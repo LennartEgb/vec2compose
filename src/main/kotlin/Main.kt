@@ -1,7 +1,27 @@
-fun main(args: Array<String>) {
-    println("Hello World!")
+import androidvector.AndroidVectorParser
+import androidvector.AndroidVectorSerializer
+import androidvector.XML
+import parser.CommandParser
+import parser.ImageVectorParser
+import parser.PathParser
+import java.io.File
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+fun main(args: Array<String>) {
+    val commandParser = CommandParser()
+    val pathParser = PathParser(commandParser = commandParser)
+    val androidVectorSerializer = AndroidVectorSerializer()
+    val androidVectorParser = AndroidVectorParser(serializer = androidVectorSerializer, pathParser = pathParser)
+
+    val imageVectorParser = ImageVectorParser()
+
+    // load file content
+    val filePath = args.first()
+    val file = File(filePath)
+    if (!file.exists()) error("File does not exist: $filePath")
+
+    XML(content = file.readText())
+        .let(androidVectorParser::parse)
+        .mapCatching(imageVectorParser::parse)
+        .onSuccess { println(it) }
+        .onFailure { println("Failed with exception: ${it.message}") }
 }
