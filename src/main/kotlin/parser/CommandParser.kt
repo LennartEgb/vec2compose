@@ -3,7 +3,7 @@ package parser
 class CommandParser {
 
     private val delimiter = Regex("\\s?[, ]\\s?")
-    
+
     fun parse(value: String): Command {
         val command = value.first()
         require(command in Command.chars) {
@@ -14,10 +14,16 @@ class CommandParser {
             "M" -> createMove(value.drop(1), isAbsolute = command.isUpperCase())
             "L" -> createLineTo(value.drop(1), isAbsolute = command.isUpperCase())
             "C" -> createCurveTo(value.drop(1), isAbsolute = command.isUpperCase())
+            "S" -> createReflectiveCurveTo(value.drop(1), isAbsolute = command.isUpperCase())
             "H" -> Command.HorizontalLineTo(value.drop(1).toFloat(), isAbsolute = command.isUpperCase())
             "V" -> Command.VerticalLineTo(value.drop(1).toFloat(), isAbsolute = command.isUpperCase())
             else -> error("No command found for $value")
         }
+    }
+
+    private fun createReflectiveCurveTo(eventString: String, isAbsolute: Boolean): Command {
+        val e = eventString.prepare()
+        return Command.ReflectiveCurveTo(x1 = e[0], y1 = e[1], x2 = e[2], y2 = e[3], isAbsolute = isAbsolute)
     }
 
     private fun createMove(eventString: String, isAbsolute: Boolean): Command {

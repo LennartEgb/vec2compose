@@ -1,6 +1,6 @@
 package parser
 
-class PathParser(private val commandParser: CommandParser) {
+class PathParser(private val commandParser: CommandParser = CommandParser()) {
     fun parse(pathCode: String): List<Command> {
         if (pathCode.isEmpty()) return emptyList()
 

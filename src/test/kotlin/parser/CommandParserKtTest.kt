@@ -86,4 +86,13 @@ internal class CommandParserKtTest {
             actual = commandParser.parse(horizontalLineToPath)
         )
     }
+
+    @Test
+    fun `parse ReflectiveCurveTo path`() {
+        val horizontalLineToPath = "s4.47,10 9.99,10"
+        assertEquals(
+            expected = Command.ReflectiveCurveTo(x1 = 4.47f, y1 = 10f, x2 = 9.99f, y2 = 10f, isAbsolute = false),
+            actual = commandParser.parse(horizontalLineToPath)
+        )
+    }
 }

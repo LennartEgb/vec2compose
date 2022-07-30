@@ -6,18 +6,20 @@ package parser
 sealed interface Command {
     companion object {
         val chars = listOf(
-            'Z',
-            'z',
-            'M',
-            'm',
-            'L',
-            'l',
             'C',
             'c',
             'H',
             'h',
+            'L',
+            'l',
+            'M',
+            'm',
+            'S',
+            's',
             'V',
             'v',
+            'Z',
+            'z',
         )
     }
 
@@ -31,6 +33,15 @@ sealed interface Command {
 
     // L
     data class LineTo(val x: Float, val y: Float, override val isAbsolute: Boolean) : Command
+
+    // S
+    data class ReflectiveCurveTo(
+        val x1: Float,
+        val y1: Float,
+        val x2: Float,
+        val y2: Float,
+        override val isAbsolute: Boolean
+    ) : Command
 
     // C
     data class CurveTo(
