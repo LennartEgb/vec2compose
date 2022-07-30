@@ -1,11 +1,14 @@
 package androidvector
 
 import models.VectorSet
-import parser.parsePath
+import parser.PathParser
 
 private typealias DpString = String
 
-internal class AndroidVectorParser(private val serializer: AndroidVectorSerializer) {
+internal class AndroidVectorParser(
+    private val serializer: AndroidVectorSerializer,
+    private val pathParser: PathParser,
+) {
 
     fun parse(xml: XML): Result<VectorSet> {
         val androidVector = serializer.serialize(xml = xml)
@@ -18,7 +21,7 @@ internal class AndroidVectorParser(private val serializer: AndroidVectorSerializ
             height = heightInDp.toIntDp(),
             viewportWidth = viewportWidth,
             viewportHeight = viewportHeight,
-            paths = path.map { VectorSet.Path(parsePath(it.pathData)) }
+            paths = path.map { VectorSet.Path(pathParser.parse(it.pathData)) }
         )
     }
 
