@@ -28,7 +28,13 @@ internal class ImageVectorParserTest {
         )
 
         val expected = """
-            ImageVector.Builder(defaultWidth = 24.dp, defaultHeight = 24.dp, viewportWidth = 48, viewportHeight = 48) {
+            ImageVector.Builder(
+                name = "ic_icon",
+                defaultWidth = 24.dp,
+                defaultHeight = 24.dp,
+                viewportWidth = 48,
+                viewportHeight = 48
+            ) {
                 moveTo(1.0f, 2.0f)
                 lineTo(2.0f, 2.0f)
                 lineToRelative(1.0f, 2.0f)
@@ -37,7 +43,7 @@ internal class ImageVectorParserTest {
         """.trimIndent()
         assertEquals(
             expected = expected,
-            actual = imageVectorParser.parse(vectorSet = set),
+            actual = imageVectorParser.parse(name = "ic_icon", vectorSet = set),
         )
     }
 }

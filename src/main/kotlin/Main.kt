@@ -18,10 +18,9 @@ fun main(args: Array<String>) {
     val filePath = args.first()
     val file = File(filePath)
     if (!file.exists()) error("File does not exist: $filePath")
-
     XML(content = file.readText())
         .let(androidVectorParser::parse)
-        .mapCatching(imageVectorParser::parse)
+        .mapCatching { imageVectorParser.parse(name = file.nameWithoutExtension, vectorSet = it) }
         .onSuccess { println(it) }
         .onFailure { println("Failed with exception: ${it.message}") }
 }

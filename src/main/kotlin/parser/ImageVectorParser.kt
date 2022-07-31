@@ -7,36 +7,41 @@ class ImageVectorParser(private val indentation: CharSequence = DEFAULT_INDENTAT
         const val DEFAULT_INDENTATION = "    "
     }
 
-    fun parse(vectorSet: VectorSet): String {
+    fun parse(name: String, vectorSet: VectorSet): String {
         return buildString {
-            append("ImageVector.Builder(")
-            append("defaultWidth = ${vectorSet.width}.dp, ")
-            append("defaultHeight = ${vectorSet.height}.dp, ")
-            append("viewportWidth = ${vectorSet.viewportWidth}, ")
-            append("viewportHeight = ${vectorSet.viewportWidth}")
-            append(") {").nl()
+            append("ImageVector.Builder(").appendLine()
+            indent().append("name = \"$name\",").appendLine()
+            indent().append("defaultWidth = ${vectorSet.width}.dp,").appendLine()
+            indent().append("defaultHeight = ${vectorSet.height}.dp,").appendLine()
+            indent().append("viewportWidth = ${vectorSet.viewportWidth},").appendLine()
+            indent().append("viewportHeight = ${vectorSet.viewportWidth}").appendLine()
+            append(") {").appendLine()
             vectorSet.paths.forEach { path ->
                 path.commands.forEach { command ->
-                    indent().append(command.toComposeMethod()).nl()
+                    indent().append(command.toComposeMethod()).appendLine()
                 }
             }
             append("}")
         }
     }
 
-    private fun StringBuilder.nl(): StringBuilder = append("\n")
     private fun StringBuilder.indent(): StringBuilder = append(indentation)
 
     private fun Command.toComposeMethod(): String {
-        return when (this) {
-            is Command.Close -> "close()"
-            is Command.CurveTo -> if (isAbsolute) "curveTo(${x1}f, ${y1}f, ${x2}f, ${y2}f, ${x3}f, ${y3}f)" else "curveToRelative(${x1}f, ${y1}f, ${x2}f, ${y2}f, ${x3}f, $y3)"
-            is Command.HorizontalLineTo -> if (isAbsolute) "horizontalLineTo(${x}f)" else "horizontalLineToRelative(${x}f)"
-            is Command.LineTo -> if (isAbsolute) "lineTo(${x}f, ${y}f)" else "lineToRelative(${x}f, ${y}f)"
-            is Command.MoveTo -> if (isAbsolute) "moveTo(${x}f, ${y}f)" else "moveToRelative(${x}f, ${y}f)"
-            is Command.ReflectiveCurveTo -> if (isAbsolute) "reflectiveCurveTo(${x1}f, ${y1}f, ${x2}f, ${y2}f)" else "reflectiveCurveToRelative(${x1}f, ${y1}f, ${x2}f, ${y2}f)"
-            is Command.VerticalLineTo -> if (isAbsolute) "verticalLineTo(${y}f)" else "verticalLineToRelative(${y}f)"
-        }
+        return method + (values().takeIf { it.isNotEmpty() }
+            ?.joinToString(separator = "f, ", prefix = "(", postfix = "f)")
+            ?: "()")
     }
+
+    private val Command.method: String
+        get() = when (this) {
+            is Command.Close -> "close"
+            is Command.CurveTo -> if (isAbsolute) "curveTo" else "curveToRelative"
+            is Command.HorizontalLineTo -> if (isAbsolute) "horizontalLineTo" else "horizontalLineToRelative"
+            is Command.LineTo -> if (isAbsolute) "lineTo" else "lineToRelative"
+            is Command.MoveTo -> if (isAbsolute) "moveTo" else "moveToRelative"
+            is Command.ReflectiveCurveTo -> if (isAbsolute) "reflectiveCurveTo" else "reflectiveCurveToRelative"
+            is Command.VerticalLineTo -> if (isAbsolute) "verticalLineTo" else "verticalLineToRelative"
+        }
 }
 
