@@ -2,7 +2,7 @@ package parser
 
 import models.VectorSet
 
-class ImageVectorParser(private val indentation: CharSequence = DEFAULT_INDENTATION) {
+internal class ImageVectorParser(private val indentation: CharSequence = DEFAULT_INDENTATION) {
     companion object {
         const val DEFAULT_INDENTATION = "    "
     }

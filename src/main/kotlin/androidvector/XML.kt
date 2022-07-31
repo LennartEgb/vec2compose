@@ -1,4 +1,4 @@
 package androidvector
 
 @JvmInline
-value class XML(val content: String)
+internal value class XML(val content: String)

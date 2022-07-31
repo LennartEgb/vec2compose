@@ -1,6 +1,6 @@
 package parser
 
-class CommandParser {
+internal class CommandParser {
 
     private val delimiter = Regex("\\s?[, ]\\s?")
 

@@ -3,7 +3,7 @@ package parser
 /**
  * Commands for path data for vector formats found [here](https://www.w3.org/TR/SVG/paths.html#PathData)
  */
-sealed interface Command {
+internal sealed interface Command {
     companion object {
         val chars = listOf(
             'C',

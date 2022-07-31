@@ -5,7 +5,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
 @JacksonXmlRootElement(localName = "vector")
-data class AndroidVector(
+internal data class AndroidVector(
     @field:JacksonXmlProperty(localName = "width")
     val widthInDp: String,
     @field:JacksonXmlProperty(localName = "height")
