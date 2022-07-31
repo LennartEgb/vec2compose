@@ -17,7 +17,7 @@ internal object Injection {
 
     private val ImageVectorParser = ImageVectorParser()
 
-    val XMLParser = XMLFileParser(
+    val XMLFileParser = XMLFileParser(
         androidVectorParser = AndroidVectorParser,
         imageVectorParser = ImageVectorParser
     )

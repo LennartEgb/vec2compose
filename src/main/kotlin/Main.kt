@@ -26,5 +26,5 @@ fun main(args: Array<String>) {
 
     // load file content
     val file = File(input)
-    out.write(Injection.XMLParser.parse(file))
+    out.write(Injection.XMLFileParser.parse(file))
 }
