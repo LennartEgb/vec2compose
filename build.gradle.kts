@@ -28,8 +28,14 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
 }
 
-application {
-    mainClass.set("MainKt")
+tasks.register<Copy>("packageDistribution") {
+    dependsOn("jar")
+    from("${project.rootDir}/scripts/vec2compose")
+    from("${project.projectDir}/build/libs/${project.name}-${project.version}.jar") {
+        rename { "${project.name}.jar" }
+        into("lib")
+    }
+    into("${project.rootDir}/dist")
 }
 
 val jar by tasks.getting(Jar::class) {
@@ -40,4 +46,8 @@ val jar by tasks.getting(Jar::class) {
         exclude("META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA")
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+application {
+    mainClass.set("MainKt")
 }

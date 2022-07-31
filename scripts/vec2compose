@@ -1,0 +1,2 @@
+#/usr/bin
+java -jar lib/vec2compose.jar $@
