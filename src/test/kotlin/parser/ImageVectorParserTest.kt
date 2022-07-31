@@ -28,6 +28,8 @@ internal class ImageVectorParserTest {
         )
 
         val expected = """
+import androidx.compose.ui.graphics.vector.ImageVector
+
 ImageVector.Builder(
     name = "ic_icon",
     defaultWidth = 24.dp,
