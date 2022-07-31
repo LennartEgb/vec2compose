@@ -3,12 +3,16 @@ package androidvector
 import models.VectorSet
 import org.junit.jupiter.api.Test
 import parser.Command
+import parser.CommandParser
 import parser.PathParser
 import kotlin.test.assertEquals
 
 internal class AndroidVectorParserTest {
 
-    private val parser = AndroidVectorParser(serializer = AndroidVectorSerializer(), pathParser = PathParser())
+    private val parser = AndroidVectorParser(
+        serializer = AndroidVectorSerializer(),
+        pathParser = PathParser(CommandParser())
+    )
 
     @Test
     fun `parse valid AndroidVector xml to VectorSet`() {

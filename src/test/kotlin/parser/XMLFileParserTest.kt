@@ -10,7 +10,7 @@ internal class XMLFileParserTest {
 
     private val fileLoader = FileLoader()
     private val serializer = AndroidVectorSerializer()
-    private val pathParser = PathParser()
+    private val pathParser = PathParser(CommandParser())
     private val androidVectorParser = AndroidVectorParser(serializer = serializer, pathParser = pathParser)
     private val imageVectorParser = ImageVectorParser()
     private val parser = XMLFileParser(androidVectorParser, imageVectorParser)
