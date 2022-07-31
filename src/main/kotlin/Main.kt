@@ -1,18 +1,28 @@
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 import kotlinx.cli.required
-import output.FileOutput
-import output.PrintOutput
+import output.FileOutputStrategy
+import output.PrintOutputStrategy
 import java.io.File
 
 fun main(args: Array<String>) {
     val argParser = ArgParser(programName = "vec2compose")
-    val input: String by argParser.option(ArgType.String, shortName = "i", description = "Input file").required()
-    val output: String? by argParser.option(ArgType.String, shortName = "o", description = "Output file")
+    val input: String by argParser.option(
+        type = ArgType.String,
+        shortName = "i",
+        fullName = "input",
+        description = "Input file"
+    ).required()
+    val output: String? by argParser.option(
+        type = ArgType.String,
+        shortName = "o",
+        fullName = "output",
+        description = "Output file"
+    )
     argParser.parse(args)
 
     val outputValue = output
-    val out = if (outputValue != null) FileOutput(pathname = outputValue) else PrintOutput()
+    val out = if (outputValue != null) FileOutputStrategy(pathname = outputValue) else PrintOutputStrategy()
 
     // load file content
     val file = File(input)

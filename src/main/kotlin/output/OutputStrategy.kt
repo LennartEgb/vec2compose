@@ -1,5 +1,5 @@
 package output
 
-interface Output {
+interface OutputStrategy {
     fun write(content: String)
 }

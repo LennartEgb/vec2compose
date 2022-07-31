@@ -1,6 +1,6 @@
 package output
 
-class PrintOutput : Output {
+class PrintOutputStrategy : OutputStrategy {
     override fun write(content: String) {
         println("------------------------------")
         println(content)
