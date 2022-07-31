@@ -21,7 +21,7 @@ class ImageVectorParser(private val indentation: CharSequence = DEFAULT_INDENTAT
                     indent().append(command.toComposeMethod()).appendLine()
                 }
             }
-            append("}")
+            append("}.build()")
         }
     }
 
