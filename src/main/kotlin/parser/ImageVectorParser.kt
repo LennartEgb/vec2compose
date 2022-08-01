@@ -19,14 +19,14 @@ internal class ImageVectorParser(private val indentation: CharSequence = DEFAULT
             vectorSet.paths.forEach { path ->
                 append(".path(").appendLine()
                 indent().append("fill = SolidColor(Color.Black),").appendLine()
-                indent().append("fillAlpha = fillAlpha,").appendLine()
+                indent().append("fillAlpha = 1f,").appendLine()
                 indent().append("stroke = null,").appendLine()
-                indent().append("strokeAlpha = strokeAlpha,").appendLine()
+                indent().append("strokeAlpha = 1f,").appendLine()
                 indent().append("strokeLineWidth = 1f,").appendLine()
                 indent().append("strokeLineCap = StrokeCap.Butt,").appendLine()
                 indent().append("strokeLineJoin = StrokeJoin.Bevel,").appendLine()
                 indent().append("strokeLineMiter = 1f,").appendLine()
-                indent().append("pathFillType = pathFillType").appendLine()
+                indent().append("pathFillType = PathFillType.NonZero").appendLine()
                 append(") {").appendLine()
 
                 path.commands.forEach { command ->

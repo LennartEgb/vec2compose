@@ -36,14 +36,14 @@ ImageVector.Builder(
     viewportHeight = 48f
 ).path(
     fill = SolidColor(Color.Black),
-    fillAlpha = fillAlpha,
+    fillAlpha = 1f,
     stroke = null,
-    strokeAlpha = strokeAlpha,
+    strokeAlpha = 1f,
     strokeLineWidth = 1f,
     strokeLineCap = StrokeCap.Butt,
     strokeLineJoin = StrokeJoin.Bevel,
     strokeLineMiter = 1f,
-    pathFillType = pathFillType
+    pathFillType = PathFillType.NonZero
 ) {
     moveTo(1.0f, 2.0f)
     lineTo(2.0f, 2.0f)
