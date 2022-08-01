@@ -4,42 +4,67 @@ internal class CommandParser {
 
     private val delimiter = Regex("\\s?[, ]\\s?")
 
-    fun parse(value: String): Command {
+    fun parse(value: String): List<Command> {
         val command = value.first()
         require(command in Command.chars) {
             "First character must be a command identifier but was $command. Command was: $value"
         }
+        val isAbsolute = command.isUpperCase()
+        val eventString = value.drop(1)
         return when (command.uppercase()) {
-            "Z" -> Command.Close(isAbsolute = command.isUpperCase())
-            "M" -> createMove(value.drop(1), isAbsolute = command.isUpperCase())
-            "L" -> createLineTo(value.drop(1), isAbsolute = command.isUpperCase())
-            "C" -> createCurveTo(value.drop(1), isAbsolute = command.isUpperCase())
-            "S" -> createReflectiveCurveTo(value.drop(1), isAbsolute = command.isUpperCase())
-            "H" -> Command.HorizontalLineTo(value.drop(1).toFloat(), isAbsolute = command.isUpperCase())
-            "V" -> Command.VerticalLineTo(value.drop(1).toFloat(), isAbsolute = command.isUpperCase())
+            "Z" -> listOf(Command.Close(isAbsolute = isAbsolute))
+            "M" -> createMoves(eventString, isAbsolute = isAbsolute)
+            "L" -> createLinesTo(eventString, isAbsolute = isAbsolute)
+            "C" -> createCurvesTo(eventString, isAbsolute = isAbsolute)
+            "S" -> createReflectiveCurvesTo(eventString, isAbsolute = isAbsolute)
+            "H" -> createHorizontalLinesTo(eventString, isAbsolute = isAbsolute)
+            "V" -> createVerticalLinesTo(eventString, isAbsolute = isAbsolute)
             else -> error("No command found for $value")
         }
     }
 
-    private fun createReflectiveCurveTo(eventString: String, isAbsolute: Boolean): Command {
-        val e = eventString.prepare()
-        return Command.ReflectiveCurveTo(x1 = e[0], y1 = e[1], x2 = e[2], y2 = e[3], isAbsolute = isAbsolute)
+    private fun createHorizontalLinesTo(eventString: String, isAbsolute: Boolean): List<Command> {
+        return eventString.prepare()
+            .validate(1, "Horizontal line")
+            .map { Command.HorizontalLineTo(it, isAbsolute) }
     }
 
-    private fun createMove(eventString: String, isAbsolute: Boolean): Command {
-        val (x, y) = eventString.prepare()
-        return Command.MoveTo(x = x, y = y, isAbsolute = isAbsolute)
+    private fun createVerticalLinesTo(eventString: String, isAbsolute: Boolean): List<Command> {
+        return eventString.prepare()
+            .validate(1, "Vertical line")
+            .map { Command.VerticalLineTo(it, isAbsolute) }
     }
 
-    private fun createLineTo(eventString: String, isAbsolute: Boolean): Command {
-        val (x, y) = eventString.prepare()
-        return Command.LineTo(x = x, y = y, isAbsolute = isAbsolute)
+    private fun createReflectiveCurvesTo(eventString: String, isAbsolute: Boolean): List<Command> {
+        return eventString.prepare()
+            .validate(4, "Reflective curve")
+            .windowed(size = 4, step = 4, partialWindows = false)
+            .map { Command.ReflectiveCurveTo(x1 = it[0], y1 = it[1], x2 = it[2], y2 = it[3], isAbsolute = isAbsolute) }
     }
 
-    private fun createCurveTo(eventString: String, isAbsolute: Boolean): Command {
-        val e = eventString.prepare()
-        return Command.CurveTo(e[0], e[1], e[2], e[3], e[4], e[5], isAbsolute = isAbsolute)
+    private fun createMoves(eventString: String, isAbsolute: Boolean): List<Command> {
+        return eventString.prepare()
+            .validate(2, "Move")
+            .windowed(size = 2, step = 2, partialWindows = false)
+            .map { Command.MoveTo(x = it[0], y = it[1], isAbsolute = isAbsolute) }
+    }
+
+    private fun createLinesTo(eventString: String, isAbsolute: Boolean): List<Command> {
+        return eventString.prepare()
+            .validate(2, "Line")
+            .windowed(size = 2, step = 2, partialWindows = false)
+            .map { Command.LineTo(x = it[0], y = it[1], isAbsolute = isAbsolute) }
+    }
+
+    private fun createCurvesTo(eventString: String, isAbsolute: Boolean): List<Command> {
+        return eventString.prepare()
+            .validate(6, "Curve")
+            .windowed(size = 6, step = 6, partialWindows = false)
+            .map { Command.CurveTo(it[0], it[1], it[2], it[3], it[4], it[5], isAbsolute = isAbsolute) }
     }
 
     private fun String.prepare(): List<Float> = split(delimiter).map(String::toFloat)
+    private fun <T> List<T>.validate(count: Int, name: String): List<T> = also {
+        check(it.size % count == 0) { "$name needs $count parameters but was $it" }
+    }
 }

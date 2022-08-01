@@ -10,7 +10,7 @@ internal class PathParser(private val commandParser: CommandParser) {
             it.substring(range = 0 until (it.indexOfFirst { c -> c in Command.chars }.takeIf { it != -1 } ?: it.length))
         }
         val tail = pathCode.drop(1).substring(commandValues.length)
-        return listOf(commandParser.parse(command + commandValues)) + parse(tail)
+        return commandParser.parse(command + commandValues) + parse(tail)
     }
 }
 
