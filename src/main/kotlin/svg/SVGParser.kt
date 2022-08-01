@@ -25,7 +25,14 @@ internal class SVGParser(
     }
 
     private fun SVG.Path.toVectorSetPath(): VectorSet.Path {
-        return VectorSet.Path(commands = pathParser.parse(pathData))
+        val path = buildString {
+            pathData.forEachIndexed { index, c ->
+                val next = pathData.getOrNull(index + 1) ?: return@buildString
+                append(c)
+                if (c.isDigit() && next == '-') append(' ')
+            }
+        }
+        return VectorSet.Path(commands = pathParser.parse(path))
     }
 }
 
