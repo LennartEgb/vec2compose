@@ -34,7 +34,17 @@ ImageVector.Builder(
     defaultHeight = 24.dp,
     viewportWidth = 48f,
     viewportHeight = 48f
-).path {
+).path(
+    fill = SolidColor(Color.Black),
+    fillAlpha = fillAlpha,
+    stroke = null,
+    strokeAlpha = strokeAlpha,
+    strokeLineWidth = 1f,
+    strokeLineCap = StrokeCap.Butt,
+    strokeLineJoin = StrokeJoin.Bevel,
+    strokeLineMiter = 1f,
+    pathFillType = pathFillType
+) {
     moveTo(1.0f, 2.0f)
     lineTo(2.0f, 2.0f)
     lineToRelative(1.0f, 2.0f)
