@@ -13,15 +13,17 @@ internal class ImageVectorParser(private val indentation: CharSequence = DEFAULT
             indent().append("name = \"$name\",").appendLine()
             indent().append("defaultWidth = ${vectorSet.width}.dp,").appendLine()
             indent().append("defaultHeight = ${vectorSet.height}.dp,").appendLine()
-            indent().append("viewportWidth = ${vectorSet.viewportWidth},").appendLine()
-            indent().append("viewportHeight = ${vectorSet.viewportWidth}").appendLine()
-            append(") {").appendLine()
+            indent().append("viewportWidth = ${vectorSet.viewportWidth}f,").appendLine()
+            indent().append("viewportHeight = ${vectorSet.viewportWidth}f").appendLine()
+            append(")")
             vectorSet.paths.forEach { path ->
+                append(".path {").appendLine()
                 path.commands.forEach { command ->
                     indent().append(command.toComposeMethod()).appendLine()
                 }
+                append("}")
             }
-            append("}.build()")
+            append(".build()")
         }
     }
 

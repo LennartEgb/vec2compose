@@ -32,9 +32,9 @@ ImageVector.Builder(
     name = "ic_icon",
     defaultWidth = 24.dp,
     defaultHeight = 24.dp,
-    viewportWidth = 48,
-    viewportHeight = 48
-) {
+    viewportWidth = 48f,
+    viewportHeight = 48f
+).path {
     moveTo(1.0f, 2.0f)
     lineTo(2.0f, 2.0f)
     lineToRelative(1.0f, 2.0f)
