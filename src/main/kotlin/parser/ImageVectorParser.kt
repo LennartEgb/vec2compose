@@ -9,8 +9,6 @@ internal class ImageVectorParser(private val indentation: CharSequence = DEFAULT
 
     fun parse(name: String, vectorSet: VectorSet): String {
         return buildString {
-            append("import androidx.compose.ui.graphics.vector.ImageVector").appendLine()
-            appendLine()
             append("ImageVector.Builder(").appendLine()
             indent().append("name = \"$name\",").appendLine()
             indent().append("defaultWidth = ${vectorSet.width}.dp,").appendLine()
