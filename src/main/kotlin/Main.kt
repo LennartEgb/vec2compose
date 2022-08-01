@@ -6,14 +6,15 @@ import output.PrintOutputStrategy
 import java.io.File
 
 fun main(args: Array<String>) {
+    /// Arguments
     val argParser = ArgParser(programName = "vec2compose")
-    val input: String by argParser.option(
+    val input by argParser.option(
         type = ArgType.String,
         shortName = "i",
         fullName = "input",
         description = "Input file"
     ).required()
-    val output: String? by argParser.option(
+    val output by argParser.option(
         type = ArgType.String,
         shortName = "o",
         fullName = "output",
@@ -21,10 +22,11 @@ fun main(args: Array<String>) {
     )
     argParser.parse(args)
 
+    /// Output strategies
     val outputValue = output
     val out = if (outputValue != null) FileOutputStrategy(pathname = outputValue) else PrintOutputStrategy()
 
-    // load file content
-    val file = File(input)
+    /// load file content
+    val file = File(input).takeIf { it.exists() } ?: error("File $input does not exist")
     out.write(Injection.XMLFileParser.parse(file))
 }
