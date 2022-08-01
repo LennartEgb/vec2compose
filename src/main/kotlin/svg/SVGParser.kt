@@ -27,8 +27,8 @@ internal class SVGParser(
     private fun SVG.Path.toVectorSetPath(): VectorSet.Path {
         val path = buildString {
             pathData.forEachIndexed { index, c ->
-                val next = pathData.getOrNull(index + 1) ?: return@buildString
                 append(c)
+                val next = pathData.getOrNull(index + 1) ?: return@buildString
                 if (c.isDigit() && next == '-') append(' ')
             }
         }

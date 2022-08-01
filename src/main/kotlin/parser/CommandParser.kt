@@ -64,7 +64,7 @@ internal class CommandParser {
     }
 
     private fun String.prepare(): List<Float> = split(delimiter).map(String::toFloat)
-    private fun <T> List<T>.validate(count: Int, name: String): List<T> = also {
-        check(it.size % count == 0) { "$name needs $count parameters but was $it" }
+    private fun <T> List<T>.validate(count: Int, name: String): List<T> = apply {
+        check(value = size % count == 0) { "$name needs $count parameters but was $this" }
     }
 }
