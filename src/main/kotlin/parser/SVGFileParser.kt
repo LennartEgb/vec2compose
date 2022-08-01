@@ -12,7 +12,7 @@ internal class SVGFileParser(
     fun parse(file: File): String {
         return XML(content = file.readText())
             .let(svgParser::parse)
-            .mapCatching { imageVectorParser.parse(name = file.name, vectorSet = it) }
+            .mapCatching { imageVectorParser.parse(name = file.nameWithoutExtension, vectorSet = it) }
             .getOrThrow()
     }
 }

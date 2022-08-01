@@ -63,7 +63,8 @@ internal class CommandParser {
             .map { Command.CurveTo(it[0], it[1], it[2], it[3], it[4], it[5], isAbsolute = isAbsolute) }
     }
 
-    private fun String.prepare(): List<Float> = split(delimiter).map(String::toFloat)
+    private val valueRegex = "[+-]?\\d*[.]?\\d+".toRegex()
+    private fun String.prepare(): List<Float> = valueRegex.findAll(this).map { it.value }.map(String::toFloat).toList()
     private fun <T> List<T>.validate(count: Int, name: String): List<T> = apply {
         check(value = size % count == 0) { "$name needs $count parameters but was $this" }
     }
