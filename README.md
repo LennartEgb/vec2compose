@@ -23,7 +23,8 @@ $ ./vec2compose -i ic_done.xml -o DoneIcon.kt
 And the second option is to print the `ImageVector` directly to the console.
 ```bash
 $ ./vec2compose -i ic_done.xml
-
+```
+```kotlin
 ImageVector.Builder(
     name = "ic_done",
     defaultWidth = 24.dp,
