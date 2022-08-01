@@ -24,3 +24,6 @@ Currently this is only available after a local gradle build
 $ ./gradlew clean jar packageDistribution
 ```
 A `dist` folder is created with the script and the `jar`.
+
+## Motivation
+This is a small project to play around with CLI tools and support the Jetpack Compose development to move further away from XML files in Android projects. A custom icon set can be generated as the [material icon set](https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/material/material-icons-core/src/commonMain/kotlin/androidx/compose/material/icons/Icons.kt;l=65?q=Icons&sq=) without adding XML resources.
