@@ -1,9 +1,8 @@
 import androidvector.AndroidVectorParser
 import androidvector.AndroidVectorSerializer
-import parser.CommandParser
-import parser.ImageVectorParser
-import parser.PathParser
-import parser.XMLFileParser
+import parser.*
+import svg.SVGDeserializer
+import svg.SVGParser
 
 internal object Injection {
     private val CommandParser = CommandParser()
@@ -15,7 +14,11 @@ internal object Injection {
         pathParser = PathParser
     )
 
+    private val SVGDeserializer = SVGDeserializer()
+    private val SVGParser = SVGParser(SVGDeserializer, PathParser)
     private val ImageVectorParser = ImageVectorParser()
+
+    val SVGFileParser = SVGFileParser(SVGParser, ImageVectorParser)
 
     val XMLFileParser = XMLFileParser(
         androidVectorParser = AndroidVectorParser,
