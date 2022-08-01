@@ -1,11 +1,11 @@
 package utils
 
 import java.io.File
+import kotlin.test.fail
 
-class FileLoader {
+internal class FileLoader {
     fun load(name: String): File {
-        val resource = javaClass.classLoader.getResource(name)
-            ?: error("Resource $name does not exist.")
-        return File(resource.file)
+        return javaClass.classLoader.getResource(name)?.file?.let { File(it) }
+            ?: fail("File $name not found")
     }
 }

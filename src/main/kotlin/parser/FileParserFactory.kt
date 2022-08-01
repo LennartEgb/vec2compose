@@ -8,7 +8,7 @@ internal object FileParserFactory {
         return when (file.extension.uppercase()) {
             "XML" -> Injection.XMLFileParser
             "SVG" -> Injection.SVGFileParser
-            else -> error("No parser found for file $file")
+            else -> throw IllegalArgumentException("No parser found for file $file")
         }
     }
 }
