@@ -1,6 +1,6 @@
 # vec2compose
 
-<p center>
+<p align=center>
 <img width=400 src="https://user-images.githubusercontent.com/26793300/182098686-b0c5d225-5751-496d-88a2-ccaf49e48cc9.png" alt="xml to compose"/>
 </p>
 
