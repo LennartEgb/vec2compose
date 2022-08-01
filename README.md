@@ -5,7 +5,7 @@
 </p>
 
 
-A CLI tool to create `ImageVector` from Androids vector XML files.
+A CLI tool to create `ImageVector` from Android vector XML files.
 
 ## Usage
 There are two options to create the `ImageVector`. The first option is to create a Kotlin file
