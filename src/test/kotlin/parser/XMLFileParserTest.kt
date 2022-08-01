@@ -13,9 +13,9 @@ internal class XMLFileParserTest {
 
     @Test
     fun `parse successfully ic_account_circle_24`() {
-        val file = fileLoader.load("ic_account_circle_24.xml")
+        val file = fileLoader.load("xml/ic_account_circle_24.xml")
         assertDoesNotThrow {
-            val content = parser.parse(file)
+            val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
@@ -31,9 +31,9 @@ internal class XMLFileParserTest {
 
     @Test
     fun `parse successfully ic_check_circle_24`() {
-        val file = fileLoader.load("ic_check_circle_24.xml")
+        val file = fileLoader.load("xml/ic_check_circle_24.xml")
         assertDoesNotThrow {
-            val content = parser.parse(file)
+            val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
@@ -49,9 +49,9 @@ internal class XMLFileParserTest {
 
     @Test
     fun `parse successfully ic_delete_24`() {
-        val file = fileLoader.load("ic_delete_24.xml")
+        val file = fileLoader.load("xml/ic_delete_24.xml")
         assertDoesNotThrow {
-            val content = parser.parse(file)
+            val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
@@ -67,9 +67,9 @@ internal class XMLFileParserTest {
 
     @Test
     fun `parse successfully ic_done_24`() {
-        val file = fileLoader.load("ic_done_24.xml")
+        val file = fileLoader.load("xml/ic_done_24.xml")
         assertDoesNotThrow {
-            val content = parser.parse(file)
+            val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
@@ -85,9 +85,9 @@ internal class XMLFileParserTest {
 
     @Test
     fun `parse successfully ic_home_24`() {
-        val file = fileLoader.load("ic_home_24.xml")
+        val file = fileLoader.load("xml/ic_home_24.xml")
         assertDoesNotThrow {
-            val content = parser.parse(file)
+            val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
@@ -103,9 +103,9 @@ internal class XMLFileParserTest {
 
     @Test
     fun `parse successfully ic_info_24`() {
-        val file = fileLoader.load("ic_info_24.xml")
+        val file = fileLoader.load("xml/ic_info_24.xml")
         assertDoesNotThrow {
-            val content = parser.parse(file)
+            val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
@@ -121,9 +121,9 @@ internal class XMLFileParserTest {
 
     @Test
     fun `parse successfully ic_language_24`() {
-        val file = fileLoader.load("ic_language_24.xml")
+        val file = fileLoader.load("xml/ic_language_24.xml")
         assertDoesNotThrow {
-            val content = parser.parse(file)
+            val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
@@ -139,9 +139,9 @@ internal class XMLFileParserTest {
 
     @Test
     fun `parse successfully ic_search_24`() {
-        val file = fileLoader.load("ic_search_24.xml")
+        val file = fileLoader.load("xml/ic_search_24.xml")
         assertDoesNotThrow {
-            val content = parser.parse(file)
+            val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
@@ -157,9 +157,9 @@ internal class XMLFileParserTest {
 
     @Test
     fun `parse successfully ic_settings_24`() {
-        val file = fileLoader.load("ic_settings_24.xml")
+        val file = fileLoader.load("xml/ic_settings_24.xml")
         assertDoesNotThrow {
-            val content = parser.parse(file)
+            val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(

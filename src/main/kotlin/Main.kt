@@ -3,6 +3,7 @@ import kotlinx.cli.ArgType
 import kotlinx.cli.required
 import output.FileOutputStrategy
 import output.PrintOutputStrategy
+import parser.FileParserFactory
 import java.io.File
 
 fun main(args: Array<String>) {
@@ -26,7 +27,10 @@ fun main(args: Array<String>) {
     val outputValue = output
     val out = if (outputValue != null) FileOutputStrategy(pathname = outputValue) else PrintOutputStrategy()
 
-    /// load file content
+    /// Load file content
     val file = File(input).takeIf { it.exists() } ?: error("File $input does not exist")
-    out.write(Injection.XMLFileParser.parse(file))
+    FileParserFactory.createFileParser(file)
+        .parse(file)
+        .onSuccess { out.write(it) }
+        .onFailure { println("Error: ${it.message}") }
 }

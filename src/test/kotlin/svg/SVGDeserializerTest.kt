@@ -2,9 +2,12 @@ package svg
 
 import androidvector.XML
 import org.junit.jupiter.api.Test
+import utils.TestObjectMapper
 import kotlin.test.assertEquals
 
 internal class SVGDeserializerTest {
+
+    private val deserializer = SVGDeserializer(TestObjectMapper)
 
     @Test
     fun `deserialize valid SVG file`() {
@@ -34,7 +37,7 @@ internal class SVGDeserializerTest {
 
         assertEquals(
             expected = Result.success(expected),
-            actual = SVGDeserializer().deserialize(content)
+            actual = deserializer.deserialize(content)
         )
     }
 }

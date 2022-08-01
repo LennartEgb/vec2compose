@@ -5,12 +5,13 @@ import org.junit.jupiter.api.Test
 import parser.Command
 import parser.CommandParser
 import parser.PathParser
+import utils.TestObjectMapper
 import kotlin.test.assertEquals
 
 internal class AndroidVectorParserTest {
 
     private val parser = AndroidVectorParser(
-        serializer = AndroidVectorSerializer(),
+        serializer = AndroidVectorSerializer(TestObjectMapper),
         pathParser = PathParser(CommandParser())
     )
 

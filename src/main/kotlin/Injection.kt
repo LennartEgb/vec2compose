@@ -1,20 +1,27 @@
 import androidvector.AndroidVectorParser
 import androidvector.AndroidVectorSerializer
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
+import com.fasterxml.jackson.dataformat.xml.XmlMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import parser.*
 import svg.SVGDeserializer
 import svg.SVGParser
 
 internal object Injection {
+    private val objectMapper: ObjectMapper = XmlMapper(JacksonXmlModule()).registerKotlinModule()
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     private val CommandParser = CommandParser()
     private val PathParser = PathParser(commandParser = CommandParser)
 
-    private val AndroidVectorSerializer = AndroidVectorSerializer()
+    private val AndroidVectorSerializer = AndroidVectorSerializer(objectMapper)
     private val AndroidVectorParser = AndroidVectorParser(
         serializer = AndroidVectorSerializer,
         pathParser = PathParser
     )
 
-    private val SVGDeserializer = SVGDeserializer()
+    private val SVGDeserializer = SVGDeserializer(objectMapper)
     private val SVGParser = SVGParser(SVGDeserializer, PathParser)
     private val ImageVectorParser = ImageVectorParser()
 

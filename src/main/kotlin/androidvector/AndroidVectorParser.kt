@@ -12,7 +12,7 @@ internal class AndroidVectorParser(
 
     fun parse(xml: XML): Result<VectorSet> {
         val androidVector = serializer.serialize(xml = xml)
-        return androidVector.map { it.toVectorSet() }
+        return androidVector.mapCatching { it.toVectorSet() }
     }
 
     private fun AndroidVector.toVectorSet(): VectorSet {
@@ -28,9 +28,8 @@ internal class AndroidVectorParser(
     private fun DpString.toIntDp(): Int {
         val int = toIntOrNull()
         if (int != null) return int
-        if (endsWith("dp")) {
-            return dropLast(2).toIntOrNull() ?: error("Malformed dp string: $this")
-        }
+        if (endsWith("dp")) return dropLast(2).toIntOrNull()
+            ?: error("Malformed dp string: $this")
         error("Could not transform dp string to int: $this")
     }
 }

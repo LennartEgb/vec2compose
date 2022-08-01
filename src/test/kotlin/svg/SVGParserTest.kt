@@ -5,10 +5,14 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import parser.CommandParser
 import parser.PathParser
+import utils.TestObjectMapper
 
 internal class SVGParserTest {
 
-    private val parser = SVGParser(deserializer = SVGDeserializer(), pathParser = PathParser(CommandParser()))
+    private val parser = SVGParser(
+        deserializer = SVGDeserializer(TestObjectMapper),
+        pathParser = PathParser(CommandParser())
+    )
 
     @Test
     fun parse() {

@@ -1,13 +1,8 @@
 package androidvector
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
-import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 
-internal class AndroidVectorSerializer {
-    private val mapper: ObjectMapper = XmlMapper(JacksonXmlModule()).registerKotlinModule()
-
+internal class AndroidVectorSerializer(private val mapper: ObjectMapper) {
     fun serialize(xml: XML): Result<AndroidVector> {
         return runCatching { mapper.readValue(xml.content, AndroidVector::class.java) }
     }
