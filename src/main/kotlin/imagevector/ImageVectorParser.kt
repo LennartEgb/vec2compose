@@ -27,7 +27,7 @@ internal class ImageVectorParser(private val indentation: CharSequence = DEFAULT
                 indent().append("strokeLineCap = StrokeCap.Butt,").appendLine()
                 indent().append("strokeLineJoin = StrokeJoin.Bevel,").appendLine()
                 indent().append("strokeLineMiter = 1f,").appendLine()
-                indent().append("pathFillType = PathFillType.NonZero").appendLine()
+                indent().append("pathFillType = ${path.fillType.composeName}").appendLine()
                 append(") {").appendLine()
 
                 path.commands.forEach { command ->
@@ -59,6 +59,11 @@ internal class ImageVectorParser(private val indentation: CharSequence = DEFAULT
             is Command.QuadraticBezierTo -> if (isAbsolute) "quadTo" else "quadToRelative"
             is Command.ReflectiveQuadraticBezierTo -> if (isAbsolute) "reflectiveQuadTo" else "reflectiveQuadToRelative"
             is Command.ArcTo -> if (isAbsolute) "arcTo" else "arcToRelative"
+        }
+    private val VectorSet.Path.FillType.composeName: String
+        get() = when (this) {
+            VectorSet.Path.FillType.NonZero -> "PathFillType.NonZero"
+            VectorSet.Path.FillType.EvenOdd -> "PathFillType.EvenOdd"
         }
 }
 

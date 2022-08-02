@@ -9,5 +9,17 @@ internal data class VectorSet(
     val viewportHeight: Int,
     val paths: List<Path>
 ) {
-    internal data class Path(val commands: List<Command>)
+    internal data class Path(
+        val fillType: FillType,
+        val commands: List<Command>,
+    ) {
+        enum class FillType {
+            NonZero,
+            EvenOdd;
+
+            companion object {
+                val Default = NonZero
+            }
+        }
+    }
 }

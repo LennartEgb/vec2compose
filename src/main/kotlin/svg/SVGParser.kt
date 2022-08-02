@@ -1,8 +1,8 @@
 package svg
 
-import vectordrawable.XML
-import models.VectorSet
 import commands.PathParser
+import models.VectorSet
+import vectordrawable.XML
 
 internal class SVGParser(
     private val deserializer: SVGDeserializer,
@@ -20,19 +20,18 @@ internal class SVGParser(
             height = height.filter { it.isDigit() }.toInt(),
             viewportWidth = rect[2] - rect[0],
             viewportHeight = rect[3] - rect[1],
-            paths = path.map { it.toVectorSetPath() },
+            paths = path.map {
+                VectorSet.Path(fillType = parseFillType(it.fillRule), commands = pathParser.parse(it.pathData))
+            },
         )
     }
 
-    private fun SVG.Path.toVectorSetPath(): VectorSet.Path {
-        val path = buildString {
-            pathData.forEachIndexed { index, c ->
-                append(c)
-                val next = pathData.getOrNull(index + 1) ?: return@buildString
-                if (c.isDigit() && next == '-') append(' ')
-            }
+    private fun parseFillType(fillRule: String): VectorSet.Path.FillType {
+        return when (fillRule) {
+            "evenodd" -> VectorSet.Path.FillType.EvenOdd
+            "nonzero" -> VectorSet.Path.FillType.NonZero
+            else -> VectorSet.Path.FillType.Default
         }
-        return VectorSet.Path(commands = pathParser.parse(path))
     }
 }
 

@@ -20,6 +20,8 @@ internal data class VectorDrawable(
     val path: List<Path> = emptyList()
 ) {
     data class Path(
+        @field:JacksonXmlProperty(localName = "fillType")
+        val fillType: String = "nonZero",
         @field:JacksonXmlProperty(localName = "fillColor")
         val fillColor: String? = null,
         @field:JacksonXmlProperty(localName = "pathData")

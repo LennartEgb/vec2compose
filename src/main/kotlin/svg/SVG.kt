@@ -20,6 +20,8 @@ data class SVG(
     data class Path(
         @field:JacksonXmlProperty(localName = "d")
         val pathData: String,
+        @field:JacksonXmlProperty(localName = "fill-rule")
+        val fillRule: String = "nonzero",
         @field:JacksonXmlProperty(localName = "fill")
         val fill: String? = null,
     )
