@@ -3,7 +3,7 @@ package commands
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
-internal class CommandParserKtTest {
+internal class CommandParserTest {
 
     private val commandParser = CommandParser()
 
