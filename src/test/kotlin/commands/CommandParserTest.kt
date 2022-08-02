@@ -44,8 +44,7 @@ internal class CommandParserTest {
             expected = listOf(
                 Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true),
                 Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true)
-            ),
-            actual = commandParser.parse(linePath)
+            ), actual = commandParser.parse(linePath)
         )
     }
 
@@ -55,16 +54,9 @@ internal class CommandParserTest {
         assertEquals(
             expected = listOf(
                 Command.CurveTo(
-                    x1 = 11.85f,
-                    y1 = 19.35f,
-                    x2 = 11.483f,
-                    y2 = 19.2f,
-                    x3 = 11.05f,
-                    y3 = 19.2f,
-                    isAbsolute = true
+                    x1 = 11.85f, y1 = 19.35f, x2 = 11.483f, y2 = 19.2f, x3 = 11.05f, y3 = 19.2f, isAbsolute = true
                 )
-            ),
-            actual = commandParser.parse(curveToPath)
+            ), actual = commandParser.parse(curveToPath)
         )
     }
 
@@ -72,8 +64,7 @@ internal class CommandParserTest {
     fun `parse Close path`() {
         val closePath = "Z"
         assertEquals(
-            expected = listOf(Command.Close),
-            actual = commandParser.parse(closePath)
+            expected = listOf(Command.Close), actual = commandParser.parse(closePath)
         )
     }
 
@@ -81,8 +72,7 @@ internal class CommandParserTest {
     fun `parse Close path relative with lowercase z`() {
         val closePath = "z"
         assertEquals(
-            expected = listOf(Command.Close),
-            actual = commandParser.parse(closePath)
+            expected = listOf(Command.Close), actual = commandParser.parse(closePath)
         )
     }
 
@@ -102,8 +92,7 @@ internal class CommandParserTest {
             expected = listOf(
                 Command.HorizontalLineTo(x = 20.05f, isAbsolute = true),
                 Command.HorizontalLineTo(x = 20.05f, isAbsolute = true),
-            ),
-            actual = commandParser.parse(horizontalLineToPath)
+            ), actual = commandParser.parse(horizontalLineToPath)
         )
     }
 
@@ -132,8 +121,7 @@ internal class CommandParserTest {
             expected = listOf(
                 Command.VerticalLineTo(y = 20.05f, isAbsolute = true),
                 Command.VerticalLineTo(y = 20.05f, isAbsolute = true),
-            ),
-            actual = commandParser.parse(horizontalLineToPath)
+            ), actual = commandParser.parse(horizontalLineToPath)
         )
     }
 
@@ -143,14 +131,9 @@ internal class CommandParserTest {
         assertEquals(
             expected = listOf(
                 Command.ReflectiveCurveTo(
-                    x1 = 4.47f,
-                    y1 = 10f,
-                    x2 = 9.99f,
-                    y2 = 10f,
-                    isAbsolute = false
+                    x1 = 4.47f, y1 = 10f, x2 = 9.99f, y2 = 10f, isAbsolute = false
                 )
-            ),
-            actual = commandParser.parse(horizontalLineToPath)
+            ), actual = commandParser.parse(horizontalLineToPath)
         )
     }
 
@@ -187,6 +170,44 @@ internal class CommandParserTest {
         assertEquals(
             expected = listOf(Command.ReflectiveQuadraticBezierTo(1000f, 300f, isAbsolute = false)),
             actual = commandParser.parse(quadraticBezierToPath)
+        )
+    }
+
+    @Test
+    fun `parse arc path`() {
+        val arcPath = "A25,25 -30 0,1 50,-25"
+        assertEquals(
+            expected = listOf(
+                Command.ArcTo(
+                    horizontalEllipseRadius = 25f,
+                    verticalEllipseRadius = 25f,
+                    theta = -30f,
+                    isMoreThanHalf = false,
+                    isPositiveArc = true,
+                    x1 = 50f,
+                    y1 = -25f,
+                    isAbsolute = true,
+                )
+            ), actual = commandParser.parse(arcPath)
+        )
+    }
+
+    @Test
+    fun `parse relative arc path`() {
+        val arcPath = "a25,25 -30 0,1 50,-25"
+        assertEquals(
+            expected = listOf(
+                Command.ArcTo(
+                    horizontalEllipseRadius = 25f,
+                    verticalEllipseRadius = 25f,
+                    theta = -30f,
+                    isMoreThanHalf = false,
+                    isPositiveArc = true,
+                    x1 = 50f,
+                    y1 = -25f,
+                    isAbsolute = false,
+                )
+            ), actual = commandParser.parse(arcPath)
         )
     }
 }

@@ -12,6 +12,7 @@ internal class CommandParser {
         val isAbsolute = command.isUpperCase()
         val eventString = value.drop(1)
         return when (command.uppercase()) {
+            "A" -> createArcTo(eventString, isAbsolute = isAbsolute)
             "C" -> createCurvesTo(eventString, isAbsolute = isAbsolute)
             "H" -> createHorizontalLinesTo(eventString, isAbsolute = isAbsolute)
             "L" -> createLinesTo(eventString, isAbsolute = isAbsolute)
@@ -23,6 +24,24 @@ internal class CommandParser {
             "Z" -> listOf(Command.Close)
             else -> error("No command found for $value")
         }
+    }
+
+    private fun createArcTo(eventString: String, isAbsolute: Boolean): List<Command> {
+        return eventString.prepare()
+            .validate(count = 7, name = "ArcTo")
+            .windowed(size = 7, step = 7, partialWindows = false)
+            .map {
+                Command.ArcTo(
+                    horizontalEllipseRadius = it[0],
+                    verticalEllipseRadius = it[1],
+                    theta = it[2],
+                    isMoreThanHalf = it[3] == 1f,
+                    isPositiveArc = it[4] == 1f,
+                    x1 = it[5],
+                    y1 = it[6],
+                    isAbsolute = isAbsolute
+                )
+            }
     }
 
     private fun createReflectiveQuadraticBezier(eventString: String, isAbsolute: Boolean): List<Command> {

@@ -5,13 +5,29 @@ package commands
  */
 internal sealed interface Command {
     companion object {
-        val validCommands: CharArray = charArrayOf('C', 'H', 'L', 'M', 'Q', 'S', 'T', 'V', 'Z')
+        val validCommands: CharArray = charArrayOf('A', 'C', 'H', 'L', 'M', 'Q', 'S', 'T', 'V', 'Z')
             .flatMap { listOf(it, it.lowercaseChar()) }
             .toCharArray()
     }
 
     val isAbsolute: Boolean
     fun values(): List<Float>
+
+    /**
+     * Arc to command indicated by a/A
+     */
+    data class ArcTo(
+        val horizontalEllipseRadius: Float,
+        val verticalEllipseRadius: Float,
+        val theta: Float,
+        val isMoreThanHalf: Boolean,
+        val isPositiveArc: Boolean,
+        val x1: Float,
+        val y1: Float,
+        override val isAbsolute: Boolean
+    ) : Command {
+        override fun values(): List<Float> = error("Complex data structure can't return float values.")
+    }
 
     /**
      * Close command indicated by z/Z

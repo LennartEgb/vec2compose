@@ -58,6 +58,7 @@ internal class ImageVectorParser(private val indentation: CharSequence = DEFAULT
             is Command.VerticalLineTo -> if (isAbsolute) "verticalLineTo" else "verticalLineToRelative"
             is Command.QuadraticBezierTo -> if (isAbsolute) "quadTo" else "quadToRelative"
             is Command.ReflectiveQuadraticBezierTo -> if (isAbsolute) "reflectiveQuadTo" else "reflectiveQuadToRelative"
+            is Command.ArcTo -> if (isAbsolute) "arcTo" else "arcToRelative"
         }
 }
 
