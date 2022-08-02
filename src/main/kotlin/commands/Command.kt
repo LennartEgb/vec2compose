@@ -77,4 +77,17 @@ internal sealed interface Command {
     data class VerticalLineTo(val y: Float, override val isAbsolute: Boolean) : Command {
         override fun values(): List<Float> = listOf(y)
     }
+
+    /**
+     * Quadratic bezier to command indicated by q/Q
+     */
+    data class QuadraticBezierTo(
+        val x1: Float,
+        val y1: Float,
+        val x2: Float,
+        val y2: Float,
+        override val isAbsolute: Boolean
+    ) : Command {
+        override fun values(): List<Float> = listOf(x1, y1, x2, y2)
+    }
 }

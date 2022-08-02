@@ -1,7 +1,5 @@
 package commands
 
-import commands.Command
-import commands.CommandParser
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -153,6 +151,24 @@ internal class CommandParserKtTest {
                 )
             ),
             actual = commandParser.parse(horizontalLineToPath)
+        )
+    }
+
+    @Test
+    fun `parse quadratic bezier path`() {
+        val quadraticBezierToPath = "Q400,50 600,300"
+        assertEquals(
+            expected = listOf(Command.QuadraticBezierTo(400f, 50f, 600f, 300f, isAbsolute = true)),
+            actual = commandParser.parse(quadraticBezierToPath)
+        )
+    }
+
+    @Test
+    fun `parse relative quadratic bezier path`() {
+        val quadraticBezierToPath = "q400,50 600,300"
+        assertEquals(
+            expected = listOf(Command.QuadraticBezierTo(400f, 50f, 600f, 300f, isAbsolute = false)),
+            actual = commandParser.parse(quadraticBezierToPath)
         )
     }
 }
