@@ -15,12 +15,11 @@ $ ./gradlew clean jar packageDistribution
 A `dist` folder is created with the script and the `jar`.
 
 ## Usage
-There are two options to create the `ImageVector`. The first option is to create a Kotlin file
-directly
+There are two options to create the `ImageVector`. The first option is to create a Kotlin file.
 ```bash
 $ ./vec2compose -i ic_done.xml -o DoneIcon.kt
 ```
-And the second option is to print the `ImageVector` directly to the console.
+The second option is to print the `ImageVector` to the console.
 ```bash
 $ ./vec2compose -i ic_done.xml
 ```
@@ -54,4 +53,4 @@ ImageVector.Builder(
 ```
 
 ## Motivation
-This is a small project to play around with CLI tools and support the Jetpack Compose development to move further away from XML files in Android projects. A custom icon set can be generated as the [material icon set](https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/material/material-icons-core/src/commonMain/kotlin/androidx/compose/material/icons/Icons.kt;l=65?q=Icons&sq=) without adding XML resources.
+This is a project to play around with CLI tools and support the Jetpack Compose development to move further away from XML files in Android projects. A custom icon set can be generated as the [material icon set](https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/material/material-icons-core/src/commonMain/kotlin/androidx/compose/material/icons/Icons.kt;l=65?q=Icons&sq=) without adding XML resources.
