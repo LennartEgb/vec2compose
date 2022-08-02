@@ -45,7 +45,7 @@ internal class AndroidVectorParserTest {
                             Command.ReflectiveCurveTo(4.47f, 10f, 9.99f, 10f, isAbsolute = false),
                             Command.CurveTo(17.52f, 22f, 22f, 17.52f, 22f, 12f, isAbsolute = true),
                             Command.ReflectiveCurveTo(17.52f, 2f, 11.99f, 2f, isAbsolute = true),
-                            Command.Close(isAbsolute = false)
+                            Command.Close
                         )
                     )
                 )

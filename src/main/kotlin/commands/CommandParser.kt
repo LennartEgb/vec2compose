@@ -12,7 +12,7 @@ internal class CommandParser {
         val isAbsolute = command.isUpperCase()
         val eventString = value.drop(1)
         return when (command.uppercase()) {
-            "Z" -> listOf(Command.Close(isAbsolute = isAbsolute))
+            "Z" -> listOf(Command.Close)
             "M" -> createMoves(eventString, isAbsolute = isAbsolute)
             "L" -> createLinesTo(eventString, isAbsolute = isAbsolute)
             "C" -> createCurvesTo(eventString, isAbsolute = isAbsolute)

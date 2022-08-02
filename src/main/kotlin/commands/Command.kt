@@ -5,7 +5,7 @@ package commands
  */
 internal sealed interface Command {
     companion object {
-        val validCommands: CharArray = charArrayOf('C', 'H', 'L', 'M', 'S', 'V', 'Z')
+        val validCommands: CharArray = charArrayOf('C', 'H', 'L', 'M', 'Q', 'S', 'T', 'V', 'Z')
             .flatMap { listOf(it, it.lowercaseChar()) }
             .toCharArray()
     }
@@ -13,23 +13,32 @@ internal sealed interface Command {
     val isAbsolute: Boolean
     fun values(): List<Float>
 
-    // Z
-    data class Close(override val isAbsolute: Boolean) : Command {
+    /**
+     * Close command indicated by z/Z
+     */
+    object Close : Command {
+        override val isAbsolute: Boolean = true
         override fun values(): List<Float> = emptyList()
 
     }
 
-    // M
+    /**
+     * Move to command indicated by m/M.
+     */
     data class MoveTo(val x: Float, val y: Float, override val isAbsolute: Boolean) : Command {
         override fun values(): List<Float> = listOf(x, y)
     }
 
-    // L
+    /**
+     * Line to command indicated by l/L
+     */
     data class LineTo(val x: Float, val y: Float, override val isAbsolute: Boolean) : Command {
         override fun values(): List<Float> = listOf(x, y)
     }
 
-    // S
+    /**
+     * Reflective curve to command indicated by s/S
+     */
     data class ReflectiveCurveTo(
         val x1: Float,
         val y1: Float,
@@ -40,7 +49,9 @@ internal sealed interface Command {
         override fun values(): List<Float> = listOf(x1, y1, x2, y2)
     }
 
-    // C
+    /**
+     * Curve to command indicated by c/C
+     */
     data class CurveTo(
         val x1: Float,
         val y1: Float,
@@ -53,12 +64,16 @@ internal sealed interface Command {
         override fun values(): List<Float> = listOf(x1, y1, x2, y2, x3, y3)
     }
 
-    // H
+    /**
+     * Horizontal line to command indicated by h/H
+     */
     data class HorizontalLineTo(val x: Float, override val isAbsolute: Boolean) : Command {
         override fun values(): List<Float> = listOf(x)
     }
 
-    // V
+    /**
+     * Vertical line to command indicated by v/V
+     */
     data class VerticalLineTo(val y: Float, override val isAbsolute: Boolean) : Command {
         override fun values(): List<Float> = listOf(y)
     }

@@ -74,7 +74,7 @@ internal class CommandParserKtTest {
     fun `parse Close path`() {
         val closePath = "Z"
         assertEquals(
-            expected = listOf(Command.Close(isAbsolute = true)),
+            expected = listOf(Command.Close),
             actual = commandParser.parse(closePath)
         )
     }
@@ -83,7 +83,7 @@ internal class CommandParserKtTest {
     fun `parse Close path relative with lowercase z`() {
         val closePath = "z"
         assertEquals(
-            expected = listOf(Command.Close(isAbsolute = false)),
+            expected = listOf(Command.Close),
             actual = commandParser.parse(closePath)
         )
     }

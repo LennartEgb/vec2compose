@@ -22,7 +22,7 @@ internal class ImageVectorParserTest {
                         Command.MoveTo(x = 1f, y = 2f, isAbsolute = true),
                         Command.LineTo(x = 2f, y = 2f, isAbsolute = true),
                         Command.LineTo(x = 1f, y = 2f, isAbsolute = false),
-                        Command.Close(isAbsolute = true)
+                        Command.Close
                     )
                 )
             ),
