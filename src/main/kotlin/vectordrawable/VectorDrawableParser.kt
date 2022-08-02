@@ -1,7 +1,7 @@
 package vectordrawable
 
-import models.VectorSet
 import commands.PathParser
+import models.VectorSet
 
 private typealias DpString = String
 
@@ -21,7 +21,12 @@ internal class VectorDrawableParser(
             height = heightInDp.toIntDp(),
             viewportWidth = viewportWidth,
             viewportHeight = viewportHeight,
-            paths = path.map { VectorSet.Path(pathParser.parse(it.pathData)) }
+            paths = path.map {
+                VectorSet.Path(
+                    fillType = VectorSet.Path.FillType.parse(it.fillType),
+                    commands = pathParser.parse(it.pathData)
+                )
+            }
         )
     }
 
@@ -32,4 +37,13 @@ internal class VectorDrawableParser(
             ?: error("Malformed dp string: $this")
         error("Could not transform dp string to int: $this")
     }
+
+    private fun VectorSet.Path.FillType.Companion.parse(fillType: String): VectorSet.Path.FillType {
+        return when (fillType) {
+            "evenOdd" -> VectorSet.Path.FillType.EvenOdd
+            "nonZero" -> VectorSet.Path.FillType.NonZero
+            else -> VectorSet.Path.FillType.Default
+        }
+    }
 }
+
