@@ -1,6 +1,6 @@
 package fileparser
 
-import androidvector.XML
+import vectordrawable.XML
 import imagevector.ImageVectorParser
 import svg.SVGParser
 import java.io.File

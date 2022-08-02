@@ -1,5 +1,5 @@
-import androidvector.AndroidVectorParser
-import androidvector.AndroidVectorSerializer
+import vectordrawable.VectorDrawableParser
+import vectordrawable.VectorDrawableSerializer
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
@@ -18,9 +18,9 @@ internal object Injection {
     private val CommandParser = CommandParser()
     private val PathParser = PathParser(commandParser = CommandParser)
 
-    private val AndroidVectorSerializer = AndroidVectorSerializer(objectMapper)
-    private val AndroidVectorParser = AndroidVectorParser(
-        serializer = AndroidVectorSerializer,
+    private val VectorDrawableSerializer = VectorDrawableSerializer(objectMapper)
+    private val VectorDrawableParser = VectorDrawableParser(
+        serializer = VectorDrawableSerializer,
         pathParser = PathParser
     )
 
@@ -31,7 +31,7 @@ internal object Injection {
     val SVGFileParser = SVGFileParser(SVGParser, ImageVectorParser)
 
     val XMLFileParser = XMLFileParser(
-        androidVectorParser = AndroidVectorParser,
+        vectorDrawableParser = VectorDrawableParser,
         imageVectorParser = ImageVectorParser
     )
 }

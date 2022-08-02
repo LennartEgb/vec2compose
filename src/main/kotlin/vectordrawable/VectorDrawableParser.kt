@@ -1,12 +1,12 @@
-package androidvector
+package vectordrawable
 
 import models.VectorSet
 import commands.PathParser
 
 private typealias DpString = String
 
-internal class AndroidVectorParser(
-    private val serializer: AndroidVectorSerializer,
+internal class VectorDrawableParser(
+    private val serializer: VectorDrawableSerializer,
     private val pathParser: PathParser,
 ) {
 
@@ -15,7 +15,7 @@ internal class AndroidVectorParser(
         return androidVector.mapCatching { it.toVectorSet() }
     }
 
-    private fun AndroidVector.toVectorSet(): VectorSet {
+    private fun VectorDrawable.toVectorSet(): VectorSet {
         return VectorSet(
             width = widthInDp.toIntDp(),
             height = heightInDp.toIntDp(),

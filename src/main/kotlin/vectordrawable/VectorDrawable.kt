@@ -1,11 +1,11 @@
-package androidvector
+package vectordrawable
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
 
 @JacksonXmlRootElement(localName = "vector")
-internal data class AndroidVector(
+internal data class VectorDrawable(
     @field:JacksonXmlProperty(localName = "width")
     val widthInDp: String,
     @field:JacksonXmlProperty(localName = "height")

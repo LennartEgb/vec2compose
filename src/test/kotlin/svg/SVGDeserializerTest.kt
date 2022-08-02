@@ -1,6 +1,6 @@
 package svg
 
-import androidvector.XML
+import vectordrawable.XML
 import org.junit.jupiter.api.Test
 import utils.TestObjectMapper
 import kotlin.test.assertEquals

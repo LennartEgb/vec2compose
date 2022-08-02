@@ -1,6 +1,6 @@
 package svg
 
-import androidvector.XML
+import vectordrawable.XML
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import commands.CommandParser

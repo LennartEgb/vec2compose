@@ -1,4 +1,4 @@
-package androidvector
+package vectordrawable
 
 import models.VectorSet
 import org.junit.jupiter.api.Test
@@ -8,15 +8,15 @@ import commands.PathParser
 import utils.TestObjectMapper
 import kotlin.test.assertEquals
 
-internal class AndroidVectorParserTest {
+internal class VectorDrawableParserTest {
 
-    private val parser = AndroidVectorParser(
-        serializer = AndroidVectorSerializer(TestObjectMapper),
+    private val parser = VectorDrawableParser(
+        serializer = VectorDrawableSerializer(TestObjectMapper),
         pathParser = PathParser(CommandParser())
     )
 
     @Test
-    fun `parse valid AndroidVector xml to VectorSet`() {
+    fun `parse valid VectorDrawable xml to VectorSet`() {
         val vector = XML(
             content = """
         <vector xmlns:android="http://schemas.android.com/apk/res/android"

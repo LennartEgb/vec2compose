@@ -1,6 +1,6 @@
 package svg
 
-import androidvector.XML
+import vectordrawable.XML
 import models.VectorSet
 import commands.PathParser
 

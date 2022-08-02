@@ -1,6 +1,6 @@
 package svg
 
-import androidvector.XML
+import vectordrawable.XML
 import com.fasterxml.jackson.databind.ObjectMapper
 
 internal class SVGDeserializer(private val mapper: ObjectMapper) {
