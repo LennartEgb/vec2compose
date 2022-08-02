@@ -1,11 +1,11 @@
 # vec2compose
 
 <p align=center>
-<img width=400 src="https://user-images.githubusercontent.com/26793300/182098686-b0c5d225-5751-496d-88a2-ccaf49e48cc9.png" alt="xml to compose"/>
+<img width=400 src="https://user-images.githubusercontent.com/26793300/182307782-c5173c33-c65d-4a02-a7f0-99c08ffa5a8d.png" alt="vec2compose"/>
 </p>
 
 
-A CLI tool to create `ImageVector` from Android vector XML files.
+A CLI tool to create `ImageVector` from Android vector XML and SVG.
 
 ## Setup
 Currently this is only available after a local gradle build
