@@ -1,5 +1,6 @@
-package parser
+package imagevector
 
+import commands.Command
 import models.VectorSet
 
 internal class ImageVectorParser(private val indentation: CharSequence = DEFAULT_INDENTATION) {

@@ -2,7 +2,7 @@ package svg
 
 import androidvector.XML
 import models.VectorSet
-import parser.PathParser
+import commands.PathParser
 
 internal class SVGParser(
     private val deserializer: SVGDeserializer,

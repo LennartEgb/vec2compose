@@ -1,4 +1,4 @@
-package parser
+package commands
 
 internal class CommandParser {
 

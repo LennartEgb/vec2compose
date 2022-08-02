@@ -1,16 +1,17 @@
-package parser
+package fileparser
 
+import androidvector.AndroidVectorParser
 import androidvector.XML
-import svg.SVGParser
+import imagevector.ImageVectorParser
 import java.io.File
 
-internal class SVGFileParser(
-    private val svgParser: SVGParser,
+internal class XMLFileParser(
+    private val androidVectorParser: AndroidVectorParser,
     private val imageVectorParser: ImageVectorParser,
 ) : FileParser {
     override fun parse(file: File): Result<String> {
         return XML(content = file.readText())
-            .let(svgParser::parse)
+            .let(androidVectorParser::parse)
             .mapCatching { imageVectorParser.parse(name = file.nameWithoutExtension, vectorSet = it) }
     }
 }

@@ -1,4 +1,4 @@
-package parser
+package fileparser
 
 import Injection
 import java.io.File

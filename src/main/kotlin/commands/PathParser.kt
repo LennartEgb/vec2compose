@@ -1,4 +1,4 @@
-package parser
+package commands
 
 internal class PathParser(private val commandParser: CommandParser) {
     private val regex = "[A-z][^A-z]*".toRegex()

@@ -1,4 +1,4 @@
-package parser
+package commands
 
 /**
  * Commands for path data for vector formats found [here](https://www.w3.org/TR/SVG/paths.html#PathData)

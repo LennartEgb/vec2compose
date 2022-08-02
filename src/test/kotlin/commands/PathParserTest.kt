@@ -1,5 +1,8 @@
-package parser
+package commands
 
+import commands.Command
+import commands.CommandParser
+import commands.PathParser
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 

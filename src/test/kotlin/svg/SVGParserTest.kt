@@ -3,8 +3,8 @@ package svg
 import androidvector.XML
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import parser.CommandParser
-import parser.PathParser
+import commands.CommandParser
+import commands.PathParser
 import utils.TestObjectMapper
 
 internal class SVGParserTest {

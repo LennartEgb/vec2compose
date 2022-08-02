@@ -1,4 +1,4 @@
-package parser
+package fileparser
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

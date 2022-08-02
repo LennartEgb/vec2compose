@@ -1,7 +1,7 @@
 package androidvector
 
 import models.VectorSet
-import parser.PathParser
+import commands.PathParser
 
 private typealias DpString = String
 

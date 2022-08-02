@@ -1,6 +1,6 @@
 package models
 
-import parser.Command
+import commands.Command
 
 internal data class VectorSet(
     val width: Int,

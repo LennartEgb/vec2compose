@@ -1,5 +1,6 @@
-package parser
+package imagevector
 
+import commands.Command
 import models.VectorSet
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals

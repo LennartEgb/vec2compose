@@ -2,9 +2,9 @@ package androidvector
 
 import models.VectorSet
 import org.junit.jupiter.api.Test
-import parser.Command
-import parser.CommandParser
-import parser.PathParser
+import commands.Command
+import commands.CommandParser
+import commands.PathParser
 import utils.TestObjectMapper
 import kotlin.test.assertEquals
 

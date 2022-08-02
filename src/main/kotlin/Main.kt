@@ -1,5 +1,5 @@
 import output.OutputStrategyFactory
-import parser.FileParserFactory
+import fileparser.FileParserFactory
 import java.io.File
 
 fun main(args: Array<String>) {

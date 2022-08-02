@@ -1,4 +1,4 @@
-package parser
+package fileparser
 
 import Injection
 import org.junit.jupiter.api.Test
@@ -6,20 +6,20 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import utils.FileLoader
 import kotlin.test.assertContains
 
-internal class XMLFileParserTest {
+class SVGFileParserTest {
 
     private val fileLoader = FileLoader()
-    private val parser = Injection.XMLFileParser
+    private val parser = Injection.SVGFileParser
 
     @Test
-    fun `parse successfully ic_account_circle_24`() {
-        val file = fileLoader.load("xml/ic_account_circle_24.xml")
+    fun `parse successfully search_24 svg`() {
+        val file = fileLoader.load("svg/search_24.svg")
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
-                    name = "ic_account_circle_24",
+                    name = "search_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24f,
@@ -30,14 +30,14 @@ internal class XMLFileParserTest {
     }
 
     @Test
-    fun `parse successfully ic_check_circle_24`() {
-        val file = fileLoader.load("xml/ic_check_circle_24.xml")
+    fun `parse successfully account_circle svg`() {
+        val file = fileLoader.load("svg/account_circle_24.svg")
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
-                    name = "ic_check_circle_24",
+                    name = "account_circle_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24f,
@@ -48,14 +48,14 @@ internal class XMLFileParserTest {
     }
 
     @Test
-    fun `parse successfully ic_delete_24`() {
-        val file = fileLoader.load("xml/ic_delete_24.xml")
+    fun `parse successfully check_circle svg`() {
+        val file = fileLoader.load("svg/check_circle_24.svg")
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
-                    name = "ic_delete_24",
+                    name = "check_circle_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24f,
@@ -66,14 +66,14 @@ internal class XMLFileParserTest {
     }
 
     @Test
-    fun `parse successfully ic_done_24`() {
-        val file = fileLoader.load("xml/ic_done_24.xml")
+    fun `parse successfully delete svg`() {
+        val file = fileLoader.load("svg/delete_24.svg")
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
-                    name = "ic_done_24",
+                    name = "delete_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24f,
@@ -84,14 +84,14 @@ internal class XMLFileParserTest {
     }
 
     @Test
-    fun `parse successfully ic_home_24`() {
-        val file = fileLoader.load("xml/ic_home_24.xml")
+    fun `parse successfully done svg`() {
+        val file = fileLoader.load("svg/done_24.svg")
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
-                    name = "ic_home_24",
+                    name = "done_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24f,
@@ -102,14 +102,14 @@ internal class XMLFileParserTest {
     }
 
     @Test
-    fun `parse successfully ic_info_24`() {
-        val file = fileLoader.load("xml/ic_info_24.xml")
+    fun `parse successfully home svg`() {
+        val file = fileLoader.load("svg/home_24.svg")
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
-                    name = "ic_info_24",
+                    name = "home_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24f,
@@ -120,14 +120,14 @@ internal class XMLFileParserTest {
     }
 
     @Test
-    fun `parse successfully ic_language_24`() {
-        val file = fileLoader.load("xml/ic_language_24.xml")
+    fun `parse successfully info svg`() {
+        val file = fileLoader.load("svg/info_24.svg")
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
-                    name = "ic_language_24",
+                    name = "info_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24f,
@@ -138,32 +138,14 @@ internal class XMLFileParserTest {
     }
 
     @Test
-    fun `parse successfully ic_search_24`() {
-        val file = fileLoader.load("xml/ic_search_24.xml")
+    fun `parse successfully settings svg`() {
+        val file = fileLoader.load("svg/settings_24.svg")
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
-                    name = "ic_search_24",
-                    defaultWidth = 24.dp,
-                    defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
-                """.trimIndent()
-            )
-        }
-    }
-
-    @Test
-    fun `parse successfully ic_settings_24`() {
-        val file = fileLoader.load("xml/ic_settings_24.xml")
-        assertDoesNotThrow {
-            val content = parser.parse(file).getOrThrow()
-            assertContains(
-                content, """
-                ImageVector.Builder(
-                    name = "ic_settings_24",
+                    name = "settings_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24f,

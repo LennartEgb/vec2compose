@@ -5,7 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import parser.*
+import commands.CommandParser
+import commands.PathParser
+import imagevector.ImageVectorParser
+import fileparser.*
 import svg.SVGDeserializer
 import svg.SVGParser
 
