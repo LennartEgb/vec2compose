@@ -10,7 +10,7 @@ internal data class VectorSet(
     val paths: List<Path>
 ) {
     internal data class Path(
-        val fillType: FillType = FillType.Default,
+        val fillType: FillType,
         val commands: List<Command>,
     ) {
         enum class FillType {
