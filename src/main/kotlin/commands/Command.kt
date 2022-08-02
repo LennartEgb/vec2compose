@@ -5,22 +5,9 @@ package commands
  */
 internal sealed interface Command {
     companion object {
-        val chars = listOf(
-            'C',
-            'c',
-            'H',
-            'h',
-            'L',
-            'l',
-            'M',
-            'm',
-            'S',
-            's',
-            'V',
-            'v',
-            'Z',
-            'z',
-        )
+        val validCommands: CharArray = charArrayOf('C', 'H', 'L', 'M', 'S', 'V', 'Z')
+            .flatMap { listOf(it, it.lowercaseChar()) }
+            .toCharArray()
     }
 
     val isAbsolute: Boolean

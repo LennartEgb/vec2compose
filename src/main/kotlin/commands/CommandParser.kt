@@ -6,7 +6,7 @@ internal class CommandParser {
 
     fun parse(value: String): List<Command> {
         val command = value.first()
-        require(command in Command.chars) {
+        require(command in Command.validCommands) {
             "First character must be a command identifier but was $command. Command was: $value"
         }
         val isAbsolute = command.isUpperCase()
