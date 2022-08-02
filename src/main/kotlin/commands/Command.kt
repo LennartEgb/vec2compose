@@ -37,19 +37,6 @@ internal sealed interface Command {
     }
 
     /**
-     * Reflective curve to command indicated by s/S
-     */
-    data class ReflectiveCurveTo(
-        val x1: Float,
-        val y1: Float,
-        val x2: Float,
-        val y2: Float,
-        override val isAbsolute: Boolean
-    ) : Command {
-        override fun values(): List<Float> = listOf(x1, y1, x2, y2)
-    }
-
-    /**
      * Curve to command indicated by c/C
      */
     data class CurveTo(
@@ -62,6 +49,19 @@ internal sealed interface Command {
         override val isAbsolute: Boolean,
     ) : Command {
         override fun values(): List<Float> = listOf(x1, y1, x2, y2, x3, y3)
+    }
+
+    /**
+     * Reflective curve to command indicated by s/S
+     */
+    data class ReflectiveCurveTo(
+        val x1: Float,
+        val y1: Float,
+        val x2: Float,
+        val y2: Float,
+        override val isAbsolute: Boolean
+    ) : Command {
+        override fun values(): List<Float> = listOf(x1, y1, x2, y2)
     }
 
     /**
@@ -89,5 +89,16 @@ internal sealed interface Command {
         override val isAbsolute: Boolean
     ) : Command {
         override fun values(): List<Float> = listOf(x1, y1, x2, y2)
+    }
+
+    /**
+     * Reflective quadratic bezier to command indicated by t/T
+     */
+    data class ReflectiveQuadraticBezierTo(
+        val x: Float,
+        val y: Float,
+        override val isAbsolute: Boolean,
+    ) : Command {
+        override fun values(): List<Float> = listOf(x, y)
     }
 }

@@ -18,10 +18,18 @@ internal class CommandParser {
             "M" -> createMoves(eventString, isAbsolute = isAbsolute)
             "Q" -> createQuadraticBezier(eventString, isAbsolute = isAbsolute)
             "S" -> createReflectiveCurvesTo(eventString, isAbsolute = isAbsolute)
+            "T" -> createReflectiveQuadraticBezier(eventString, isAbsolute = isAbsolute)
             "V" -> createVerticalLinesTo(eventString, isAbsolute = isAbsolute)
             "Z" -> listOf(Command.Close)
             else -> error("No command found for $value")
         }
+    }
+
+    private fun createReflectiveQuadraticBezier(eventString: String, isAbsolute: Boolean): List<Command> {
+        return eventString.prepare()
+            .validate(count = 2, name = "Reflective quadratic bezier")
+            .windowed(size = 2, step = 2, partialWindows = false)
+            .map { Command.ReflectiveQuadraticBezierTo(x = it[0], it[1], isAbsolute = isAbsolute) }
     }
 
     private fun createQuadraticBezier(eventString: String, isAbsolute: Boolean): List<Command> {

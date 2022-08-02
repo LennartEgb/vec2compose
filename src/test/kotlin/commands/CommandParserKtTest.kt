@@ -171,4 +171,22 @@ internal class CommandParserKtTest {
             actual = commandParser.parse(quadraticBezierToPath)
         )
     }
+
+    @Test
+    fun `parse reflective quadratic bezier path`() {
+        val quadraticBezierToPath = "T1000,300"
+        assertEquals(
+            expected = listOf(Command.ReflectiveQuadraticBezierTo(1000f, 300f, isAbsolute = true)),
+            actual = commandParser.parse(quadraticBezierToPath)
+        )
+    }
+
+    @Test
+    fun `parse relative reflective quadratic bezier path`() {
+        val quadraticBezierToPath = "t1000,300"
+        assertEquals(
+            expected = listOf(Command.ReflectiveQuadraticBezierTo(1000f, 300f, isAbsolute = false)),
+            actual = commandParser.parse(quadraticBezierToPath)
+        )
+    }
 }
