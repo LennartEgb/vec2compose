@@ -12,15 +12,31 @@ internal class CommandParser {
         val isAbsolute = command.isUpperCase()
         val eventString = value.drop(1)
         return when (command.uppercase()) {
-            "Z" -> listOf(Command.Close)
-            "M" -> createMoves(eventString, isAbsolute = isAbsolute)
-            "L" -> createLinesTo(eventString, isAbsolute = isAbsolute)
             "C" -> createCurvesTo(eventString, isAbsolute = isAbsolute)
-            "S" -> createReflectiveCurvesTo(eventString, isAbsolute = isAbsolute)
             "H" -> createHorizontalLinesTo(eventString, isAbsolute = isAbsolute)
+            "L" -> createLinesTo(eventString, isAbsolute = isAbsolute)
+            "M" -> createMoves(eventString, isAbsolute = isAbsolute)
+            "Q" -> createQuadraticBezier(eventString, isAbsolute = isAbsolute)
+            "S" -> createReflectiveCurvesTo(eventString, isAbsolute = isAbsolute)
+            "T" -> createReflectiveQuadraticBezier(eventString, isAbsolute = isAbsolute)
             "V" -> createVerticalLinesTo(eventString, isAbsolute = isAbsolute)
+            "Z" -> listOf(Command.Close)
             else -> error("No command found for $value")
         }
+    }
+
+    private fun createReflectiveQuadraticBezier(eventString: String, isAbsolute: Boolean): List<Command> {
+        return eventString.prepare()
+            .validate(count = 2, name = "Reflective quadratic bezier")
+            .windowed(size = 2, step = 2, partialWindows = false)
+            .map { Command.ReflectiveQuadraticBezierTo(x = it[0], it[1], isAbsolute = isAbsolute) }
+    }
+
+    private fun createQuadraticBezier(eventString: String, isAbsolute: Boolean): List<Command> {
+        return eventString.prepare()
+            .validate(count = 4, "Quadratic bezier")
+            .windowed(size = 4, step = 4, partialWindows = false)
+            .map { Command.QuadraticBezierTo(x1 = it[0], y1 = it[1], x2 = it[2], y2 = it[3], isAbsolute = isAbsolute) }
     }
 
     private fun createHorizontalLinesTo(eventString: String, isAbsolute: Boolean): List<Command> {
