@@ -7,14 +7,8 @@ internal data class VectorSet(
     val height: Int,
     val viewportWidth: Int,
     val viewportHeight: Int,
-    val groups: List<Group>,
     val paths: List<Path>
 ) {
-    data class Group(
-        val name: String = "",
-        val groups: List<Group> = emptyList(),
-        val paths: List<Path>
-    )
 
     data class Path(
         val fillType: FillType,
