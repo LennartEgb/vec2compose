@@ -94,4 +94,118 @@ internal class VectorDrawableSerializerTest {
         )
         assertNull(serializer.serialize(vector).getOrNull())
     }
+
+    @Test
+    fun `serialize XML with group`() {
+        val vector = XML(
+            content = """
+            <vector xmlns:android="http://schemas.android.com/apk/res/android"
+                android:height="24dp"
+                android:width="24dp"
+                android:viewportWidth="24"
+                android:viewportHeight="24">
+               <group
+                     android:name="rotationGroup"
+                     android:pivotX="10.0"
+                     android:pivotY="10.0"
+                     android:rotation="15.0" >
+                  <path
+                    android:name="vect"
+                    android:fillColor="#FF000000"
+                    android:pathData="M15.67,4H14V2h-4v2H8.33C7.6,4 7,4.6 7,5.33V9h4.93L13,7v2h4V5.33C17,4.6 16.4,4 15.67,4z"
+                    android:fillAlpha=".3"/>
+                  <path
+                    android:name="draw"
+                    android:fillColor="#FF000000"
+                    android:pathData="M13,12.5h2L11,20v-5.5H9L11.93,9H7v11.67C7,21.4 7.6,22 8.33,22h7.33c0.74,0 1.34,-0.6 1.34,-1.33V9h-4v3.5z"/>
+               </group>
+            </vector>
+        """.trimIndent()
+        )
+        assertEquals(
+            expected = VectorDrawable(
+                widthInDp = "24dp",
+                heightInDp = "24dp",
+                viewportWidth = 24,
+                viewportHeight = 24,
+                tint = null,
+                path = emptyList(),
+                group = listOf(
+                    VectorDrawable.Group(
+                        name = "rotationGroup",
+                        pivotX = 10.0f,
+                        pivotY = 10.0f,
+                        rotation = 15.0f,
+                        path = listOf(
+                            VectorDrawable.Path(
+                                name = "vect",
+                                fillColor = "#FF000000",
+                                pathData = "M15.67,4H14V2h-4v2H8.33C7.6,4 7,4.6 7,5.33V9h4.93L13,7v2h4V5.33C17,4.6 16.4,4 15.67,4z",
+                                fillType = "nonZero",
+                            ),
+                            VectorDrawable.Path(
+                                name = "draw",
+                                fillColor = "#FF000000",
+                                pathData = "M13,12.5h2L11,20v-5.5H9L11.93,9H7v11.67C7,21.4 7.6,22 8.33,22h7.33c0.74,0 1.34,-0.6 1.34,-1.33V9h-4v3.5z",
+                                fillType = "nonZero",
+                            )
+                        )
+                    )
+                ),
+            ),
+            actual = serializer.serialize(vector).getOrThrow()
+        )
+    }
+
+    @Test
+    fun `serialize XML with more dimensional groups`() {
+        val vector = XML(
+            content = """
+            <vector xmlns:android="http://schemas.android.com/apk/res/android"
+                android:height="24dp"
+                android:width="24dp"
+                android:viewportWidth="24"
+                android:viewportHeight="24">
+               <group android:name="parent">
+                  <group android:name="parent.first">
+                    <path android:pathData="M15.67,4" />
+                  </group>
+                  <group android:name="parent.second">
+                    <path android:pathData="M13,12.5"/>
+                  </group>
+               </group>
+            </vector>
+        """.trimIndent()
+        )
+        assertEquals(
+            expected = VectorDrawable(
+                widthInDp = "24dp",
+                heightInDp = "24dp",
+                viewportWidth = 24,
+                viewportHeight = 24,
+                tint = null,
+                path = emptyList(),
+                group = listOf(
+                    VectorDrawable.Group(
+                        name = "parent",
+                        group = listOf(
+                            VectorDrawable.Group(
+                                name = "parent.first",
+                                path = listOf(
+                                    VectorDrawable.Path(pathData = "M15.67,4"),
+                                )
+                            ),
+                            VectorDrawable.Group(
+                                name = "parent.second",
+                                path = listOf(
+                                    VectorDrawable.Path(pathData = "M13,12.5")
+                                )
+                            )
+                        ),
+                    )
+                ),
+            ),
+            actual = serializer.serialize(vector).getOrThrow()
+        )
+    }
 }
