@@ -21,12 +21,23 @@ internal class VectorDrawableParser(
             height = heightInDp.toIntDp(),
             viewportWidth = viewportWidth,
             viewportHeight = viewportHeight,
-            paths = path.map {
-                VectorSet.Path(
-                    fillType = VectorSet.Path.FillType.parse(it.fillType),
-                    commands = pathParser.parse(it.pathData)
-                )
-            }
+            paths = path.map { it.toVectorPath() },
+            groups = group.map { it.toVectorGroup() }
+        )
+    }
+
+    private fun VectorDrawable.Group.toVectorGroup(): VectorSet.Group {
+        return VectorSet.Group(
+            name = name,
+            groups = group.map { it.toVectorGroup() },
+            paths = path.map { it.toVectorPath() },
+        )
+    }
+
+    private fun VectorDrawable.Path.toVectorPath(): VectorSet.Path {
+        return VectorSet.Path(
+            fillType = VectorSet.Path.FillType.parse(fillType),
+            commands = pathParser.parse(pathData)
         )
     }
 

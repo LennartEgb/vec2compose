@@ -27,6 +27,7 @@ internal class ImageVectorParserTest {
                     )
                 )
             ),
+            groups = emptyList()
         )
 
         val expected = """
@@ -77,6 +78,7 @@ internal class ImageVectorParserTest {
                     )
                 )
             ),
+            groups = emptyList(),
         )
 
         val expected = """
