@@ -23,7 +23,7 @@ internal data class VectorDrawable(
 ) {
     data class Group(
         @field:JacksonXmlProperty(localName = "name")
-        val name: String = "",
+        val name: String? = null,
         @field:JacksonXmlProperty(localName = "pivotX")
         val pivotX: Float? = null,
         @field:JacksonXmlProperty(localName = "pivotY")

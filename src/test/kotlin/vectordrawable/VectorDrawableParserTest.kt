@@ -49,7 +49,8 @@ internal class VectorDrawableParserTest {
                             Command.Close
                         )
                     )
-                )
+                ),
+                groups = emptyList(),
             ),
             actual = parser.parse(vector).getOrThrow(),
         )
@@ -90,7 +91,8 @@ internal class VectorDrawableParserTest {
                             Command.Close
                         )
                     )
-                )
+                ),
+                groups = emptyList(),
             ),
             actual = parser.parse(vector).getOrThrow(),
         )
