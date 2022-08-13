@@ -21,7 +21,7 @@ data class SVG(
 ) {
     data class Group(
         @field:JacksonXmlProperty(localName = "id")
-        val name: String = "",
+        val name: String? = null,
         @field:JacksonXmlElementWrapper(useWrapping = false)
         val g: List<Group> = emptyList(),
         @field:JacksonXmlElementWrapper(useWrapping = false)

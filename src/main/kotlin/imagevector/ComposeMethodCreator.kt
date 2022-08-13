@@ -15,28 +15,47 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         append(")")
     }
 
-    fun parsePath(path: VectorSet.Path): String = buildString {
-        append(".path(").appendLine()
-        indentAppend("fill = SolidColor(Color.Black),").appendLine()
-        indentAppend("fillAlpha = 1f,").appendLine()
-        indentAppend("stroke = null,").appendLine()
-        indentAppend("strokeAlpha = 1f,").appendLine()
-        indentAppend("strokeLineWidth = 1f,").appendLine()
-        indentAppend("strokeLineCap = StrokeCap.Butt,").appendLine()
-        indentAppend("strokeLineJoin = StrokeJoin.Bevel,").appendLine()
-        indentAppend("strokeLineMiter = 1f,").appendLine()
-        indentAppend("pathFillType = ${path.fillType.composeName}").appendLine()
+    fun parsePath(path: VectorSet.Path, forBuilder: Boolean = true): String = buildString {
+        if (forBuilder) append(".")
+        append("path(").appendLine()
+        indent().append("fill = SolidColor(Color.Black),").appendLine()
+        indent().append("fillAlpha = 1f,").appendLine()
+        indent().append("stroke = null,").appendLine()
+        indent().append("strokeAlpha = 1f,").appendLine()
+        indent().append("strokeLineWidth = 1f,").appendLine()
+        indent().append("strokeLineCap = StrokeCap.Butt,").appendLine()
+        indent().append("strokeLineJoin = StrokeJoin.Bevel,").appendLine()
+        indent().append("strokeLineMiter = 1f,").appendLine()
+        indent().append("pathFillType = ${path.fillType.composeName}").appendLine()
         append(") {").appendLine()
-        path.commands.forEach { command ->
-            indentAppend(command.toComposeMethod()).appendLine()
-        }
+        path.commands.map { it.toComposeMethod() }
+            .forEach { indent().append(it).appendLine()}
+        append("}")
+    }.removePrefix(indentation)
+
+    fun parseGroup(group: VectorSet.Group, forBuilder: Boolean = true): String = buildString {
+        if (forBuilder) append(".")
+        append("group(").appendLine()
+        group.name?.also { indent().append("name = $it").appendLine() }
+        indent().append("rotate = 0f,").appendLine()
+        indent().append("pivotX = 0f,").appendLine()
+        indent().append("pivotY = 0f,").appendLine()
+        indent().append("scaleX = 1f,").appendLine()
+        indent().append("scaleY = 1f,").appendLine()
+        indent().append("translationX = 0f,").appendLine()
+        indent().append("translationY = 0f,").appendLine()
+        indent().append("clipPathData = emptyList()").appendLine()
+        append(") {").appendLine()
+        group.groups.joinToString(separator = "\n") { parseGroup(it, forBuilder = false) }.setupIndent().let(::append).appendLine()
+        group.paths.joinToString(separator = "\n") { parsePath(it, forBuilder = false) }.setupIndent().let(::append).appendLine()
         append("}")
     }
 
     private fun Command.toComposeMethod(): String {
-        return method + (values().takeIf { it.isNotEmpty() }
+        val function = values().takeIf { it.isNotEmpty() }
             ?.joinToString(separator = "f, ", prefix = "(", postfix = "f)")
-            ?: "()")
+            ?: "()"
+        return method + function
     }
 
     private val Command.method: String
@@ -53,8 +72,8 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
             is Command.ArcTo -> if (isAbsolute) "arcTo" else "arcToRelative"
         }
 
+    private fun String.setupIndent() = prependIndent(indent = indentation.toString())
     private fun StringBuilder.indent() = append(indentation)
-    private fun StringBuilder.indentAppend(value: String) = indent().append(value)
     private val VectorSet.Path.FillType.composeName: String
         get() = when (this) {
             VectorSet.Path.FillType.NonZero -> "PathFillType.NonZero"
