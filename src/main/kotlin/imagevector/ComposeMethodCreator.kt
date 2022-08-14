@@ -28,8 +28,10 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         indent().append("strokeLineMiter = 1f,").appendLine()
         indent().append("pathFillType = ${path.fillType.composeName}").appendLine()
         append(") {").appendLine()
-        path.commands.map { it.toComposeMethod() }
+
+        path.commands.map(Command::method)
             .forEach { indent().append(it).appendLine() }
+
         append("}")
     }.removePrefix(indentation)
 
@@ -57,7 +59,6 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         append("}")
     }
 
-    private fun Command.toComposeMethod(): String = "$methodName($methodParams)"
     private fun String.setupIndent(): String = prependIndent(indent = indentation.toString())
     private fun StringBuilder.indent(): StringBuilder = append(indentation)
     private val VectorSet.Path.FillType.composeName: String

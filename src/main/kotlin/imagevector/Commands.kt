@@ -2,6 +2,8 @@ package imagevector
 
 import commands.Command
 
+internal val Command.method: String get() = "$methodName($methodParams)"
+
 internal val Command.methodName: String
     get() = when (this) {
         is Command.Close -> "close"
