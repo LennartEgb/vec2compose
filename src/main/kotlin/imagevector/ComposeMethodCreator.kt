@@ -29,7 +29,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         indent().append("pathFillType = ${path.fillType.composeName}").appendLine()
         append(") {").appendLine()
         path.commands.map { it.toComposeMethod() }
-            .forEach { indent().append(it).appendLine()}
+            .forEach { indent().append(it).appendLine() }
         append("}")
     }.removePrefix(indentation)
 
@@ -46,34 +46,20 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         indent().append("translationY = 0f,").appendLine()
         indent().append("clipPathData = emptyList()").appendLine()
         append(") {").appendLine()
-        group.groups.joinToString(separator = "\n") { parseGroup(it, forBuilder = false) }.setupIndent().let(::append).appendLine()
-        group.paths.joinToString(separator = "\n") { parsePath(it, forBuilder = false) }.setupIndent().let(::append).appendLine()
+        group.groups.joinToString(separator = "\n") { parseGroup(it, forBuilder = false) }
+            .setupIndent()
+            .let(::append)
+            .appendLine()
+        group.paths.joinToString(separator = "\n") { parsePath(it, forBuilder = false) }
+            .setupIndent()
+            .let(::append)
+            .appendLine()
         append("}")
     }
 
-    private fun Command.toComposeMethod(): String {
-        val function = values().takeIf { it.isNotEmpty() }
-            ?.joinToString(separator = "f, ", prefix = "(", postfix = "f)")
-            ?: "()"
-        return method + function
-    }
-
-    private val Command.method: String
-        get() = when (this) {
-            is Command.Close -> "close"
-            is Command.CurveTo -> if (isAbsolute) "curveTo" else "curveToRelative"
-            is Command.HorizontalLineTo -> if (isAbsolute) "horizontalLineTo" else "horizontalLineToRelative"
-            is Command.LineTo -> if (isAbsolute) "lineTo" else "lineToRelative"
-            is Command.MoveTo -> if (isAbsolute) "moveTo" else "moveToRelative"
-            is Command.ReflectiveCurveTo -> if (isAbsolute) "reflectiveCurveTo" else "reflectiveCurveToRelative"
-            is Command.VerticalLineTo -> if (isAbsolute) "verticalLineTo" else "verticalLineToRelative"
-            is Command.QuadraticBezierTo -> if (isAbsolute) "quadTo" else "quadToRelative"
-            is Command.ReflectiveQuadraticBezierTo -> if (isAbsolute) "reflectiveQuadTo" else "reflectiveQuadToRelative"
-            is Command.ArcTo -> if (isAbsolute) "arcTo" else "arcToRelative"
-        }
-
-    private fun String.setupIndent() = prependIndent(indent = indentation.toString())
-    private fun StringBuilder.indent() = append(indentation)
+    private fun Command.toComposeMethod(): String = "$methodName($methodParams)"
+    private fun String.setupIndent(): String = prependIndent(indent = indentation.toString())
+    private fun StringBuilder.indent(): StringBuilder = append(indentation)
     private val VectorSet.Path.FillType.composeName: String
         get() = when (this) {
             VectorSet.Path.FillType.NonZero -> "PathFillType.NonZero"
