@@ -26,12 +26,14 @@ internal val Command.methodParams: String
                 "$isPositiveArc, " +
                 "${x1}f, " +
                 "${y1}f"
-        is Command.CurveTo,
-        is Command.HorizontalLineTo,
-        is Command.LineTo,
-        is Command.MoveTo,
-        is Command.QuadraticBezierTo,
-        is Command.ReflectiveCurveTo,
-        is Command.ReflectiveQuadraticBezierTo,
-        is Command.VerticalLineTo -> values().joinToString(separator = "f, ", postfix = "f")
+        is Command.HorizontalLineTo -> "${x}f"
+        is Command.VerticalLineTo -> "${y}f"
+        is Command.CurveTo -> floatParams(x1, y1, x2, y2, x3, y3)
+        is Command.LineTo -> floatParams(x, y)
+        is Command.MoveTo -> floatParams(x, y)
+        is Command.QuadraticBezierTo -> floatParams(x1, y1, x2, y2)
+        is Command.ReflectiveCurveTo -> floatParams(x1, y1, x2, y2)
+        is Command.ReflectiveQuadraticBezierTo -> floatParams(x, y)
     }
+
+private fun floatParams(vararg values: Float): String = values.joinToString("f, ", postfix = "f")

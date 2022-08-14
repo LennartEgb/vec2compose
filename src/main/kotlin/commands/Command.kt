@@ -11,7 +11,6 @@ internal sealed interface Command {
     }
 
     val isAbsolute: Boolean
-    fun values(): List<Float>
 
     /**
      * Arc to command indicated by a/A
@@ -25,32 +24,24 @@ internal sealed interface Command {
         val x1: Float,
         val y1: Float,
         override val isAbsolute: Boolean
-    ) : Command {
-        override fun values(): List<Float> = error("Complex data structure can't return float values.")
-    }
+    ) : Command
 
     /**
      * Close command indicated by z/Z
      */
     object Close : Command {
         override val isAbsolute: Boolean = true
-        override fun values(): List<Float> = emptyList()
-
     }
 
     /**
      * Move to command indicated by m/M.
      */
-    data class MoveTo(val x: Float, val y: Float, override val isAbsolute: Boolean) : Command {
-        override fun values(): List<Float> = listOf(x, y)
-    }
+    data class MoveTo(val x: Float, val y: Float, override val isAbsolute: Boolean) : Command
 
     /**
      * Line to command indicated by l/L
      */
-    data class LineTo(val x: Float, val y: Float, override val isAbsolute: Boolean) : Command {
-        override fun values(): List<Float> = listOf(x, y)
-    }
+    data class LineTo(val x: Float, val y: Float, override val isAbsolute: Boolean) : Command
 
     /**
      * Curve to command indicated by c/C
@@ -63,9 +54,7 @@ internal sealed interface Command {
         val x3: Float,
         val y3: Float,
         override val isAbsolute: Boolean,
-    ) : Command {
-        override fun values(): List<Float> = listOf(x1, y1, x2, y2, x3, y3)
-    }
+    ) : Command
 
     /**
      * Reflective curve to command indicated by s/S
@@ -76,23 +65,17 @@ internal sealed interface Command {
         val x2: Float,
         val y2: Float,
         override val isAbsolute: Boolean
-    ) : Command {
-        override fun values(): List<Float> = listOf(x1, y1, x2, y2)
-    }
+    ) : Command
 
     /**
      * Horizontal line to command indicated by h/H
      */
-    data class HorizontalLineTo(val x: Float, override val isAbsolute: Boolean) : Command {
-        override fun values(): List<Float> = listOf(x)
-    }
+    data class HorizontalLineTo(val x: Float, override val isAbsolute: Boolean) : Command
 
     /**
      * Vertical line to command indicated by v/V
      */
-    data class VerticalLineTo(val y: Float, override val isAbsolute: Boolean) : Command {
-        override fun values(): List<Float> = listOf(y)
-    }
+    data class VerticalLineTo(val y: Float, override val isAbsolute: Boolean) : Command
 
     /**
      * Quadratic bezier to command indicated by q/Q
@@ -103,9 +86,7 @@ internal sealed interface Command {
         val x2: Float,
         val y2: Float,
         override val isAbsolute: Boolean
-    ) : Command {
-        override fun values(): List<Float> = listOf(x1, y1, x2, y2)
-    }
+    ) : Command
 
     /**
      * Reflective quadratic bezier to command indicated by t/T
@@ -114,7 +95,5 @@ internal sealed interface Command {
         val x: Float,
         val y: Float,
         override val isAbsolute: Boolean,
-    ) : Command {
-        override fun values(): List<Float> = listOf(x, y)
-    }
+    ) : Command
 }
