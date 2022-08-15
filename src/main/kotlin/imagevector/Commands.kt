@@ -21,13 +21,9 @@ internal val Command.methodName: String
 internal val Command.methodParams: String
     get() = when (this) {
         Command.Close -> ""
-        is Command.ArcTo -> "${horizontalEllipseRadius}f, " +
-                "${verticalEllipseRadius}f, " +
-                "${theta}f, " +
-                "$isMoreThanHalf, " +
-                "$isPositiveArc, " +
-                "${x1}f, " +
-                "${y1}f"
+        is Command.ArcTo -> floatParams(horizontalEllipseRadius, verticalEllipseRadius, theta) +
+                ", $isMoreThanHalf, $isPositiveArc, " +
+                floatParams(x1, y1)
         is Command.HorizontalLineTo -> "${x}f"
         is Command.VerticalLineTo -> "${y}f"
         is Command.CurveTo -> floatParams(x1, y1, x2, y2, x3, y3)
