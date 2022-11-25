@@ -243,4 +243,22 @@ class SVGFileParserTest {
             )
         }
     }
+
+    @Test
+    fun `parse successfully party_cloudy_night_24`() {
+        val file = fileLoader.load("svg/partly_cloudy_night_24.svg")
+        val result = parser.parse(file = file)
+        assertContains(
+            result.getOrThrow(),
+            """
+                ImageVector.Builder(
+                    name = "partly_cloudy_night_24",
+                    defaultWidth = 48.dp,
+                    defaultHeight = 48.dp,
+                    viewportWidth = 48f,
+                    viewportHeight = 48f
+                )
+            """.trimIndent()
+        )
+    }
 }

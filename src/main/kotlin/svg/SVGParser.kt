@@ -14,10 +14,12 @@ internal class SVGParser(
     }
 
     private fun SVG.toVectorSet(): VectorSet {
-        val rect = viewBox.split(" ").map { it.toInt() }
+        val width = width.filter { it.isDigit() }.toInt()
+        val height = height.filter { it.isDigit() }.toInt()
+        val rect = viewBox?.split(" ")?.map { it.toInt() } ?: listOf(0, 0, width, height)
         return VectorSet(
-            width = width.filter { it.isDigit() }.toInt(),
-            height = height.filter { it.isDigit() }.toInt(),
+            width = width,
+            height = height,
             viewportWidth = rect[2] - rect[0],
             viewportHeight = rect[3] - rect[1],
             paths = path.map { it.toVectorPath() },

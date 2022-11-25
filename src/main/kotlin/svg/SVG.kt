@@ -11,7 +11,7 @@ data class SVG(
     @field:JacksonXmlProperty(localName = "height")
     val height: String,
     @field:JacksonXmlProperty(localName = "viewBox")
-    val viewBox: String,
+    val viewBox: String? = null,
     @field:JacksonXmlProperty(localName = "fill")
     val fill: String? = null,
     @field:JacksonXmlElementWrapper(useWrapping = false)
