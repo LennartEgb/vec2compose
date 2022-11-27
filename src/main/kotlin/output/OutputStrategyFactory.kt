@@ -2,11 +2,13 @@ package output
 
 import imagevector.ImageVectorImportProvider
 
-internal object OutputStrategyFactory {
+internal class OutputStrategyFactory(
+    private val nameFormatter: NameFormatter
+) {
     private val importProvider = ImageVectorImportProvider()
 
-    fun create(outputPath: String?): OutputStrategy {
-        return outputPath?.let { FileOutputStrategy(it, importProvider) }
+    fun create(outputPath: String?, name: String): OutputStrategy {
+        return outputPath?.let { FileOutputStrategy(nameFormatter.format(name), it, importProvider) }
             ?: PrintOutputStrategy()
     }
 }
