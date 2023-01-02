@@ -2,7 +2,6 @@ package output
 
 import imagevector.ImageVectorImportProvider
 import java.io.File
-import java.lang.StringBuilder
 
 internal class FileOutputStrategy(
     private val name: String,
@@ -11,24 +10,25 @@ internal class FileOutputStrategy(
 ) : OutputStrategy {
     override fun write(content: String) {
         buildString {
-            importProvider.createImports().forEach { append(it).appendLine() }
+            importProvider.createImports().forEach { appendLine(it) }
             appendLine()
-
-            append("private var cache: ImageVector? = null").appendLine()
-            append("val $name: ImageVector").appendLine()
-
-            val lines = content.lines()
-            lines.forEach { line ->
-                if (line == lines.first()) {
-                    indent().append("get() = cache ?: $line")
-                } else {
-                    indent().append(line)
-                }
-                appendLine()
+            appendLine("private var cache: ImageVector? = null")
+            appendLine("val $name: ImageVector")
+            content.lines().forEachMeta { line, isFirst, isLast ->
+                indent()
+                if (isFirst) append("get() = cache ?: ")
+                append(line)
+                if (isLast) appendLine()
             }
             append(".also { cache = it }")
         }.also { File(pathname).apply { writeText(it) }.createNewFile() }
     }
 
     private fun StringBuilder.indent() = append("    ")
+
+    private fun <T> List<T>.forEachMeta(action: (T, isFirst: Boolean, isLast: Boolean) -> Unit) {
+        val firstIndex = indices.first
+        val lastIndex = indices.last
+        forEachIndexed { index, t -> action(t, index == firstIndex, index == lastIndex) }
+    }
 }
