@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.0"
+    kotlin("jvm") version "1.8.0"
     application
 }
 
@@ -13,9 +13,8 @@ repositories {
 }
 
 dependencies {
-    implementation(dependencyNotation = "org.jetbrains.kotlinx:kotlinx-cli:0.3.5")
-    implementation(dependencyNotation = "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.3")
-    implementation(dependencyNotation = "com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
+    implementation(libs.kotlin.cli)
+    implementation(libs.bundles.jackson)
 
     testImplementation(kotlin("test"))
 }

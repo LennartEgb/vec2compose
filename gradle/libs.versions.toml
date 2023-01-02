@@ -1,0 +1,14 @@
+[versions]
+kotlin = "1.8.0"
+kotlin-cli = "0.3.5"
+jackson = "2.13.3"
+
+[libraries]
+kotlin-cli = { module = "org.jetbrains.kotlinx:kotlinx-cli", version.ref = "kotlin-cli" }
+jackson-dataformat = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-xml", version.ref = "jackson" }
+jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
+
+[bundles]
+jackson = ["jackson-dataformat", "jackson-module-kotlin"]
+
+# [plugins]
