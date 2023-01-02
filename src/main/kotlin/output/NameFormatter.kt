@@ -2,7 +2,7 @@ package output
 
 import java.util.*
 
-internal class NameFormatter {
+internal class NameFormatter(private val locale: Locale = Locale.getDefault()) {
     private val regex = "[-_ ]".toRegex()
 
     fun format(name: String): String {
@@ -11,7 +11,7 @@ internal class NameFormatter {
             endIndex = name.indexOf(char = '.').takeIf { it != -1 } ?: name.indices.last
         )
         return nameWithoutExtension.split(regex).joinToString(separator = "") { word ->
-            word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+            word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(locale) else it.toString() }
         }
     }
 }
