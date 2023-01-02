@@ -29,7 +29,9 @@ tasks.withType<KotlinCompile> {
 
 tasks.register<Copy>("packageDistribution") {
     dependsOn("jar")
-    from("${project.rootDir}/scripts/vec2compose")
+    from("${project.rootDir}/scripts/vec2compose") {
+        filter { it.replace("lib/vec2compose.jar", "${project.rootDir}/dist/lib/vec2compose.jar") }
+    }
     from("${project.projectDir}/build/libs/${project.name}-${project.version}.jar") {
         rename { "${project.name}.jar" }
         into("lib")
