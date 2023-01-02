@@ -11,4 +11,5 @@ jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-
 [bundles]
 jackson = ["jackson-dataformat", "jackson-module-kotlin"]
 
-# [plugins]
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
