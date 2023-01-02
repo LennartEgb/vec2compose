@@ -8,12 +8,11 @@ internal class OutputStrategyFactoryTest {
     private val factory = OutputStrategyFactory(NameFormatter())
     @Test
     fun `create without output path returns PrintOutputStrategy`() {
-
-        assertIs<PrintOutputStrategy>(factory.create(null, name = "George"))
+        assertIs<PrintOutputStrategy>(factory.create(outputPath = null, name = "George"))
     }
 
     @Test
     fun `create with output path returns FileOutputStrategy`() {
-        assertIs<FileOutputStrategy>(factory.create("some_file.xml", name = "George"))
+        assertIs<FileOutputStrategy>(factory.create(outputPath = "some_file.xml", name = "George"))
     }
 }

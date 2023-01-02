@@ -50,17 +50,17 @@ class SVGFileParserTest {
 
     @Test
     fun `parse successfully check_circle svg`() {
-        val file = fileLoader.load("svg/check_circle_24.svg")
+        val file = fileLoader.load("svg/check_circle_48.svg")
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
-                    name = "check_circle_24",
-                    defaultWidth = 24.dp,
-                    defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    name = "check_circle_48",
+                    defaultWidth = 48.dp,
+                    defaultHeight = 48.dp,
+                    viewportWidth = 48f,
+                    viewportHeight = 48f
                 """.trimIndent()
             )
         }
@@ -68,17 +68,17 @@ class SVGFileParserTest {
 
     @Test
     fun `parse successfully delete svg`() {
-        val file = fileLoader.load("svg/delete_24.svg")
+        val file = fileLoader.load("svg/delete_48.svg")
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
                 content, """
                 ImageVector.Builder(
-                    name = "delete_24",
-                    defaultWidth = 24.dp,
-                    defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    name = "delete_48",
+                    defaultWidth = 48.dp,
+                    defaultHeight = 48.dp,
+                    viewportWidth = 48f,
+                    viewportHeight = 48f
                 """.trimIndent()
             )
         }
