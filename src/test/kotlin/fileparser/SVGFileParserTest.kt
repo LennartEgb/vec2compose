@@ -237,7 +237,8 @@ class SVGFileParserTest {
                         reflectiveCurveTo(13.98f, 15.6f, 12.0f, 15.6f)
                         close()
                     }
-                }.build()
+                }
+                .build()
                 """.trimIndent(),
                 actual = content,
             )

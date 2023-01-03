@@ -52,7 +52,8 @@ internal class ImageVectorParserTest {
                 lineTo(2.0f, 2.0f)
                 lineToRelative(1.0f, 2.0f)
                 close()
-            }.build()
+            }
+            .build()
         """.trimIndent()
         assertEquals(
             expected = expected,
@@ -103,7 +104,8 @@ internal class ImageVectorParserTest {
                 lineTo(2.0f, 2.0f)
                 lineToRelative(1.0f, 2.0f)
                 close()
-            }.build()
+            }
+            .build()
         """.trimIndent()
         assertEquals(
             expected = expected,

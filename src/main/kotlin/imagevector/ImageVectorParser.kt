@@ -13,8 +13,8 @@ internal class ImageVectorParser(indentation: CharSequence = DEFAULT_INDENTATION
     fun parse(name: String, vectorSet: VectorSet): String {
         return buildString {
             append(composeMethodCreator.parseConstructor(name, vectorSet))
-            vectorSet.groups.map(composeMethodCreator::parseGroup).forEach(::append)
-            vectorSet.paths.map(composeMethodCreator::parsePath).forEach(::append)
+            vectorSet.groups.map(composeMethodCreator::parseGroup).forEach(::appendLine)
+            vectorSet.paths.map(composeMethodCreator::parsePath).forEach(::appendLine)
             append(".build()")
         }.replace(emptyLineRegex, "")
     }
