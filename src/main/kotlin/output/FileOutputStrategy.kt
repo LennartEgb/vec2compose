@@ -18,17 +18,15 @@ internal class FileOutputStrategy(
                 indent()
                 if (isFirst) append("get() = cache ?: ")
                 append(line)
-                if (isLast) appendLine()
+                if (!isLast) appendLine()
             }
-            append(".also { cache = it }")
+            appendLine(".also { cache = it }")
         }.also { File(pathname).apply { writeText(it) }.createNewFile() }
     }
 
     private fun StringBuilder.indent() = append("    ")
 
     private fun <T> List<T>.forEachMeta(action: (T, isFirst: Boolean, isLast: Boolean) -> Unit) {
-        val firstIndex = indices.first
-        val lastIndex = indices.last
-        forEachIndexed { index, t -> action(t, index == firstIndex, index == lastIndex) }
+        forEachIndexed { index, t -> action(t, index == indices.first, index == indices.last) }
     }
 }
