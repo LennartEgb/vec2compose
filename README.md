@@ -10,18 +10,18 @@ A CLI tool to create `ImageVector` from Android vector XML and SVG.
 ## Setup
 Currently, this is only available after a local gradle build
 ```bash
-$ ./gradlew clean jar packageDistribution
+./gradlew clean jar packageDistribution
 ```
 A `dist` folder is created with the script and jar file. Add the `dist` folder to PATH and use it everywhere.
 
 ## Usage
 There are two options to create the `ImageVector`. The first option is to create a Kotlin file.
 ```bash
-$ ./vec2compose -i ic_done.xml -o DoneIcon.kt
+vec2compose -i ic_done.xml -o DoneIcon.kt
 ```
 The second option is to print the `ImageVector` to the console.
 ```bash
-$ ./vec2compose -i ic_done.xml
+vec2compose -i ic_done.xml
 ```
 ```kotlin
 ImageVector.Builder(
