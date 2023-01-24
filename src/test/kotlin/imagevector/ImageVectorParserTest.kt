@@ -14,8 +14,8 @@ internal class ImageVectorParserTest {
         val set = VectorSet(
             width = 24,
             height = 24,
-            viewportWidth = 48,
-            viewportHeight = 42,
+            viewportWidth = 48f,
+            viewportHeight = 42f,
             paths = listOf(
                 VectorSet.Path(
                     fillType = VectorSet.Path.FillType.NonZero,
@@ -35,8 +35,8 @@ internal class ImageVectorParserTest {
                 name = "ic_icon",
                 defaultWidth = 24.dp,
                 defaultHeight = 24.dp,
-                viewportWidth = 48f,
-                viewportHeight = 42f
+                viewportWidth = 48.0f,
+                viewportHeight = 42.0f
             ).path(
                 fill = SolidColor(Color.Black),
                 fillAlpha = 1f,
@@ -65,8 +65,8 @@ internal class ImageVectorParserTest {
         val set = VectorSet(
             width = 24,
             height = 24,
-            viewportWidth = 48,
-            viewportHeight = 42,
+            viewportWidth = 48f,
+            viewportHeight = 42f,
             paths = listOf(
                 VectorSet.Path(
                     fillType = VectorSet.Path.FillType.EvenOdd,
@@ -86,8 +86,8 @@ internal class ImageVectorParserTest {
                 name = "ic_icon",
                 defaultWidth = 24.dp,
                 defaultHeight = 24.dp,
-                viewportWidth = 48f,
-                viewportHeight = 42f
+                viewportWidth = 48.0f,
+                viewportHeight = 42.0f
             ).path(
                 fill = SolidColor(Color.Black),
                 fillAlpha = 1f,

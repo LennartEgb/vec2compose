@@ -5,8 +5,8 @@ import commands.Command
 internal data class VectorSet(
     val width: Int,
     val height: Int,
-    val viewportWidth: Int,
-    val viewportHeight: Int,
+    val viewportWidth: Float,
+    val viewportHeight: Float,
     val groups: List<Group>,
     val paths: List<Path>
 ) {
