@@ -22,8 +22,8 @@ internal class XMLFileParserTest {
                     name = "ic_account_circle_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 """.trimIndent()
             )
         }
@@ -40,8 +40,8 @@ internal class XMLFileParserTest {
                     name = "ic_check_circle_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 """.trimIndent()
             )
         }
@@ -58,8 +58,8 @@ internal class XMLFileParserTest {
                     name = "ic_delete_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 """.trimIndent()
             )
         }
@@ -76,8 +76,8 @@ internal class XMLFileParserTest {
                     name = "ic_done_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 """.trimIndent()
             )
         }
@@ -94,8 +94,8 @@ internal class XMLFileParserTest {
                     name = "ic_home_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 """.trimIndent()
             )
         }
@@ -112,8 +112,8 @@ internal class XMLFileParserTest {
                     name = "ic_info_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 """.trimIndent()
             )
         }
@@ -130,8 +130,8 @@ internal class XMLFileParserTest {
                     name = "ic_language_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 """.trimIndent()
             )
         }
@@ -148,8 +148,8 @@ internal class XMLFileParserTest {
                     name = "ic_search_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 """.trimIndent()
             )
         }
@@ -166,8 +166,8 @@ internal class XMLFileParserTest {
                     name = "ic_settings_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 """.trimIndent()
             )
         }

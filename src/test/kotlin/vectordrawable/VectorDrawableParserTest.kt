@@ -35,8 +35,8 @@ internal class VectorDrawableParserTest {
             expected = VectorSet(
                 width = 24,
                 height = 24,
-                viewportWidth = 24,
-                viewportHeight = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
                 paths = listOf(
                     VectorSet.Path(
                         fillType = VectorSet.Path.FillType.NonZero,
@@ -77,8 +77,8 @@ internal class VectorDrawableParserTest {
             expected = VectorSet(
                 width = 24,
                 height = 24,
-                viewportWidth = 24,
-                viewportHeight = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
                 paths = listOf(
                     VectorSet.Path(
                         fillType = VectorSet.Path.FillType.EvenOdd,

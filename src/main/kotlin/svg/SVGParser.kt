@@ -16,7 +16,7 @@ internal class SVGParser(
     private fun SVG.toVectorSet(): VectorSet {
         val width = width.filter { it.isDigit() }.toInt()
         val height = height.filter { it.isDigit() }.toInt()
-        val rect = viewBox?.split(" ")?.map { it.toInt() } ?: listOf(0, 0, width, height)
+        val rect: List<Float> = viewBox?.split(" ")?.map { it.toFloat() } ?: listOf(0, 0, width, height).map { it.toFloat() }
         return VectorSet(
             width = width,
             height = height,

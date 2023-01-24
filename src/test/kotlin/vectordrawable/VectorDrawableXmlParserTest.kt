@@ -23,8 +23,8 @@ class VectorDrawableXmlParserTest {
             expected = VectorDrawable(
                 widthInDp = "24dp",
                 heightInDp = "24dp",
-                viewportWidth = 24,
-                viewportHeight = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
                 tint = "?attr/colorControlNormal",
                 path = listOf(
                     VectorDrawable.Path(
@@ -57,8 +57,8 @@ class VectorDrawableXmlParserTest {
             expected = VectorDrawable(
                 widthInDp = "24dp",
                 heightInDp = "24dp",
-                viewportWidth = 24,
-                viewportHeight = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
                 tint = "?attr/colorControlNormal",
                 path = listOf(
                     VectorDrawable.Path(

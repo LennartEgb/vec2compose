@@ -29,8 +29,8 @@ internal class VectorDrawableSerializerTest {
             expected = VectorDrawable(
                 widthInDp = "24dp",
                 heightInDp = "24dp",
-                viewportWidth = 24,
-                viewportHeight = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
                 tint = "?attr/colorControlNormal",
                 path = listOf(
                     VectorDrawable.Path(
@@ -65,8 +65,8 @@ internal class VectorDrawableSerializerTest {
             expected = VectorDrawable(
                 widthInDp = "24dp",
                 heightInDp = "24dp",
-                viewportWidth = 24,
-                viewportHeight = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
                 tint = "?attr/colorControlNormal",
                 path = listOf(
                     VectorDrawable.Path(
@@ -126,8 +126,8 @@ internal class VectorDrawableSerializerTest {
             expected = VectorDrawable(
                 widthInDp = "24dp",
                 heightInDp = "24dp",
-                viewportWidth = 24,
-                viewportHeight = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
                 tint = null,
                 path = emptyList(),
                 group = listOf(
@@ -181,8 +181,8 @@ internal class VectorDrawableSerializerTest {
             expected = VectorDrawable(
                 widthInDp = "24dp",
                 heightInDp = "24dp",
-                viewportWidth = 24,
-                viewportHeight = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
                 tint = null,
                 path = emptyList(),
                 group = listOf(

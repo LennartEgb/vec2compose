@@ -11,9 +11,9 @@ internal data class VectorDrawable(
     @field:JacksonXmlProperty(localName = "height")
     val heightInDp: String,
     @field:JacksonXmlProperty(localName = "viewportWidth")
-    val viewportWidth: Int,
+    val viewportWidth: Float,
     @field:JacksonXmlProperty(localName = "viewportHeight")
-    val viewportHeight: Int,
+    val viewportHeight: Float,
     @field:JacksonXmlProperty(localName = "tint")
     val tint: String? = null,
     @field:JacksonXmlElementWrapper(useWrapping = false)

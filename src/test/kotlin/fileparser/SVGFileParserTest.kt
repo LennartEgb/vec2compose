@@ -23,8 +23,8 @@ class SVGFileParserTest {
                     name = "search_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 """.trimIndent()
             )
         }
@@ -41,8 +41,8 @@ class SVGFileParserTest {
                     name = "account_circle_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 """.trimIndent()
             )
         }
@@ -59,8 +59,8 @@ class SVGFileParserTest {
                     name = "check_circle_48",
                     defaultWidth = 48.dp,
                     defaultHeight = 48.dp,
-                    viewportWidth = 48f,
-                    viewportHeight = 48f
+                    viewportWidth = 48.0f,
+                    viewportHeight = 48.0f
                 """.trimIndent()
             )
         }
@@ -77,8 +77,8 @@ class SVGFileParserTest {
                     name = "delete_48",
                     defaultWidth = 48.dp,
                     defaultHeight = 48.dp,
-                    viewportWidth = 48f,
-                    viewportHeight = 48f
+                    viewportWidth = 48.0f,
+                    viewportHeight = 48.0f
                 """.trimIndent()
             )
         }
@@ -95,8 +95,8 @@ class SVGFileParserTest {
                     name = "done_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 """.trimIndent()
             )
         }
@@ -113,8 +113,8 @@ class SVGFileParserTest {
                     name = "home_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 """.trimIndent()
             )
         }
@@ -131,8 +131,8 @@ class SVGFileParserTest {
                     name = "info_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 """.trimIndent()
             )
         }
@@ -149,8 +149,8 @@ class SVGFileParserTest {
                     name = "settings_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
-                    viewportWidth = 24f,
-                    viewportHeight = 24f
+                    viewportWidth = 24.0f,
+                    viewportHeight = 24.0f
                 ).group(
                     rotate = 0f,
                     pivotX = 0f,
@@ -256,8 +256,8 @@ class SVGFileParserTest {
                     name = "partly_cloudy_night_24",
                     defaultWidth = 48.dp,
                     defaultHeight = 48.dp,
-                    viewportWidth = 48f,
-                    viewportHeight = 48f
+                    viewportWidth = 48.0f,
+                    viewportHeight = 48.0f
                 )
             """.trimIndent()
         )
