@@ -11,7 +11,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         indent().append("defaultWidth = ${set.width}.dp,").appendLine()
         indent().append("defaultHeight = ${set.height}.dp,").appendLine()
         indent().append("viewportWidth = ${set.viewportWidth}f,").appendLine()
-        indent().append("viewportHeight = ${set.viewportWidth}f").appendLine()
+        indent().append("viewportHeight = ${set.viewportHeight}f").appendLine()
         append(")")
     }
 
