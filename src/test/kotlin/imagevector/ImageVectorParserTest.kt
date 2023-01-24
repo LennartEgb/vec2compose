@@ -15,7 +15,7 @@ internal class ImageVectorParserTest {
             width = 24,
             height = 24,
             viewportWidth = 48,
-            viewportHeight = 48,
+            viewportHeight = 42,
             paths = listOf(
                 VectorSet.Path(
                     fillType = VectorSet.Path.FillType.NonZero,
@@ -36,7 +36,7 @@ internal class ImageVectorParserTest {
                 defaultWidth = 24.dp,
                 defaultHeight = 24.dp,
                 viewportWidth = 48f,
-                viewportHeight = 48f
+                viewportHeight = 42f
             ).path(
                 fill = SolidColor(Color.Black),
                 fillAlpha = 1f,
@@ -66,7 +66,7 @@ internal class ImageVectorParserTest {
             width = 24,
             height = 24,
             viewportWidth = 48,
-            viewportHeight = 48,
+            viewportHeight = 42,
             paths = listOf(
                 VectorSet.Path(
                     fillType = VectorSet.Path.FillType.EvenOdd,
@@ -87,7 +87,7 @@ internal class ImageVectorParserTest {
                 defaultWidth = 24.dp,
                 defaultHeight = 24.dp,
                 viewportWidth = 48f,
-                viewportHeight = 48f
+                viewportHeight = 42f
             ).path(
                 fill = SolidColor(Color.Black),
                 fillAlpha = 1f,
