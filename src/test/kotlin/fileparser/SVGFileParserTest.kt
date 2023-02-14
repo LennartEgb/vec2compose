@@ -1,6 +1,7 @@
 package fileparser
 
 import Injection
+import imagevector.ImageVectorParser
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import utils.FileLoader
@@ -10,7 +11,7 @@ import kotlin.test.assertEquals
 class SVGFileParserTest {
 
     private val fileLoader = FileLoader()
-    private val parser = Injection.SVGFileParser
+    private val parser = FileParser(vectorSetParser = Injection.SVGParser, imageVectorParser = ImageVectorParser())
 
     @Test
     fun `parse successfully search_24 svg`() {

@@ -1,6 +1,7 @@
 package fileparser
 
 import Injection
+import imagevector.ImageVectorParser
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import utils.FileLoader
@@ -9,7 +10,7 @@ import kotlin.test.assertContains
 internal class XMLFileParserTest {
 
     private val fileLoader = FileLoader()
-    private val parser = Injection.XMLFileParser
+    private val parser = FileParser(vectorSetParser = Injection.VectorDrawableParser, imageVectorParser = ImageVectorParser())
 
     @Test
     fun `parse successfully ic_account_circle_24`() {
