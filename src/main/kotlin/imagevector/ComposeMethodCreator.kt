@@ -1,7 +1,7 @@
 package imagevector
 
-import commands.Command
 import VectorSet
+import commands.Command
 
 internal class ComposeMethodCreator(private val indentation: CharSequence) {
 
@@ -18,7 +18,8 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
     fun parsePath(path: VectorSet.Path, forBuilder: Boolean = true): String = buildString {
         if (forBuilder) append(".")
         append("path(").appendLine()
-        indent().append("fill = SolidColor(Color.Black),").appendLine()
+        val fillColor = path.fillColor?.getComposeColor() ?: "Color.Black"
+        indent().append("fill = SolidColor($fillColor),").appendLine()
         indent().append("fillAlpha = 1f,").appendLine()
         indent().append("stroke = null,").appendLine()
         indent().append("strokeAlpha = 1f,").appendLine()
@@ -66,7 +67,15 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
             VectorSet.Path.FillType.NonZero -> "PathFillType.NonZero"
             VectorSet.Path.FillType.EvenOdd -> "PathFillType.EvenOdd"
         }
+
+    private fun VectorSet.Path.FillColor.getComposeColor(): String {
+        return buildString {
+            append("Color(0x")
+            append(alpha.toString(16))
+            append(red.toString(16))
+            append(green.toString(16))
+            append(blue.toString(16))
+            append(")")
+        }
+    }
 }
-
-
-

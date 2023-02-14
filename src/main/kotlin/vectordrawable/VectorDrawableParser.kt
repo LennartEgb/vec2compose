@@ -42,7 +42,7 @@ internal class VectorDrawableParser(
         return VectorSet.Path(
             fillType = VectorSet.Path.FillType.parse(fillType),
             commands = pathParser.parse(pathData),
-            fillColor = fillColor?.let(colorDeserializer::deserialize) ?: VectorSet.Path.FillColor.Default
+            fillColor = fillColor?.let(colorDeserializer::deserialize)
         )
     }
 

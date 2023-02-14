@@ -86,7 +86,6 @@ internal class VectorDrawableParserTest {
                             Command.ReflectiveCurveTo(17.52f, 2f, 11.99f, 2f, isAbsolute = true),
                             Command.Close
                         ),
-                        fillColor = VectorSet.Path.FillColor(red = 0xFF, green = 0xFF, blue = 0xFF, alpha = 0xFF)
                     )
                 ),
                 groups = emptyList(),

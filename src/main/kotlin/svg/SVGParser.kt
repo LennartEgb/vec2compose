@@ -10,7 +10,7 @@ internal class SVGParser(
     private val pathParser: PathParser,
 ): VectorSetParser {
 
-    private val colorDeserializer: ColorDeserializer = ColorDeserializer()
+    private val colorDeserializer = ColorDeserializer()
 
     override fun parse(content: String): Result<VectorSet> {
         return deserializer.deserialize(content).mapCatching { it.toVectorSet() }
@@ -42,7 +42,7 @@ internal class SVGParser(
         return VectorSet.Path(
             fillType = parseFillType(fillRule),
             commands = pathParser.parse(pathData),
-            fillColor = fill?.let(colorDeserializer::deserialize) ?: VectorSet.Path.FillColor.Default
+            fillColor = fill?.let(colorDeserializer::deserialize)
         )
     }
 
