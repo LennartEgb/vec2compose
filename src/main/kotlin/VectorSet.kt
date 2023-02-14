@@ -1,5 +1,3 @@
-package models
-
 import commands.Command
 
 internal data class VectorSet(
@@ -19,6 +17,7 @@ internal data class VectorSet(
 
     data class Path(
         val fillType: FillType,
+        val fillColor: FillColor = FillColor.Default,
         val commands: List<Command>,
     ) {
         enum class FillType {
@@ -27,6 +26,12 @@ internal data class VectorSet(
 
             companion object {
                 val Default = NonZero
+            }
+        }
+
+        data class FillColor(val red: Int, val green: Int, val blue: Int, val alpha: Int) {
+            companion object {
+                val Default = FillColor(red = 0xFF, green = 0xFF, blue = 0xFF, alpha = 0xFF)
             }
         }
     }

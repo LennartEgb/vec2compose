@@ -1,5 +1,6 @@
 package fileparser
 
+import VectorSetParserFactory
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import svg.SVGParser

@@ -1,7 +1,7 @@
 package imagevector
 
 import commands.Command
-import models.VectorSet
+import VectorSet
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 

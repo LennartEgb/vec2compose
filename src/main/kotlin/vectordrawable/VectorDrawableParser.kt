@@ -1,8 +1,9 @@
 package vectordrawable
 
+import ColorDeserializer
 import commands.PathParser
-import models.VectorSet
-import models.VectorSetParser
+import VectorSet
+import VectorSetParser
 
 private typealias DpString = String
 
@@ -10,6 +11,8 @@ internal class VectorDrawableParser(
     private val serializer: VectorDrawableDeserializer,
     private val pathParser: PathParser,
 ) : VectorSetParser {
+
+    private val colorDeserializer = ColorDeserializer()
 
     override fun parse(content: String): Result<VectorSet> {
         val androidVector = serializer.deserialize(content = content)
@@ -38,7 +41,8 @@ internal class VectorDrawableParser(
     private fun VectorDrawable.Path.toVectorPath(): VectorSet.Path {
         return VectorSet.Path(
             fillType = VectorSet.Path.FillType.parse(fillType),
-            commands = pathParser.parse(pathData)
+            commands = pathParser.parse(pathData),
+            fillColor = fillColor?.let(colorDeserializer::deserialize) ?: VectorSet.Path.FillColor.Default
         )
     }
 

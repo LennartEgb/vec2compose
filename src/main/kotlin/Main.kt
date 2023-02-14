@@ -1,5 +1,3 @@
-import fileparser.FileParser
-import fileparser.VectorSetParserFactory
 import imagevector.ImageVectorParser
 import output.NameFormatter
 import output.OutputStrategyFactory
@@ -11,7 +9,8 @@ fun main(args: Array<String>) {
     val nameFormatter = NameFormatter()
     val outputStrategy = OutputStrategyFactory(nameFormatter = nameFormatter).create(arguments.output, file.name)
 
-    FileParser(vectorSetParser = VectorSetParserFactory.createVectorSetParser(file), imageVectorParser = ImageVectorParser())
+    val vectorSetParser = VectorSetParserFactory.createVectorSetParser(file)
+    FileParser(vectorSetParser = vectorSetParser, imageVectorParser = ImageVectorParser())
         .parse(file)
         .onSuccess { outputStrategy.write(it) }
         .onFailure { println("Error occurred: ${it.message}") }

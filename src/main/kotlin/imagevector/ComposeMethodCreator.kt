@@ -1,7 +1,7 @@
 package imagevector
 
 import commands.Command
-import models.VectorSet
+import VectorSet
 
 internal class ComposeMethodCreator(private val indentation: CharSequence) {
 
