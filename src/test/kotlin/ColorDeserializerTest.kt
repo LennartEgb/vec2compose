@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class ColorDeserializerTest {
 
@@ -116,6 +117,14 @@ class ColorDeserializerTest {
                 expected = VectorSet.Path.FillColor(red = 0x00, green = 0x00, blue = 0xFF, alpha = 0x33),
                 actual = deserializer.deserialize(color = "#330000FF")
             )
+        }
+    }
+
+    @Nested
+    inner class DeserializeNoHex {
+        @Test
+        fun `returns no color`() {
+            assertNull(actual = deserializer.deserialize(color = "R.color.white"))
         }
     }
 
