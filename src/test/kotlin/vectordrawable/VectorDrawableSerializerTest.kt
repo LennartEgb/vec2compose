@@ -7,7 +7,7 @@ import kotlin.test.assertNull
 
 internal class VectorDrawableSerializerTest {
 
-    private val serializer = VectorDrawableSerializer(TestObjectMapper)
+    private val serializer = VectorDrawableDeserializer(TestObjectMapper)
 
     @Test
     fun `serialize valid VectorDrawable without fillType returns serialized VectorDrawable`() {
@@ -38,7 +38,7 @@ internal class VectorDrawableSerializerTest {
                     )
                 )
             ),
-            actual = serializer.serialize(vector).getOrThrow(),
+            actual = serializer.deserialize(vector).getOrThrow(),
         )
     }
 
@@ -72,7 +72,7 @@ internal class VectorDrawableSerializerTest {
                     )
                 )
             ),
-            actual = serializer.serialize(vector).getOrThrow(),
+            actual = serializer.deserialize(vector).getOrThrow(),
         )
     }
 
@@ -86,7 +86,7 @@ internal class VectorDrawableSerializerTest {
             <body>Don't forget me this weekend!</body>
         </note>
         """.trimIndent()
-        assertNull(serializer.serialize(vector).getOrNull())
+        assertNull(serializer.deserialize(vector).getOrNull())
     }
 
     @Test
@@ -145,7 +145,7 @@ internal class VectorDrawableSerializerTest {
                     )
                 ),
             ),
-            actual = serializer.serialize(vector).getOrThrow()
+            actual = serializer.deserialize(vector).getOrThrow()
         )
     }
 
@@ -195,7 +195,7 @@ internal class VectorDrawableSerializerTest {
                     )
                 ),
             ),
-            actual = serializer.serialize(vector).getOrThrow()
+            actual = serializer.deserialize(vector).getOrThrow()
         )
     }
 }

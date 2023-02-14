@@ -1,4 +1,6 @@
-import fileparser.FileParserFactory
+import fileparser.FileParser
+import fileparser.VectorSetParserFactory
+import imagevector.ImageVectorParser
 import output.NameFormatter
 import output.OutputStrategyFactory
 import java.io.File
@@ -8,7 +10,8 @@ fun main(args: Array<String>) {
     val file = File(arguments.input).takeIf { it.exists() } ?: error("File ${arguments.input} does not exist")
     val nameFormatter = NameFormatter()
     val outputStrategy = OutputStrategyFactory(nameFormatter = nameFormatter).create(arguments.output, file.name)
-    FileParserFactory.createFileParser(file)
+
+    FileParser(vectorSetParser = VectorSetParserFactory.createVectorSetParser(file), imageVectorParser = ImageVectorParser())
         .parse(file)
         .onSuccess { outputStrategy.write(it) }
         .onFailure { println("Error occurred: ${it.message}") }

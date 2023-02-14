@@ -5,4 +5,3 @@ internal class PathParser(private val commandParser: CommandParser) {
     fun parse(pathCode: String): List<Command> =
         regex.findAll(pathCode).flatMap { commandParser.parse(it.value) }.toList()
 }
-

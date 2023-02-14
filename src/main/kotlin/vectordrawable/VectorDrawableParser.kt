@@ -2,16 +2,17 @@ package vectordrawable
 
 import commands.PathParser
 import models.VectorSet
+import models.VectorSetParser
 
 private typealias DpString = String
 
 internal class VectorDrawableParser(
-    private val serializer: VectorDrawableSerializer,
+    private val serializer: VectorDrawableDeserializer,
     private val pathParser: PathParser,
-) {
+) : VectorSetParser {
 
-    fun parse(content: String): Result<VectorSet> {
-        val androidVector = serializer.serialize(content = content)
+    override fun parse(content: String): Result<VectorSet> {
+        val androidVector = serializer.deserialize(content = content)
         return androidVector.mapCatching { it.toVectorSet() }
     }
 
