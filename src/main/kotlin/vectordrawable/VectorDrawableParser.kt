@@ -10,8 +10,8 @@ internal class VectorDrawableParser(
     private val pathParser: PathParser,
 ) {
 
-    fun parse(xml: XML): Result<VectorSet> {
-        val androidVector = serializer.serialize(xml = xml)
+    fun parse(content: String): Result<VectorSet> {
+        val androidVector = serializer.serialize(content = content)
         return androidVector.mapCatching { it.toVectorSet() }
     }
 

@@ -2,15 +2,15 @@ package svg
 
 import commands.PathParser
 import models.VectorSet
-import vectordrawable.XML
+import models.VectorSetParser
 
 internal class SVGParser(
     private val deserializer: SVGDeserializer,
     private val pathParser: PathParser,
-) {
+): VectorSetParser {
 
-    fun parse(xml: XML): Result<VectorSet> {
-        return deserializer.deserialize(xml).mapCatching { it.toVectorSet() }
+    override fun parse(content: String): Result<VectorSet> {
+        return deserializer.deserialize(content).mapCatching { it.toVectorSet() }
     }
 
     private fun SVG.toVectorSet(): VectorSet {

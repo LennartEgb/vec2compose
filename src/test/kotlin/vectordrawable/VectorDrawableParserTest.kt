@@ -17,8 +17,7 @@ internal class VectorDrawableParserTest {
 
     @Test
     fun `parse valid VectorDrawable xml to VectorSet`() {
-        val vector = XML(
-            content = """
+        val vector = """
         <vector xmlns:android="http://schemas.android.com/apk/res/android"
             android:width="24dp"
             android:height="24dp"
@@ -30,7 +29,6 @@ internal class VectorDrawableParserTest {
               android:pathData="M11.99,2C6.47,2 2,6.48 2,12s4.47,10 9.99,10C17.52,22 22,17.52 22,12S17.52,2 11.99,2z"/>
         </vector>
         """.trimIndent()
-        )
         assertEquals(
             expected = VectorSet(
                 width = 24,
@@ -58,8 +56,7 @@ internal class VectorDrawableParserTest {
 
     @Test
     fun `parse valid VectorDrawable with fillType evenOdd to VectorSet`() {
-        val vector = XML(
-            content = """
+        val vector = """
         <vector xmlns:android="http://schemas.android.com/apk/res/android"
             android:width="24dp"
             android:height="24dp"
@@ -72,7 +69,6 @@ internal class VectorDrawableParserTest {
               android:pathData="M11.99,2C6.47,2 2,6.48 2,12s4.47,10 9.99,10C17.52,22 22,17.52 22,12S17.52,2 11.99,2z"/>
         </vector>
         """.trimIndent()
-        )
         assertEquals(
             expected = VectorSet(
                 width = 24,
