@@ -1,7 +1,4 @@
-package fileparser
-
 import imagevector.ImageVectorParser
-import models.VectorSetParser
 import java.io.File
 
 internal class FileParser(

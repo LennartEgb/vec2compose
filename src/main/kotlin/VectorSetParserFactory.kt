@@ -1,7 +1,3 @@
-package fileparser
-
-import Injection
-import models.VectorSetParser
 import java.io.File
 
 internal object VectorSetParserFactory {

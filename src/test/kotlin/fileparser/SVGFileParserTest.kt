@@ -1,5 +1,6 @@
 package fileparser
 
+import FileParser
 import Injection
 import imagevector.ImageVectorParser
 import org.junit.jupiter.api.Test

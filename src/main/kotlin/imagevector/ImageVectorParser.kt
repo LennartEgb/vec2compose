@@ -1,6 +1,6 @@
 package imagevector
 
-import models.VectorSet
+import VectorSet
 
 internal class ImageVectorParser(indentation: CharSequence = DEFAULT_INDENTATION) {
     private companion object {
