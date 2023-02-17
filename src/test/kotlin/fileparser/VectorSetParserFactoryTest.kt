@@ -12,18 +12,19 @@ internal class VectorSetParserFactoryTest {
 
     @Test
     fun `createFileParser with xml file returns XMLFileParser`() {
-        assertIs<VectorDrawableParser>(VectorSetParserFactory.createVectorSetParser(File("file.xml")))
+        val factory = VectorSetParserFactory(File("file.xml"))
+        assertIs<VectorDrawableParser>(factory.create())
     }
 
     @Test
     fun `createFileParser with svg file returns SVGFileParser`() {
-        assertIs<SVGParser>(VectorSetParserFactory.createVectorSetParser(File("file.svg")))
+        val factory = VectorSetParserFactory(File("file.svg"))
+        assertIs<SVGParser>(factory.create())
     }
 
     @Test
     fun `createFileParser with unsupported file throws IllegalArgumentException`() {
-        assertThrows<IllegalArgumentException> {
-            VectorSetParserFactory.createVectorSetParser(File("file.jpeg"))
-        }
+        val factory = VectorSetParserFactory(File("file.jpeg"))
+        assertThrows<IllegalArgumentException> { factory.create() }
     }
 }
