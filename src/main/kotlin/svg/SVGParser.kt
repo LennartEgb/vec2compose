@@ -1,16 +1,15 @@
 package svg
 
-import ColorDeserializer
-import commands.PathParser
+import ColorParser
 import VectorSet
 import VectorSetParser
+import commands.PathParser
 
 internal class SVGParser(
+    private val colorParser: ColorParser,
     private val deserializer: SVGDeserializer,
     private val pathParser: PathParser,
-): VectorSetParser {
-
-    private val colorDeserializer = ColorDeserializer()
+) : VectorSetParser {
 
     override fun parse(content: String): Result<VectorSet> {
         return deserializer.deserialize(content).mapCatching { it.toVectorSet() }
@@ -19,7 +18,9 @@ internal class SVGParser(
     private fun SVG.toVectorSet(): VectorSet {
         val width = width.filter { it.isDigit() }.toInt()
         val height = height.filter { it.isDigit() }.toInt()
-        val rect: List<Float> = viewBox?.split(" ")?.map { it.toFloat() } ?: listOf(0, 0, width, height).map { it.toFloat() }
+        val rect: List<Float> = viewBox?.split(" ")
+            ?.map { it.toFloat() }
+            ?: listOf(0f, 0f, width.toFloat(), height.toFloat())
         return VectorSet(
             width = width,
             height = height,
@@ -42,7 +43,7 @@ internal class SVGParser(
         return VectorSet.Path(
             fillType = parseFillType(fillRule),
             commands = pathParser.parse(pathData),
-            fillColor = fill?.let(colorDeserializer::deserialize)
+            fillColor = fill?.let(colorParser::parse)
         )
     }
 

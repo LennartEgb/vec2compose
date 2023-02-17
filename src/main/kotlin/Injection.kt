@@ -7,8 +7,8 @@ import commands.CommandParser
 import commands.PathParser
 import svg.SVGDeserializer
 import svg.SVGParser
-import vectordrawable.VectorDrawableParser
 import vectordrawable.VectorDrawableDeserializer
+import vectordrawable.VectorDrawableParser
 
 internal object Injection {
     private val objectMapper: ObjectMapper = XmlMapper(JacksonXmlModule()).registerKotlinModule()
@@ -16,7 +16,17 @@ internal object Injection {
     private val CommandParser = CommandParser()
     private val PathParser = PathParser(commandParser = CommandParser)
     private val VectorDrawableSerializer = VectorDrawableDeserializer(objectMapper)
-    val VectorDrawableParser = VectorDrawableParser(VectorDrawableSerializer, PathParser)
     private val SVGDeserializer = SVGDeserializer(objectMapper)
-    val SVGParser = SVGParser(SVGDeserializer, PathParser)
+    private val colorParser = HexColorParser()
+
+    val VectorDrawableParser = VectorDrawableParser(
+        colorParser = colorParser,
+        deserializer = VectorDrawableSerializer,
+        pathParser = PathParser
+    )
+    val SVGParser = SVGParser(
+        colorParser = colorParser,
+        deserializer = SVGDeserializer,
+        pathParser = PathParser
+    )
 }

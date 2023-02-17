@@ -11,7 +11,7 @@ import kotlin.test.assertEquals
 internal class VectorDrawableParserTest {
 
     private val parser = VectorDrawableParser(
-        serializer = VectorDrawableDeserializer(TestObjectMapper),
+        deserializer = VectorDrawableDeserializer(TestObjectMapper),
         pathParser = PathParser(CommandParser())
     )
 

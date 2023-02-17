@@ -1,9 +1,14 @@
-internal class ColorDeserializer {
-    fun deserialize(color: String): VectorSet.Path.FillColor? {
-        if (color.startsWith("#")) return deserialize(color.drop(1))
+internal interface ColorParser {
+    fun parse(color: String): VectorSet.Path.FillColor?
+}
+
+
+internal class HexColorParser() : ColorParser {
+    override fun parse(color: String): VectorSet.Path.FillColor? {
+        if (color.startsWith("#")) return parse(color.drop(1))
         return when (color.length) {
-            3 -> deserialize(color.fold(initial = "") { acc, char -> "$acc$char$char" })
-            6 -> deserialize("FF$color")
+            3 -> parse(color.fold(initial = "") { acc, char -> "$acc$char$char" })
+            6 -> parse("FF$color")
             8 -> color.windowed(size = 2, step = 2).let { (a, r, g, b) ->
                 VectorSet.Path.FillColor(
                     red = r.toInt(16),
