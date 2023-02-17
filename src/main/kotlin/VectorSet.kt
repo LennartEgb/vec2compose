@@ -29,7 +29,19 @@ internal data class VectorSet(
             }
         }
 
-        data class FillColor(val red: Int, val green: Int, val blue: Int, val alpha: Int)
+        data class FillColor(val red: Int, val green: Int, val blue: Int, val alpha: Int) {
+            override fun toString(): String {
+                fun String.format() = if (length < 2) padStart(length = 2, padChar = '0') else this
+                return buildString {
+                    append("Color(0x")
+                    append(alpha.toString(16).format())
+                    append(red.toString(16).format())
+                    append(green.toString(16).format())
+                    append(blue.toString(16).format())
+                    append(")")
+                }
+            }
+        }
     }
 }
 
