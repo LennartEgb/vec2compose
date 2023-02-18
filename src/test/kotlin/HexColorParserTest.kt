@@ -3,17 +3,17 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-class ColorParserTest {
+class HexColorParserTest {
 
-    private val deserializer = HexColorParser()
+    private val parser = HexColorParser()
 
     @Nested
-    inner class DeserializeThreeCharHex {
+    inner class ParseThreeCharHex {
         @Test
         fun `white color to FillColor`() {
             assertEquals(
                 expected = VectorSet.Path.FillColor(red = 0xFF, green = 0xFF, blue = 0xFF, alpha = 0xFF),
-                actual = deserializer.parse(color = "#fff")
+                actual = parser.parse(color = "#fff")
             )
         }
 
@@ -21,7 +21,7 @@ class ColorParserTest {
         fun `red color to FillColor`() {
             assertEquals(
                 expected = VectorSet.Path.FillColor(red = 0xFF, green = 0x00, blue = 0x00, alpha = 0xFF),
-                actual = deserializer.parse(color = "#F00")
+                actual = parser.parse(color = "#F00")
             )
         }
 
@@ -29,7 +29,7 @@ class ColorParserTest {
         fun `green color to FillColor`() {
             assertEquals(
                 expected = VectorSet.Path.FillColor(red = 0x00, green = 0xFF, blue = 0x00, alpha = 0xFF),
-                actual = deserializer.parse(color = "#0F0")
+                actual = parser.parse(color = "#0F0")
             )
         }
 
@@ -37,18 +37,18 @@ class ColorParserTest {
         fun `blue color to FillColor`() {
             assertEquals(
                 expected = VectorSet.Path.FillColor(red = 0x00, green = 0x00, blue = 0xFF, alpha = 0xFF),
-                actual = deserializer.parse(color = "#00F")
+                actual = parser.parse(color = "#00F")
             )
         }
     }
 
     @Nested
-    inner class DeserializeSixCharHex {
+    inner class ParseSixCharHex {
         @Test
         fun `white color to FillColor`() {
             assertEquals(
                 expected = VectorSet.Path.FillColor(red = 0xFF, green = 0xFF, blue = 0xFF, alpha = 0xFF),
-                actual = deserializer.parse(color = "#FFFFFF")
+                actual = parser.parse(color = "#FFFFFF")
             )
         }
 
@@ -56,7 +56,7 @@ class ColorParserTest {
         fun `red color to FillColor`() {
             assertEquals(
                 expected = VectorSet.Path.FillColor(red = 0xFF, green = 0x00, blue = 0x00, alpha = 0xFF),
-                actual = deserializer.parse(color = "#FF0000")
+                actual = parser.parse(color = "#FF0000")
             )
         }
 
@@ -64,7 +64,7 @@ class ColorParserTest {
         fun `green color to FillColor`() {
             assertEquals(
                 expected = VectorSet.Path.FillColor(red = 0x00, green = 0xFF, blue = 0x00, alpha = 0xFF),
-                actual = deserializer.parse(color = "#00FF00")
+                actual = parser.parse(color = "#00FF00")
             )
         }
 
@@ -72,18 +72,18 @@ class ColorParserTest {
         fun `blue color to FillColor`() {
             assertEquals(
                 expected = VectorSet.Path.FillColor(red = 0x00, green = 0x00, blue = 0xFF, alpha = 0xFF),
-                actual = deserializer.parse(color = "#0000FF")
+                actual = parser.parse(color = "#0000FF")
             )
         }
     }
 
     @Nested
-    inner class DeserializeEightCharHex {
+    inner class ParseEightCharHex {
         @Test
         fun `white color to FillColor`() {
             assertEquals(
                 expected = VectorSet.Path.FillColor(red = 0xFF, green = 0xFF, blue = 0xFF, alpha = 0xFF),
-                actual = deserializer.parse(color = "#FFFFFFFF")
+                actual = parser.parse(color = "#FFFFFFFF")
             )
         }
 
@@ -91,7 +91,7 @@ class ColorParserTest {
         fun `red color to FillColor`() {
             assertEquals(
                 expected = VectorSet.Path.FillColor(red = 0xFF, green = 0x00, blue = 0x00, alpha = 0xFF),
-                actual = deserializer.parse(color = "#FFFF0000")
+                actual = parser.parse(color = "#FFFF0000")
             )
         }
 
@@ -99,7 +99,7 @@ class ColorParserTest {
         fun `green color to FillColor`() {
             assertEquals(
                 expected = VectorSet.Path.FillColor(red = 0x00, green = 0xFF, blue = 0x00, alpha = 0xFF),
-                actual = deserializer.parse(color = "#FF00FF00")
+                actual = parser.parse(color = "#FF00FF00")
             )
         }
 
@@ -107,7 +107,7 @@ class ColorParserTest {
         fun `blue color to FillColor`() {
             assertEquals(
                 expected = VectorSet.Path.FillColor(red = 0x00, green = 0x00, blue = 0xFF, alpha = 0xFF),
-                actual = deserializer.parse(color = "#FF0000FF")
+                actual = parser.parse(color = "#FF0000FF")
             )
         }
 
@@ -115,16 +115,16 @@ class ColorParserTest {
         fun `black color with alpha to FillColor`() {
             assertEquals(
                 expected = VectorSet.Path.FillColor(red = 0x00, green = 0x00, blue = 0xFF, alpha = 0x33),
-                actual = deserializer.parse(color = "#330000FF")
+                actual = parser.parse(color = "#330000FF")
             )
         }
     }
 
     @Nested
-    inner class DeserializeNoHex {
+    inner class ParseNoHex {
         @Test
         fun `returns no color`() {
-            assertNull(actual = deserializer.parse(color = "R.color.white"))
+            assertNull(actual = parser.parse(color = "R.color.white"))
         }
     }
 }
