@@ -1,6 +1,7 @@
 package vectordrawable
 
 import ColorParser
+import Translation
 import VectorSet
 import VectorSetParser
 import commands.PathParser
@@ -30,11 +31,15 @@ internal class VectorDrawableParser(
     }
 
     private fun VectorDrawable.Group.toVectorGroup(): VectorSet.Group {
+        val tx = translateX ?: 0f
+        val ty = translateY ?: 0f
+
         return VectorSet.Group(
             name = name,
             groups = group.map { it.toVectorGroup() },
             paths = path.map { it.toVectorPath() },
-            rotate = rotation ?: 0f
+            rotate = rotation ?: 0f,
+            translation = Translation(x = tx, y = ty)
         )
     }
 

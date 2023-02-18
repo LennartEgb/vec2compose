@@ -45,8 +45,8 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         indent().append("pivotY = 0f,").appendLine()
         indent().append("scaleX = 1f,").appendLine()
         indent().append("scaleY = 1f,").appendLine()
-        indent().append("translationX = 0f,").appendLine()
-        indent().append("translationY = 0f,").appendLine()
+        indent().append("translationX = ${group.translation.x}f,").appendLine()
+        indent().append("translationY = ${group.translation.y}f,").appendLine()
         indent().append("clipPathData = emptyList()").appendLine()
         append(") {").appendLine()
         group.groups.joinToString(separator = "\n") { parseGroup(it, forBuilder = false) }
