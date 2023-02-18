@@ -162,8 +162,8 @@ class SVGFileParserTest {
                     viewportHeight = 24.0f
                 ).group(
                     rotate = 0.0f,
-                    pivotX = 0f,
-                    pivotY = 0f,
+                    pivotX = 0.0f,
+                    pivotY = 0.0f,
                     scaleX = 1.0f,
                     scaleY = 1.0f,
                     translationX = 0.0f,

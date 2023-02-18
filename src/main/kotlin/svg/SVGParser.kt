@@ -39,6 +39,7 @@ internal class SVGParser(
             groups = g.map { it.toVectorGroup() },
             paths = path.map { it.toVectorPath() },
             rotate = transform?.getRotation() ?: 0f,
+            pivot = transform?.getPivot() ?: Translation(0f, 0f),
             translation = transform?.getTranslation() ?: Translation(0f, 0f),
             scale = transform?.getScale() ?: Scale(1f, 1f)
         )
@@ -62,8 +63,11 @@ internal class SVGParser(
     }
 
     private fun String.getRotation(): Float {
-        // TODO: Cannot use x and y at this moment
         return getFunction("rotate")?.let { (a, _, _) -> a } ?: 0f
+    }
+
+    private fun String.getPivot(): Translation {
+        return getFunction("rotate")?.let { (_, x, y) -> Translation(x = x, y = y) } ?: Translation(0f, 0f)
     }
 
     private fun String.getTranslation(): Translation {

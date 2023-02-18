@@ -36,11 +36,14 @@ internal class VectorDrawableParser(
         val ty = translateY ?: 0f
         val sx = scaleX ?: 1f
         val sy = scaleY ?: 1f
+        val px = pivotX ?: 0f
+        val py = pivotY ?: 0f
         return VectorSet.Group(
             name = name,
             groups = group.map { it.toVectorGroup() },
             paths = path.map { it.toVectorPath() },
             rotate = rotation ?: 0f,
+            pivot = Translation(x = px, y = py),
             translation = Translation(x = tx, y = ty),
             scale = Scale(x = sx, y = sy)
         )
