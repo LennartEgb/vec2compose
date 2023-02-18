@@ -164,8 +164,8 @@ class SVGFileParserTest {
                     rotate = 0.0f,
                     pivotX = 0f,
                     pivotY = 0f,
-                    scaleX = 1f,
-                    scaleY = 1f,
+                    scaleX = 1.0f,
+                    scaleY = 1.0f,
                     translationX = 0.0f,
                     translationY = 0.0f,
                     clipPathData = emptyList()

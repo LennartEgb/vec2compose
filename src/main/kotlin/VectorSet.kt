@@ -14,7 +14,8 @@ internal data class VectorSet(
         val groups: List<Group>,
         val paths: List<Path>,
         val rotate: Float,
-        val translation: Translation
+        val translation: Translation,
+        val scale: Scale
     )
 
     data class Path(

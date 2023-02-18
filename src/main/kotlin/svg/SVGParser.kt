@@ -1,6 +1,7 @@
 package svg
 
 import ColorParser
+import Scale
 import Translation
 import VectorSet
 import VectorSetParser
@@ -38,7 +39,8 @@ internal class SVGParser(
             groups = g.map { it.toVectorGroup() },
             paths = path.map { it.toVectorPath() },
             rotate = transform?.getRotation() ?: 0f,
-            translation = transform?.getTranslation() ?: Translation(0f, 0f)
+            translation = transform?.getTranslation() ?: Translation(0f, 0f),
+            scale = transform?.getScale() ?: Scale(1f, 1f)
         )
     }
 
@@ -66,6 +68,10 @@ internal class SVGParser(
 
     private fun String.getTranslation(): Translation {
         return getFunction("translate")?.let { (x, y) -> Translation(x = x, y = y) } ?: Translation(0f, 0f)
+    }
+
+    private fun String.getScale(): Scale {
+        return getFunction("scale")?.let { (x, y) -> Scale(x = x, y = y) } ?: Scale(0f, 0f)
     }
 
     private fun String.getFunction(key: String): List<Float>? {
