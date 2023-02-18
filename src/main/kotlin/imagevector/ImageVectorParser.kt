@@ -22,4 +22,3 @@ internal class ImageVectorParser(indentation: CharSequence = DEFAULT_INDENTATION
         }.replace(emptyLineRegex, "")
     }
 }
-

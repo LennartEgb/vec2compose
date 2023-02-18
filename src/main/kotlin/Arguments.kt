@@ -1,4 +1,9 @@
-import kotlinx.cli.*
+import kotlinx.cli.ArgParser
+import kotlinx.cli.ArgType
+import kotlinx.cli.DefaultRequiredType
+import kotlinx.cli.SingleNullableOption
+import kotlinx.cli.SingleOption
+import kotlinx.cli.required
 
 internal class Arguments(args: Array<String>) {
     private val inputOption: SingleOption<String, DefaultRequiredType.Required>

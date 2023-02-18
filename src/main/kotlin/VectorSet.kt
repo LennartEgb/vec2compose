@@ -12,13 +12,13 @@ internal data class VectorSet(
     data class Group(
         val name: String?,
         val groups: List<Group>,
-        val paths: List<Path>,
+        val paths: List<Path>
     )
 
     data class Path(
         val fillType: FillType,
         val fillColor: FillColor? = null,
-        val commands: List<Command>,
+        val commands: List<Command>
     ) {
         enum class FillType {
             NonZero,

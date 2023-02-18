@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.Test
-import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
 class VectorSetTest {

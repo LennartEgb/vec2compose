@@ -20,7 +20,8 @@ internal class XMLFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "ic_account_circle_24",
                     defaultWidth = 24.dp,
@@ -38,7 +39,8 @@ internal class XMLFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "ic_check_circle_24",
                     defaultWidth = 24.dp,
@@ -56,7 +58,8 @@ internal class XMLFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "ic_delete_24",
                     defaultWidth = 24.dp,
@@ -74,7 +77,8 @@ internal class XMLFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "ic_done_24",
                     defaultWidth = 24.dp,
@@ -92,7 +96,8 @@ internal class XMLFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "ic_home_24",
                     defaultWidth = 24.dp,
@@ -110,7 +115,8 @@ internal class XMLFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "ic_info_24",
                     defaultWidth = 24.dp,
@@ -128,7 +134,8 @@ internal class XMLFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "ic_language_24",
                     defaultWidth = 24.dp,
@@ -146,7 +153,8 @@ internal class XMLFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "ic_search_24",
                     defaultWidth = 24.dp,
@@ -164,7 +172,8 @@ internal class XMLFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "ic_settings_24",
                     defaultWidth = 24.dp,

@@ -10,7 +10,7 @@ private typealias DpString = String
 internal class VectorDrawableParser(
     private val colorParser: ColorParser,
     private val deserializer: VectorDrawableDeserializer,
-    private val pathParser: PathParser,
+    private val pathParser: PathParser
 ) : VectorSetParser {
 
     override fun parse(content: String): Result<VectorSet> {
@@ -33,7 +33,7 @@ internal class VectorDrawableParser(
         return VectorSet.Group(
             name = name,
             groups = group.map { it.toVectorGroup() },
-            paths = path.map { it.toVectorPath() },
+            paths = path.map { it.toVectorPath() }
         )
     }
 
@@ -48,8 +48,10 @@ internal class VectorDrawableParser(
     private fun DpString.toIntDp(): Int {
         val int = toIntOrNull()
         if (int != null) return int
-        if (endsWith("dp")) return dropLast(2).toIntOrNull()
-            ?: error("Malformed dp string: $this")
+        if (endsWith("dp")) {
+            return dropLast(2).toIntOrNull()
+                ?: error("Malformed dp string: $this")
+        }
         error("Could not transform dp string to int: $this")
     }
 
@@ -61,4 +63,3 @@ internal class VectorDrawableParser(
         }
     }
 }
-

@@ -127,5 +127,4 @@ class ColorParserTest {
             assertNull(actual = deserializer.parse(color = "R.color.white"))
         }
     }
-
 }

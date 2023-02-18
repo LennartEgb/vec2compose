@@ -20,7 +20,8 @@ class SVGFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "search_24",
                     defaultWidth = 24.dp,
@@ -38,7 +39,8 @@ class SVGFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "account_circle_24",
                     defaultWidth = 24.dp,
@@ -56,7 +58,8 @@ class SVGFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "check_circle_48",
                     defaultWidth = 48.dp,
@@ -74,7 +77,8 @@ class SVGFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "delete_48",
                     defaultWidth = 48.dp,
@@ -92,7 +96,8 @@ class SVGFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "done_24",
                     defaultWidth = 24.dp,
@@ -110,7 +115,8 @@ class SVGFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "home_24",
                     defaultWidth = 24.dp,
@@ -128,7 +134,8 @@ class SVGFileParserTest {
         assertDoesNotThrow {
             val content = parser.parse(file).getOrThrow()
             assertContains(
-                content, """
+                content,
+                """
                 ImageVector.Builder(
                     name = "info_24",
                     defaultWidth = 24.dp,
@@ -242,7 +249,7 @@ class SVGFileParserTest {
                 }
                 .build()
                 """.trimIndent(),
-                actual = content,
+                actual = content
             )
         }
     }
