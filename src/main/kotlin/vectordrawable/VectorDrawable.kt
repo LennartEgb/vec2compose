@@ -28,6 +28,10 @@ internal data class VectorDrawable(
         val pivotX: Float? = null,
         @field:JacksonXmlProperty(localName = "pivotY")
         val pivotY: Float? = null,
+        @field:JacksonXmlProperty(localName = "translateX")
+        val translateX: Float? = null,
+        @field:JacksonXmlProperty(localName = "translateY")
+        val translateY: Float? = null,
         @field:JacksonXmlProperty(localName = "rotation")
         val rotation: Float? = null,
         @field:JacksonXmlElementWrapper(useWrapping = false)

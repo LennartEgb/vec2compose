@@ -13,7 +13,8 @@ internal data class VectorSet(
         val name: String?,
         val groups: List<Group>,
         val paths: List<Path>,
-        val rotate: Float
+        val rotate: Float,
+        val translation: Translation
     )
 
     data class Path(

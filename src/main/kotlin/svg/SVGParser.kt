@@ -1,6 +1,7 @@
 package svg
 
 import ColorParser
+import Translation
 import VectorSet
 import VectorSetParser
 import commands.PathParser
@@ -36,7 +37,8 @@ internal class SVGParser(
             name = name,
             groups = g.map { it.toVectorGroup() },
             paths = path.map { it.toVectorPath() },
-            rotate = transform?.getRotation() ?: 0f
+            rotate = transform?.getRotation() ?: 0f,
+            translation = transform?.getTranslation() ?: Translation(0f, 0f)
         )
     }
 
@@ -58,12 +60,18 @@ internal class SVGParser(
     }
 
     private fun String.getRotation(): Float {
-        val key = "rotate"
-        val startIndex = indexOf(key).takeIf { it != -1 } ?: return 0f
-        val rotateStart = substring(startIndex + key.length)
-        val endIndex = rotateStart.indexOfFirst { it == ')' }
-        val (a, _, _) = rotateStart.substring(1 until endIndex).split(" ").map { it.toFloat() }
         // TODO: Cannot use x and y at this moment
-        return a
+        return getFunction("rotate")?.let { (a, _, _) -> a } ?: 0f
+    }
+
+    private fun String.getTranslation(): Translation {
+        return getFunction("translate")?.let { (x, y) -> Translation(x = x, y = y) } ?: Translation(0f, 0f)
+    }
+
+    private fun String.getFunction(key: String): List<Float>? {
+        val startIndex = indexOf(key).takeIf { it != -1 } ?: return null
+        val functionStart = substring(startIndex + key.length)
+        val endIndex = functionStart.indexOfFirst { it == ')' }
+        return functionStart.substring(1 until endIndex).split(" ").map { it.toFloat() }
     }
 }
