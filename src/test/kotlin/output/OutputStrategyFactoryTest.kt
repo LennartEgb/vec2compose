@@ -2,6 +2,7 @@ package output
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertIs
+import kotlin.test.assertIsNot
 
 internal class OutputStrategyFactoryTest {
 
@@ -9,7 +10,7 @@ internal class OutputStrategyFactoryTest {
 
     @Test
     fun `create without output path returns PrintOutputStrategy`() {
-        assertIs<PrintOutputStrategy>(factory.create(outputPath = null, name = "George"))
+        assertIsNot<FileOutputStrategy>(factory.create(outputPath = null, name = "George"))
     }
 
     @Test

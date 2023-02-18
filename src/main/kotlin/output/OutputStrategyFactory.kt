@@ -9,6 +9,6 @@ internal class OutputStrategyFactory(
 
     fun create(outputPath: String?, name: String): OutputStrategy {
         return outputPath?.let { FileOutputStrategy(nameFormatter.format(name), it, importProvider) }
-            ?: PrintOutputStrategy()
+            ?: OutputStrategy(::println)
     }
 }
