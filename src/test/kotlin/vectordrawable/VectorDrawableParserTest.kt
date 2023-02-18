@@ -1,5 +1,6 @@
 package vectordrawable
 
+import HexColorParser
 import commands.Command
 import commands.CommandParser
 import commands.PathParser
@@ -12,7 +13,8 @@ internal class VectorDrawableParserTest {
 
     private val parser = VectorDrawableParser(
         deserializer = VectorDrawableDeserializer(TestObjectMapper),
-        pathParser = PathParser(CommandParser())
+        pathParser = PathParser(CommandParser()),
+        colorParser = HexColorParser(),
     )
 
     @Test
