@@ -19,7 +19,7 @@ internal data class VectorDrawable(
     @field:JacksonXmlElementWrapper(useWrapping = false)
     val path: List<Path> = emptyList(),
     @field:JacksonXmlElementWrapper(useWrapping = false)
-    val group: List<Group> = emptyList(),
+    val group: List<Group> = emptyList()
 ) {
     data class Group(
         @field:JacksonXmlProperty(localName = "name")
@@ -33,7 +33,7 @@ internal data class VectorDrawable(
         @field:JacksonXmlElementWrapper(useWrapping = false)
         val group: List<Group> = emptyList(),
         @field:JacksonXmlElementWrapper(useWrapping = false)
-        val path: List<Path> = emptyList(),
+        val path: List<Path> = emptyList()
     )
 
     data class Path(
@@ -44,6 +44,6 @@ internal data class VectorDrawable(
         @field:JacksonXmlProperty(localName = "fillColor")
         val fillColor: String? = null,
         @field:JacksonXmlProperty(localName = "pathData")
-        val pathData: String,
+        val pathData: String
     )
 }

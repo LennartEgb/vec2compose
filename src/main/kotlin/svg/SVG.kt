@@ -25,7 +25,7 @@ data class SVG(
         @field:JacksonXmlElementWrapper(useWrapping = false)
         val g: List<Group> = emptyList(),
         @field:JacksonXmlElementWrapper(useWrapping = false)
-        val path: List<Path> = emptyList(),
+        val path: List<Path> = emptyList()
     )
 
     data class Path(
@@ -36,6 +36,6 @@ data class SVG(
         @field:JacksonXmlProperty(localName = "fill-rule")
         val fillRule: String = "nonzero",
         @field:JacksonXmlProperty(localName = "fill")
-        val fill: String? = null,
+        val fill: String? = null
     )
 }

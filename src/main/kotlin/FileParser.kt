@@ -3,7 +3,7 @@ import java.io.File
 
 internal class FileParser(
     private val vectorSetParser: VectorSetParser,
-    private val imageVectorParser: ImageVectorParser,
+    private val imageVectorParser: ImageVectorParser
 ) {
     fun parse(file: File): Result<String> {
         return file.readText()

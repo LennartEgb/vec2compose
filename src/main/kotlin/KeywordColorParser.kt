@@ -14,7 +14,7 @@ internal class KeywordColorParser : ColorParser {
                             alpha = 0xff,
                             red = r.toInt(),
                             green = g.toInt(),
-                            blue = b.toInt(),
+                            blue = b.toInt()
                         )
                     }
             }

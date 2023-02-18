@@ -1,10 +1,10 @@
 package vectordrawable
 
 import HexColorParser
+import VectorSet
 import commands.Command
 import commands.CommandParser
 import commands.PathParser
-import VectorSet
 import org.junit.jupiter.api.Test
 import utils.TestObjectMapper
 import kotlin.test.assertEquals
@@ -14,7 +14,7 @@ internal class VectorDrawableParserTest {
     private val parser = VectorDrawableParser(
         deserializer = VectorDrawableDeserializer(TestObjectMapper),
         pathParser = PathParser(CommandParser()),
-        colorParser = HexColorParser(),
+        colorParser = HexColorParser()
     )
 
     @Test
@@ -47,12 +47,12 @@ internal class VectorDrawableParserTest {
                             Command.CurveTo(17.52f, 22f, 22f, 17.52f, 22f, 12f, isAbsolute = true),
                             Command.ReflectiveCurveTo(17.52f, 2f, 11.99f, 2f, isAbsolute = true),
                             Command.Close
-                        ),
-                    ),
+                        )
+                    )
                 ),
-                groups = emptyList(),
+                groups = emptyList()
             ),
-            actual = parser.parse(vector).getOrThrow(),
+            actual = parser.parse(vector).getOrThrow()
         )
     }
 
@@ -87,12 +87,12 @@ internal class VectorDrawableParserTest {
                             Command.CurveTo(17.52f, 22f, 22f, 17.52f, 22f, 12f, isAbsolute = true),
                             Command.ReflectiveCurveTo(17.52f, 2f, 11.99f, 2f, isAbsolute = true),
                             Command.Close
-                        ),
+                        )
                     )
                 ),
-                groups = emptyList(),
+                groups = emptyList()
             ),
-            actual = parser.parse(vector).getOrThrow(),
+            actual = parser.parse(vector).getOrThrow()
         )
     }
 }

@@ -1,7 +1,7 @@
 package imagevector
 
-import commands.Command
 import VectorSet
+import commands.Command
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
@@ -56,7 +56,7 @@ internal class ImageVectorParserTest {
         """.trimIndent()
         assertEquals(
             expected = expected,
-            actual = imageVectorParser.parse(name = "ic_icon", vectorSet = set),
+            actual = imageVectorParser.parse(name = "ic_icon", vectorSet = set)
         )
     }
 
@@ -78,7 +78,7 @@ internal class ImageVectorParserTest {
                     )
                 )
             ),
-            groups = emptyList(),
+            groups = emptyList()
         )
 
         val expected = """
@@ -107,7 +107,7 @@ internal class ImageVectorParserTest {
         """.trimIndent()
         assertEquals(
             expected = expected,
-            actual = imageVectorParser.parse(name = "ic_icon", vectorSet = set),
+            actual = imageVectorParser.parse(name = "ic_icon", vectorSet = set)
         )
     }
 }

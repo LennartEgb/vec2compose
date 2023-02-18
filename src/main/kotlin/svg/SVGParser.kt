@@ -8,7 +8,7 @@ import commands.PathParser
 internal class SVGParser(
     private val colorParser: ColorParser,
     private val deserializer: SVGDeserializer,
-    private val pathParser: PathParser,
+    private val pathParser: PathParser
 ) : VectorSetParser {
 
     override fun parse(content: String): Result<VectorSet> {
@@ -35,7 +35,7 @@ internal class SVGParser(
         return VectorSet.Group(
             name = name,
             groups = g.map { it.toVectorGroup() },
-            paths = path.map { it.toVectorPath() },
+            paths = path.map { it.toVectorPath() }
         )
     }
 
@@ -55,4 +55,3 @@ internal class SVGParser(
         }
     }
 }
-

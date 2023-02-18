@@ -6,7 +6,7 @@ import java.io.File
 internal class FileOutputStrategy(
     private val name: String,
     private val pathname: String,
-    private val importProvider: ImageVectorImportProvider,
+    private val importProvider: ImageVectorImportProvider
 ) : OutputStrategy {
     override fun write(content: String) {
         buildString {

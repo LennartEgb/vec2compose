@@ -53,7 +53,7 @@ internal sealed interface Command {
         val y2: Float,
         val x3: Float,
         val y3: Float,
-        override val isAbsolute: Boolean,
+        override val isAbsolute: Boolean
     ) : Command
 
     /**
@@ -94,6 +94,6 @@ internal sealed interface Command {
     data class ReflectiveQuadraticBezierTo(
         val x: Float,
         val y: Float,
-        override val isAbsolute: Boolean,
+        override val isAbsolute: Boolean
     ) : Command
 }
