@@ -35,7 +35,8 @@ internal class SVGParser(
         return VectorSet.Group(
             name = name,
             groups = g.map { it.toVectorGroup() },
-            paths = path.map { it.toVectorPath() }
+            paths = path.map { it.toVectorPath() },
+            rotate = transform?.getRotation() ?: 0f
         )
     }
 
@@ -54,5 +55,15 @@ internal class SVGParser(
             "nonzero" -> VectorSet.Path.FillType.NonZero
             else -> VectorSet.Path.FillType.Default
         }
+    }
+
+    private fun String.getRotation(): Float {
+        val key = "rotate"
+        val startIndex = indexOf(key).takeIf { it != -1 } ?: return 0f
+        val rotateStart = substring(startIndex + key.length)
+        val endIndex = rotateStart.indexOfFirst { it == ')' }
+        val (a, _, _) = rotateStart.substring(1 until endIndex).split(" ").map { it.toFloat() }
+        // TODO: Cannot use x and y at this moment
+        return a
     }
 }

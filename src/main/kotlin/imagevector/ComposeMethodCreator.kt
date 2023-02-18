@@ -40,7 +40,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         if (forBuilder) append(".")
         append("group(").appendLine()
         group.name?.also { indent().append("name = $it").appendLine() }
-        indent().append("rotate = 0f,").appendLine()
+        indent().append("rotate = ${group.rotate}f,").appendLine()
         indent().append("pivotX = 0f,").appendLine()
         indent().append("pivotY = 0f,").appendLine()
         indent().append("scaleX = 1f,").appendLine()
