@@ -1,5 +1,6 @@
 package svg
 
+import HexColorParser
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import commands.CommandParser
@@ -10,7 +11,8 @@ internal class SVGParserTest {
 
     private val parser = SVGParser(
         deserializer = SVGDeserializer(TestObjectMapper),
-        pathParser = PathParser(CommandParser())
+        pathParser = PathParser(CommandParser()),
+        colorParser = HexColorParser(),
     )
 
     @Test

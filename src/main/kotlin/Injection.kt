@@ -17,15 +17,20 @@ internal object Injection {
     private val PathParser = PathParser(commandParser = CommandParser)
     private val VectorDrawableSerializer = VectorDrawableDeserializer(objectMapper)
     private val SVGDeserializer = SVGDeserializer(objectMapper)
-    private val colorParser = HexColorParser()
+    private val hexColorParser = HexColorParser()
+    private val keywordColorParser = KeywordColorParser()
+    private val combinedColorParser = object : ColorParser {
+        override fun parse(color: String): VectorSet.Path.FillColor? = keywordColorParser.parse(color)
+            ?: hexColorParser.parse(color)
+    }
 
     val VectorDrawableParser = VectorDrawableParser(
-        colorParser = colorParser,
+        colorParser = hexColorParser,
         deserializer = VectorDrawableSerializer,
         pathParser = PathParser
     )
     val SVGParser = SVGParser(
-        colorParser = colorParser,
+        colorParser = combinedColorParser,
         deserializer = SVGDeserializer,
         pathParser = PathParser
     )
