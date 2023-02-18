@@ -9,21 +9,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Setup JDK
         uses: actions/setup-java@v3
         with:
           java-version: 17
           distribution: temurin
-      - name: Run unit tests
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: :test -i
       - name: Check formatting
         uses: gradle/gradle-build-action@v2
         with:
           arguments: ktlintCheck
+      - name: Run unit tests
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: test
       - name: Run Kover code coverage
         uses: gradle/gradle-build-action@v2
         with:
