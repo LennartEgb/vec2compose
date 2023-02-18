@@ -1,0 +1,6 @@
+#!/bin/sh
+
+./gradlew ktlintCheck
+status=$?
+
+exit $status
