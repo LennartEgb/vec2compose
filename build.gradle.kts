@@ -1,9 +1,11 @@
+import kotlinx.kover.api.KoverTaskExtension
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.kover)
     alias(libs.plugins.ktlint)
     application
 }
@@ -22,6 +24,16 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
+kover {
+    verify {
+        rule {
+            bound {
+                minValue = 80
+            }
+        }
+    }
+}
+
 tasks.test {
     useJUnitPlatform()
     testLogging {
@@ -31,6 +43,10 @@ tasks.test {
         showCauses = true
         showExceptions = true
         showStackTraces = true
+    }
+    extensions.configure(KoverTaskExtension::class) {
+        isDisabled.set(false)
+        reportFile.set(file("$buildDir/kover/result.bin"))
     }
 }
 
