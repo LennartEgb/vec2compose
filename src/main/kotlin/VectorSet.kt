@@ -9,38 +9,38 @@ internal data class VectorSet(
     val paths: List<Path>
 ) {
 
-  data class Group(
-      val name: String?,
-      val groups: List<Group>,
-      val paths: List<Path>,
-  )
+    data class Group(
+        val name: String?,
+        val groups: List<Group>,
+        val paths: List<Path>,
+    )
 
-  data class Path(
-      val fillType: FillType,
-      val fillColor: FillColor? = null,
-      val commands: List<Command>,
-  ) {
-    enum class FillType {
-      NonZero,
-      EvenOdd;
+    data class Path(
+        val fillType: FillType,
+        val fillColor: FillColor? = null,
+        val commands: List<Command>,
+    ) {
+        enum class FillType {
+            NonZero,
+            EvenOdd;
 
-      companion object {
-        val Default = NonZero
-      }
-    }
-
-    data class FillColor(val red: Int, val green: Int, val blue: Int, val alpha: Int) {
-      override fun toString(): String {
-        fun String.format() = if (length < 2) padStart(length = 2, padChar = '0') else this
-        return buildString {
-          append("Color(0x")
-          append(alpha.toString(16).format())
-          append(red.toString(16).format())
-          append(green.toString(16).format())
-          append(blue.toString(16).format())
-          append(")")
+            companion object {
+                val Default = NonZero
+            }
         }
-      }
+
+        data class FillColor(val red: Int, val green: Int, val blue: Int, val alpha: Int) {
+            override fun toString(): String {
+                fun String.format() = if (length < 2) padStart(length = 2, padChar = '0') else this
+                return buildString {
+                    append("Color(0x")
+                    append(alpha.toString(16).format())
+                    append(red.toString(16).format())
+                    append(green.toString(16).format())
+                    append(blue.toString(16).format())
+                    append(")")
+                }
+            }
+        }
     }
-  }
 }

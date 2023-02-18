@@ -13,16 +13,16 @@ data class SVG(
     @field:JacksonXmlElementWrapper(useWrapping = false) val path: List<Path> = emptyList(),
     @field:JacksonXmlElementWrapper(useWrapping = false) val g: List<Group> = emptyList()
 ) {
-  data class Group(
-      @field:JacksonXmlProperty(localName = "id") val name: String? = null,
-      @field:JacksonXmlElementWrapper(useWrapping = false) val g: List<Group> = emptyList(),
-      @field:JacksonXmlElementWrapper(useWrapping = false) val path: List<Path> = emptyList(),
-  )
+    data class Group(
+        @field:JacksonXmlProperty(localName = "id") val name: String? = null,
+        @field:JacksonXmlElementWrapper(useWrapping = false) val g: List<Group> = emptyList(),
+        @field:JacksonXmlElementWrapper(useWrapping = false) val path: List<Path> = emptyList(),
+    )
 
-  data class Path(
-      @field:JacksonXmlProperty(localName = "id") val id: String = "",
-      @field:JacksonXmlProperty(localName = "d") val pathData: String,
-      @field:JacksonXmlProperty(localName = "fill-rule") val fillRule: String = "nonzero",
-      @field:JacksonXmlProperty(localName = "fill") val fill: String? = null,
-  )
+    data class Path(
+        @field:JacksonXmlProperty(localName = "id") val id: String = "",
+        @field:JacksonXmlProperty(localName = "d") val pathData: String,
+        @field:JacksonXmlProperty(localName = "fill-rule") val fillRule: String = "nonzero",
+        @field:JacksonXmlProperty(localName = "fill") val fill: String? = null,
+    )
 }

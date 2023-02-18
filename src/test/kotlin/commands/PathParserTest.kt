@@ -5,33 +5,52 @@ import org.junit.jupiter.api.Test
 
 internal class PathParserTest {
 
-  private val pathParser = PathParser(CommandParser())
+    private val pathParser = PathParser(CommandParser())
 
-  @Test
-  fun `parse path to list of commands without closing end`() {
-    val pathSample = "M27.05,24.55L12.15,19.65C11.85,19.35 11.483,19.2 11.05,19.2"
+    @Test
+    fun `parse path to list of commands without closing end`() {
+        val pathSample = "M27.05,24.55L12.15,19.65C11.85,19.35 11.483,19.2 11.05,19.2"
 
-    assertEquals(
-        actual = pathParser.parse(pathSample),
-        expected =
-            listOf(
-                Command.MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true),
-                Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true),
-                Command.CurveTo(11.85f, 19.35f, 11.483f, 19.2f, 11.05f, 19.2f, isAbsolute = true)))
-  }
+        assertEquals(
+            actual = pathParser.parse(pathSample),
+            expected =
+                listOf(
+                    Command.MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true),
+                    Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true),
+                    Command.CurveTo(
+                        11.85f,
+                        19.35f,
+                        11.483f,
+                        19.2f,
+                        11.05f,
+                        19.2f,
+                        isAbsolute = true
+                    )
+                )
+        )
+    }
 
-  @Test
-  fun `parse path to list of commands with closing end`() {
-    val pathSample = "M27.05,24.55L12.15,19.65C11.85,19.35 11.483,19.2 11.05,19.2Z"
+    @Test
+    fun `parse path to list of commands with closing end`() {
+        val pathSample = "M27.05,24.55L12.15,19.65C11.85,19.35 11.483,19.2 11.05,19.2Z"
 
-    assertEquals(
-        actual = pathParser.parse(pathSample),
-        expected =
-            listOf(
-                Command.MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true),
-                Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true),
-                Command.CurveTo(11.85f, 19.35f, 11.483f, 19.2f, 11.05f, 19.2f, isAbsolute = true),
-                Command.Close,
-            ))
-  }
+        assertEquals(
+            actual = pathParser.parse(pathSample),
+            expected =
+                listOf(
+                    Command.MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true),
+                    Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true),
+                    Command.CurveTo(
+                        11.85f,
+                        19.35f,
+                        11.483f,
+                        19.2f,
+                        11.05f,
+                        19.2f,
+                        isAbsolute = true
+                    ),
+                    Command.Close,
+                )
+        )
+    }
 }

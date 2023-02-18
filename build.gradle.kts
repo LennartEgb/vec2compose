@@ -22,6 +22,10 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
+ktfmt {
+    kotlinLangStyle()
+}
+
 tasks.test {
     useJUnitPlatform()
     testLogging {

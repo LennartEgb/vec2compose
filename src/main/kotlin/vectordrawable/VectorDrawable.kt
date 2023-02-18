@@ -14,19 +14,19 @@ internal data class VectorDrawable(
     @field:JacksonXmlElementWrapper(useWrapping = false) val path: List<Path> = emptyList(),
     @field:JacksonXmlElementWrapper(useWrapping = false) val group: List<Group> = emptyList(),
 ) {
-  data class Group(
-      @field:JacksonXmlProperty(localName = "name") val name: String? = null,
-      @field:JacksonXmlProperty(localName = "pivotX") val pivotX: Float? = null,
-      @field:JacksonXmlProperty(localName = "pivotY") val pivotY: Float? = null,
-      @field:JacksonXmlProperty(localName = "rotation") val rotation: Float? = null,
-      @field:JacksonXmlElementWrapper(useWrapping = false) val group: List<Group> = emptyList(),
-      @field:JacksonXmlElementWrapper(useWrapping = false) val path: List<Path> = emptyList(),
-  )
+    data class Group(
+        @field:JacksonXmlProperty(localName = "name") val name: String? = null,
+        @field:JacksonXmlProperty(localName = "pivotX") val pivotX: Float? = null,
+        @field:JacksonXmlProperty(localName = "pivotY") val pivotY: Float? = null,
+        @field:JacksonXmlProperty(localName = "rotation") val rotation: Float? = null,
+        @field:JacksonXmlElementWrapper(useWrapping = false) val group: List<Group> = emptyList(),
+        @field:JacksonXmlElementWrapper(useWrapping = false) val path: List<Path> = emptyList(),
+    )
 
-  data class Path(
-      @field:JacksonXmlProperty(localName = "name") val name: String? = null,
-      @field:JacksonXmlProperty(localName = "fillType") val fillType: String = "nonZero",
-      @field:JacksonXmlProperty(localName = "fillColor") val fillColor: String? = null,
-      @field:JacksonXmlProperty(localName = "pathData") val pathData: String,
-  )
+    data class Path(
+        @field:JacksonXmlProperty(localName = "name") val name: String? = null,
+        @field:JacksonXmlProperty(localName = "fillType") val fillType: String = "nonZero",
+        @field:JacksonXmlProperty(localName = "fillColor") val fillColor: String? = null,
+        @field:JacksonXmlProperty(localName = "pathData") val pathData: String,
+    )
 }

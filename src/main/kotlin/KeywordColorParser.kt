@@ -1,27 +1,27 @@
 internal class KeywordColorParser : ColorParser {
 
-  private val nameToColors: Map<String, VectorSet.Path.FillColor> = createNamesToColors()
+    private val nameToColors: Map<String, VectorSet.Path.FillColor> = createNamesToColors()
 
-  override fun parse(color: String): VectorSet.Path.FillColor? = nameToColors[color]
+    override fun parse(color: String): VectorSet.Path.FillColor? = nameToColors[color]
 
-  private fun createNamesToColors(): Map<String, VectorSet.Path.FillColor> {
-    return getColors()
-        .lines()
-        .associate { line -> line.split(":").let { it[0] to it[1] } }
-        .mapValues { (_, color) ->
-          color.removeSurrounding("[", "]").split(",").let { (r, g, b) ->
-            VectorSet.Path.FillColor(
-                alpha = 0xff,
-                red = r.toInt(),
-                green = g.toInt(),
-                blue = b.toInt(),
-            )
-          }
-        }
-  }
+    private fun createNamesToColors(): Map<String, VectorSet.Path.FillColor> {
+        return getColors()
+            .lines()
+            .associate { line -> line.split(":").let { it[0] to it[1] } }
+            .mapValues { (_, color) ->
+                color.removeSurrounding("[", "]").split(",").let { (r, g, b) ->
+                    VectorSet.Path.FillColor(
+                        alpha = 0xff,
+                        red = r.toInt(),
+                        green = g.toInt(),
+                        blue = b.toInt(),
+                    )
+                }
+            }
+    }
 
-  private fun getColors() =
-      """
+    private fun getColors() =
+        """
         aliceblue:[240,248,255]
         antiquewhite:[250,235,215]
         aqua:[0,255,255]
@@ -170,5 +170,5 @@ internal class KeywordColorParser : ColorParser {
         yellow:[255,255,0]
         yellowgreen:[154,205,50]
     """
-          .trimIndent()
+            .trimIndent()
 }

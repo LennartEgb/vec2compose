@@ -7,30 +7,34 @@ import org.junit.jupiter.api.Test
 
 internal class ImageVectorParserTest {
 
-  private val imageVectorParser = ImageVectorParser()
+    private val imageVectorParser = ImageVectorParser()
 
-  @Test
-  fun `parse VectorSet with FillType NonZero to ImageVector string`() {
-    val set =
-        VectorSet(
-            width = 24,
-            height = 24,
-            viewportWidth = 48f,
-            viewportHeight = 42f,
-            paths =
-                listOf(
-                    VectorSet.Path(
-                        fillType = VectorSet.Path.FillType.NonZero,
-                        commands =
-                            listOf(
-                                Command.MoveTo(x = 1f, y = 2f, isAbsolute = true),
-                                Command.LineTo(x = 2f, y = 2f, isAbsolute = true),
-                                Command.LineTo(x = 1f, y = 2f, isAbsolute = false),
-                                Command.Close))),
-            groups = emptyList())
+    @Test
+    fun `parse VectorSet with FillType NonZero to ImageVector string`() {
+        val set =
+            VectorSet(
+                width = 24,
+                height = 24,
+                viewportWidth = 48f,
+                viewportHeight = 42f,
+                paths =
+                    listOf(
+                        VectorSet.Path(
+                            fillType = VectorSet.Path.FillType.NonZero,
+                            commands =
+                                listOf(
+                                    Command.MoveTo(x = 1f, y = 2f, isAbsolute = true),
+                                    Command.LineTo(x = 2f, y = 2f, isAbsolute = true),
+                                    Command.LineTo(x = 1f, y = 2f, isAbsolute = false),
+                                    Command.Close
+                                )
+                        )
+                    ),
+                groups = emptyList()
+            )
 
-    val expected =
-        """
+        val expected =
+            """
             ImageVector.Builder(
                 name = "ic_icon",
                 defaultWidth = 24.dp,
@@ -54,36 +58,39 @@ internal class ImageVectorParserTest {
                 close()
             }.build()
         """
-            .trimIndent()
-    assertEquals(
-        expected = expected,
-        actual = imageVectorParser.parse(name = "ic_icon", vectorSet = set),
-    )
-  }
-
-  @Test
-  fun `parse VectorSet with FillType EvenOdd to ImageVector string`() {
-    val set =
-        VectorSet(
-            width = 24,
-            height = 24,
-            viewportWidth = 48f,
-            viewportHeight = 42f,
-            paths =
-                listOf(
-                    VectorSet.Path(
-                        fillType = VectorSet.Path.FillType.EvenOdd,
-                        commands =
-                            listOf(
-                                Command.MoveTo(x = 1f, y = 2f, isAbsolute = true),
-                                Command.LineTo(x = 2f, y = 2f, isAbsolute = true),
-                                Command.LineTo(x = 1f, y = 2f, isAbsolute = false),
-                                Command.Close))),
-            groups = emptyList(),
+                .trimIndent()
+        assertEquals(
+            expected = expected,
+            actual = imageVectorParser.parse(name = "ic_icon", vectorSet = set),
         )
+    }
 
-    val expected =
-        """
+    @Test
+    fun `parse VectorSet with FillType EvenOdd to ImageVector string`() {
+        val set =
+            VectorSet(
+                width = 24,
+                height = 24,
+                viewportWidth = 48f,
+                viewportHeight = 42f,
+                paths =
+                    listOf(
+                        VectorSet.Path(
+                            fillType = VectorSet.Path.FillType.EvenOdd,
+                            commands =
+                                listOf(
+                                    Command.MoveTo(x = 1f, y = 2f, isAbsolute = true),
+                                    Command.LineTo(x = 2f, y = 2f, isAbsolute = true),
+                                    Command.LineTo(x = 1f, y = 2f, isAbsolute = false),
+                                    Command.Close
+                                )
+                        )
+                    ),
+                groups = emptyList(),
+            )
+
+        val expected =
+            """
             ImageVector.Builder(
                 name = "ic_icon",
                 defaultWidth = 24.dp,
@@ -107,10 +114,10 @@ internal class ImageVectorParserTest {
                 close()
             }.build()
         """
-            .trimIndent()
-    assertEquals(
-        expected = expected,
-        actual = imageVectorParser.parse(name = "ic_icon", vectorSet = set),
-    )
-  }
+                .trimIndent()
+        assertEquals(
+            expected = expected,
+            actual = imageVectorParser.parse(name = "ic_icon", vectorSet = set),
+        )
+    }
 }
