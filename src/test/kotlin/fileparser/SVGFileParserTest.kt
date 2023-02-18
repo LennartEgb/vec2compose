@@ -172,7 +172,7 @@ class SVGFileParserTest {
                 ) {
                     path(
                         fill = SolidColor(Color.Black),
-                        fillAlpha = 1f,
+                        fillAlpha = 1.0f,
                         stroke = null,
                         strokeAlpha = 1f,
                         strokeLineWidth = 1f,
@@ -190,7 +190,7 @@ class SVGFileParserTest {
                     }
                     path(
                         fill = SolidColor(Color.Black),
-                        fillAlpha = 1f,
+                        fillAlpha = 1.0f,
                         stroke = null,
                         strokeAlpha = 1f,
                         strokeLineWidth = 1f,

@@ -18,7 +18,8 @@ internal data class VectorSet(
     data class Path(
         val fillType: FillType,
         val fillColor: FillColor? = null,
-        val commands: List<Command>
+        val commands: List<Command>,
+        val alpha: Float
     ) {
         enum class FillType {
             NonZero,

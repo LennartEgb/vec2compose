@@ -43,7 +43,8 @@ internal class SVGParser(
         return VectorSet.Path(
             fillType = parseFillType(fillRule),
             commands = pathParser.parse(pathData),
-            fillColor = fill?.let(colorParser::parse)
+            fillColor = fill?.let(colorParser::parse),
+            alpha = fillOpacity
         )
     }
 
