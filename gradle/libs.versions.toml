@@ -1,6 +1,7 @@
 [versions]
 kotlin = "1.8.0"
 kotlin-cli = "0.3.5"
+kotlin-kover = "0.6.1"
 jackson = "2.13.3"
 ktlint = "11.2.0"
 
@@ -14,4 +15,5 @@ jackson = ["jackson-dataformat", "jackson-module-kotlin"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kotlin-kover" }
 ktlint = {id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint"}
