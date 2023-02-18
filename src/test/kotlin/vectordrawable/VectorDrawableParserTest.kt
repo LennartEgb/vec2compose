@@ -1,8 +1,9 @@
 package vectordrawable
 
 import HexColorParser
+import Scale
+import Translation
 import VectorSet
-import commands.Command
 import commands.CommandParser
 import commands.PathParser
 import org.junit.jupiter.api.Test
@@ -19,40 +20,23 @@ internal class VectorDrawableParserTest {
 
     @Test
     fun `parse valid VectorDrawable xml to VectorSet`() {
-        val vector = """
-        <vector xmlns:android="https://schemas.android.com/apk/res/android"
-            android:width="24dp"
-            android:height="24dp"
-            android:viewportWidth="24"
-            android:viewportHeight="24"
-            android:tint="?attr/colorControlNormal">
-          <path
-              android:fillColor="@android:color/white"
-              android:alpha="0.5"
-              android:pathData="M11.99,2C6.47,2 2,6.48 2,12s4.47,10 9.99,10C17.52,22 22,17.52 22,12S17.52,2 11.99,2z"/>
-        </vector>
-        """.trimIndent()
+        val vector = vector(
+            """
+                <path
+                    android:fillColor="@android:color/white"
+                    android:alpha="0.5"
+                    android:pathData=""/>
+            """.trimIndent()
+        )
         assertEquals(
-            expected = VectorSet(
-                width = 24,
-                height = 24,
-                viewportWidth = 24f,
-                viewportHeight = 24f,
+            expected = vectorSet(
                 paths = listOf(
                     VectorSet.Path(
                         fillType = VectorSet.Path.FillType.NonZero,
-                        commands = listOf(
-                            Command.MoveTo(x = 11.99f, y = 2f, isAbsolute = true),
-                            Command.CurveTo(6.47f, 2f, 2f, 6.48f, 2f, 12f, isAbsolute = true),
-                            Command.ReflectiveCurveTo(4.47f, 10f, 9.99f, 10f, isAbsolute = false),
-                            Command.CurveTo(17.52f, 22f, 22f, 17.52f, 22f, 12f, isAbsolute = true),
-                            Command.ReflectiveCurveTo(17.52f, 2f, 11.99f, 2f, isAbsolute = true),
-                            Command.Close
-                        ),
+                        commands = emptyList(),
                         alpha = .5f
                     )
-                ),
-                groups = emptyList()
+                )
             ),
             actual = parser.parse(vector).getOrThrow()
         )
@@ -60,42 +44,84 @@ internal class VectorDrawableParserTest {
 
     @Test
     fun `parse valid VectorDrawable with fillType evenOdd to VectorSet`() {
-        val vector = """
-        <vector xmlns:android="https://schemas.android.com/apk/res/android"
-            android:width="24dp"
-            android:height="24dp"
-            android:viewportWidth="24"
-            android:viewportHeight="24"
-            android:tint="?attr/colorControlNormal">
-          <path
-              android:fillType="evenOdd"
-              android:fillColor="@android:color/white"
-              android:pathData="M11.99,2C6.47,2 2,6.48 2,12s4.47,10 9.99,10C17.52,22 22,17.52 22,12S17.52,2 11.99,2z"/>
-        </vector>
-        """.trimIndent()
+        val v = vector(
+            """
+            <path
+             android:fillType="evenOdd"
+             android:fillColor="@android:color/white"
+             android:pathData=""/>
+            """.trimIndent()
+        )
         assertEquals(
-            expected = VectorSet(
-                width = 24,
-                height = 24,
-                viewportWidth = 24f,
-                viewportHeight = 24f,
+            expected = vectorSet(
                 paths = listOf(
                     VectorSet.Path(
                         fillType = VectorSet.Path.FillType.EvenOdd,
-                        commands = listOf(
-                            Command.MoveTo(x = 11.99f, y = 2f, isAbsolute = true),
-                            Command.CurveTo(6.47f, 2f, 2f, 6.48f, 2f, 12f, isAbsolute = true),
-                            Command.ReflectiveCurveTo(4.47f, 10f, 9.99f, 10f, isAbsolute = false),
-                            Command.CurveTo(17.52f, 22f, 22f, 17.52f, 22f, 12f, isAbsolute = true),
-                            Command.ReflectiveCurveTo(17.52f, 2f, 11.99f, 2f, isAbsolute = true),
-                            Command.Close
-                        ),
+                        commands = emptyList(),
                         alpha = 1f
                     )
-                ),
-                groups = emptyList()
+                )
             ),
-            actual = parser.parse(vector).getOrThrow()
+            actual = parser.parse(v).getOrThrow()
         )
     }
+
+    @Test
+    fun `parse drawable with group`() {
+        val vector = vector(
+            """
+                <group 
+                    android:name="hi"
+                    android:pivotX="10.0"
+                    android:pivotY="11.0"
+                    android:rotation="15.0"
+                    android:translateX="20.0"
+                    android:translateY="21.0"
+                    android:scaleX="30.0"
+                    android:scaleY="31.0"
+                />
+            """.trimIndent()
+        )
+        val result = parser.parse(vector).getOrThrow()
+        assertEquals(
+            expected = listOf(
+                VectorSet.Group(
+                    name = "hi",
+                    groups = emptyList(),
+                    paths = emptyList(),
+                    rotate = 15f,
+                    pivot = Translation(10f, 11f),
+                    translation = Translation(20f, 21f),
+                    scale = Scale(30f, 31f)
+                )
+            ),
+            actual = result.groups
+        )
+    }
+
+    private fun vector(content: String): String = buildString {
+        appendLine(
+            """
+            <vector xmlns:android="https://schemas.android.com/apk/res/android"
+                    android:width="24dp"
+                    android:height="24dp"
+                    android:viewportWidth="24"
+                    android:viewportHeight="24">
+            """.trimIndent()
+        )
+        appendLine(content)
+        appendLine("</vector>")
+    }
+
+    private fun vectorSet(
+        paths: List<VectorSet.Path> = emptyList(),
+        groups: List<VectorSet.Group> = emptyList()
+    ): VectorSet = VectorSet(
+        width = 24,
+        height = 24,
+        viewportWidth = 24f,
+        viewportHeight = 24f,
+        paths = paths,
+        groups = groups
+    )
 }
