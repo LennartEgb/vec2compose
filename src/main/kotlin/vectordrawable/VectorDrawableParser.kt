@@ -33,7 +33,8 @@ internal class VectorDrawableParser(
         return VectorSet.Group(
             name = name,
             groups = group.map { it.toVectorGroup() },
-            paths = path.map { it.toVectorPath() }
+            paths = path.map { it.toVectorPath() },
+            rotate = rotation ?: 0f
         )
     }
 

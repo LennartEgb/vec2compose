@@ -25,7 +25,9 @@ data class SVG(
         @field:JacksonXmlElementWrapper(useWrapping = false)
         val g: List<Group> = emptyList(),
         @field:JacksonXmlElementWrapper(useWrapping = false)
-        val path: List<Path> = emptyList()
+        val path: List<Path> = emptyList(),
+        @field:JacksonXmlProperty(localName = "transform")
+        val transform: String? = null
     )
 
     data class Path(
