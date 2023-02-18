@@ -3,150 +3,159 @@ package fileparser
 import FileParser
 import Injection
 import imagevector.ImageVectorParser
+import kotlin.test.assertContains
+import kotlin.test.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import utils.FileLoader
-import kotlin.test.assertContains
-import kotlin.test.assertEquals
 
 class SVGFileParserTest {
 
-    private val fileLoader = FileLoader()
-    private val parser = FileParser(vectorSetParser = Injection.SVGParser, imageVectorParser = ImageVectorParser())
+  private val fileLoader = FileLoader()
+  private val parser =
+      FileParser(vectorSetParser = Injection.SVGParser, imageVectorParser = ImageVectorParser())
 
-    @Test
-    fun `parse successfully search_24 svg`() {
-        val file = fileLoader.load("svg/search_24.svg")
-        assertDoesNotThrow {
-            val content = parser.parse(file).getOrThrow()
-            assertContains(
-                content, """
+  @Test
+  fun `parse successfully search_24 svg`() {
+    val file = fileLoader.load("svg/search_24.svg")
+    assertDoesNotThrow {
+      val content = parser.parse(file).getOrThrow()
+      assertContains(
+          content,
+          """
                 ImageVector.Builder(
                     name = "search_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24.0f,
                     viewportHeight = 24.0f
-                """.trimIndent()
-            )
-        }
+                """
+              .trimIndent())
     }
+  }
 
-    @Test
-    fun `parse successfully account_circle svg`() {
-        val file = fileLoader.load("svg/account_circle_24.svg")
-        assertDoesNotThrow {
-            val content = parser.parse(file).getOrThrow()
-            assertContains(
-                content, """
+  @Test
+  fun `parse successfully account_circle svg`() {
+    val file = fileLoader.load("svg/account_circle_24.svg")
+    assertDoesNotThrow {
+      val content = parser.parse(file).getOrThrow()
+      assertContains(
+          content,
+          """
                 ImageVector.Builder(
                     name = "account_circle_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24.0f,
                     viewportHeight = 24.0f
-                """.trimIndent()
-            )
-        }
+                """
+              .trimIndent())
     }
+  }
 
-    @Test
-    fun `parse successfully check_circle svg`() {
-        val file = fileLoader.load("svg/check_circle_48.svg")
-        assertDoesNotThrow {
-            val content = parser.parse(file).getOrThrow()
-            assertContains(
-                content, """
+  @Test
+  fun `parse successfully check_circle svg`() {
+    val file = fileLoader.load("svg/check_circle_48.svg")
+    assertDoesNotThrow {
+      val content = parser.parse(file).getOrThrow()
+      assertContains(
+          content,
+          """
                 ImageVector.Builder(
                     name = "check_circle_48",
                     defaultWidth = 48.dp,
                     defaultHeight = 48.dp,
                     viewportWidth = 48.0f,
                     viewportHeight = 48.0f
-                """.trimIndent()
-            )
-        }
+                """
+              .trimIndent())
     }
+  }
 
-    @Test
-    fun `parse successfully delete svg`() {
-        val file = fileLoader.load("svg/delete_48.svg")
-        assertDoesNotThrow {
-            val content = parser.parse(file).getOrThrow()
-            assertContains(
-                content, """
+  @Test
+  fun `parse successfully delete svg`() {
+    val file = fileLoader.load("svg/delete_48.svg")
+    assertDoesNotThrow {
+      val content = parser.parse(file).getOrThrow()
+      assertContains(
+          content,
+          """
                 ImageVector.Builder(
                     name = "delete_48",
                     defaultWidth = 48.dp,
                     defaultHeight = 48.dp,
                     viewportWidth = 48.0f,
                     viewportHeight = 48.0f
-                """.trimIndent()
-            )
-        }
+                """
+              .trimIndent())
     }
+  }
 
-    @Test
-    fun `parse successfully done svg`() {
-        val file = fileLoader.load("svg/done_24.svg")
-        assertDoesNotThrow {
-            val content = parser.parse(file).getOrThrow()
-            assertContains(
-                content, """
+  @Test
+  fun `parse successfully done svg`() {
+    val file = fileLoader.load("svg/done_24.svg")
+    assertDoesNotThrow {
+      val content = parser.parse(file).getOrThrow()
+      assertContains(
+          content,
+          """
                 ImageVector.Builder(
                     name = "done_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24.0f,
                     viewportHeight = 24.0f
-                """.trimIndent()
-            )
-        }
+                """
+              .trimIndent())
     }
+  }
 
-    @Test
-    fun `parse successfully home svg`() {
-        val file = fileLoader.load("svg/home_24.svg")
-        assertDoesNotThrow {
-            val content = parser.parse(file).getOrThrow()
-            assertContains(
-                content, """
+  @Test
+  fun `parse successfully home svg`() {
+    val file = fileLoader.load("svg/home_24.svg")
+    assertDoesNotThrow {
+      val content = parser.parse(file).getOrThrow()
+      assertContains(
+          content,
+          """
                 ImageVector.Builder(
                     name = "home_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24.0f,
                     viewportHeight = 24.0f
-                """.trimIndent()
-            )
-        }
+                """
+              .trimIndent())
     }
+  }
 
-    @Test
-    fun `parse successfully info svg`() {
-        val file = fileLoader.load("svg/info_24.svg")
-        assertDoesNotThrow {
-            val content = parser.parse(file).getOrThrow()
-            assertContains(
-                content, """
+  @Test
+  fun `parse successfully info svg`() {
+    val file = fileLoader.load("svg/info_24.svg")
+    assertDoesNotThrow {
+      val content = parser.parse(file).getOrThrow()
+      assertContains(
+          content,
+          """
                 ImageVector.Builder(
                     name = "info_24",
                     defaultWidth = 24.dp,
                     defaultHeight = 24.dp,
                     viewportWidth = 24.0f,
                     viewportHeight = 24.0f
-                """.trimIndent()
-            )
-        }
+                """
+              .trimIndent())
     }
+  }
 
-    @Test
-    fun `parse successfully settings svg with groups`() {
-        val file = fileLoader.load("svg/settings_24.svg")
-        assertDoesNotThrow {
-            val content = parser.parse(file).getOrThrow()
-            assertEquals(
-                expected = """
+  @Test
+  fun `parse successfully settings svg with groups`() {
+    val file = fileLoader.load("svg/settings_24.svg")
+    assertDoesNotThrow {
+      val content = parser.parse(file).getOrThrow()
+      assertEquals(
+          expected =
+              """
                 ImageVector.Builder(
                     name = "settings_24",
                     defaultWidth = 24.dp,
@@ -241,19 +250,20 @@ class SVGFileParserTest {
                     }
                 }
                 .build()
-                """.trimIndent(),
-                actual = content,
-            )
-        }
+                """
+                  .trimIndent(),
+          actual = content,
+      )
     }
+  }
 
-    @Test
-    fun `parse successfully party_cloudy_night_24`() {
-        val file = fileLoader.load("svg/partly_cloudy_night_24.svg")
-        val result = parser.parse(file = file)
-        assertContains(
-            result.getOrThrow(),
-            """
+  @Test
+  fun `parse successfully party_cloudy_night_24`() {
+    val file = fileLoader.load("svg/partly_cloudy_night_24.svg")
+    val result = parser.parse(file = file)
+    assertContains(
+        result.getOrThrow(),
+        """
                 ImageVector.Builder(
                     name = "partly_cloudy_night_24",
                     defaultWidth = 48.dp,
@@ -261,7 +271,7 @@ class SVGFileParserTest {
                     viewportWidth = 48.0f,
                     viewportHeight = 48.0f
                 )
-            """.trimIndent()
-        )
-    }
+            """
+            .trimIndent())
+  }
 }
