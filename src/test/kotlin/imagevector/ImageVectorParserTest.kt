@@ -24,7 +24,8 @@ internal class ImageVectorParserTest {
                         Command.LineTo(x = 2f, y = 2f, isAbsolute = true),
                         Command.LineTo(x = 1f, y = 2f, isAbsolute = false),
                         Command.Close
-                    )
+                    ),
+                    alpha = 1f
                 )
             ),
             groups = emptyList()
@@ -39,7 +40,7 @@ internal class ImageVectorParserTest {
                 viewportHeight = 42.0f
             ).path(
                 fill = SolidColor(Color.Black),
-                fillAlpha = 1f,
+                fillAlpha = 1.0f,
                 stroke = null,
                 strokeAlpha = 1f,
                 strokeLineWidth = 1f,
@@ -75,7 +76,8 @@ internal class ImageVectorParserTest {
                         Command.LineTo(x = 2f, y = 2f, isAbsolute = true),
                         Command.LineTo(x = 1f, y = 2f, isAbsolute = false),
                         Command.Close
-                    )
+                    ),
+                    alpha = .5f
                 )
             ),
             groups = emptyList()
@@ -90,7 +92,7 @@ internal class ImageVectorParserTest {
                 viewportHeight = 42.0f
             ).path(
                 fill = SolidColor(Color.Black),
-                fillAlpha = 1f,
+                fillAlpha = 0.5f,
                 stroke = null,
                 strokeAlpha = 1f,
                 strokeLineWidth = 1f,

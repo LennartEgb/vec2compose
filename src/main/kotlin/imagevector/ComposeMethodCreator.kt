@@ -20,7 +20,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         append("path(").appendLine()
         val fillColor = path.fillColor?.toString() ?: "Color.Black"
         indent().append("fill = SolidColor($fillColor),").appendLine()
-        indent().append("fillAlpha = 1f,").appendLine()
+        indent().append("fillAlpha = ${path.alpha}f,").appendLine()
         indent().append("stroke = null,").appendLine()
         indent().append("strokeAlpha = 1f,").appendLine()
         indent().append("strokeLineWidth = 1f,").appendLine()

@@ -36,6 +36,8 @@ data class SVG(
         @field:JacksonXmlProperty(localName = "fill-rule")
         val fillRule: String = "nonzero",
         @field:JacksonXmlProperty(localName = "fill")
-        val fill: String? = null
+        val fill: String? = null,
+        @field:JacksonXmlProperty(localName = "fill-opacity")
+        val fillOpacity: Float = 1.0f
     )
 }

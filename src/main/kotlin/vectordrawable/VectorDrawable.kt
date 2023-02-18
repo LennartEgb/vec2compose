@@ -44,6 +44,8 @@ internal data class VectorDrawable(
         @field:JacksonXmlProperty(localName = "fillColor")
         val fillColor: String? = null,
         @field:JacksonXmlProperty(localName = "pathData")
-        val pathData: String
+        val pathData: String,
+        @field:JacksonXmlProperty(localName = "alpha")
+        val alpha: Float = 1.0f
     )
 }
