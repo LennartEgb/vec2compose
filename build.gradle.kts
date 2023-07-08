@@ -75,7 +75,3 @@ val jar by tasks.getting(Jar::class) {
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
-
-application {
-    mainClass.set("MainKt")
-}
