@@ -1,9 +1,8 @@
-import java.io.File
-
-internal class VectorSetParserFactory(private val file: File) {
-    fun create(): VectorSetParser = when (file.extension.uppercase()) {
-        "XML" -> Injection.VectorDrawableParser
-        "SVG" -> Injection.SVGParser
-        else -> throw IllegalArgumentException("No parser found for file ${file.name}")
+internal object VectorSetParserFactory {
+    fun create(fileExtension: String): VectorSetParser {
+        val validExtensions = mapOf("xml" to Injection.VectorDrawableParser, "svg" to Injection.SVGParser)
+        val extension = fileExtension.lowercase()
+        require(extension in validExtensions.keys) { "No parser found for file extension: $fileExtension" }
+        return validExtensions.getValue(extension)
     }
 }
