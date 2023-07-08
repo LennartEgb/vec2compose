@@ -1,7 +1,7 @@
 import imagevector.ImageVectorParser
 import java.io.File
 
-internal class FileParser(
+class FileParser(
     private val vectorSetParser: VectorSetParser,
     private val imageVectorParser: ImageVectorParser
 ) {

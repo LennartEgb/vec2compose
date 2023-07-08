@@ -2,7 +2,7 @@ package imagevector
 
 import VectorSet
 
-internal class ImageVectorParser(indentation: CharSequence = DEFAULT_INDENTATION) {
+class ImageVectorParser(indentation: CharSequence = DEFAULT_INDENTATION) {
     private companion object {
         const val DEFAULT_INDENTATION = "    "
     }
