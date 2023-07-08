@@ -1,6 +1,6 @@
 package imagevector
 
-internal class ImageVectorImportProvider {
+class ImageVectorImportProvider {
     fun createImports(): List<String> = listOf(
         "import androidx.compose.ui.graphics.Color",
         "import androidx.compose.ui.graphics.PathFillType",

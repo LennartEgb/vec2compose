@@ -13,7 +13,6 @@ repositories {
 dependencies {
     implementation(project(":core"))
     implementation(libs.kotlin.cli)
-    implementation(libs.bundles.jackson)
 
     testImplementation(kotlin("test"))
 }
