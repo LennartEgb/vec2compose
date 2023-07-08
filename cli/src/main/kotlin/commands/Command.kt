@@ -3,7 +3,7 @@ package commands
 /**
  * Commands for path data for vector formats found [here](https://www.w3.org/TR/SVG/paths.html#PathData)
  */
-internal sealed interface Command {
+sealed interface Command {
     companion object {
         val validCommands: CharArray = charArrayOf('A', 'C', 'H', 'L', 'M', 'Q', 'S', 'T', 'V', 'Z')
             .flatMap { listOf(it, it.lowercaseChar()) }
@@ -29,7 +29,7 @@ internal sealed interface Command {
     /**
      * Close command indicated by z/Z
      */
-    object Close : Command {
+    data object Close : Command {
         override val isAbsolute: Boolean = true
     }
 

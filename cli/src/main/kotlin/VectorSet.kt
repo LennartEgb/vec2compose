@@ -1,6 +1,6 @@
 import commands.Command
 
-internal data class VectorSet(
+data class VectorSet(
     val width: Int,
     val height: Int,
     val viewportWidth: Float,
