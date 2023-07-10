@@ -1,12 +1,28 @@
 package svg
 
+import nl.adaptivity.xmlutil.serialization.XML
 import org.junit.jupiter.api.Test
-import utils.TestObjectMapper
 import kotlin.test.assertEquals
 
 internal class SVGDeserializerTest {
 
-    private val deserializer = SVGDeserializer(TestObjectMapper)
+    private val deserializer = SVGDeserializer()
+
+    @Test
+    fun `Serialize and deserialize`() {
+        val svg = SVG(
+            width = "",
+            height = "",
+            viewBox = "",
+            fill = "",
+            path = listOf(SVG.Path(pathData = "M 0 2 L 0 24")),
+            g = listOf(SVG.Group())
+        )
+
+        val string = XML.encodeToString(svg)
+        val decoded = XML.decodeFromString<SVG>(string)
+        assertEquals(expected = svg, actual = decoded)
+    }
 
     @Test
     fun `deserialize valid SVG file`() {
@@ -80,9 +96,9 @@ internal class SVGDeserializerTest {
 
     @Test
     fun `parse SVG with groups`() {
-        // NOTE: SVG found here: https://www.sarasoueidan.com/blog/structuring-grouping-referencing-in-svg/
+        // NOTE: The supported SVGs must have the documented namespace: https://www.w3.org/TR/SVG/struct.html#Namespace
         val content = """
-            <svg width="1144.12px" height="400px" viewBox="0 0 572.06 200">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1144.12px" height="400px" viewBox="0 0 572.06 200">
             	<g id="bird">
             		<g id="body">
             			<path id="first" d="M48.42,78.11"/>

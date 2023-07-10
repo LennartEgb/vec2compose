@@ -1,9 +1,17 @@
 package svg
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
+import nl.adaptivity.xmlutil.serialization.DefaultXmlSerializationPolicy
+import nl.adaptivity.xmlutil.serialization.XML
 
-internal class SVGDeserializer(private val mapper: ObjectMapper) {
-    fun deserialize(content: String): Result<SVG> {
-        return runCatching { mapper.readValue(content, SVG::class.java) }
+internal class SVGDeserializer {
+
+    @OptIn(ExperimentalXmlUtilApi::class)
+    private val xmlConfig = XML {
+        policy = DefaultXmlSerializationPolicy(pedantic = false, unknownChildHandler = { _, _, _, _, _ -> emptyList() })
+    }
+
+    fun deserialize(content: String): Result<SVG> = runCatching {
+        xmlConfig.decodeFromString(deserializer = SVG.serializer(), string = content)
     }
 }
