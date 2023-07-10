@@ -1,7 +1,7 @@
 package vectordrawable
 
+import nl.adaptivity.xmlutil.serialization.XML
 import org.junit.jupiter.api.Test
-import utils.TestObjectMapper
 import kotlin.test.assertEquals
 
 class VectorDrawableXmlParserTest {
@@ -34,7 +34,7 @@ class VectorDrawableXmlParserTest {
                     )
                 )
             ),
-            actual = TestObjectMapper.readValue(xmlContent, VectorDrawable::class.java)
+            actual = XML.decodeFromString(VectorDrawable.serializer(), xmlContent)
         )
     }
 
@@ -68,7 +68,7 @@ class VectorDrawableXmlParserTest {
                     )
                 )
             ),
-            actual = TestObjectMapper.readValue(xmlContent, VectorDrawable::class.java)
+            actual = XML.decodeFromString(VectorDrawable.serializer(), xmlContent)
         )
     }
 }

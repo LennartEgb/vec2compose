@@ -15,7 +15,7 @@ internal object Injection {
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     private val CommandParser = CommandParser()
     private val PathParser = PathParser(commandParser = CommandParser)
-    private val VectorDrawableDeserializer = VectorDrawableDeserializer(objectMapper)
+    private val VectorDrawableDeserializer = VectorDrawableDeserializer()
     private val SVGDeserializer = SVGDeserializer(objectMapper)
     private val hexColorParser: ColorParser = HexColorParser()
     private val keywordColorParser: ColorParser = KeywordColorParser()
