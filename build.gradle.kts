@@ -55,23 +55,14 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.register<Copy>("packageDistribution") {
-    dependsOn("jar")
+    dependsOn(":cli:jar")
     from("${project.rootDir}/scripts/vec2compose") {
-        filter { it.replace("lib/vec2compose.jar", "${project.rootDir}/dist/lib/vec2compose.jar") }
+        val jarName = "lib/${project.name}.jar"
+        filter { it.replace(jarName, "${project.rootDir}/dist/$jarName") }
     }
-    from("${project.projectDir}/build/libs/${project.name}-${project.version}.jar") {
+    from("${project.projectDir}/cli/build/libs/cli.jar") {
         rename { "${project.name}.jar" }
         into("lib")
     }
     into("${project.rootDir}/dist")
-}
-
-val jar by tasks.getting(Jar::class) {
-    manifest {
-        attributes["Main-Class"] = "MainKt"
-    }
-    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }) {
-        exclude("META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA")
-    }
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
