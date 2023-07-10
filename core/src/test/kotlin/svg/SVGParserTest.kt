@@ -6,13 +6,12 @@ import VectorSet
 import commands.CommandParser
 import commands.PathParser
 import org.junit.jupiter.api.Test
-import utils.TestObjectMapper
 import kotlin.test.assertEquals
 
 internal class SVGParserTest {
 
     private val parser = SVGParser(
-        deserializer = SVGDeserializer(TestObjectMapper),
+        deserializer = SVGDeserializer(),
         pathParser = PathParser(CommandParser()),
         colorParser = HexColorParser()
     )

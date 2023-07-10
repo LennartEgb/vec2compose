@@ -16,7 +16,7 @@ internal object Injection {
     private val CommandParser = CommandParser()
     private val PathParser = PathParser(commandParser = CommandParser)
     private val VectorDrawableDeserializer = VectorDrawableDeserializer()
-    private val SVGDeserializer = SVGDeserializer(objectMapper)
+    private val SVGDeserializer = SVGDeserializer()
     private val hexColorParser: ColorParser = HexColorParser()
     private val keywordColorParser: ColorParser = KeywordColorParser()
     private val combinedColorParser = object : ColorParser {

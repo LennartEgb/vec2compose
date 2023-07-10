@@ -1,45 +1,53 @@
 package svg
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import nl.adaptivity.xmlutil.serialization.XmlSerialName
 
-@JacksonXmlRootElement(localName = "svg")
+private const val svgNamespace = "http://www.w3.org/2000/svg"
+
+@XmlSerialName(value = "svg", namespace = svgNamespace)
+@Serializable
 data class SVG(
-    @field:JacksonXmlProperty(localName = "width")
+    @SerialName(value = "width")
     val width: String,
-    @field:JacksonXmlProperty(localName = "height")
+    @SerialName(value = "height")
     val height: String,
-    @field:JacksonXmlProperty(localName = "viewBox")
+    @SerialName(value = "viewBox")
     val viewBox: String? = null,
-    @field:JacksonXmlProperty(localName = "fill")
+    @SerialName(value = "fill")
     val fill: String? = null,
-    @field:JacksonXmlElementWrapper(useWrapping = false)
+    @SerialName(value = "path")
     val path: List<Path> = emptyList(),
-    @field:JacksonXmlElementWrapper(useWrapping = false)
+    @SerialName(value = "g")
     val g: List<Group> = emptyList()
 ) {
+
+    @XmlSerialName(value = "g")
+    @Serializable
     data class Group(
-        @field:JacksonXmlProperty(localName = "id")
+        @SerialName(value = "id")
         val name: String? = null,
-        @field:JacksonXmlElementWrapper(useWrapping = false)
+        @SerialName(value = "g")
         val g: List<Group> = emptyList(),
-        @field:JacksonXmlElementWrapper(useWrapping = false)
+        @SerialName(value = "path")
         val path: List<Path> = emptyList(),
-        @field:JacksonXmlProperty(localName = "transform")
+        @SerialName(value = "transform")
         val transform: String? = null
     )
 
+    @XmlSerialName(value = "path")
+    @Serializable
     data class Path(
-        @field:JacksonXmlProperty(localName = "id")
+        @SerialName(value = "id")
         val id: String = "",
-        @field:JacksonXmlProperty(localName = "d")
+        @SerialName(value = "d")
         val pathData: String,
-        @field:JacksonXmlProperty(localName = "fill-rule")
+        @SerialName(value = "fill-rule")
         val fillRule: String = "nonzero",
-        @field:JacksonXmlProperty(localName = "fill")
+        @SerialName(value = "fill")
         val fill: String? = null,
-        @field:JacksonXmlProperty(localName = "fill-opacity")
+        @SerialName(value = "fill-opacity")
         val fillOpacity: Float = 1.0f
     )
 }
