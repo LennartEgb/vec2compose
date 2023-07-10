@@ -4,16 +4,21 @@ kotlin-cli = "0.3.5"
 kotlin-kover = "0.6.1"
 jackson = "2.13.3"
 ktlint = "11.2.0"
+xmlutil = "0.86.1"
 
 [libraries]
 kotlin-cli = { module = "org.jetbrains.kotlinx:kotlinx-cli", version.ref = "kotlin-cli" }
 jackson-dataformat = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-xml", version.ref = "jackson" }
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
+xmlutil-core = { module = "io.github.pdvrieze.xmlutil:core", version.ref = "xmlutil" }
+xmlutil-serialization = { module = "io.github.pdvrieze.xmlutil:serialization", version.ref = "xmlutil" }
 
 [bundles]
 jackson = ["jackson-dataformat", "jackson-module-kotlin"]
+xmlutil = ["xmlutil-core", "xmlutil-serialization"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kotlin-kover" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
