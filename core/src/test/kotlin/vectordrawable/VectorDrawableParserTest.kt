@@ -7,13 +7,12 @@ import VectorSet
 import commands.CommandParser
 import commands.PathParser
 import org.junit.jupiter.api.Test
-import utils.TestObjectMapper
 import kotlin.test.assertEquals
 
 internal class VectorDrawableParserTest {
 
     private val parser = VectorDrawableParser(
-        deserializer = VectorDrawableDeserializer(TestObjectMapper),
+        deserializer = VectorDrawableDeserializer(),
         pathParser = PathParser(CommandParser()),
         colorParser = HexColorParser()
     )
@@ -102,7 +101,7 @@ internal class VectorDrawableParserTest {
     private fun vector(content: String): String = buildString {
         appendLine(
             """
-            <vector xmlns:android="https://schemas.android.com/apk/res/android"
+            <vector xmlns:android="http://schemas.android.com/apk/res/android"
                     android:width="24dp"
                     android:height="24dp"
                     android:viewportWidth="24"

@@ -1,13 +1,31 @@
 package vectordrawable
 
+import nl.adaptivity.xmlutil.serialization.XML
 import org.junit.jupiter.api.Test
-import utils.TestObjectMapper
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 internal class VectorDrawableSerializerTest {
 
-    private val serializer = VectorDrawableDeserializer(TestObjectMapper)
+    private val serializer = VectorDrawableDeserializer()
+
+    @Test
+    fun `Serialize and deserialize`() {
+        val drawable = VectorDrawable(
+            widthInDp = "24dp",
+            heightInDp = "24dp",
+            viewportWidth = 24f,
+            viewportHeight = 24f,
+            tint = null,
+            path = listOf(VectorDrawable.Path(pathData = "M2 0 L 0 0 L 24 24")),
+            group = emptyList()
+        )
+
+        val string = XML.encodeToString(drawable)
+        val decoded = XML.decodeFromString<VectorDrawable>(string)
+
+        assertEquals(expected = drawable, actual = decoded)
+    }
 
     @Test
     fun `serialize valid VectorDrawable without fillType returns serialized VectorDrawable`() {
@@ -106,7 +124,7 @@ internal class VectorDrawableSerializerTest {
                     android:name="vect"
                     android:fillColor="#FF000000"
                     android:pathData="M15.67,4H14V2h-4v2H8.33C7.6,4 7,4.6 7,5.33V9h4.93L13,7v2h4V5.33C17,4.6 16.4,4 15.67,4z"
-                    android:fillAlpha=".3"/>
+                    android:alpha=".3"/>
                   <path
                     android:name="draw"
                     android:fillColor="#FF000000"
@@ -133,7 +151,8 @@ internal class VectorDrawableSerializerTest {
                                 name = "vect",
                                 fillColor = "#FF000000",
                                 pathData = "M15.67,4H14V2h-4v2H8.33C7.6,4 7,4.6 7,5.33V9h4.93L13,7v2h4V5.33C17,4.6 16.4,4 15.67,4z",
-                                fillType = "nonZero"
+                                fillType = "nonZero",
+                                alpha = .3f
                             ),
                             VectorDrawable.Path(
                                 name = "draw",
