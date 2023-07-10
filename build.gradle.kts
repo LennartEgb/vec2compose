@@ -17,13 +17,6 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation(libs.kotlin.cli)
-    implementation(libs.bundles.jackson)
-
-    testImplementation(kotlin("test"))
-}
-
 kover {
     verify {
         rule {
