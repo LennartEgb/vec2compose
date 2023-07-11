@@ -11,9 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.kotlin.cli)
     implementation(libs.bundles.xmlutil)
-
     testImplementation(kotlin("test"))
 }
 
