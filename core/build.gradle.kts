@@ -10,11 +10,15 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation(libs.bundles.xmlutil)
-    testImplementation(kotlin("test"))
-}
-
 tasks.test {
     useJUnitPlatform()
+}
+
+sourceSets {
+    val commonMain by creating {
+        dependencies {
+            implementation(libs.bundles.xmlutil)
+            testImplementation(kotlin("test"))
+        }
+    }
 }
