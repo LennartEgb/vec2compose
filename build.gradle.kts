@@ -28,7 +28,6 @@ kover {
 }
 
 tasks.test {
-    useJUnitPlatform()
     testLogging {
         events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
         showStandardStreams = true
