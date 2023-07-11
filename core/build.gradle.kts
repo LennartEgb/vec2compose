@@ -12,7 +12,6 @@ repositories {
 
 dependencies {
     implementation(libs.kotlin.cli)
-    implementation(libs.bundles.jackson)
     implementation(libs.bundles.xmlutil)
 
     testImplementation(kotlin("test"))
