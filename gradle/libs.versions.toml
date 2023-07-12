@@ -11,6 +11,7 @@ kotlin-cli = { module = "org.jetbrains.kotlinx:kotlinx-cli", version.ref = "kotl
 xmlutil-core = { module = "io.github.pdvrieze.xmlutil:core", version.ref = "xmlutil" }
 xmlutil-serialization = { module = "io.github.pdvrieze.xmlutil:serialization", version.ref = "xmlutil" }
 okio = {module = "com.squareup.okio:okio", version.ref = "okio"}
+okio-fakefilesystem = {module = "com.squareup.okio:okio-fakefilesystem", version.ref = "okio"}
 
 [bundles]
 xmlutil = ["xmlutil-core", "xmlutil-serialization"]

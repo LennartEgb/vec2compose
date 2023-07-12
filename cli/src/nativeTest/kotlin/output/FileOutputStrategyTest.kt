@@ -1,9 +1,9 @@
 package output
 
 import imagevector.ImageVectorImportProvider
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Test
-import java.io.File
+import okio.Path.Companion.toPath
+import okio.fakefilesystem.FakeFileSystem
+import kotlin.test.Test
 import kotlin.test.assertTrue
 
 class FileOutputStrategyTest {
@@ -11,20 +11,17 @@ class FileOutputStrategyTest {
     private val name = ""
     private val pathname = "./tmp.kt"
 
-    @AfterEach
-    fun deleteFile() {
-        File(pathname).delete()
-    }
-
     @Test
     fun `writes to file`() {
+        val system = FakeFileSystem()
         val strategy = FileOutputStrategy(
+            fileSystem = system,
             name = name,
             pathname = pathname,
             importProvider = ImageVectorImportProvider()
         )
         strategy.write("CONTENT")
 
-        assertTrue(File(pathname).exists())
+        assertTrue(system.exists(pathname.toPath()))
     }
 }
