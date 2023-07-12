@@ -1,7 +1,7 @@
 package svg
 
 import nl.adaptivity.xmlutil.serialization.XML
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class SVGDeserializerTest {
@@ -9,7 +9,7 @@ internal class SVGDeserializerTest {
     private val deserializer = SVGDeserializer()
 
     @Test
-    fun `Serialize and deserialize`() {
+    fun serialize_and_deserialize() {
         val svg = SVG(
             width = "",
             height = "",
@@ -25,7 +25,7 @@ internal class SVGDeserializerTest {
     }
 
     @Test
-    fun `deserialize valid SVG file`() {
+    fun deserialize_valid_SVG_file() {
         val content = """
             <svg xmlns="http://www.w3.org/2000/svg"
                 height="24px"
@@ -60,7 +60,7 @@ internal class SVGDeserializerTest {
     }
 
     @Test
-    fun `deserialize valid SVG file with fill-rule evenodd`() {
+    fun deserialize_valid_SVG_file_with_fill_rule_evenodd() {
         val content = """
             <svg xmlns="http://www.w3.org/2000/svg"
                 height="24px"
@@ -95,7 +95,7 @@ internal class SVGDeserializerTest {
     }
 
     @Test
-    fun `parse SVG with groups`() {
+    fun parse_SVG_with_groups() {
         // NOTE: The supported SVGs must have the documented namespace: https://www.w3.org/TR/SVG/struct.html#Namespace
         val content = """
             <svg xmlns="http://www.w3.org/2000/svg" width="1144.12px" height="400px" viewBox="0 0 572.06 200">

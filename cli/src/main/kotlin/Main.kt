@@ -1,16 +1,25 @@
 import imagevector.ImageVectorParser
+import okio.FileSystem
+import okio.Path.Companion.toPath
 import output.NameFormatter
 import output.OutputStrategyFactory
-import java.io.File
 
 fun main(args: Array<String>) {
     val arguments = Arguments(args)
-    val file = File(arguments.input).takeIf { it.exists() } ?: error("File ${arguments.input} does not exist")
-    val nameFormatter = NameFormatter()
-    val outputStrategy = OutputStrategyFactory(nameFormatter = nameFormatter).create(arguments.output, file.name)
+    val system = FileSystem.SYSTEM
+    val path = arguments.input.toPath()
+    if (!system.exists(path)) error("File ${arguments.input} does not exist")
 
-    FileParser(vectorSetParser = VectorSetParserFactory.create(file.extension), imageVectorParser = ImageVectorParser())
-        .parse(file)
+    val name = path.name
+    val extension = name.takeLastWhile { it != '.' }
+    val content = system.read(path) { readUtf8() }
+    val title = name.removeSuffix(extension).removeSuffix(".")
+
+    val nameFormatter = NameFormatter()
+    val outputStrategy = OutputStrategyFactory(nameFormatter = nameFormatter).create(arguments.output, title)
+
+    FileParser(vectorSetParser = VectorSetParserFactory.create(extension), imageVectorParser = ImageVectorParser())
+        .parse(content = content, name = title)
         .onSuccess { outputStrategy.write(it) }
         .onFailure { println("Error occurred: ${it.message}") }
 }

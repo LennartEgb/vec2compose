@@ -1,6 +1,6 @@
 package commands
 
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class PathParserTest {
@@ -8,7 +8,7 @@ internal class PathParserTest {
     private val pathParser = PathParser(CommandParser())
 
     @Test
-    fun `parse path to list of commands without closing end`() {
+    fun parse_path_to_list_of_commands_without_closing_end() {
         val pathSample = "M27.05,24.55L12.15,19.65C11.85,19.35 11.483,19.2 11.05,19.2"
 
         assertEquals(
@@ -22,7 +22,7 @@ internal class PathParserTest {
     }
 
     @Test
-    fun `parse path to list of commands with closing end`() {
+    fun parse_path_to_list_of_commands_with_closing_end() {
         val pathSample = "M27.05,24.55L12.15,19.65C11.85,19.35 11.483,19.2 11.05,19.2Z"
 
         assertEquals(

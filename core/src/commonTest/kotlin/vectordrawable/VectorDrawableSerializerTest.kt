@@ -1,7 +1,7 @@
 package vectordrawable
 
 import nl.adaptivity.xmlutil.serialization.XML
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
@@ -10,7 +10,7 @@ internal class VectorDrawableSerializerTest {
     private val serializer = VectorDrawableDeserializer()
 
     @Test
-    fun `Serialize and deserialize`() {
+    fun serialize_and_deserialize() {
         val drawable = VectorDrawable(
             widthInDp = "24dp",
             heightInDp = "24dp",
@@ -28,7 +28,7 @@ internal class VectorDrawableSerializerTest {
     }
 
     @Test
-    fun `serialize valid VectorDrawable without fillType returns serialized VectorDrawable`() {
+    fun serialize_valid_VectorDrawable_without_FillType_returns_serialized_VectorDrawable() {
         val vector = """
         <vector xmlns:android="http://schemas.android.com/apk/res/android"
             android:width="24dp"
@@ -61,7 +61,7 @@ internal class VectorDrawableSerializerTest {
     }
 
     @Test
-    fun `serialize valid VectorDrawable with fillType evenOdd returns serialized VectorDrawable`() {
+    fun serialize_valid_VectorDrawable_with_fillType_evenOdd_returns_serialized_VectorDrawable() {
         val vector = """
         <vector xmlns:android="http://schemas.android.com/apk/res/android"
             android:width="24dp"
@@ -95,7 +95,7 @@ internal class VectorDrawableSerializerTest {
     }
 
     @Test
-    fun `serialize invalid XML returns Failure`() {
+    fun serialize_invalid_XML_returns_Failure() {
         val vector = """
         <note>
             <to>Tove</to>
@@ -108,7 +108,7 @@ internal class VectorDrawableSerializerTest {
     }
 
     @Test
-    fun `serialize XML with group`() {
+    fun serialize_XML_with_group() {
         val vector = """
             <vector xmlns:android="http://schemas.android.com/apk/res/android"
                 android:height="24dp"
@@ -169,7 +169,7 @@ internal class VectorDrawableSerializerTest {
     }
 
     @Test
-    fun `serialize XML with more dimensional groups`() {
+    fun serialize_XML_with_more_dimensional_groups() {
         val vector = """
             <vector xmlns:android="http://schemas.android.com/apk/res/android"
                 android:height="24dp"

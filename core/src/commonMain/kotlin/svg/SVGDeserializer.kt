@@ -8,7 +8,11 @@ internal class SVGDeserializer {
 
     @OptIn(ExperimentalXmlUtilApi::class)
     private val xmlConfig = XML {
-        policy = DefaultXmlSerializationPolicy(pedantic = false, unknownChildHandler = { _, _, _, _, _ -> emptyList() })
+        policy = DefaultXmlSerializationPolicy(
+            pedantic = false,
+            unknownChildHandler = { _, _, _, _, _ -> emptyList() }
+        )
+        this.repairNamespaces
     }
 
     fun deserialize(content: String): Result<SVG> = runCatching {
