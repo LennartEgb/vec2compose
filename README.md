@@ -8,12 +8,9 @@
 A CLI tool to create `ImageVector` from Android vector XML and SVG.
 
 ## Setup
-After a local gradle build a `dist` folder is created with the script and jar file.
-Add the `dist` folder to `PATH` and use it everywhere.
 
-```bash
-./gradlew clean jar packageDistribution
-```
+Run `./gradlew assembleCli` to generate the native binary that is generated in `dist` folder.
+Add the `dist` folder to `PATH` and use it everywhere.
 
 ## Usage
 There are two options to create the `ImageVector`. The first option is to create a Kotlin file.
@@ -54,4 +51,5 @@ ImageVector.Builder(
 ```
 
 ## Motivation
-This is a project to play around with CLI tools and support the Jetpack Compose development to move further away from XML files in Android projects. A custom icon set can be generated as the [material icon set](https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/material/material-icons-core/src/commonMain/kotlin/androidx/compose/material/icons/Icons.kt;l=65?q=Icons&sq=) without adding XML resources.
+This is a project to play around with CLI tools and support the Jetpack Compose development to move further away from XML files in Android projects.
+A custom icon set can be generated as the [material icon set](https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/material/material-icons-core/src/commonMain/kotlin/androidx/compose/material/icons/Icons.kt;l=65?q=Icons&sq=) without adding XML resources.
