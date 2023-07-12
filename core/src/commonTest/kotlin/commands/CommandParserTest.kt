@@ -1,6 +1,6 @@
 package commands
 
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class CommandParserTest {
@@ -8,7 +8,7 @@ internal class CommandParserTest {
     private val commandParser = CommandParser()
 
     @Test
-    fun `parse Move command`() {
+    fun parse_Move_command() {
         val movePath = "M27.05,24.55"
         assertEquals(
             expected = listOf(Command.MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true)),
@@ -17,7 +17,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse multiple Move command`() {
+    fun parse_multiple_Move_command() {
         val movePath = "M27.05,24.55 27.05,24.55"
         assertEquals(
             expected = listOf(
@@ -29,7 +29,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse LineTo path`() {
+    fun parse_LineTo_path() {
         val linePath = "L12.15,19.65"
         assertEquals(
             expected = listOf(Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true)),
@@ -38,7 +38,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse multiple LineTo path`() {
+    fun parse_multiple_LineTo_path() {
         val linePath = "L12.15,19.65 12.15,19.65"
         assertEquals(
             expected = listOf(
@@ -50,7 +50,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse CurveTo path`() {
+    fun parse_CurveTo_path() {
         val curveToPath = "C11.85,19.35 11.483,19.2 11.05,19.2"
         assertEquals(
             expected = listOf(
@@ -69,7 +69,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse Close path`() {
+    fun parse_Close_path() {
         val closePath = "Z"
         assertEquals(
             expected = listOf(Command.Close),
@@ -78,7 +78,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse Close path relative with lowercase z`() {
+    fun parse_Close_path_relative_with_lowercase_z() {
         val closePath = "z"
         assertEquals(
             expected = listOf(Command.Close),
@@ -87,7 +87,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse HorizontalLineTo path`() {
+    fun parse_HorizontalLineTo_path() {
         val horizontalLineToPath = "H20.05"
         assertEquals(
             expected = listOf(Command.HorizontalLineTo(x = 20.05f, isAbsolute = true)),
@@ -96,7 +96,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse multiple HorizontalLineTo path`() {
+    fun parse_multiple_HorizontalLineTo_path() {
         val horizontalLineToPath = "H20.05 20.05"
         assertEquals(
             expected = listOf(
@@ -108,7 +108,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse HorizontalLineTo path with relative command`() {
+    fun parse_HorizontalLineTo_path_with_relative_command() {
         val horizontalLineToPath = "h20.05"
         assertEquals(
             expected = listOf(Command.HorizontalLineTo(x = 20.05f, isAbsolute = false)),
@@ -117,7 +117,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse VerticalLineTo path`() {
+    fun parse_VerticalLineTo_path() {
         val horizontalLineToPath = "V20.05"
         assertEquals(
             expected = listOf(Command.VerticalLineTo(y = 20.05f, isAbsolute = true)),
@@ -126,7 +126,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse multiple VerticalLineTo path`() {
+    fun parse_multiple_VerticalLineTo_path() {
         val horizontalLineToPath = "V20.05 20.05"
         assertEquals(
             expected = listOf(
@@ -138,7 +138,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse ReflectiveCurveTo path`() {
+    fun parse_ReflectiveCurveTo_path() {
         val horizontalLineToPath = "s4.47,10 9.99,10"
         assertEquals(
             expected = listOf(
@@ -155,7 +155,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse quadratic bezier path`() {
+    fun parse_quadratic_bezier_path() {
         val quadraticBezierToPath = "Q400,50 600,300"
         assertEquals(
             expected = listOf(Command.QuadraticBezierTo(400f, 50f, 600f, 300f, isAbsolute = true)),
@@ -164,7 +164,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse relative quadratic bezier path`() {
+    fun parse_relative_quadratic_bezier_path() {
         val quadraticBezierToPath = "q400,50 600,300"
         assertEquals(
             expected = listOf(Command.QuadraticBezierTo(400f, 50f, 600f, 300f, isAbsolute = false)),
@@ -173,7 +173,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse reflective quadratic bezier path`() {
+    fun parse_reflective_quadratic_bezier_path() {
         val quadraticBezierToPath = "T1000,300"
         assertEquals(
             expected = listOf(Command.ReflectiveQuadraticBezierTo(1000f, 300f, isAbsolute = true)),
@@ -182,7 +182,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse relative reflective quadratic bezier path`() {
+    fun parse_relative_reflective_quadratic_bezier_path() {
         val quadraticBezierToPath = "t1000,300"
         assertEquals(
             expected = listOf(Command.ReflectiveQuadraticBezierTo(1000f, 300f, isAbsolute = false)),
@@ -191,7 +191,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse arc path`() {
+    fun parse_arc_path() {
         val arcPath = "A25,25 -30 0,1 50,-25"
         assertEquals(
             expected = listOf(
@@ -211,7 +211,7 @@ internal class CommandParserTest {
     }
 
     @Test
-    fun `parse relative arc path`() {
+    fun parse_relative_arc_path() {
         val arcPath = "a25,25 -30 0,1 50,-25"
         assertEquals(
             expected = listOf(

@@ -6,7 +6,7 @@ import Translation
 import VectorSet
 import commands.CommandParser
 import commands.PathParser
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class VectorDrawableParserTest {
@@ -18,7 +18,7 @@ internal class VectorDrawableParserTest {
     )
 
     @Test
-    fun `parse valid VectorDrawable xml to VectorSet`() {
+    fun parse_valid_VectorDrawable_xml_to_VectorSet() {
         val vector = vector(
             """
                 <path
@@ -42,7 +42,7 @@ internal class VectorDrawableParserTest {
     }
 
     @Test
-    fun `parse valid VectorDrawable with fillType evenOdd to VectorSet`() {
+    fun parse_valid_VectorDrawable_with_fillType_evenOdd_to_VectorSet() {
         val v = vector(
             """
             <path
@@ -66,7 +66,7 @@ internal class VectorDrawableParserTest {
     }
 
     @Test
-    fun `parse drawable with group`() {
+    fun parse_drawable_with_group() {
         val vector = vector(
             """
                 <group 

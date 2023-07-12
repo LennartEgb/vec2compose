@@ -1,7 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlin.kover)
     alias(libs.plugins.ktlint)
     application
 }
@@ -13,6 +12,7 @@ repositories {
 dependencies {
     implementation(project(":core"))
     implementation(libs.kotlin.cli)
+    implementation(libs.okio)
 
     testImplementation(kotlin("test"))
 }

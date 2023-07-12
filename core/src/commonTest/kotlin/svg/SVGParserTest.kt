@@ -5,7 +5,7 @@ import Translation
 import VectorSet
 import commands.CommandParser
 import commands.PathParser
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class SVGParserTest {
@@ -17,7 +17,7 @@ internal class SVGParserTest {
     )
 
     @Test
-    fun `parse SVG file with correct fill color`() {
+    fun parse_SVG_file_with_correct_fill_color() {
         val svg = svg {
             appendLine("""<path d="" fill="none"/>""")
             appendLine("""<path fill="#fff" d=""/>""")
@@ -28,7 +28,7 @@ internal class SVGParserTest {
     }
 
     @Test
-    fun `parse file with group rotation`() {
+    fun parse_file_with_group_rotation() {
         val svg = svg {
             appendLine("""<g transform="rotate(45 0 0)"/>""")
         }
@@ -37,7 +37,7 @@ internal class SVGParserTest {
     }
 
     @Test
-    fun `parse file with group pivot`() {
+    fun parse_file_with_group_pivot() {
         val svg = svg {
             appendLine("""<g transform="rotate(45 20 30)"/>""")
         }
@@ -46,7 +46,7 @@ internal class SVGParserTest {
     }
 
     @Test
-    fun `parse file with group translate`() {
+    fun parse_file_with_group_translate() {
         val svg = svg {
             appendLine("""<g transform="translate(20 30)"/>""")
         }

@@ -1,12 +1,12 @@
 package vectordrawable
 
 import nl.adaptivity.xmlutil.serialization.XML
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class VectorDrawableXmlParserTest {
     @Test
-    fun `parse VectorDrawable xml`() {
+    fun parseVectorDrawableXML() {
         val xmlContent = """
         <vector xmlns:android="http://schemas.android.com/apk/res/android"
             android:width="24dp"
@@ -39,7 +39,7 @@ class VectorDrawableXmlParserTest {
     }
 
     @Test
-    fun `parse VectorDrawable with fillType nonZero xml`() {
+    fun parseVectorDrawableWithFillTypeNonZeroXML() {
         val xmlContent = """
         <vector xmlns:android="http://schemas.android.com/apk/res/android"
             android:width="24dp"

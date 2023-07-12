@@ -2,7 +2,7 @@ package imagevector
 
 import VectorSet
 import commands.Command
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class ImageVectorParserTest {
@@ -10,7 +10,7 @@ internal class ImageVectorParserTest {
     private val imageVectorParser = ImageVectorParser()
 
     @Test
-    fun `parse VectorSet with FillType NonZero to ImageVector string`() {
+    fun parse_VectorSet_with_FillType_NonZero_to_ImageVector_string() {
         val set = VectorSet(
             width = 24,
             height = 24,
@@ -62,7 +62,7 @@ internal class ImageVectorParserTest {
     }
 
     @Test
-    fun `parse VectorSet with FillType EvenOdd to ImageVector string`() {
+    fun parse_VectorSet_with_FillType_EvenOdd_to_ImageVector_string() {
         val set = VectorSet(
             width = 24,
             height = 24,
