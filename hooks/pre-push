@@ -1,6 +1,15 @@
 #!/bin/sh
 
-./gradlew ktlintCheck
+./gradlew test
 status=$?
+# Check the exit code of the previous command
 
-exit $status
+if [ $status -ne 0 ]; then
+  echo "Gradle test task failed. Exiting..."
+  exit 1
+fi
+
+# Only run native test in cli as core only uses common module
+./gradlew :cli:nativeTest
+
+exit $?
