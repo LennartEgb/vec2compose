@@ -1,15 +1,17 @@
 package output
 
 import imagevector.ImageVectorImportProvider
-import java.io.File
+import okio.FileSystem
+import okio.Path.Companion.toPath
 
 internal class FileOutputStrategy(
     private val name: String,
     private val pathname: String,
-    private val importProvider: ImageVectorImportProvider
+    private val importProvider: ImageVectorImportProvider,
+    private val fileSystem: FileSystem = FileSystem.SYSTEM,
 ) : OutputStrategy {
     override fun write(content: String) {
-        buildString {
+        val output = buildString {
             importProvider.createImports().forEach { appendLine(it) }
             appendLine()
             appendLine("private var cache: ImageVector? = null")
@@ -21,7 +23,10 @@ internal class FileOutputStrategy(
                 if (!isLast) appendLine()
             }
             appendLine(".also { cache = it }")
-        }.also { File(pathname).apply { writeText(it) }.createNewFile() }
+        }
+        fileSystem.write(pathname.toPath()) {
+            writeUtf8(output)
+        }
     }
 
     private fun StringBuilder.indent() = append("    ")
