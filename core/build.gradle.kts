@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_VARIABLE")
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     kotlin("multiplatform")
@@ -18,13 +20,9 @@ kotlin {
             useJUnitPlatform()
         }
     }
-    js(BOTH) {
+    js(IR) {
         browser {
-            commonWebpackConfig {
-                cssSupport {
-                    enabled.set(true)
-                }
-            }
+            commonWebpackConfig(Action { cssSupport { enabled.set(true) } })
         }
     }
     val hostOs = System.getProperty("os.name")
@@ -57,17 +55,3 @@ kotlin {
         val nativeTest by getting
     }
 }
-// sourceSets {
-//     val commonMain by creating {
-//         dependencies {
-//             implementation(libs.bundles.xmlutil)
-//             testImplementation(kotlin("test"))
-//         }
-//     }
-//     val commonTest by creating {
-//         dependencies {
-//
-//         }
-//     }
-// }
-//

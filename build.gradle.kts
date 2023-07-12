@@ -1,13 +1,12 @@
-import kotlinx.kover.api.KoverTaskExtension
-import org.gradle.api.tasks.testing.logging.TestLogEvent
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetWithHostTests
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.kotlin.jvm)
+    kotlin("multiplatform") version "1.9.0"
     alias(libs.plugins.kotlin.kover)
     alias(libs.plugins.ktlint)
-    application
 }
 
 group = "dev.lennartegb"
@@ -27,34 +26,28 @@ kover {
     }
 }
 
-tasks.test {
-    testLogging {
-        events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
-        showStandardStreams = true
-        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-        showCauses = true
-        showExceptions = true
-        showStackTraces = true
-    }
-    extensions.configure(KoverTaskExtension::class) {
-        isDisabled.set(false)
-        reportFile.set(file("$buildDir/kover/result.bin"))
+kotlin {
+    nativeTarget()
+}
+
+fun KotlinMultiplatformExtension.nativeTarget(
+    configure: Action<KotlinNativeTargetWithHostTests> = Action { }
+): KotlinNativeTargetWithHostTests {
+    val hostOs = System.getProperty("os.name")
+    val isMingwX64 = hostOs.startsWith("Windows")
+    return when {
+        hostOs == "Mac OS X" -> macosX64("native", configure)
+        hostOs == "Linux" -> linuxX64("native", configure)
+        isMingwX64 -> mingwX64("native", configure)
+        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
-}
+tasks.register<Copy>("assembleCli") {
+    dependsOn(":cli:nativeBinaries")
 
-tasks.register<Copy>("packageDistribution") {
-    dependsOn(":cli:jar")
-    from("${project.rootDir}/scripts/vec2compose") {
-        val jarName = "lib/${project.name}.jar"
-        filter { it.replace(jarName, "${project.rootDir}/dist/$jarName") }
-    }
-    from("${project.projectDir}/cli/build/libs/cli.jar") {
-        rename { "${project.name}.jar" }
-        into("lib")
+    from("${project.projectDir}/cli/build/bin/native/releaseExecutable/cli.kexe") {
+        rename { project.name }
     }
     into("${project.rootDir}/dist")
 }
