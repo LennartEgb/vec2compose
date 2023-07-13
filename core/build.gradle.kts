@@ -44,7 +44,6 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(libs.okio)
             }
         }
         val jvmMain by getting
@@ -55,3 +54,13 @@ kotlin {
         val nativeTest by getting
     }
 }
+
+/**
+ * Resource loading implementation from https://developer.squareup.com/blog/kotlin-multiplatform-shared-test-resources
+ */
+tasks.register<Copy>("copyNativeTestResources") {
+    from("src/commonTest/resources")
+    into("build/bin/native/debugTest/resources")
+}
+
+tasks.findByName("nativeTest")?.dependsOn("copyNativeTestResources")

@@ -1,11 +1,10 @@
 package utils
 
-import okio.FileSystem
-import okio.Path.Companion.toPath
+expect fun readBinaryResource(resourceName: String): ByteArray
 
-internal class FileLoader(private val fileSystem: FileSystem = FileSystem.RESOURCES) {
+internal class FileLoader {
 
     fun load(name: String): String {
-        return fileSystem.read(name.toPath()) { readUtf8() }
+        return readBinaryResource(name).decodeToString()
     }
 }
