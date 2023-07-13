@@ -7,11 +7,11 @@ xmlutil = "0.86.1"
 okio = "3.4.0"
 
 [libraries]
-kotlin-cli = { module = "org.jetbrains.kotlinx:kotlinx-cli", version.ref = "kotlin-cli" }
-xmlutil-core = { module = "io.github.pdvrieze.xmlutil:core", version.ref = "xmlutil" }
-xmlutil-serialization = { module = "io.github.pdvrieze.xmlutil:serialization", version.ref = "xmlutil" }
-okio = {module = "com.squareup.okio:okio", version.ref = "okio"}
-okio-fakefilesystem = {module = "com.squareup.okio:okio-fakefilesystem", version.ref = "okio"}
+kotlin-cli = { group = "org.jetbrains.kotlinx", name = "kotlinx-cli", version.ref = "kotlin-cli" }
+xmlutil-core = { group = "io.github.pdvrieze.xmlutil", name = "core", version.ref = "xmlutil" }
+xmlutil-serialization = { group = "io.github.pdvrieze.xmlutil", name = "serialization", version.ref = "xmlutil" }
+okio = { group = "com.squareup.okio", name = "okio", version.ref = "okio"}
+okio-fakefilesystem = { group = "com.squareup.okio", name = "okio-fakefilesystem", version.ref = "okio"}
 
 [bundles]
 xmlutil = ["xmlutil-core", "xmlutil-serialization"]
