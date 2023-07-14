@@ -8,7 +8,7 @@ internal class FileOutputStrategy(
     private val name: String,
     private val pathname: String,
     private val importProvider: ImageVectorImportProvider,
-    private val fileSystem: FileSystem = FileSystem.SYSTEM,
+    private val fileSystem: FileSystem,
 ) : OutputStrategy {
     override fun write(content: String) {
         val output = buildString {

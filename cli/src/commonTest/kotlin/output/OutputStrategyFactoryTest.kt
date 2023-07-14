@@ -1,12 +1,13 @@
 package output
 
+import okio.fakefilesystem.FakeFileSystem
 import kotlin.test.Test
 import kotlin.test.assertIs
 import kotlin.test.assertIsNot
 
 internal class OutputStrategyFactoryTest {
 
-    private val factory = OutputStrategyFactory(NameFormatter())
+    private val factory = OutputStrategyFactory(NameFormatter(), FakeFileSystem())
 
     @Test
     fun create_without_output_path_returns_PrintOutputStrategy() {
