@@ -9,14 +9,14 @@ class FileReaderTest {
     @Test
     fun not_existent_path_throws_error() {
         val reader = FileReader(FakeFileSystem())
-        assertFailsWith<IllegalArgumentException> { reader.read(path = "Hello".toPath()) }
+        assertFailsWith<IllegalArgumentException> { reader.read(path = "Hello") }
     }
 
     @Test
     fun existent_path_returns_file() {
         val system = FakeFileSystem()
-        val path = "test.svg".toPath()
-        system.write(path, mustCreate = true) { writeUtf8("Hello SVG") }
+        val path = "test.svg"
+        system.write(path.toPath(), mustCreate = true) { writeUtf8("Hello SVG") }
 
         assertEquals(
             expected = File(name = "test.svg", content = "Hello SVG"),

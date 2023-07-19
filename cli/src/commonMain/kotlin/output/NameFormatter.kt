@@ -1,6 +1,6 @@
 package output
 
-internal class NameFormatter {
+internal object NameFormatter {
     private val regex = "[-_ ]".toRegex()
 
     fun format(name: String): String {

@@ -7,7 +7,7 @@ import kotlin.test.assertIsNot
 
 internal class OutputStrategyFactoryTest {
 
-    private val factory = OutputStrategyFactory(NameFormatter(), FakeFileSystem())
+    private val factory = OutputStrategyFactory(FakeFileSystem())
 
     @Test
     fun create_without_output_path_returns_PrintOutputStrategy() {

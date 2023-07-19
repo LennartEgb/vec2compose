@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 
 internal class NameFormatterTest {
 
-    private val formatter = NameFormatter()
+    private val formatter = NameFormatter
 
     @Test
     fun ic_close_XML_file_is_parsed_to_IcClose() {
