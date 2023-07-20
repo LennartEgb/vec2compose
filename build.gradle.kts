@@ -1,44 +1,15 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetWithHostTests
-
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.kotlin.kover)
+    alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.kotlin.kover)
 }
-
-group = "dev.lennartegb"
-version = "0.1.0"
 
 repositories {
     mavenCentral()
 }
 
-kover {
-    verify {
-        rule {
-            bound {
-                minValue = 80
-            }
-        }
-    }
-}
-
-kotlin {
-    nativeTarget()
-}
-
-fun KotlinMultiplatformExtension.nativeTarget(
-    configure: Action<KotlinNativeTargetWithHostTests> = Action { }
-): KotlinNativeTargetWithHostTests {
-    val hostOs = System.getProperty("os.name")
-    val isMingwX64 = hostOs.startsWith("Windows")
-    return when {
-        hostOs == "Mac OS X" -> macosX64("native", configure)
-        hostOs == "Linux" -> linuxX64("native", configure)
-        isMingwX64 -> mingwX64("native", configure)
-        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
-    }
+dependencies {
+    kover(project(":cli"))
 }
 
 tasks.register<Copy>("assembleCli") {

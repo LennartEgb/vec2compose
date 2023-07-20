@@ -1,15 +1,22 @@
+@file:Suppress("UNUSED_VARIABLE")
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlin.kover)
 }
 
 repositories {
     mavenCentral()
 }
 
+dependencies {
+    kover(project(":core"))
+}
+
 kotlin {
     jvm {
         compilations.all {
-            kotlinOptions.jvmTarget = "1.8"
+            kotlinOptions.jvmTarget = "17"
         }
         withJava()
         testRuns["test"].executionTask.configure {
