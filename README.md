@@ -10,7 +10,6 @@ A CLI tool to create `ImageVector` from Android vector XML and SVG.
 ## Setup
 
 Run `./gradlew assembleCli` to generate the native binary that is located in the `dist` folder.
-Add the `dist` folder to `PATH` and use it everywhere.
 
 ## Usage
 There are two options to create the `ImageVector`. The first option is to create a Kotlin file.
