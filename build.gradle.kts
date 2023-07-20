@@ -1,10 +1,8 @@
-
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetWithHostTests
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    kotlin("multiplatform") version "1.9.0"
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.kover)
     alias(libs.plugins.ktlint)
 }

@@ -1,8 +1,7 @@
 @file:Suppress("UNUSED_VARIABLE")
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    kotlin("multiplatform")
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.serialization)
 }
 
