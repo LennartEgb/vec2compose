@@ -13,7 +13,7 @@ internal class FileOutputStrategy(
 ) : OutputStrategy {
     override fun write(content: String) {
         val output = buildString {
-            importProvider.createImports().forEach { appendLine(it) }
+            importProvider.createImports(hasGroup = content.contains("group")).forEach { appendLine(it) }
             appendLine()
             appendLine("private var cache: ImageVector? = null")
             appendLine("val $name: ImageVector")
