@@ -12,16 +12,16 @@ internal class CommandParser {
         val isAbsolute = command.isUpperCase()
         val eventString = value.drop(1)
         return when (command.uppercase()) {
-            "A" -> createArcTo(eventString, isAbsolute = isAbsolute)
-            "C" -> createCurvesTo(eventString, isAbsolute = isAbsolute)
-            "H" -> createHorizontalLinesTo(eventString, isAbsolute = isAbsolute)
-            "L" -> createLinesTo(eventString, isAbsolute = isAbsolute)
-            "M" -> createMoves(eventString, isAbsolute = isAbsolute)
-            "Q" -> createQuadraticBezier(eventString, isAbsolute = isAbsolute)
-            "S" -> createReflectiveCurvesTo(eventString, isAbsolute = isAbsolute)
-            "T" -> createReflectiveQuadraticBezier(eventString, isAbsolute = isAbsolute)
-            "V" -> createVerticalLinesTo(eventString, isAbsolute = isAbsolute)
-            "Z" -> listOf(Command.Close)
+            "A"  -> createArcTo(eventString, isAbsolute = isAbsolute)
+            "C"  -> createCurvesTo(eventString, isAbsolute = isAbsolute)
+            "H"  -> createHorizontalLinesTo(eventString, isAbsolute = isAbsolute)
+            "L"  -> createLinesTo(eventString, isAbsolute = isAbsolute)
+            "M"  -> createMoves(eventString, isAbsolute = isAbsolute)
+            "Q"  -> createQuadraticBezier(eventString, isAbsolute = isAbsolute)
+            "S"  -> createReflectiveCurvesTo(eventString, isAbsolute = isAbsolute)
+            "T"  -> createReflectiveQuadraticBezier(eventString, isAbsolute = isAbsolute)
+            "V"  -> createVerticalLinesTo(eventString, isAbsolute = isAbsolute)
+            "Z"  -> listOf(Command.Close)
             else -> error("No command found for $value")
         }
     }
@@ -78,10 +78,14 @@ internal class CommandParser {
     }
 
     private fun createMoves(eventString: String, isAbsolute: Boolean): List<Command> {
-        return eventString.prepare()
+        val commands = eventString.prepare()
             .validate(2, "Move")
             .windowed(size = 2, step = 2, partialWindows = false)
-            .map { Command.MoveTo(x = it[0], y = it[1], isAbsolute = isAbsolute) }
+        val moveTo = commands.first().let {
+            Command.MoveTo(x = it[0], y = it[1], isAbsolute = isAbsolute)
+        }
+        val lineTo = commands.drop(1).map { Command.LineTo(x = it[0], y = it[1], isAbsolute = isAbsolute) }
+        return listOf(moveTo) + lineTo
     }
 
     private fun createLinesTo(eventString: String, isAbsolute: Boolean): List<Command> {

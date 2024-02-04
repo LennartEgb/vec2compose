@@ -16,13 +16,14 @@ internal class CommandParserTest {
         )
     }
 
+    // @see https://www.w3.org/TR/SVG2/paths.html#PathDataMovetoCommands
     @Test
     fun parse_multiple_Move_command() {
         val movePath = "M27.05,24.55 27.05,24.55"
         assertEquals(
             expected = listOf(
                 Command.MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true),
-                Command.MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true)
+                Command.LineTo(x = 27.05f, y = 24.55f, isAbsolute = true)
             ),
             actual = commandParser.parse(movePath)
         )
