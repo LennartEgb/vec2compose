@@ -9,6 +9,7 @@ internal class FileOutputStrategy(
     private val pathname: String,
     private val importProvider: ImageVectorImportProvider,
     private val fileSystem: FileSystem,
+    private val indentation: String = "\t",
 ) : OutputStrategy {
     override fun write(content: String) {
         val output = buildString {
@@ -16,11 +17,11 @@ internal class FileOutputStrategy(
             appendLine()
             appendLine("private var cache: ImageVector? = null")
             appendLine("val $name: ImageVector")
-            content.lines().forEachMeta { line, isFirst, isLast ->
+            content.lines().forEachIndexed { index, line ->
                 indent()
-                if (isFirst) append("get() = cache ?: ")
+                if (index == indices.first) append("get() = cache ?: ")
                 append(line)
-                if (!isLast) appendLine()
+                if (index != indices.last) appendLine()
             }
             appendLine(".also { cache = it }")
         }
@@ -29,9 +30,6 @@ internal class FileOutputStrategy(
         }
     }
 
-    private fun StringBuilder.indent() = append("    ")
+    private fun StringBuilder.indent() = append(indentation)
 
-    private fun <T> List<T>.forEachMeta(action: (T, isFirst: Boolean, isLast: Boolean) -> Unit) {
-        forEachIndexed { index, t -> action(t, index == indices.first, index == indices.last) }
-    }
 }

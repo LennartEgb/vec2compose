@@ -2,11 +2,7 @@ package imagevector
 
 import VectorSet
 
-class ImageVectorParser(indentation: CharSequence = DEFAULT_INDENTATION) {
-    private companion object {
-        const val DEFAULT_INDENTATION = "    "
-    }
-
+class ImageVectorParser(indentation: CharSequence) {
     private val emptyLineRegex = "(?m)^[ \t]*\r?\n".toRegex()
     private val composeMethodCreator = ComposeMethodCreator(indentation)
 

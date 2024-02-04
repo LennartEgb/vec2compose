@@ -11,11 +11,11 @@ internal class OutputStrategyFactoryTest {
 
     @Test
     fun create_without_output_path_returns_PrintOutputStrategy() {
-        assertIsNot<FileOutputStrategy>(factory.create(outputPath = null, name = "George"))
+        assertIsNot<FileOutputStrategy>(factory.create(outputPath = null, name = "George", indentation = ""))
     }
 
     @Test
     fun create_with_output_path_returns_FileOutputStrategy() {
-        assertIs<FileOutputStrategy>(factory.create(outputPath = "some_file.xml", name = "George"))
+        assertIs<FileOutputStrategy>(factory.create(outputPath = "some_file.xml", name = "George", indentation = ""))
     }
 }

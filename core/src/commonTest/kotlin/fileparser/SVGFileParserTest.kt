@@ -11,7 +11,10 @@ import kotlin.test.assertEquals
 class SVGFileParserTest {
 
     private val fileLoader = FileLoader()
-    private val parser = FileParser(vectorSetParser = Injection.SVGParser, imageVectorParser = ImageVectorParser())
+    private val parser = FileParser(
+        vectorSetParser = Injection.SVGParser,
+        imageVectorParser = ImageVectorParser(indentation = "    ")
+    )
 
     @Test
     fun parse_successfully_search_24_svg() {

@@ -7,7 +7,7 @@ import kotlin.test.assertEquals
 
 internal class ImageVectorParserTest {
 
-    private val imageVectorParser = ImageVectorParser()
+    private val imageVectorParser = ImageVectorParser(indentation = "    ")
 
     @Test
     fun parse_VectorSet_with_FillType_NonZero_to_ImageVector_string() {

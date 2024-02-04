@@ -10,8 +10,10 @@ import kotlin.test.assertContains
 internal class XMLFileParserTest {
 
     private val fileLoader = FileLoader()
-    private val parser =
-        FileParser(vectorSetParser = Injection.VectorDrawableParser, imageVectorParser = ImageVectorParser())
+    private val parser = FileParser(
+        vectorSetParser = Injection.VectorDrawableParser,
+        imageVectorParser = ImageVectorParser(indentation = "    ")
+    )
 
     @Test
     fun parse_successfully_ic_account_circle_24() {

@@ -8,12 +8,14 @@ fun main(args: Array<String>) {
 
     val fileSystem = FileSystem.SYSTEM
     val file = FileReader(fileSystem = fileSystem).read(arguments.input)
-
+    val indentation = "    "
     val outputStrategy = OutputStrategyFactory(fileSystem = fileSystem)
-        .create(arguments.output, NameFormatter.format(file.name))
+        .create(outputPath = arguments.output, name = NameFormatter.format(file.name), indentation = indentation)
 
-    FileParser(vectorSetParser = VectorSetParserFactory.create(file.extension), imageVectorParser = ImageVectorParser())
-        .parse(content = file.content, name = file.name)
+    FileParser(
+        vectorSetParser = VectorSetParserFactory.create(file.extension),
+        imageVectorParser = ImageVectorParser(indentation = indentation),
+    ).parse(content = file.content, name = file.name)
         .onSuccess { outputStrategy.write(it) }
         .onFailure { println("Error occurred: ${it.message}") }
 }
