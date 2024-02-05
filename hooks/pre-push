@@ -1,6 +1,6 @@
 #!/bin/sh
 
-./gradlew test
+./gradlew allTests
 status=$?
 # Check the exit code of the previous command
 
