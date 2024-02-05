@@ -1,9 +1,9 @@
 [versions]
-xmlutil = "0.86.1"
 kotlin = "1.9.22"
 kotlin-cli = "0.3.6"
 kotlin-kover = "0.7.4"
 ktlint = "12.1.0"
+xmlutil = "0.86.3"
 okio = "3.4.0"
 
 [libraries]
