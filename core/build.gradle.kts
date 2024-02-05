@@ -18,11 +18,6 @@ kotlin {
             useJUnitPlatform()
         }
     }
-    js(IR) {
-        browser {
-            commonWebpackConfig(Action { cssSupport { enabled.set(true) } })
-        }
-    }
     val hostOs = System.getProperty("os.name")
     val isMingwX64 = hostOs.startsWith("Windows")
     when {
@@ -46,8 +41,6 @@ kotlin {
         }
         val jvmMain by getting
         val jvmTest by getting
-        val jsMain by getting
-        val jsTest by getting
         val nativeMain by getting
         val nativeTest by getting
     }
