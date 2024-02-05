@@ -36,20 +36,18 @@ kotlin {
         }
     }
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 implementation(project(":core"))
                 implementation(libs.kotlin.cli)
                 implementation(libs.okio)
             }
         }
-        val commonTest by getting {
+        commonTest {
             dependencies {
                 implementation(kotlin("test"))
                 implementation(libs.okio.fakefilesystem)
             }
         }
-        val nativeMain by getting
-        val nativeTest by getting
     }
 }
