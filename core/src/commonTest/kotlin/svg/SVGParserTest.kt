@@ -21,10 +21,30 @@ internal class SVGParserTest {
         val svg = svg {
             appendLine("""<path d="" fill="none"/>""")
             appendLine("""<path fill="#fff" d=""/>""")
+            appendLine("""<path d=""/>""")
         }
         val result = parser.parse(content = svg).getOrThrow()
-        val expected = listOf(null, VectorSet.Path.FillColor(0xff, 0xff, 0xff, 0xff))
-        assertEquals(expected = expected, actual = result.paths.map { it.fillColor })
+        val expected = listOf(
+            VectorSet.Path(
+                fillType = VectorSet.Path.FillType.Default,
+                fillColor = null,
+                commands = emptyList(),
+                alpha = 1f
+            ),
+            VectorSet.Path(
+                fillType = VectorSet.Path.FillType.Default,
+                fillColor = VectorSet.Path.FillColor(0xff, 0xff, 0xff, 0xff),
+                commands = emptyList(),
+                alpha = 1f
+            ),
+            VectorSet.Path(
+                fillType = VectorSet.Path.FillType.Default,
+                fillColor = VectorSet.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff),
+                commands = emptyList(),
+                alpha = 1f
+            ),
+        )
+        assertEquals(expected = expected, actual = result.paths)
     }
 
     @Test
@@ -52,6 +72,26 @@ internal class SVGParserTest {
         }
         val result = parser.parse(svg).getOrThrow()
         assertEquals(expected = listOf(Translation(20f, 30f)), actual = result.groups.map { it.translation })
+    }
+
+    @Test
+    fun parse_path_data_with_fill_none() {
+        val svg = svg {
+            appendLine("""<path d="" fill="none"/>""")
+        }
+        val result = parser.parse(svg).getOrThrow()
+
+        assertEquals(
+            expected = listOf(
+                VectorSet.Path(
+                    fillType = VectorSet.Path.FillType.Default,
+                    fillColor = null,
+                    commands = emptyList(),
+                    alpha = 1f
+                )
+            ),
+            actual = result.paths
+        )
     }
 
     private fun svg(block: StringBuilder.() -> Unit): String {

@@ -18,8 +18,8 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
     fun parsePath(path: VectorSet.Path, forBuilder: Boolean = true): String = buildString {
         if (forBuilder) append(".")
         append("path(").appendLine()
-        val fillColor = path.fillColor?.toString() ?: "Color.Black"
-        indent().append("fill = SolidColor($fillColor),").appendLine()
+        val fillColor = path.fillColor?.toString()?.let { "SolidColor($it)" } ?: "null"
+        indent().append("fill = $fillColor,").appendLine()
         indent().append("fillAlpha = ${path.alpha}f,").appendLine()
         indent().append("stroke = null,").appendLine()
         indent().append("strokeAlpha = 1f,").appendLine()
