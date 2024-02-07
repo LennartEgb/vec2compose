@@ -1,6 +1,6 @@
 package output
 
-import imagevector.ImageVectorImportProvider
+import dev.lennartegb.vec2compose.core.imagevector.ImageVectorImportProvider
 import okio.FileSystem
 
 internal class OutputStrategyFactory(private val fileSystem: FileSystem) {

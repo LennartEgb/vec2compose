@@ -1,11 +1,11 @@
 package vectordrawable
 
-import ColorParser
-import Scale
-import Translation
-import VectorSet
-import VectorSetParser
-import commands.PathParser
+import dev.lennartegb.vec2compose.core.ColorParser
+import dev.lennartegb.vec2compose.core.Scale
+import dev.lennartegb.vec2compose.core.Translation
+import dev.lennartegb.vec2compose.core.VectorSet
+import dev.lennartegb.vec2compose.core.VectorSetParser
+import dev.lennartegb.vec2compose.core.commands.PathParser
 
 private typealias DpString = String
 
