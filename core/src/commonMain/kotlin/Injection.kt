@@ -2,14 +2,12 @@ import commands.CommandParser
 import commands.PathParser
 import svg.SVGDeserializer
 import svg.SVGParser
-import vectordrawable.VectorDrawableDeserializer
 import vectordrawable.VectorDrawableParser
 
 internal object Injection {
 
     private val CommandParser = CommandParser()
     private val PathParser = PathParser(commandParser = CommandParser)
-    private val VectorDrawableDeserializer = VectorDrawableDeserializer()
     private val SVGDeserializer = SVGDeserializer()
     private val hexColorParser: ColorParser = HexColorParser()
     private val keywordColorParser: ColorParser = KeywordColorParser()
@@ -20,7 +18,6 @@ internal object Injection {
 
     val VectorDrawableParser: VectorSetParser = VectorDrawableParser(
         colorParser = hexColorParser,
-        deserializer = VectorDrawableDeserializer,
         pathParser = PathParser
     )
     val SVGParser: VectorSetParser = SVGParser(

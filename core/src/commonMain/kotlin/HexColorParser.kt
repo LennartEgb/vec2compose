@@ -1,4 +1,4 @@
-internal class HexColorParser : ColorParser {
+class HexColorParser : ColorParser {
     override fun parse(color: String): VectorSet.Path.FillColor? {
         if (color.startsWith("#")) return parse(color.drop(1))
         return when (color.length) {

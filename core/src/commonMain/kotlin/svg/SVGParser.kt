@@ -9,8 +9,8 @@ import commands.PathParser
 
 internal class SVGParser(
     private val colorParser: ColorParser,
-    private val deserializer: SVGDeserializer,
-    private val pathParser: PathParser
+    private val pathParser: PathParser,
+    private val deserializer: SVGDeserializer = SVGDeserializer(),
 ) : VectorSetParser {
 
     override fun parse(content: String): Result<VectorSet> {
