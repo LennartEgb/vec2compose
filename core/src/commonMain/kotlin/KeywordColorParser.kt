@@ -1,4 +1,4 @@
-internal class KeywordColorParser : ColorParser {
+class KeywordColorParser : ColorParser {
 
     private val nameToColors: Map<String, VectorSet.Path.FillColor> = createNamesToColors()
 

@@ -11,8 +11,8 @@ private typealias DpString = String
 
 internal class VectorDrawableParser(
     private val colorParser: ColorParser,
-    private val deserializer: VectorDrawableDeserializer,
-    private val pathParser: PathParser
+    private val pathParser: PathParser,
+    private val deserializer: VectorDrawableDeserializer = VectorDrawableDeserializer()
 ) : VectorSetParser {
 
     override fun parse(content: String): Result<VectorSet> {

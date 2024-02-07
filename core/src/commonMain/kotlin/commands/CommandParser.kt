@@ -1,6 +1,6 @@
 package commands
 
-internal class CommandParser {
+class CommandParser {
 
     private val valueRegex = "[+-]?\\d*[.]?\\d+".toRegex()
 
