@@ -1,4 +1,4 @@
-package svg
+package dev.lennartegb.vec2compose.svg
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

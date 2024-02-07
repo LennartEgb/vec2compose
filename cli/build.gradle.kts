@@ -30,6 +30,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(":core"))
+                implementation(project(":svg"))
                 implementation(libs.kotlin.cli)
                 implementation(libs.okio)
             }

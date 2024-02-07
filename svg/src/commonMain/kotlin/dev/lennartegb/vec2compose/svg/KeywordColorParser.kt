@@ -1,6 +1,12 @@
-package dev.lennartegb.vec2compose.core
+package dev.lennartegb.vec2compose.svg
 
-class KeywordColorParser : ColorParser {
+import dev.lennartegb.vec2compose.core.ColorParser
+import dev.lennartegb.vec2compose.core.VectorSet
+
+/**
+ * Supported color keywords: https://www.w3.org/TR/SVG11/types.html#ColorKeywords
+ */
+internal class KeywordColorParser : ColorParser {
 
     private val nameToColors: Map<String, VectorSet.Path.FillColor> = createNamesToColors()
 
@@ -23,6 +29,7 @@ class KeywordColorParser : ColorParser {
     }
 
     private fun getColors() = """
+ 
         aliceblue:[240,248,255]
         antiquewhite:[250,235,215]
         aqua:[0,255,255]
