@@ -1,4 +1,4 @@
-package vectordrawable
+package dev.lennartegb.vec2compose.vectorDrawable
 
 import dev.lennartegb.vec2compose.core.ColorParser
 import dev.lennartegb.vec2compose.core.Scale
@@ -10,8 +10,8 @@ import dev.lennartegb.vec2compose.core.commands.PathParser
 private typealias DpString = String
 
 internal class VectorDrawableParser(
-    private val colorParser: ColorParser,
     private val pathParser: PathParser,
+    private val colorParser: ColorParser,
     private val deserializer: VectorDrawableDeserializer = VectorDrawableDeserializer()
 ) : VectorSetParser {
 
@@ -72,7 +72,7 @@ internal class VectorDrawableParser(
         return when (fillType) {
             "evenOdd" -> VectorSet.Path.FillType.EvenOdd
             "nonZero" -> VectorSet.Path.FillType.NonZero
-            else -> VectorSet.Path.FillType.Default
+            else -> Default
         }
     }
 }

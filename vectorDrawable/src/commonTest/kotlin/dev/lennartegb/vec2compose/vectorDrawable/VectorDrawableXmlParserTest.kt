@@ -1,6 +1,7 @@
-package vectordrawable
+package dev.lennartegb.vec2compose.vectorDrawable
 
 import nl.adaptivity.xmlutil.serialization.XML
+import dev.lennartegb.vec2compose.vectorDrawable.VectorDrawable
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

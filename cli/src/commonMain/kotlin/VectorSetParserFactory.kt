@@ -1,13 +1,14 @@
-import dev.lennartegb.vec2compose.core.Injection
 import dev.lennartegb.vec2compose.core.VectorSetParser
-import dev.lennartegb.vec2compose.svg.vectorSetParser
+import dev.lennartegb.vec2compose.core.commands.PathParser
+import dev.lennartegb.vec2compose.svg.vectorSetParser as svgVectorSetParser
+import dev.lennartegb.vec2compose.vectorDrawable.vectorSetParser as androidVectorSetParser
 
 object VectorSetParserFactory {
 
     fun create(fileExtension: String): VectorSetParser {
         val validExtensions = mapOf(
-            "xml" to Injection.VectorDrawableParser,
-            "svg" to vectorSetParser(pathParser = Injection.PathParser)
+            "xml" to androidVectorSetParser(pathParser = PathParser()),
+            "svg" to svgVectorSetParser(pathParser = PathParser())
         )
         val extension = fileExtension.lowercase()
         require(extension in validExtensions.keys) { "No parser found for file extension: $fileExtension" }

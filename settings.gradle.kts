@@ -3,5 +3,7 @@ plugins {
 }
 include(":core")
 include(":cli")
-rootProject.name = "vec2compose"
 include("svg")
+include("vectorDrawable")
+
+rootProject.name = "vec2compose"
