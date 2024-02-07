@@ -31,7 +31,7 @@ kotlin {
             dependencies {
                 implementation(project(":core"))
                 implementation(project(":svg"))
-                implementation(project(":vectorDrawable"))
+                implementation(project(":vector-drawable"))
                 implementation(libs.kotlin.cli)
                 implementation(libs.okio)
             }
