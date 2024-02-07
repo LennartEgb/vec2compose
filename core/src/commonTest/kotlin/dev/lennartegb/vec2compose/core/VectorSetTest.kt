@@ -1,6 +1,5 @@
 package dev.lennartegb.vec2compose.core
 
-import dev.lennartegb.vec2compose.core.VectorSet
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

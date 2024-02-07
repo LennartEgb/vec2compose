@@ -15,11 +15,6 @@ kotlin {
     mingwX64("windows")
 
     sourceSets {
-        commonMain {
-            dependencies {
-                implementation(libs.bundles.xmlutil)
-            }
-        }
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
@@ -27,13 +22,3 @@ kotlin {
         }
     }
 }
-
-/**
- * Resource loading implementation from https://developer.squareup.com/blog/kotlin-multiplatform-shared-test-resources
- */
-tasks.register<Copy>("copyNativeTestResources") {
-    from("src/commonTest/resources")
-    into("build/bin/native/debugTest/resources")
-}
-
-tasks.findByName("nativeTest")?.dependsOn("copyNativeTestResources")
