@@ -1,4 +1,4 @@
-package vectordrawable
+package dev.lennartegb.vec2compose.vectorDrawable
 
 import dev.lennartegb.vec2compose.core.HexColorParser
 import dev.lennartegb.vec2compose.core.Scale

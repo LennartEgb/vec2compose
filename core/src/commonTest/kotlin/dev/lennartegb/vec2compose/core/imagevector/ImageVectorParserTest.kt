@@ -39,7 +39,7 @@ internal class ImageVectorParserTest {
                 viewportWidth = 48.0f,
                 viewportHeight = 42.0f
             ).path(
-                fill = SolidColor(Color.Black),
+                fill = null,
                 fillAlpha = 1.0f,
                 stroke = null,
                 strokeAlpha = 1f,
@@ -91,7 +91,7 @@ internal class ImageVectorParserTest {
                 viewportWidth = 48.0f,
                 viewportHeight = 42.0f
             ).path(
-                fill = SolidColor(Color.Black),
+                fill = null,
                 fillAlpha = 0.5f,
                 stroke = null,
                 strokeAlpha = 1f,

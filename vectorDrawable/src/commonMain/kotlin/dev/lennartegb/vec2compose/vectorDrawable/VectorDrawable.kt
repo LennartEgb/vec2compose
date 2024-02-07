@@ -1,4 +1,4 @@
-package vectordrawable
+package dev.lennartegb.vec2compose.vectorDrawable
 
 import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlElement

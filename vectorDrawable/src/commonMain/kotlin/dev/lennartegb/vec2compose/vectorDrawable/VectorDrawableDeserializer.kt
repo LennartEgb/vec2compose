@@ -1,4 +1,4 @@
-package vectordrawable
+package dev.lennartegb.vec2compose.vectorDrawable
 
 import nl.adaptivity.xmlutil.serialization.XML
 
