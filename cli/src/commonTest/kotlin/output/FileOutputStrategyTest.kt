@@ -1,6 +1,6 @@
 package output
 
-import imagevector.ImageVectorImportProvider
+import dev.lennartegb.vec2compose.core.imagevector.ImageVectorImportProvider
 import okio.Path.Companion.toPath
 import okio.fakefilesystem.FakeFileSystem
 import kotlin.test.Test

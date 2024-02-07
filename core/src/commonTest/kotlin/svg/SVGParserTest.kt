@@ -1,10 +1,10 @@
 package svg
 
-import HexColorParser
-import Translation
-import VectorSet
-import commands.CommandParser
-import commands.PathParser
+import dev.lennartegb.vec2compose.core.HexColorParser
+import dev.lennartegb.vec2compose.core.Translation
+import dev.lennartegb.vec2compose.core.VectorSet
+import dev.lennartegb.vec2compose.core.commands.CommandParser
+import dev.lennartegb.vec2compose.core.commands.PathParser
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

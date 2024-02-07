@@ -1,6 +1,6 @@
 package fileparser
 
-import VectorSetParserFactory
+import dev.lennartegb.vec2compose.core.VectorSetParserFactory
 import svg.SVGParser
 import vectordrawable.VectorDrawableParser
 import kotlin.test.Test
