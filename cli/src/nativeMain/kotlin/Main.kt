@@ -1,5 +1,4 @@
 import dev.lennartegb.vec2compose.core.FileParser
-import dev.lennartegb.vec2compose.core.VectorSetParserFactory
 import dev.lennartegb.vec2compose.core.imagevector.ImageVectorParser
 import okio.FileSystem
 import output.NameFormatter

@@ -1,4 +1,4 @@
-package svg
+package dev.lennartegb.vec2compose.svg
 
 import dev.lennartegb.vec2compose.core.HexColorParser
 import dev.lennartegb.vec2compose.core.Translation

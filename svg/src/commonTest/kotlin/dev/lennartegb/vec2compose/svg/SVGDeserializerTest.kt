@@ -1,4 +1,4 @@
-package svg
+package dev.lennartegb.vec2compose.svg
 
 import nl.adaptivity.xmlutil.serialization.XML
 import kotlin.test.Test
