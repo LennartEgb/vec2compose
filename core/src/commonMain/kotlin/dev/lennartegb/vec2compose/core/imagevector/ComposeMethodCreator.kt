@@ -1,6 +1,10 @@
 package dev.lennartegb.vec2compose.core.imagevector
 
 import dev.lennartegb.vec2compose.core.VectorSet
+import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke.Cap.Butt
+import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke.Cap.Square
+import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke.Join.Bevel
+import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke.Join.Miter
 import dev.lennartegb.vec2compose.core.commands.Command
 
 internal class ComposeMethodCreator(private val indentation: CharSequence) {
@@ -18,15 +22,15 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
     fun parsePath(path: VectorSet.Path, forBuilder: Boolean = true): String = buildString {
         if (forBuilder) append(".")
         append("path(").appendLine()
-        val fillColor = path.fillColor?.toString()?.let { "SolidColor($it)" } ?: "null"
+        val fillColor = path.fillColor?.solid()
         indent().append("fill = $fillColor,").appendLine()
         indent().append("fillAlpha = ${path.alpha}f,").appendLine()
-        indent().append("stroke = null,").appendLine()
-        indent().append("strokeAlpha = 1f,").appendLine()
-        indent().append("strokeLineWidth = 1f,").appendLine()
-        indent().append("strokeLineCap = StrokeCap.Butt,").appendLine()
-        indent().append("strokeLineJoin = StrokeJoin.Bevel,").appendLine()
-        indent().append("strokeLineMiter = 1f,").appendLine()
+        indent().append("stroke = ${path.stroke.color?.solid()},").appendLine()
+        indent().append("strokeAlpha = ${path.stroke.alpha}f,").appendLine()
+        indent().append("strokeLineWidth = ${path.stroke.width}f,").appendLine()
+        indent().append("strokeLineCap = ${path.stroke.cap.property()},").appendLine()
+        indent().append("strokeLineJoin = ${path.stroke.join.property()},").appendLine()
+        indent().append("strokeLineMiter = ${path.stroke.miter}f,").appendLine()
         indent().append("pathFillType = ${path.fillType.composeName}").appendLine()
         append(") {").appendLine()
 
@@ -67,4 +71,17 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
             VectorSet.Path.FillType.NonZero -> "PathFillType.NonZero"
             VectorSet.Path.FillType.EvenOdd -> "PathFillType.EvenOdd"
         }
+
+    private fun VectorSet.Path.FillColor?.solid(): String = this?.let { "SolidColor($it)" } ?: "null"
+    private fun VectorSet.Path.Stroke.Cap.property(): String = when (this) {
+        Butt -> "StrokeCap.Butt"
+        Square -> "StrokeCap.Square"
+        VectorSet.Path.Stroke.Cap.Round -> "StrokeCap.Round"
+    }
+
+    private fun VectorSet.Path.Stroke.Join.property(): String = when (this) {
+        Bevel -> "StrokeJoin.Bevel"
+        Miter -> "StrokeJoin.Miter"
+        VectorSet.Path.Stroke.Join.Round -> "StrokeJoin.Round"
+    }
 }
