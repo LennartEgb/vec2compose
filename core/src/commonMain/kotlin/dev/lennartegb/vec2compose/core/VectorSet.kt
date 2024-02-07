@@ -25,7 +25,8 @@ data class VectorSet(
         val fillType: FillType,
         val fillColor: FillColor? = null,
         val commands: List<Command>,
-        val alpha: Float
+        val alpha: Float,
+        val stroke: Stroke = Stroke(),
     ) {
         enum class FillType {
             NonZero,
@@ -34,6 +35,18 @@ data class VectorSet(
             companion object {
                 val Default = NonZero
             }
+        }
+
+        data class Stroke(
+            val color: FillColor? = null,
+            val alpha: Float = 1f,
+            val width: Float = 1f,
+            val cap: Cap = Cap.Butt,
+            val join: Join = Join.Bevel,
+            val miter: Float = 1f,
+        ) {
+            enum class Cap { Butt, Round, Square }
+            enum class Join { Bevel, Miter, Round }
         }
 
         data class FillColor(val red: Int, val green: Int, val blue: Int, val alpha: Int) {
