@@ -43,7 +43,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
     fun parseGroup(group: VectorSet.Group, forBuilder: Boolean = true): String = buildString {
         if (forBuilder) append(".")
         append("group(").appendLine()
-        group.name?.also { indent().append("name = $it").appendLine() }
+        group.name?.also { indent().append("name = \"$it\",").appendLine() }
         indent().append("rotate = ${group.rotate}f,").appendLine()
         indent().append("pivotX = ${group.pivot.x}f,").appendLine()
         indent().append("pivotY = ${group.pivot.y}f,").appendLine()
@@ -53,14 +53,16 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         indent().append("translationY = ${group.translation.y}f,").appendLine()
         indent().append("clipPathData = emptyList()").appendLine()
         append(") {").appendLine()
-        group.groups.joinToString(separator = "\n") { parseGroup(it, forBuilder = false) }
-            .setupIndent()
-            .let(::append)
-            .appendLine()
-        group.paths.joinToString(separator = "\n") { parsePath(it, forBuilder = false) }
-            .setupIndent()
-            .let(::append)
-            .appendLine()
+        group.groups.takeIf { it.isNotEmpty() }
+            ?.joinToString(separator = "\n") { parseGroup(it, forBuilder = false) }
+            ?.setupIndent()
+            ?.let(::append)
+            ?.appendLine()
+        group.paths.takeIf { it.isNotEmpty() }
+            ?.joinToString(separator = "\n") { parsePath(it, forBuilder = false) }
+            ?.setupIndent()
+            ?.let(::append)
+            ?.appendLine()
         append("}")
     }
 
