@@ -56,8 +56,42 @@ internal class SVGParser(
             fillType = parseFillType(fillRule),
             commands = pathParser.parse(pathData),
             fillColor = fillColor,
-            alpha = fillOpacity
+            alpha = fillOpacity,
+            stroke = toStroke(),
         )
+    }
+
+    private fun SVG.Path.toStroke(): VectorSet.Path.Stroke {
+        return VectorSet.Path.Stroke(
+            color = strokeColor?.let(colorParser::parse),
+            alpha = strokeAlpha?.toFloat(), // TODO: support percentage
+            width = strokeWidth?.toFloat(), // TODO: support percentage
+            cap = strokeLinecap?.let(::getStrokeLineCap),
+            join = strokeLinejoin?.let(::getStrokeLineJoin),
+            miter = strokeMiter?.toFloat()
+        )
+    }
+
+    private fun getStrokeLineJoin(value: String): VectorSet.Path.Stroke.Join {
+        // NOTE: Documentation lists more supported values. Compose only supports three, so we need to ignore
+        //       unsupported values for now.
+        //       arcs | bevel | miter | miter-clip | round
+        //       @see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linejoin
+        return when (value) {
+            "round" -> VectorSet.Path.Stroke.Join.Round
+            "bevel" -> VectorSet.Path.Stroke.Join.Bevel
+            "miter" -> VectorSet.Path.Stroke.Join.Miter
+            else -> error("StrokeJoin not supported. Was: $value. Must be in: ${VectorSet.Path.Stroke.Join.entries}")
+        }
+    }
+
+    private fun getStrokeLineCap(value: String): VectorSet.Path.Stroke.Cap {
+        return when (value) {
+            "butt" -> VectorSet.Path.Stroke.Cap.Butt
+            "round" -> VectorSet.Path.Stroke.Cap.Round
+            "square" -> VectorSet.Path.Stroke.Cap.Square
+            else -> error("StrokeCap not supported. Was: $value. Must be in: ${VectorSet.Path.Stroke.Cap.entries}")
+        }
     }
 
     private fun parseFillType(fillRule: String): VectorSet.Path.FillType {
