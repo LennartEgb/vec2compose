@@ -129,4 +129,33 @@ internal class SVGDeserializerTest {
             actual = deserializer.deserialize(content).getOrThrow()
         )
     }
+
+    @Test
+    fun parse_svg_with_strokes() {
+        val svg = """
+            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5 12V7.5" stroke="#888888" stroke-width="1.5" stroke-linecap="butt" stroke-linejoin="round" stroke-opacity="0.5" stroke-miterlimit="1"/>
+            </svg>
+        """.trimIndent()
+        assertEquals(
+            actual = deserializer.deserialize(svg).getOrThrow(),
+            expected = SVG(
+                width = "25",
+                height = "24",
+                viewBox = "0 0 25 24",
+                fill = "none",
+                path = listOf(
+                    SVG.Path(
+                        pathData = "M12.5 12V7.5",
+                        strokeLinecap = "butt",
+                        strokeLinejoin = "round",
+                        strokeWidth = "1.5",
+                        strokeColor = "#888888",
+                        strokeAlpha = "0.5",
+                        strokeMiter = "1"
+                    )
+                )
+            )
+        )
+    }
 }
