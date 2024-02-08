@@ -1,4 +1,3 @@
-import dev.lennartegb.vec2compose.core.FileParser
 import dev.lennartegb.vec2compose.core.imagevector.ImageVectorParser
 import okio.FileSystem
 import output.NameFormatter
@@ -12,11 +11,11 @@ fun main(args: Array<String>) {
     val indentation = "    "
     val outputStrategy = OutputStrategyFactory(fileSystem = fileSystem)
         .create(outputPath = arguments.output, name = NameFormatter.format(file.name), indentation = indentation)
+    val imageVectorParser = ImageVectorParser(indentation = indentation)
 
-    FileParser(
-        vectorSetParser = VectorSetParserFactory.create(file.extension),
-        imageVectorParser = ImageVectorParser(indentation = indentation),
-    ).parse(content = file.content, name = file.name)
+    VectorSetParserFactory.create(file.extension)
+        .parse(content = file.content)
+        .mapCatching { imageVectorParser.parse(name = file.name, vectorSet = it) }
         .onSuccess { outputStrategy.write(it) }
         .onFailure { println("Error occurred: ${it.message}") }
 }
