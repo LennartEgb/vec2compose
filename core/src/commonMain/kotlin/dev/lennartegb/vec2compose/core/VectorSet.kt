@@ -45,6 +45,17 @@ data class VectorSet(
             val join: Join = Join.Bevel,
             val miter: Float = 1f,
         ) {
+
+            // NOTE: constructor with null values to fall back to default values.
+            constructor(color: FillColor?, alpha: Float?, width: Float?, cap: Cap?, join: Join?, miter: Float?) : this(
+                color = color,
+                alpha = alpha ?: 1f,
+                width = width ?: 1f,
+                cap = cap ?: Cap.Butt,
+                join = join ?: Join.Bevel,
+                miter = miter ?: 1f
+            )
+
             enum class Cap { Butt, Round, Square }
             enum class Join { Bevel, Miter, Round }
         }
