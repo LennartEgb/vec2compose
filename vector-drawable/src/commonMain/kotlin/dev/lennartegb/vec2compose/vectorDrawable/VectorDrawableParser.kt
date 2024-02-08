@@ -54,8 +54,38 @@ internal class VectorDrawableParser(
             fillType = VectorSet.Path.FillType.parse(fillType),
             commands = pathParser.parse(pathData),
             fillColor = fillColor?.let(colorParser::parse),
-            alpha = alpha
+            alpha = alpha,
+            stroke = toStroke()
         )
+    }
+
+    private fun VectorDrawable.Path.toStroke(): VectorSet.Path.Stroke {
+        return VectorSet.Path.Stroke(
+            color = strokeColor?.let { colorParser.parse(it) },
+            alpha = strokeAlpha?.toFloat(),
+            width = strokeWidth?.toFloat(),
+            cap = strokeLineCap?.let(::getCap),
+            join = strokeLineJoin?.let(::getJoin),
+            miter = strokeMiterLimit?.toFloat(),
+        )
+    }
+
+    private fun getCap(value: String): VectorSet.Path.Stroke.Cap {
+        return when (value) {
+            "round" -> VectorSet.Path.Stroke.Cap.Round
+            "butt" -> VectorSet.Path.Stroke.Cap.Butt
+            "square" -> VectorSet.Path.Stroke.Cap.Square
+            else -> error("StrokeCap not supported. Was: $value. Must be in: ${VectorSet.Path.Stroke.Cap.entries}")
+        }
+    }
+
+    private fun getJoin(value: String): VectorSet.Path.Stroke.Join {
+        return when (value) {
+            "round" -> VectorSet.Path.Stroke.Join.Round
+            "bevel" -> VectorSet.Path.Stroke.Join.Bevel
+            "miter" -> VectorSet.Path.Stroke.Join.Miter
+            else -> error("StrokeJoin not supported. Was: $value. Must be in: ${VectorSet.Path.Stroke.Join.entries}")
+        }
     }
 
     private fun DpString.toIntDp(): Int {

@@ -60,6 +60,18 @@ internal data class VectorDrawable(
         @XmlSerialName(namespace = androidNamespace, value = "pathData")
         val pathData: String,
         @XmlSerialName(namespace = androidNamespace, value = "alpha")
-        val alpha: Float = 1.0f
+        val alpha: Float = 1.0f,
+        @XmlSerialName(namespace = androidNamespace, value = "strokeWidth")
+        val strokeWidth: String? = null,
+        @XmlSerialName(namespace = androidNamespace, value = "strokeLineCap")
+        val strokeLineCap: String? = null,
+        @XmlSerialName(namespace = androidNamespace, value = "strokeLineJoin")
+        val strokeLineJoin: String? = null,
+        @XmlSerialName(namespace = androidNamespace, value = "strokeColor")
+        val strokeColor: String? = null,
+        @XmlSerialName(namespace = androidNamespace, value = "strokeAlpha")
+        val strokeAlpha: String? = null,
+        @XmlSerialName(namespace = androidNamespace, value = "strokeMiterLimit")
+        val strokeMiterLimit: String? = null,
     )
 }
