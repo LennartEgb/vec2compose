@@ -48,6 +48,18 @@ data class SVG(
         @SerialName(value = "fill")
         val fill: String? = null,
         @SerialName(value = "fill-opacity")
-        val fillOpacity: Float = 1.0f
+        val fillOpacity: Float = 1.0f,
+        @SerialName(value = "stroke")
+        val strokeColor: String? = null,
+        @SerialName(value = "stroke-width")
+        val strokeWidth: String? = null,
+        @SerialName(value = "stroke-linecap")
+        val strokeLinecap: String? = null,
+        @SerialName(value = "stroke-linejoin")
+        val strokeLinejoin: String? = null,
+        @SerialName(value = "stroke-opacity")
+        val strokeAlpha: String? = null,
+        @SerialName(value = "stroke-miterlimit")
+        val strokeMiter: String? = null,
     )
 }
