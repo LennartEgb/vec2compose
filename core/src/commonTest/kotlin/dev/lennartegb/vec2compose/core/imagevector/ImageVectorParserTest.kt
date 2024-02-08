@@ -42,11 +42,11 @@ internal class ImageVectorParserTest {
                 fill = null,
                 fillAlpha = 1.0f,
                 stroke = null,
-                strokeAlpha = 1f,
-                strokeLineWidth = 1f,
+                strokeAlpha = 1.0f,
+                strokeLineWidth = 1.0f,
                 strokeLineCap = StrokeCap.Butt,
                 strokeLineJoin = StrokeJoin.Bevel,
-                strokeLineMiter = 1f,
+                strokeLineMiter = 1.0f,
                 pathFillType = PathFillType.NonZero
             ) {
                 moveTo(1.0f, 2.0f)
@@ -94,11 +94,11 @@ internal class ImageVectorParserTest {
                 fill = null,
                 fillAlpha = 0.5f,
                 stroke = null,
-                strokeAlpha = 1f,
-                strokeLineWidth = 1f,
+                strokeAlpha = 1.0f,
+                strokeLineWidth = 1.0f,
                 strokeLineCap = StrokeCap.Butt,
                 strokeLineJoin = StrokeJoin.Bevel,
-                strokeLineMiter = 1f,
+                strokeLineMiter = 1.0f,
                 pathFillType = PathFillType.EvenOdd
             ) {
                 moveTo(1.0f, 2.0f)
