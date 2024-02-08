@@ -98,6 +98,49 @@ internal class VectorDrawableParserTest {
         )
     }
 
+    @Test
+    fun parse_path_with_stroke() {
+        val vector = vector(
+            """
+             <path
+             android:pathData=""
+             android:strokeWidth="42"
+             android:strokeLineCap="butt"
+             android:strokeLineJoin="bevel"
+             android:strokeColor="#fff"
+             android:strokeAlpha=".5"
+             android:strokeMiterLimit="2"
+             />
+        """.trimIndent()
+        )
+        val result = parser.parse(vector).getOrThrow()
+        assertEquals(
+            actual = result,
+            expected = VectorSet(
+                width = 24,
+                height = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
+                groups = emptyList(),
+                paths = listOf(
+                    VectorSet.Path(
+                        commands = emptyList(),
+                        alpha = 1f,
+                        fillType = VectorSet.Path.FillType.Default,
+                        stroke = VectorSet.Path.Stroke(
+                            color = VectorSet.Path.FillColor(0xff, 0xff, 0xff, 0xff),
+                            alpha = .5f,
+                            width = 42f,
+                            cap = VectorSet.Path.Stroke.Cap.Butt,
+                            join = VectorSet.Path.Stroke.Join.Bevel,
+                            miter = 2f,
+                        ),
+                    )
+                ),
+            )
+        )
+    }
+
     private fun vector(content: String): String = buildString {
         appendLine(
             """
