@@ -10,9 +10,9 @@ repositories {
 
 kotlin {
     jvm()
-    macosX64("macos")
-    linuxX64("linux")
-    mingwX64("windows")
+    macosX64()
+    linuxX64()
+    mingwX64()
 
     sourceSets {
         commonMain {
