@@ -11,19 +11,17 @@ internal class FileOutputStrategy(
     private val fileSystem: FileSystem,
     private val indentation: String = "\t",
 ) : OutputStrategy {
+
     override fun write(content: String) {
         val output = buildString {
             importProvider.createImports(hasGroup = content.contains("group")).forEach { appendLine(it) }
             appendLine()
             appendLine("private var cache: ImageVector? = null")
             appendLine("val $name: ImageVector")
-            content.lines().forEachIndexed { index, line ->
+            "get() = cache ?: $content.also { cache = it }".lines().forEach { line ->
                 indent()
-                if (index == indices.first) append("get() = cache ?: ")
-                append(line)
-                if (index != indices.last) appendLine()
+                appendLine(line)
             }
-            appendLine(".also { cache = it }")
         }
         fileSystem.write(pathname.toPath()) {
             writeUtf8(output)
