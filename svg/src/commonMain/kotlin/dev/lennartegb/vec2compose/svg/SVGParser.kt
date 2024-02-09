@@ -46,18 +46,17 @@ internal class SVGParser(
     }
 
     private fun SVG.Path.toVectorPath(): VectorSet.Path {
-        // NOTE: Only when fill is null use black FillColor as default color. If fill="none" use null.
-        val fillColor: VectorSet.Path.FillColor? = if (fill == null) {
-            VectorSet.Path.FillColor(red = 0, green = 0, blue = 0, alpha = 0xff)
-        } else {
-            colorParser.parse(fill)
-        }
+        val stroke = toStroke()
+        var fillColor: VectorSet.Path.FillColor? = fill?.let(colorParser::parse)
+        // NOTE: Only when fill and strokeColor is null use black FillColor as default color as fill can be none
+        //       resulting to null.
+        fillColor = if (fill == null && strokeColor == null) Black else fillColor
         return VectorSet.Path(
             fillType = parseFillType(fillRule),
             commands = pathParser.parse(pathData),
             fillColor = fillColor,
             alpha = fillOpacity,
-            stroke = toStroke(),
+            stroke = stroke,
         )
     }
 
@@ -124,4 +123,6 @@ internal class SVGParser(
         val endIndex = functionStart.indexOfFirst { it == ')' }
         return functionStart.substring(1 until endIndex).split(" ").map { it.toFloat() }
     }
+
+    private val Black: VectorSet.Path.FillColor = VectorSet.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff)
 }
