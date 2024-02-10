@@ -26,21 +26,14 @@ kotlin {
             }
         }
     }
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation(project(":core"))
-                implementation(project(":svg"))
-                implementation(project(":vector-drawable"))
-                implementation(libs.kotlin.cli)
-                implementation(libs.okio)
-            }
-        }
-        commonTest {
-            dependencies {
-                implementation(kotlin("test"))
-                implementation(libs.okio.fakefilesystem)
-            }
-        }
+
+    dependencies {
+        commonMainImplementation(project(":core"))
+        commonMainImplementation(project(":svg"))
+        commonMainImplementation(project(":vector-drawable"))
+        commonMainImplementation(libs.kotlin.cli)
+        commonMainImplementation(libs.okio)
+        commonTestImplementation(kotlin("test"))
+        commonTestImplementation(libs.okio.fakefilesystem)
     }
 }

@@ -14,11 +14,7 @@ kotlin {
     linuxX64()
     mingwX64()
 
-    sourceSets {
-        commonTest {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
+    dependencies {
+        commonTestImplementation(kotlin("test"))
     }
 }
