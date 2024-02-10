@@ -4,10 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.kover)
 }
 
-repositories {
-    mavenCentral()
-}
-
 kotlin {
     jvm()
     macosX64()

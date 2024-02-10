@@ -12,6 +12,12 @@ dependencies {
     kover(project(":cli"))
 }
 
+subprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
 tasks.register<Copy>("assembleCli") {
     dependsOn(":cli:nativeBinaries")
 

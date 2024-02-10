@@ -3,10 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.kover)
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     kover(project(":core"))
 }
