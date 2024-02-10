@@ -1,25 +1,28 @@
 # vec2compose
 
 <p align=center>
-<img width=400 src="https://user-images.githubusercontent.com/26793300/182307782-c5173c33-c65d-4a02-a7f0-99c08ffa5a8d.png" alt="vec2compose"/>
+    <img width=400 src="art/logo.png" alt="random logo showing svg and xml logo pointing to jetpack compose logo"/> 
 </p>
-
 
 A CLI tool to create `ImageVector` from Android vector XML and SVG.
 
 ## Setup
-
-Run `./gradlew assembleCli` to generate the native binary that is located in the `dist` folder.
+Clone this repository and run `./gradlew assembleCli` to generate the native binary to the `dist` folder.
 
 ## Usage
+
 There are two options to create the `ImageVector`. The first option is to create a Kotlin file.
+
 ```bash
 vec2compose -i ic_done.xml -o DoneIcon.kt
 ```
+
 The second option is to print the `ImageVector` to the console.
+
 ```bash
 vec2compose -i ic_done.xml
 ```
+
 ```kotlin
 ImageVector.Builder(
     name = "ic_done",
@@ -50,5 +53,6 @@ ImageVector.Builder(
 ```
 
 ## Motivation
-This is a project to play around with CLI tools and support the Jetpack Compose development to move further away from XML files in Android projects.
+
+This is a project to play around with CLI tools and support the Jetpack Compose development.
 A custom icon set can be generated as the [material icon set](https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:compose/material/material-icons-core/src/commonMain/kotlin/androidx/compose/material/icons/Icons.kt;l=65?q=Icons&sq=) without adding XML resources.
