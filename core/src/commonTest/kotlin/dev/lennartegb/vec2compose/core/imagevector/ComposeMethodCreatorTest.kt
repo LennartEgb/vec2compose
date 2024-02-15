@@ -21,7 +21,7 @@ internal class ComposeMethodCreatorTest {
     @Test
     fun parse_constructor_returns_builder() {
         val creator = ComposeMethodCreator(indentation = "  ")
-        val actual = creator.parseConstructor(name = "hello", set = testVectorSet)
+        val actual = creator.createConstructor(name = "hello", set = testVectorSet)
         assertEquals(
             expected = """
                 ImageVector.Builder(
@@ -39,7 +39,7 @@ internal class ComposeMethodCreatorTest {
     @Test
     fun parse_path() {
         val creator = ComposeMethodCreator(indentation = "  ")
-        val actual = creator.parsePath(
+        val actual = creator.createPath(
             forBuilder = false,
             path = VectorSet.Path(
                 fillType = VectorSet.Path.FillType.EvenOdd,
@@ -85,7 +85,7 @@ internal class ComposeMethodCreatorTest {
     @Test
     fun parse_path_for_builder() {
         val creator = ComposeMethodCreator(indentation = "  ")
-        val actual = creator.parsePath(
+        val actual = creator.createPath(
             forBuilder = true,
             path = VectorSet.Path(
                 fillType = VectorSet.Path.FillType.EvenOdd,
@@ -131,7 +131,7 @@ internal class ComposeMethodCreatorTest {
     @Test
     fun parse_group() {
         val creator = ComposeMethodCreator(indentation = "  ")
-        val actual = creator.parseGroup(
+        val actual = creator.createGroup(
             forBuilder = false,
             group = VectorSet.Group(
                 name = "group",
@@ -165,7 +165,7 @@ internal class ComposeMethodCreatorTest {
     @Test
     fun parse_group_for_builder() {
         val creator = ComposeMethodCreator(indentation = "  ")
-        val actual = creator.parseGroup(
+        val actual = creator.createGroup(
             forBuilder = true,
             group = VectorSet.Group(
                 name = "group",

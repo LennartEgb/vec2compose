@@ -7,7 +7,7 @@ import kotlin.test.assertEquals
 
 internal class ImageVectorParserTest {
 
-    private val imageVectorParser = ImageVectorParser(indentation = "    ")
+    private val imageVectorParser = ImageVectorCreator(indentation = "    ")
 
     @Test
     fun parse_VectorSet_with_FillType_NonZero_to_ImageVector_string() {
@@ -57,7 +57,7 @@ internal class ImageVectorParserTest {
         """.trimIndent()
         assertEquals(
             expected = expected,
-            actual = imageVectorParser.parse(name = "ic_icon", vectorSet = set)
+            actual = imageVectorParser.create(name = "ic_icon", vectorSet = set)
         )
     }
 
@@ -109,7 +109,7 @@ internal class ImageVectorParserTest {
         """.trimIndent()
         assertEquals(
             expected = expected,
-            actual = imageVectorParser.parse(name = "ic_icon", vectorSet = set)
+            actual = imageVectorParser.create(name = "ic_icon", vectorSet = set)
         )
     }
 }

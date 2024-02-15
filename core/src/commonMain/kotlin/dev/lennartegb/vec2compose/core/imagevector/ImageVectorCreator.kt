@@ -2,23 +2,23 @@ package dev.lennartegb.vec2compose.core.imagevector
 
 import dev.lennartegb.vec2compose.core.VectorSet
 
-class ImageVectorParser(indentation: CharSequence) {
+class ImageVectorCreator(indentation: CharSequence) {
 
     private val emptyLineRegex = "(?m)^[ \t]*\r?\n".toRegex()
     private val composeMethodCreator = ComposeMethodCreator(indentation)
 
-    fun parse(name: String, vectorSet: VectorSet): String {
+    fun create(name: String, vectorSet: VectorSet): String {
         return buildString {
-            append(composeMethodCreator.parseConstructor(name, vectorSet))
+            append(composeMethodCreator.createConstructor(name, vectorSet))
 
-            val groups = vectorSet.groups.mergeLines(composeMethodCreator::parseGroup)
+            val groups = vectorSet.groups.mergeLines(composeMethodCreator::createGroup)
             val groupIndices = groups.indices
             groups.forEachIndexed { index, line ->
                 append(line)
                 if (index != groupIndices.last) appendLine()
             }
 
-            val paths = vectorSet.paths.mergeLines(composeMethodCreator::parsePath)
+            val paths = vectorSet.paths.mergeLines(composeMethodCreator::createPath)
             val pathIndices = paths.indices
             paths.forEachIndexed { index, s ->
                 append(s)

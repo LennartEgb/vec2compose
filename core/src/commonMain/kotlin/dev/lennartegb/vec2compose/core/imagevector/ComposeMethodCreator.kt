@@ -9,7 +9,7 @@ import dev.lennartegb.vec2compose.core.commands.Command
 
 internal class ComposeMethodCreator(private val indentation: CharSequence) {
 
-    fun parseConstructor(name: String, set: VectorSet): String = buildString {
+    fun createConstructor(name: String, set: VectorSet): String = buildString {
         append("ImageVector.Builder(").appendLine()
         indent().append("name = \"$name\",").appendLine()
         indent().append("defaultWidth = ${set.width}.dp,").appendLine()
@@ -19,7 +19,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         append(")")
     }
 
-    fun parsePath(path: VectorSet.Path, forBuilder: Boolean = true): String = buildString {
+    fun createPath(path: VectorSet.Path, forBuilder: Boolean = true): String = buildString {
         if (forBuilder) append(".")
         append("path(").appendLine()
         val fillColor = path.fillColor?.solid()
@@ -40,7 +40,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         append("}")
     }.removePrefix(indentation)
 
-    fun parseGroup(group: VectorSet.Group, forBuilder: Boolean = true): String = buildString {
+    fun createGroup(group: VectorSet.Group, forBuilder: Boolean = true): String = buildString {
         if (forBuilder) append(".")
         append("group(").appendLine()
         group.name?.also { indent().append("name = \"$it\",").appendLine() }
@@ -54,12 +54,12 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         indent().append("clipPathData = emptyList()").appendLine()
         append(") {").appendLine()
         group.groups.takeIf { it.isNotEmpty() }
-            ?.joinToString(separator = "\n") { parseGroup(it, forBuilder = false) }
+            ?.joinToString(separator = "\n") { createGroup(it, forBuilder = false) }
             ?.setupIndent()
             ?.let(::append)
             ?.appendLine()
         group.paths.takeIf { it.isNotEmpty() }
-            ?.joinToString(separator = "\n") { parsePath(it, forBuilder = false) }
+            ?.joinToString(separator = "\n") { createPath(it, forBuilder = false) }
             ?.setupIndent()
             ?.let(::append)
             ?.appendLine()
