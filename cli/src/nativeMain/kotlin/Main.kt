@@ -1,21 +1,9 @@
-import dev.lennartegb.vec2compose.core.imagevector.ImageVectorCreator
-import okio.FileSystem
-import output.NameFormatter
-import output.OutputStrategyFactory
+import org.koin.core.context.startKoin
 
 fun main(args: Array<String>) {
     val arguments = Arguments(args)
-
-    val fileSystem = FileSystem.SYSTEM
-    val file = FileReader(fileSystem = fileSystem).read(arguments.input)
+    startKoin { modules(cliModule) }
+    
     val indentation = "    "
-    val outputStrategy = OutputStrategyFactory(fileSystem = fileSystem)
-        .create(outputPath = arguments.output, name = NameFormatter.format(file.name), indentation = indentation)
-    val imageVectorParser = ImageVectorCreator(indentation = indentation)
-
-    VectorSetParserFactory.create(file.extension)
-        .parse(content = file.content)
-        .mapCatching { imageVectorParser.create(name = file.name, vectorSet = it) }
-        .onSuccess { outputStrategy.write(it) }
-        .onFailure { println("Error occurred: ${it.message}") }
+    Application(indentation = indentation).run(arguments)
 }

@@ -29,7 +29,9 @@ kotlin {
         commonMainImplementation(project(":vector-drawable"))
         commonMainImplementation(libs.kotlin.cli)
         commonMainImplementation(libs.okio)
+        commonMainImplementation(libs.koin.core)
         commonTestImplementation(kotlin("test"))
+        commonTestImplementation(libs.koin.test)
         commonTestImplementation(libs.okio.fakefilesystem)
     }
 }
