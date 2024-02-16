@@ -8,5 +8,8 @@ internal class SVGColorParser(
     private val keywordColorParser: KeywordColorParser,
 ) {
 
-    fun parse(color: String): VectorSet.Path.FillColor? = hexColorParser.parse(color) ?: keywordColorParser.parse(color)
+    fun parse(color: String): VectorSet.Path.FillColor? {
+        if (color == "none") return null
+        return keywordColorParser.parse(color) ?: hexColorParser.parse(color, strategy = HexColorParser.Strategy.RGBA)
+    }
 }

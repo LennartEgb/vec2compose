@@ -39,6 +39,7 @@ class HexColorParserTest {
             actual = parser.parse(color = "#00F")
         )
     }
+
     @Test
     fun parseSixCharHexWhiteColorToFillColor() {
         assertEquals(
@@ -114,5 +115,37 @@ class HexColorParserTest {
     @Test
     fun resourceNameReturnsNull() {
         assertNull(actual = parser.parse(color = "R.color.white"))
+    }
+
+    @Test
+    fun parseRgbaColor() {
+        assertEquals(
+            expected = VectorSet.Path.FillColor(red = 0x01, green = 0x02, blue = 0x03, alpha = 0x04),
+            actual = parser.parse(color = "#01020304", strategy = HexColorParser.Strategy.RGBA)
+        )
+    }
+
+    @Test
+    fun parseRgbaColorWithSixElements() {
+        assertEquals(
+            expected = VectorSet.Path.FillColor(red = 0x01, green = 0x02, blue = 0x03, alpha = 0xff),
+            actual = parser.parse(color = "#010203", strategy = HexColorParser.Strategy.RGBA)
+        )
+    }
+
+    @Test
+    fun parseRgbaColorWithFourElements() {
+        assertEquals(
+            expected = VectorSet.Path.FillColor(red = 0x11, green = 0x22, blue = 0x33, alpha = 0x44),
+            actual = parser.parse(color = "#1234", strategy = HexColorParser.Strategy.RGBA)
+        )
+    }
+
+    @Test
+    fun parseRgbaColorWithThreeElements() {
+        assertEquals(
+            expected = VectorSet.Path.FillColor(red = 0x11, green = 0x22, blue = 0x33, alpha = 0xff),
+            actual = parser.parse(color = "#123", strategy = HexColorParser.Strategy.RGBA)
+        )
     }
 }
