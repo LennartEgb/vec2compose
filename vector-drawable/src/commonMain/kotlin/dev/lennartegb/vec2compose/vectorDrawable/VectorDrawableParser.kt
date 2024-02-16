@@ -1,6 +1,6 @@
 package dev.lennartegb.vec2compose.vectorDrawable
 
-import dev.lennartegb.vec2compose.core.ColorParser
+import dev.lennartegb.vec2compose.core.HexColorParser
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
 import dev.lennartegb.vec2compose.core.VectorSet
@@ -11,7 +11,7 @@ private typealias DpString = String
 
 internal class VectorDrawableParser(
     private val pathParser: PathParser,
-    private val colorParser: ColorParser,
+    private val colorParser: HexColorParser,
     private val deserializer: VectorDrawableDeserializer = VectorDrawableDeserializer()
 ) : VectorSetParser {
 

@@ -1,16 +1,15 @@
 package dev.lennartegb.vec2compose.svg
 
-import dev.lennartegb.vec2compose.core.ColorParser
 import dev.lennartegb.vec2compose.core.VectorSet
 
 /**
  * Supported color keywords: https://www.w3.org/TR/SVG11/types.html#ColorKeywords
  */
-internal class KeywordColorParser : ColorParser {
+internal class KeywordColorParser {
 
     private val nameToColors: Map<String, VectorSet.Path.FillColor> = createNamesToColors()
 
-    override fun parse(color: String): VectorSet.Path.FillColor? = nameToColors[color]
+    fun parse(color: String): VectorSet.Path.FillColor? = nameToColors[color]
 
     private fun createNamesToColors(): Map<String, VectorSet.Path.FillColor> {
         return getColors().lines().associate { line -> line.split(":").let { it[0] to it[1] } }

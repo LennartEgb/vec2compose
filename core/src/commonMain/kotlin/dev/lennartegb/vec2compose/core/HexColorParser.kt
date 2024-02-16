@@ -1,7 +1,7 @@
 package dev.lennartegb.vec2compose.core
 
-class HexColorParser : ColorParser {
-    override fun parse(color: String): VectorSet.Path.FillColor? {
+class HexColorParser {
+    fun parse(color: String): VectorSet.Path.FillColor? {
         if (color.startsWith("#")) return parse(color.drop(1))
         return when (color.length) {
             3 -> parse(color.fold(initial = "") { acc, char -> "$acc$char$char" })

@@ -1,6 +1,5 @@
 package dev.lennartegb.vec2compose.svg
 
-import dev.lennartegb.vec2compose.core.ColorParser
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
 import dev.lennartegb.vec2compose.core.VectorSet
@@ -8,7 +7,7 @@ import dev.lennartegb.vec2compose.core.VectorSetParser
 import dev.lennartegb.vec2compose.core.commands.PathParser
 
 internal class SVGParser(
-    private val colorParser: ColorParser,
+    private val colorParser: SVGColorParser,
     private val pathParser: PathParser,
     private val deserializer: SVGDeserializer = SVGDeserializer(),
 ) : VectorSetParser {

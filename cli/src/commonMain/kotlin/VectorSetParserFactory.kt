@@ -1,7 +1,7 @@
 import dev.lennartegb.vec2compose.core.VectorSetParser
 import dev.lennartegb.vec2compose.core.commands.PathParser
-import dev.lennartegb.vec2compose.svg.vectorSetParser as svgVectorSetParser
-import dev.lennartegb.vec2compose.vectorDrawable.vectorSetParser as androidVectorSetParser
+import dev.lennartegb.vec2compose.svg.di.vectorSetParser as svgVectorSetParser
+import dev.lennartegb.vec2compose.vectorDrawable.di.vectorSetParser as androidVectorSetParser
 
 object VectorSetParserFactory {
 

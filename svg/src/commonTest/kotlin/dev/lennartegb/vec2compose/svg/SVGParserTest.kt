@@ -13,7 +13,7 @@ internal class SVGParserTest {
     private val parser = SVGParser(
         deserializer = SVGDeserializer(),
         pathParser = PathParser(CommandParser()),
-        colorParser = HexColorParser()
+        colorParser = SVGColorParser(HexColorParser(), KeywordColorParser())
     )
 
     @Test
