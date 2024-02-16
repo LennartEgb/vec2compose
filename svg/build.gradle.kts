@@ -13,6 +13,8 @@ kotlin {
     dependencies {
         commonMainImplementation(project(":core"))
         commonMainImplementation(libs.bundles.xmlutil)
+        commonMainImplementation(libs.koin.core)
         commonTestImplementation(kotlin("test"))
+        commonTestImplementation(libs.koin.test)
     }
 }
