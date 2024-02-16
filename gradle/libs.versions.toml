@@ -5,6 +5,7 @@ kotlin-kover = "0.7.4"
 ktlint = "12.1.0"
 xmlutil = "0.86.3"
 okio = "3.4.0"
+koin = "3.5.0"
 
 [libraries]
 kotlin-cli = { group = "org.jetbrains.kotlinx", name = "kotlinx-cli", version.ref = "kotlin-cli" }
@@ -12,6 +13,8 @@ xmlutil-core = { group = "io.github.pdvrieze.xmlutil", name = "core", version.re
 xmlutil-serialization = { group = "io.github.pdvrieze.xmlutil", name = "serialization", version.ref = "xmlutil" }
 okio = { group = "com.squareup.okio", name = "okio", version.ref = "okio"}
 okio-fakefilesystem = { group = "com.squareup.okio", name = "okio-fakefilesystem", version.ref = "okio"}
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
 
 [bundles]
 xmlutil = ["xmlutil-core", "xmlutil-serialization"]
