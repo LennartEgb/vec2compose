@@ -4,6 +4,7 @@ import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
 import dev.lennartegb.vec2compose.core.VectorSet
 import dev.lennartegb.vec2compose.core.VectorSetParser
+import dev.lennartegb.vec2compose.core.commands.Command
 import dev.lennartegb.vec2compose.core.commands.PathParser
 
 internal class SVGParser(
@@ -27,7 +28,7 @@ internal class SVGParser(
             height = height,
             viewportWidth = rect[2] - rect[0],
             viewportHeight = rect[3] - rect[1],
-            paths = path.map { it.toVectorPath() },
+            paths = circles.map { it.toVectorPath() } + path.map { it.toVectorPath() },
             groups = g.map { it.toVectorGroup() }
         )
     }
@@ -67,6 +68,46 @@ internal class SVGParser(
             cap = strokeLinecap?.let(::getStrokeLineCap),
             join = strokeLinejoin?.let(::getStrokeLineJoin),
             miter = strokeMiter?.toFloat()
+        )
+    }
+
+    private fun SVG.Circle.toVectorPath(): VectorSet.Path {
+        val cx = centerX.toFloat()
+        val cy = centerY.toFloat()
+        val r = radius.toFloat()
+        val color = fill?.let(colorParser::parse) ?: VectorSet.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff)
+
+        return VectorSet.Path(
+            fillType = VectorSet.Path.FillType.Default,
+            fillColor = color,
+            commands = listOf(
+                Command.MoveTo(x = cx - r, y = cy, isAbsolute = true),
+                Command.ArcTo(
+                    horizontalEllipseRadius = r,
+                    verticalEllipseRadius = r,
+                    theta = 0f,
+                    isMoreThanHalf = false,
+                    isAbsolute = true,
+                    isPositiveArc = true,
+                    x1 = cx + r,
+                    y1 = cy
+                ),
+                Command.ArcTo(
+                    horizontalEllipseRadius = r,
+                    verticalEllipseRadius = r,
+                    theta = 0f,
+                    isMoreThanHalf = false,
+                    isAbsolute = true,
+                    isPositiveArc = true,
+                    x1 = cx - r,
+                    y1 = cy,
+                ),
+                Command.Close
+            ),
+            alpha = opacity.toFloat(),
+            stroke = VectorSet.Path.Stroke(
+
+            ),
         )
     }
 
