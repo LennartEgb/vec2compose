@@ -81,5 +81,7 @@ data class SVG(
         val stroke: String? = null,
         @SerialName("stroke-width")
         val strokeWidth: String? = null,
+        @SerialName("opacity")
+        val opacity: String = "1",
     )
 }
