@@ -20,7 +20,8 @@ data class SVG(
     @SerialName(value = "path")
     val path: List<Path> = emptyList(),
     @SerialName(value = "g")
-    val g: List<Group> = emptyList()
+    val g: List<Group> = emptyList(),
+    val circles: List<Circle> = emptyList(),
 ) {
 
     @XmlSerialName(value = "g")
@@ -61,5 +62,24 @@ data class SVG(
         val strokeAlpha: String? = null,
         @SerialName(value = "stroke-miterlimit")
         val strokeMiter: String? = null,
+    )
+
+    @XmlSerialName(value = "circle")
+    @Serializable
+    data class Circle(
+        @SerialName("cx")
+        val centerX: String,
+        @SerialName("cy")
+        val centerY: String,
+        @SerialName("r")
+        val radius: String,
+        @SerialName("id")
+        val id: String? = null,
+        @SerialName("fill")
+        val fill: String? = null,
+        @SerialName("stroke")
+        val stroke: String? = null,
+        @SerialName("stroke-width")
+        val strokeWidth: String? = null,
     )
 }

@@ -158,4 +158,30 @@ internal class SVGDeserializerTest {
             )
         )
     }
+
+    @Test
+    fun parse_svg_with_circle() {
+        val svg = """
+            <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="30" fill="green" stroke="yellow" stroke-width="10"/>
+            </svg>
+        """.trimIndent()
+        assertEquals(
+            actual = deserializer.deserialize(svg).getOrThrow(),
+            expected = SVG(
+                width = "100",
+                height = "100",
+                circles = listOf(
+                    SVG.Circle(
+                        centerX = "50",
+                        centerY = "50",
+                        radius = "30",
+                        fill = "green",
+                        stroke = "yellow",
+                        strokeWidth = "10",
+                    )
+                )
+            ),
+        )
+    }
 }
