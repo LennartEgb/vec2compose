@@ -28,15 +28,15 @@ internal class SVGParser(
             height = height,
             viewportWidth = rect[2] - rect[0],
             viewportHeight = rect[3] - rect[1],
-            nodes = circles.map { it.toVectorPath() } + path.map { it.toVectorPath() } + g.map { it.toVectorGroup() },
+            nodes = circles.map { it.toVectorPath() } + paths.map { it.toVectorPath() } + groups.map { it.toVectorGroup() },
         )
     }
 
     private fun SVG.Group.toVectorGroup(): VectorSet.Group {
         return VectorSet.Group(
             name = name,
-            groups = g.map { it.toVectorGroup() },
-            paths = path.map { it.toVectorPath() },
+            groups = groups.map { it.toVectorGroup() },
+            paths = paths.map { it.toVectorPath() },
             rotate = transform?.getRotation() ?: 0f,
             pivot = transform?.getPivot() ?: Translation(0f, 0f),
             translation = transform?.getTranslation() ?: Translation(0f, 0f),
