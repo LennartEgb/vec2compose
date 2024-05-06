@@ -15,8 +15,8 @@ internal class SVGDeserializerTest {
             height = "",
             viewBox = "",
             fill = "",
-            path = listOf(SVG.Path(pathData = "M 0 2 L 0 24")),
-            g = listOf(SVG.Group())
+            paths = listOf(SVG.Path(pathData = "M 0 2 L 0 24")),
+            groups = listOf(SVG.Group())
         )
 
         val string = XML.encodeToString(svg)
@@ -49,8 +49,8 @@ internal class SVGDeserializerTest {
             height = "24px",
             viewBox = "0 0 24 24",
             fill = "#000000",
-            path = expectedPaths,
-            g = emptyList()
+            paths = expectedPaths,
+            groups = emptyList()
         )
 
         assertEquals(
@@ -84,8 +84,8 @@ internal class SVGDeserializerTest {
             height = "24px",
             viewBox = "0 0 24 24",
             fill = "#000000",
-            path = expectedPaths,
-            g = emptyList()
+            paths = expectedPaths,
+            groups = emptyList()
         )
 
         assertEquals(
@@ -114,14 +114,14 @@ internal class SVGDeserializerTest {
                 width = "1144.12px",
                 height = "400px",
                 viewBox = "0 0 572.06 200",
-                path = emptyList(),
-                g = listOf(
+                paths = emptyList(),
+                groups = listOf(
                     SVG.Group(
                         name = "bird",
-                        path = listOf(),
-                        g = listOf(
-                            SVG.Group(name = "body", path = listOf(SVG.Path(id = "first", pathData = "M48.42,78.11"))),
-                            SVG.Group(name = "head", path = listOf(SVG.Path(id = "second", pathData = "M48.42,78.11")))
+                        paths = listOf(),
+                        groups = listOf(
+                            SVG.Group(name = "body", paths = listOf(SVG.Path(id = "first", pathData = "M48.42,78.11"))),
+                            SVG.Group(name = "head", paths = listOf(SVG.Path(id = "second", pathData = "M48.42,78.11")))
                         )
                     )
                 )
@@ -144,7 +144,7 @@ internal class SVGDeserializerTest {
                 height = "24",
                 viewBox = "0 0 25 24",
                 fill = "none",
-                path = listOf(
+                paths = listOf(
                     SVG.Path(
                         pathData = "M12.5 12V7.5",
                         strokeLinecap = "butt",

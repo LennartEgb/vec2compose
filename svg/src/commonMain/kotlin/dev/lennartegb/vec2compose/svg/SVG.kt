@@ -17,10 +17,8 @@ data class SVG(
     val viewBox: String? = null,
     @SerialName(value = "fill")
     val fill: String? = null,
-    @SerialName(value = "path")
-    val path: List<Path> = emptyList(),
-    @SerialName(value = "g")
-    val g: List<Group> = emptyList(),
+    val paths: List<Path> = emptyList(),
+    val groups: List<Group> = emptyList(),
     val circles: List<Circle> = emptyList(),
 ) {
 
@@ -29,10 +27,8 @@ data class SVG(
     data class Group(
         @SerialName(value = "id")
         val name: String? = null,
-        @SerialName(value = "g")
-        val g: List<Group> = emptyList(),
-        @SerialName(value = "path")
-        val path: List<Path> = emptyList(),
+        val groups: List<Group> = emptyList(),
+        val paths: List<Path> = emptyList(),
         @SerialName(value = "transform")
         val transform: String? = null
     )
