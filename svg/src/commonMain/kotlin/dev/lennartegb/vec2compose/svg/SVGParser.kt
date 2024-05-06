@@ -28,8 +28,7 @@ internal class SVGParser(
             height = height,
             viewportWidth = rect[2] - rect[0],
             viewportHeight = rect[3] - rect[1],
-            paths = circles.map { it.toVectorPath() } + path.map { it.toVectorPath() },
-            groups = g.map { it.toVectorGroup() }
+            nodes = circles.map { it.toVectorPath() } + path.map { it.toVectorPath() } + g.map { it.toVectorGroup() },
         )
     }
 

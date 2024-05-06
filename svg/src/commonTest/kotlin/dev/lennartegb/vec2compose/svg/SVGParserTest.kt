@@ -16,6 +16,9 @@ internal class SVGParserTest {
         colorParser = SVGColorParser(HexColorParser(), KeywordColorParser())
     )
 
+    private val VectorSet.groups: List<VectorSet.Group> get() = nodes.filterIsInstance<VectorSet.Group>()
+    private val VectorSet.paths: List<VectorSet.Path> get() = nodes.filterIsInstance<VectorSet.Path>()
+
     @Test
     fun parse_SVG_file_with_correct_fill_color() {
         val svg = svg {
@@ -44,7 +47,7 @@ internal class SVGParserTest {
                 alpha = 1f
             ),
         )
-        assertEquals(expected = expected, actual = result.paths)
+        assertEquals(expected = expected, actual = result.nodes)
     }
 
     @Test
