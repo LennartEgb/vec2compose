@@ -14,8 +14,7 @@ internal class ComposeMethodCreatorTest {
         height = 12,
         viewportWidth = 24f,
         viewportHeight = 48f,
-        groups = emptyList(),
-        paths = emptyList(),
+        nodes = emptyList(),
     )
 
     @Test

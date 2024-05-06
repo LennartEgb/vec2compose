@@ -10,21 +10,17 @@ class ImageVectorCreator(indentation: CharSequence) {
     fun create(name: String, vectorSet: VectorSet): String {
         return buildString {
             append(composeMethodCreator.createConstructor(name, vectorSet))
-
-            val groups = vectorSet.groups.mergeLines(composeMethodCreator::createGroup)
-            val groupIndices = groups.indices
-            groups.forEachIndexed { index, line ->
+            val nodes = vectorSet.nodes.mergeLines { node ->
+                when (node) {
+                    is VectorSet.Group -> composeMethodCreator.createGroup(node)
+                    is VectorSet.Path -> composeMethodCreator.createPath(node)
+                }
+            }
+            val nodeIndices = nodes.indices
+            nodes.forEachIndexed { index, line ->
                 append(line)
-                if (index != groupIndices.last) appendLine()
+                if (index != nodeIndices.last) appendLine()
             }
-
-            val paths = vectorSet.paths.mergeLines(composeMethodCreator::createPath)
-            val pathIndices = paths.indices
-            paths.forEachIndexed { index, s ->
-                append(s)
-                if (index != pathIndices.last) appendLine()
-            }
-
             append(".build()")
         }.replace(emptyLineRegex, "")
     }
