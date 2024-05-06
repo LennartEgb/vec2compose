@@ -16,7 +16,7 @@ internal class ImageVectorParserTest {
             height = 24,
             viewportWidth = 48f,
             viewportHeight = 42f,
-            paths = listOf(
+            nodes = listOf(
                 VectorSet.Path(
                     fillType = VectorSet.Path.FillType.NonZero,
                     commands = listOf(
@@ -28,7 +28,6 @@ internal class ImageVectorParserTest {
                     alpha = 1f
                 )
             ),
-            groups = emptyList()
         )
 
         val expected = """
@@ -68,7 +67,7 @@ internal class ImageVectorParserTest {
             height = 24,
             viewportWidth = 48f,
             viewportHeight = 42f,
-            paths = listOf(
+            nodes = listOf(
                 VectorSet.Path(
                     fillType = VectorSet.Path.FillType.EvenOdd,
                     commands = listOf(
@@ -80,7 +79,6 @@ internal class ImageVectorParserTest {
                     alpha = .5f
                 )
             ),
-            groups = emptyList()
         )
 
         val expected = """

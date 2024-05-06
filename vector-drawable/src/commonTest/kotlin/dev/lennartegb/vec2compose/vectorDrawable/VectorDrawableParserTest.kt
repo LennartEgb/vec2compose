@@ -29,7 +29,7 @@ internal class VectorDrawableParserTest {
         )
         assertEquals(
             expected = vectorSet(
-                paths = listOf(
+                nodes = listOf(
                     VectorSet.Path(
                         fillType = VectorSet.Path.FillType.NonZero,
                         commands = emptyList(),
@@ -53,7 +53,7 @@ internal class VectorDrawableParserTest {
         )
         assertEquals(
             expected = vectorSet(
-                paths = listOf(
+                nodes = listOf(
                     VectorSet.Path(
                         fillType = VectorSet.Path.FillType.EvenOdd,
                         commands = emptyList(),
@@ -94,7 +94,7 @@ internal class VectorDrawableParserTest {
                     scale = Scale(30f, 31f)
                 )
             ),
-            actual = result.groups
+            actual = result.nodes
         )
     }
 
@@ -121,8 +121,7 @@ internal class VectorDrawableParserTest {
                 height = 24,
                 viewportWidth = 24f,
                 viewportHeight = 24f,
-                groups = emptyList(),
-                paths = listOf(
+                nodes = listOf(
                     VectorSet.Path(
                         commands = emptyList(),
                         alpha = 1f,
@@ -156,14 +155,12 @@ internal class VectorDrawableParserTest {
     }
 
     private fun vectorSet(
-        paths: List<VectorSet.Path> = emptyList(),
-        groups: List<VectorSet.Group> = emptyList()
+        nodes: List<VectorSet.Node> = emptyList(),
     ): VectorSet = VectorSet(
         width = 24,
         height = 24,
         viewportWidth = 24f,
         viewportHeight = 24f,
-        paths = paths,
-        groups = groups
+        nodes = nodes,
     )
 }

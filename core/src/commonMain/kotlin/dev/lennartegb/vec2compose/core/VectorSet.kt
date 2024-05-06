@@ -7,9 +7,10 @@ data class VectorSet(
     val height: Int,
     val viewportWidth: Float,
     val viewportHeight: Float,
-    val groups: List<Group>,
-    val paths: List<Path>
+    val nodes: List<Node>,
 ) {
+
+    sealed interface Node
 
     data class Group(
         val name: String?,
@@ -19,7 +20,7 @@ data class VectorSet(
         val pivot: Translation,
         val translation: Translation,
         val scale: Scale
-    )
+    ): Node
 
     data class Path(
         val fillType: FillType,
@@ -27,7 +28,7 @@ data class VectorSet(
         val commands: List<Command>,
         val alpha: Float,
         val stroke: Stroke = Stroke(),
-    ) {
+    ): Node {
         enum class FillType {
             NonZero,
             EvenOdd;

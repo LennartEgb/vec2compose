@@ -26,8 +26,7 @@ internal class VectorDrawableParser(
             height = heightInDp.toIntDp(),
             viewportWidth = viewportWidth,
             viewportHeight = viewportHeight,
-            paths = path.map { it.toVectorPath() },
-            groups = group.map { it.toVectorGroup() }
+            nodes = path.map { it.toVectorPath() } + group.map { it.toVectorGroup() }
         )
     }
 
