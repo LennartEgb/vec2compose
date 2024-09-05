@@ -5,3 +5,4 @@ local.properties
 /.gradle
 /dist
 /kotlin-js-store
+.kotlin
