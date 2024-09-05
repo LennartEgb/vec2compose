@@ -12,12 +12,12 @@ private typealias DpString = String
 internal class VectorDrawableParser(
     private val pathParser: PathParser,
     private val colorParser: HexColorParser,
-    private val deserializer: VectorDrawableDeserializer = VectorDrawableDeserializer()
+    private val deserializer: VectorDrawableDeserializer = VectorDrawableDeserializer(),
 ) : VectorSetParser {
 
     override fun parse(content: String): Result<VectorSet> {
-        val androidVector = deserializer.deserialize(content = content)
-        return androidVector.mapCatching { it.toVectorSet() }
+        val androidVector = deserializer.deserialize(content)
+        return runCatching { androidVector.toVectorSet() }
     }
 
     private fun VectorDrawable.toVectorSet(): VectorSet {
@@ -26,7 +26,12 @@ internal class VectorDrawableParser(
             height = heightInDp.toIntDp(),
             viewportWidth = viewportWidth,
             viewportHeight = viewportHeight,
-            nodes = path.map { it.toVectorPath() } + group.map { it.toVectorGroup() }
+            nodes = children.map {
+                when (it) {
+                    is VectorDrawable.Group -> it.toVectorGroup()
+                    is VectorDrawable.Path -> it.toVectorPath()
+                }
+            }
         )
     }
 
@@ -39,7 +44,12 @@ internal class VectorDrawableParser(
         val py = pivotY ?: 0f
         return VectorSet.Group(
             name = name,
-            nodes = group.map { it.toVectorGroup() } + path.map { it.toVectorPath() },
+            nodes = children.map {
+                when (it) {
+                    is VectorDrawable.Group -> it.toVectorGroup()
+                    is VectorDrawable.Path -> it.toVectorPath()
+                }
+            },
             rotate = rotation ?: 0f,
             pivot = Translation(x = px, y = py),
             translation = Translation(x = tx, y = ty),
