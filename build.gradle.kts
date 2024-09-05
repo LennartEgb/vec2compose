@@ -4,18 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.kover)
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     kover(project(":cli"))
-}
-
-subprojects {
-    repositories {
-        mavenCentral()
-    }
 }
 
 tasks.register<Copy>("assembleCli") {

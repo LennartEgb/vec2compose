@@ -1,9 +1,14 @@
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
 }
-include(":core")
-include(":cli")
-include(":svg")
-include(":vector-drawable")
+
+include(
+    ":core",
+    ":cli",
+    ":svg",
+    ":vector-drawable",
+)
 
 rootProject.name = "vec2compose"
