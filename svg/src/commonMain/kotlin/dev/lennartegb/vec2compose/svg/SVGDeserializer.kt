@@ -1,22 +1,32 @@
 package dev.lennartegb.vec2compose.svg
 
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
+import kotlinx.serialization.modules.subclass
 import nl.adaptivity.xmlutil.ExperimentalXmlUtilApi
-import nl.adaptivity.xmlutil.serialization.DefaultXmlSerializationPolicy
 import nl.adaptivity.xmlutil.serialization.UnknownChildHandler
 import nl.adaptivity.xmlutil.serialization.XML
 
 internal class SVGDeserializer {
 
-    @OptIn(ExperimentalXmlUtilApi::class)
-    private val xmlConfig = XML {
-        policy = DefaultXmlSerializationPolicy.Builder().apply {
-            pedantic = false
-            unknownChildHandler = UnknownChildHandler { _, _, _, _, _ -> emptyList() }
-            repairNamespaces = true
-        }.build()
+    private val polyModule = SerializersModule {
+        polymorphic(baseClass = SVG.Child::class) {
+            subclass(SVG.Circle::class)
+            subclass(SVG.Group::class)
+            subclass(SVG.Path::class)
+        }
     }
 
-    fun deserialize(content: String): Result<SVG> = runCatching {
-        xmlConfig.decodeFromString(deserializer = SVG.serializer(), string = content)
+    @OptIn(ExperimentalXmlUtilApi::class)
+    private val xmlConfig = XML(serializersModule = polyModule) {
+        autoPolymorphic = true
+        defaultPolicy {
+            pedantic = false
+            repairNamespaces = true
+            unknownChildHandler = UnknownChildHandler { _, _, _, _, _ -> emptyList() }
+        }
     }
+
+    fun deserialize(content: String): SVG = xmlConfig.decodeFromString<SVG>(content)
 }

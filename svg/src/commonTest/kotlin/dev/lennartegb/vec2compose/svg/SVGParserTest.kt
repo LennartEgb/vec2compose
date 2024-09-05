@@ -1,20 +1,13 @@
 package dev.lennartegb.vec2compose.svg
 
-import dev.lennartegb.vec2compose.core.HexColorParser
 import dev.lennartegb.vec2compose.core.Translation
 import dev.lennartegb.vec2compose.core.VectorSet
-import dev.lennartegb.vec2compose.core.commands.CommandParser
-import dev.lennartegb.vec2compose.core.commands.PathParser
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class SVGParserTest {
 
-    private val parser = SVGParser(
-        deserializer = SVGDeserializer(),
-        pathParser = PathParser(CommandParser()),
-        colorParser = SVGColorParser(HexColorParser(), KeywordColorParser())
-    )
+    private val parser = SVGParser()
 
     private val VectorSet.groups: List<VectorSet.Group> get() = nodes.filterIsInstance<VectorSet.Group>()
     private val VectorSet.paths: List<VectorSet.Path> get() = nodes.filterIsInstance<VectorSet.Path>()
@@ -65,7 +58,9 @@ internal class SVGParserTest {
             appendLine("""<g transform="rotate(45 20 30)"/>""")
         }
         val result = parser.parse(svg).getOrThrow()
-        assertEquals(expected = listOf(Translation(20f, 30f)), actual = result.groups.map { it.pivot })
+        assertEquals(
+            expected = listOf(Translation(20f, 30f)),
+            actual = result.groups.map { it.pivot })
     }
 
     @Test
@@ -73,8 +68,10 @@ internal class SVGParserTest {
         val svg = svg {
             appendLine("""<g transform="translate(20 30)"/>""")
         }
-        val result = parser.parse(svg).getOrThrow()
-        assertEquals(expected = listOf(Translation(20f, 30f)), actual = result.groups.map { it.translation })
+        assertEquals(
+            actual = parser.parse(svg).map { set -> set.groups.map { it.translation } },
+            expected = Result.success(listOf(Translation(20f, 30f))),
+        )
     }
 
     @Test
@@ -82,7 +79,6 @@ internal class SVGParserTest {
         val svg = svg {
             appendLine("""<path d="" fill="none"/>""")
         }
-        val result = parser.parse(svg).getOrThrow()
 
         assertEquals(
             expected = listOf(
@@ -93,7 +89,7 @@ internal class SVGParserTest {
                     alpha = 1f
                 )
             ),
-            actual = result.paths
+            actual = parser.parse(svg).map { it.paths }.getOrThrow()
         )
     }
 

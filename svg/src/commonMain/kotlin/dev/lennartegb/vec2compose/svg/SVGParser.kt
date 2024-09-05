@@ -8,14 +8,13 @@ import dev.lennartegb.vec2compose.core.commands.Command
 import dev.lennartegb.vec2compose.core.commands.PathParser
 
 internal class SVGParser(
-    private val colorParser: SVGColorParser,
-    private val pathParser: PathParser,
+    private val colorParser: SVGColorParser = SVGColorParser(),
+    private val pathParser: PathParser = PathParser(),
     private val deserializer: SVGDeserializer = SVGDeserializer(),
 ) : VectorSetParser {
 
-    override fun parse(content: String): Result<VectorSet> {
-        return deserializer.deserialize(content).mapCatching { it.toVectorSet() }
-    }
+    override fun parse(content: String): Result<VectorSet> =
+        runCatching { deserializer.deserialize(content).toVectorSet() }
 
     private fun SVG.toVectorSet(): VectorSet {
         val width = width.filter { it.isDigit() }.toInt()
@@ -28,15 +27,20 @@ internal class SVGParser(
             height = height,
             viewportWidth = rect[2] - rect[0],
             viewportHeight = rect[3] - rect[1],
-            nodes = circles.map { it.toVectorPath() } + paths.map { it.toVectorPath() } + groups.map { it.toVectorGroup() },
+            nodes = children.map { it.toNode() },
         )
+    }
+
+    private fun SVG.Child.toNode(): VectorSet.Node = when (this) {
+        is SVG.Circle -> toVectorPath()
+        is SVG.Group -> toVectorGroup()
+        is SVG.Path -> toVectorPath()
     }
 
     private fun SVG.Group.toVectorGroup(): VectorSet.Group {
         return VectorSet.Group(
             name = name,
-            groups = groups.map { it.toVectorGroup() },
-            paths = paths.map { it.toVectorPath() },
+            nodes = children.map { it.toNode() },
             rotate = transform?.getRotation() ?: 0f,
             pivot = transform?.getPivot() ?: Translation(0f, 0f),
             translation = transform?.getTranslation() ?: Translation(0f, 0f),
@@ -74,7 +78,12 @@ internal class SVGParser(
         val cx = centerX.toFloat()
         val cy = centerY.toFloat()
         val r = radius.toFloat()
-        val color = fill?.let(colorParser::parse) ?: VectorSet.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff)
+        val color = fill?.let(colorParser::parse) ?: VectorSet.Path.FillColor(
+            0x00,
+            0x00,
+            0x00,
+            alpha = 0xff
+        )
 
         return VectorSet.Path(
             fillType = VectorSet.Path.FillType.Default,
@@ -145,11 +154,17 @@ internal class SVGParser(
     }
 
     private fun String.getPivot(): Translation {
-        return getFunction("rotate")?.let { (_, x, y) -> Translation(x = x, y = y) } ?: Translation(0f, 0f)
+        return getFunction("rotate")?.let { (_, x, y) -> Translation(x = x, y = y) } ?: Translation(
+            0f,
+            0f
+        )
     }
 
     private fun String.getTranslation(): Translation {
-        return getFunction("translate")?.let { (x, y) -> Translation(x = x, y = y) } ?: Translation(0f, 0f)
+        return getFunction("translate")?.let { (x, y) -> Translation(x = x, y = y) } ?: Translation(
+            0f,
+            0f
+        )
     }
 
     private fun String.getScale(): Scale {
@@ -163,5 +178,6 @@ internal class SVGParser(
         return functionStart.substring(1 until endIndex).split(" ").map { it.toFloat() }
     }
 
-    private val Black: VectorSet.Path.FillColor = VectorSet.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff)
+    private val Black: VectorSet.Path.FillColor =
+        VectorSet.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff)
 }

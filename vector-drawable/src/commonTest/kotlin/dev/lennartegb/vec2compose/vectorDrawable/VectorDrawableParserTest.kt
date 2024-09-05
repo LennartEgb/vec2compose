@@ -86,8 +86,7 @@ internal class VectorDrawableParserTest {
             expected = listOf(
                 VectorSet.Group(
                     name = "hi",
-                    groups = emptyList(),
-                    paths = emptyList(),
+                    nodes = emptyList(),
                     rotate = 15f,
                     pivot = Translation(10f, 11f),
                     translation = Translation(20f, 21f),
