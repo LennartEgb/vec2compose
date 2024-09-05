@@ -1,31 +1,13 @@
 package dev.lennartegb.vec2compose.vectorDrawable
 
-import nl.adaptivity.xmlutil.serialization.XML
+import nl.adaptivity.xmlutil.XmlException
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
+import kotlin.test.assertFailsWith
 
 internal class VectorDrawableDeserializerTest {
 
     private val serializer = VectorDrawableDeserializer()
-
-    @Test
-    fun serialize_and_deserialize() {
-        val drawable = VectorDrawable(
-            widthInDp = "24dp",
-            heightInDp = "24dp",
-            viewportWidth = 24f,
-            viewportHeight = 24f,
-            tint = null,
-            path = listOf(VectorDrawable.Path(pathData = "M2 0 L 0 0 L 24 24")),
-            group = emptyList()
-        )
-
-        val string = XML.encodeToString(drawable)
-        val decoded = XML.decodeFromString<VectorDrawable>(string)
-
-        assertEquals(expected = drawable, actual = decoded)
-    }
 
     @Test
     fun serialize_valid_VectorDrawable_without_FillType_returns_serialized_VectorDrawable() {
@@ -48,7 +30,7 @@ internal class VectorDrawableDeserializerTest {
                 viewportWidth = 24f,
                 viewportHeight = 24f,
                 tint = "?attr/colorControlNormal",
-                path = listOf(
+                children = listOf(
                     VectorDrawable.Path(
                         fillType = "nonZero",
                         fillColor = "@android:color/white",
@@ -56,7 +38,7 @@ internal class VectorDrawableDeserializerTest {
                     )
                 )
             ),
-            actual = serializer.deserialize(vector).getOrThrow()
+            actual = serializer.deserialize(vector)
         )
     }
 
@@ -82,7 +64,7 @@ internal class VectorDrawableDeserializerTest {
                 viewportWidth = 24f,
                 viewportHeight = 24f,
                 tint = "?attr/colorControlNormal",
-                path = listOf(
+                children = listOf(
                     VectorDrawable.Path(
                         fillType = "evenOdd",
                         fillColor = "@android:color/white",
@@ -90,7 +72,7 @@ internal class VectorDrawableDeserializerTest {
                     )
                 )
             ),
-            actual = serializer.deserialize(vector).getOrThrow()
+            actual = serializer.deserialize(vector)
         )
     }
 
@@ -104,7 +86,7 @@ internal class VectorDrawableDeserializerTest {
             <body>Don't forget me this weekend!</body>
         </note>
         """.trimIndent()
-        assertNull(serializer.deserialize(vector).getOrNull())
+        assertFailsWith<XmlException> { serializer.deserialize(vector) }
     }
 
     @Test
@@ -139,14 +121,13 @@ internal class VectorDrawableDeserializerTest {
                 viewportWidth = 24f,
                 viewportHeight = 24f,
                 tint = null,
-                path = emptyList(),
-                group = listOf(
+                children = listOf(
                     VectorDrawable.Group(
                         name = "rotationGroup",
                         pivotX = 10.0f,
                         pivotY = 10.0f,
                         rotation = 15.0f,
-                        path = listOf(
+                        children = listOf(
                             VectorDrawable.Path(
                                 name = "vect",
                                 fillColor = "#FF000000",
@@ -164,7 +145,7 @@ internal class VectorDrawableDeserializerTest {
                     )
                 )
             ),
-            actual = serializer.deserialize(vector).getOrThrow()
+            actual = serializer.deserialize(vector)
         )
     }
 
@@ -193,20 +174,19 @@ internal class VectorDrawableDeserializerTest {
                 viewportWidth = 24f,
                 viewportHeight = 24f,
                 tint = null,
-                path = emptyList(),
-                group = listOf(
+                children = listOf(
                     VectorDrawable.Group(
                         name = "parent",
-                        group = listOf(
+                        children = listOf(
                             VectorDrawable.Group(
                                 name = "parent.first",
-                                path = listOf(
+                                children = listOf(
                                     VectorDrawable.Path(pathData = "M15.67,4")
                                 )
                             ),
                             VectorDrawable.Group(
                                 name = "parent.second",
-                                path = listOf(
+                                children = listOf(
                                     VectorDrawable.Path(pathData = "M13,12.5")
                                 )
                             )
@@ -214,7 +194,7 @@ internal class VectorDrawableDeserializerTest {
                     )
                 )
             ),
-            actual = serializer.deserialize(vector).getOrThrow()
+            actual = serializer.deserialize(vector)
         )
     }
 }

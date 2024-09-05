@@ -28,5 +28,5 @@ internal class SVGDeserializer {
         }
     }
 
-    fun deserialize(content: String): SVG = xmlConfig.decodeFromString<SVG>(content)
+    fun deserialize(content: String): SVG = xmlConfig.decodeFromString(content)
 }
