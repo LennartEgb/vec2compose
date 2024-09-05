@@ -14,8 +14,7 @@ data class VectorSet(
 
     data class Group(
         val name: String?,
-        val groups: List<Group>,
-        val paths: List<Path>,
+        val nodes: List<Node>,
         val rotate: Float,
         val pivot: Translation,
         val translation: Translation,

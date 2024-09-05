@@ -53,13 +53,13 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         indent().append("translationY = ${group.translation.y}f,").appendLine()
         indent().append("clipPathData = emptyList()").appendLine()
         append(") {").appendLine()
-        group.groups.takeIf { it.isNotEmpty() }
-            ?.joinToString(separator = "\n") { createGroup(it, forBuilder = false) }
-            ?.setupIndent()
-            ?.let(::append)
-            ?.appendLine()
-        group.paths.takeIf { it.isNotEmpty() }
-            ?.joinToString(separator = "\n") { createPath(it, forBuilder = false) }
+        group.nodes.takeIf { it.isNotEmpty() }
+            ?.joinToString(separator = "\n") {
+                when(it) {
+                    is VectorSet.Group -> createGroup(it, forBuilder = false)
+                    is VectorSet.Path -> createPath(it, forBuilder = false)
+                }
+            }
             ?.setupIndent()
             ?.let(::append)
             ?.appendLine()
