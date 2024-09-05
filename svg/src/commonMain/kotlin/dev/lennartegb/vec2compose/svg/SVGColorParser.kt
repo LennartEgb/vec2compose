@@ -4,8 +4,8 @@ import dev.lennartegb.vec2compose.core.HexColorParser
 import dev.lennartegb.vec2compose.core.VectorSet
 
 internal class SVGColorParser(
-    private val hexColorParser: HexColorParser,
-    private val keywordColorParser: KeywordColorParser,
+    private val hexColorParser: HexColorParser = HexColorParser(),
+    private val keywordColorParser: KeywordColorParser = KeywordColorParser(),
 ) {
 
     fun parse(color: String): VectorSet.Path.FillColor? {
