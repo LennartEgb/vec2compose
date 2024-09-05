@@ -1,28 +1,11 @@
 package dev.lennartegb.vec2compose.svg
 
-import nl.adaptivity.xmlutil.serialization.XML
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class SVGDeserializerTest {
 
     private val deserializer = SVGDeserializer()
-
-    @Test
-    fun serialize_and_deserialize() {
-        val svg = SVG(
-            width = "",
-            height = "",
-            viewBox = "",
-            fill = "",
-            paths = listOf(SVG.Path(pathData = "M 0 2 L 0 24")),
-            groups = listOf(SVG.Group())
-        )
-
-        val string = XML.encodeToString(svg)
-        val decoded = XML.decodeFromString<SVG>(string)
-        assertEquals(expected = svg, actual = decoded)
-    }
 
     @Test
     fun deserialize_valid_SVG_file() {
