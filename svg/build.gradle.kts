@@ -10,11 +10,15 @@ kotlin {
     linuxX64()
     mingwX64()
 
-    dependencies {
-        commonMainImplementation(project(":core"))
-        commonMainImplementation(libs.bundles.xmlutil)
-        commonMainImplementation(libs.koin.core)
-        commonTestImplementation(kotlin("test"))
-        commonTestImplementation(libs.koin.test)
+    sourceSets {
+        commonMain.dependencies {
+            implementation(project(":core"))
+            implementation(libs.bundles.xmlutil)
+            implementation(libs.koin.core)
+        }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.koin.test)
+        }
     }
 }
