@@ -134,8 +134,7 @@ internal class ComposeMethodCreatorTest {
             forBuilder = false,
             group = VectorSet.Group(
                 name = "group",
-                groups = emptyList(),
-                paths = emptyList(),
+                nodes = emptyList(),
                 rotate = 0.25f,
                 pivot = Translation(x = .15f, y = .20f),
                 translation = Translation(x = .25f, y = .30f),
@@ -168,8 +167,7 @@ internal class ComposeMethodCreatorTest {
             forBuilder = true,
             group = VectorSet.Group(
                 name = "group",
-                groups = emptyList(),
-                paths = emptyList(),
+                nodes = emptyList(),
                 rotate = 0.25f,
                 pivot = Translation(x = .15f, y = .20f),
                 translation = Translation(x = .25f, y = .30f),
