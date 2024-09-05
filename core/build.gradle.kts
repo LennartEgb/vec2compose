@@ -10,7 +10,9 @@ kotlin {
     linuxX64()
     mingwX64()
 
-    dependencies {
-        commonTestImplementation(kotlin("test"))
+    sourceSets {
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
     }
 }
