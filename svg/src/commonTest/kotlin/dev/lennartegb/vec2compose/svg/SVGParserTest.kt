@@ -15,11 +15,10 @@ internal class SVGParserTest {
     @Test
     fun parse_SVG_file_with_correct_fill_color() {
         val svg = svg {
-            appendLine("""<path d="" fill="none"/>""")
-            appendLine("""<path fill="#fff" d=""/>""")
-            appendLine("""<path d=""/>""")
+            """<path d="" fill="none"/>
+            <path fill="#fff" d=""/>
+            <path d=""/>"""
         }
-        val result = parser.parse(content = svg).getOrThrow()
         val expected = listOf(
             VectorSet.Path(
                 fillType = VectorSet.Path.FillType.Default,
@@ -40,34 +39,33 @@ internal class SVGParserTest {
                 alpha = 1f
             ),
         )
-        assertEquals(expected = expected, actual = result.nodes)
+        assertEquals(
+            actual = parser.parse(content = svg).map { it.nodes },
+            expected = Result.success(expected),
+        )
     }
 
     @Test
     fun parse_file_with_group_rotation() {
-        val svg = svg {
-            appendLine("""<g transform="rotate(45 0 0)"/>""")
-        }
-        val result = parser.parse(svg).getOrThrow()
-        assertEquals(expected = listOf(45f), actual = result.groups.map { it.rotate })
+        val svg = svg { """<g transform="rotate(45 0 0)"/>""" }
+        assertEquals(
+            actual = parser.parse(svg).map { it.groups.map { it.rotate } },
+            expected = Result.success(listOf(45f)),
+        )
     }
 
     @Test
     fun parse_file_with_group_pivot() {
-        val svg = svg {
-            appendLine("""<g transform="rotate(45 20 30)"/>""")
-        }
-        val result = parser.parse(svg).getOrThrow()
+        val svg = svg { """<g transform="rotate(45 20 30)"/>""" }
         assertEquals(
-            expected = listOf(Translation(20f, 30f)),
-            actual = result.groups.map { it.pivot })
+            actual = parser.parse(svg).map { it.groups.map { it.pivot } },
+            expected = Result.success(listOf(Translation(20f, 30f))),
+        )
     }
 
     @Test
     fun parse_file_with_group_translate() {
-        val svg = svg {
-            appendLine("""<g transform="translate(20 30)"/>""")
-        }
+        val svg = svg { """<g transform="translate(20 30)"/>""" }
         assertEquals(
             actual = parser.parse(svg).map { set -> set.groups.map { it.translation } },
             expected = Result.success(listOf(Translation(20f, 30f))),
@@ -76,36 +74,20 @@ internal class SVGParserTest {
 
     @Test
     fun parse_path_data_with_fill_none() {
-        val svg = svg {
-            appendLine("""<path d="" fill="none"/>""")
-        }
+        val svg = svg { """<path d="" fill="none"/>""" }
 
         assertEquals(
-            expected = listOf(
-                VectorSet.Path(
-                    fillType = VectorSet.Path.FillType.Default,
-                    fillColor = null,
-                    commands = emptyList(),
-                    alpha = 1f
+            actual = parser.parse(svg).map { it.paths },
+            expected = Result.success(
+                listOf(
+                    VectorSet.Path(
+                        fillType = VectorSet.Path.FillType.Default,
+                        fillColor = null,
+                        commands = emptyList(),
+                        alpha = 1f
+                    )
                 )
             ),
-            actual = parser.parse(svg).map { it.paths }.getOrThrow()
         )
-    }
-
-    private fun svg(block: StringBuilder.() -> Unit): String {
-        return buildString {
-            appendLine(
-                """
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     height="24px"
-                     viewBox="0 0 24 24"
-                     width="24px"
-                     fill="#000000">
-                """.trimIndent()
-            )
-            block()
-            appendLine("</svg>")
-        }
     }
 }
