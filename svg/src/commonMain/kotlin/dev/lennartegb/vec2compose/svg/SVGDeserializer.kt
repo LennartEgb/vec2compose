@@ -14,6 +14,7 @@ internal class SVGDeserializer {
         polymorphic(baseClass = SVG.Child::class) {
             subclass(SVG.Circle::class)
             subclass(SVG.Group::class)
+            subclass(SVG.Ellipse::class)
             subclass(SVG.Path::class)
             subclass(SVG.Rectangle::class)
         }

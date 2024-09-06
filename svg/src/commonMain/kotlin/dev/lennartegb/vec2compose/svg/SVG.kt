@@ -16,7 +16,7 @@ data class SVG(
     @SerialName("height") val height: String,
     @SerialName("viewBox") val viewBox: String? = null,
     @SerialName("fill") val fill: String? = null,
-    @XmlPolyChildren([GROUP, PATH, CIRCLE, RECTANGLE])
+    @XmlPolyChildren([GROUP, PATH, CIRCLE, RECTANGLE, ELLIPSE])
     val children: List<@Polymorphic Child> = emptyList(),
 ) {
 
@@ -25,6 +25,7 @@ data class SVG(
         const val PATH = "path"
         const val CIRCLE = "circle"
         const val RECTANGLE = "rect"
+        const val ELLIPSE = "ellipse"
     }
 
     sealed interface Child
@@ -35,7 +36,7 @@ data class SVG(
     data class Group(
         @SerialName("id") val name: String? = null,
         @SerialName("transform") val transform: String? = null,
-        @XmlPolyChildren([GROUP, PATH, CIRCLE, RECTANGLE])
+        @XmlPolyChildren([GROUP, PATH, CIRCLE, RECTANGLE, ELLIPSE])
         val children: List<@Polymorphic Child> = emptyList(),
     ) : Child
 
@@ -81,5 +82,15 @@ data class SVG(
         @SerialName("rx") val horizontalCornerRadius: String? = null,
         @SerialName("ry") val verticalCornerRadius: String? = null,
         @SerialName("fill") val fill: String? = null,
+    ) : Child
+
+    @Serializable
+    @SerialName(ELLIPSE)
+    @XmlSerialName(ELLIPSE)
+    data class Ellipse(
+        @SerialName("cx") val centerX: String,
+        @SerialName("cy") val centerY: String,
+        @SerialName("rx") val radiusX: String,
+        @SerialName("ry") val radiusY: String,
     ) : Child
 }
