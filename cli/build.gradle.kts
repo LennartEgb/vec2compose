@@ -3,10 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.kover)
 }
 
-dependencies {
-    kover(project(":core"))
-}
-
 kotlin {
     val hostOs = System.getProperty("os.name")
     val isMingwX64 = hostOs.startsWith("Windows")
