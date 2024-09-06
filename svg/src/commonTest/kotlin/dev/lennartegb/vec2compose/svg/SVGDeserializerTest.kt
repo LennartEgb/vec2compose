@@ -9,24 +9,16 @@ internal class SVGDeserializerTest {
 
     @Test
     fun deserialize_valid_SVG_file() {
-        val content = """
-            <svg xmlns="http://www.w3.org/2000/svg"
-                width="24px"
-                height="24px"
-                viewBox="0 0 24 24"
-                fill="#000000">
-                <path d="M0 0h24v24H0z" fill="none"/>
-                <path d="M15.5 14h-.79l-.28-.27C15.41"/>
-            </svg>
-        """.trimIndent()
+        val content = svg {
+            """
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M15.5 14h-.79l-.28-.27C15.41"/>
+            """
+        }
 
         assertEquals(
             actual = deserializer.deserialize(content),
-            expected = SVG(
-                width = "24px",
-                height = "24px",
-                viewBox = "0 0 24 24",
-                fill = "#000000",
+            expected = testSVG(
                 children = listOf(
                     SVG.Path(fillRule = "nonzero", pathData = "M0 0h24v24H0z", fill = "none"),
                     SVG.Path(fillRule = "nonzero", pathData = "M15.5 14h-.79l-.28-.27C15.41")
@@ -37,22 +29,14 @@ internal class SVGDeserializerTest {
 
     @Test
     fun deserialize_valid_SVG_file_with_fill_rule_evenodd() {
-        val content = """
-            <svg xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 0 24 24"
-                width="24px"
-                fill="#000000">
-                <path d="M0 0h24v24H0z" fill="none" fill-rule="evenodd"/>
-                <path d="M15.5 14h-.79l-.28-.27C15.41"/>
-            </svg>
-        """.trimIndent()
+        val content = svg {
+            """
+            <path d="M0 0h24v24H0z" fill="none" fill-rule="evenodd"/>
+            <path d="M15.5 14h-.79l-.28-.27C15.41"/>
+            """
+        }
 
-        val expected = SVG(
-            width = "24px",
-            height = "24px",
-            viewBox = "0 0 24 24",
-            fill = "#000000",
+        val expected = testSVG(
             children = listOf(
                 SVG.Path(fillRule = "evenodd", pathData = "M0 0h24v24H0z", fill = "none"),
                 SVG.Path(fillRule = "nonzero", pathData = "M15.5 14h-.79l-.28-.27C15.41")
@@ -64,10 +48,10 @@ internal class SVGDeserializerTest {
 
     @Test
     fun parse_SVG_with_groups() {
-        // NOTE: The supported SVGs must have the documented namespace: https://www.w3.org/TR/SVG/struct.html#Namespace
-        val content = """
-            <svg xmlns="http://www.w3.org/2000/svg" width="1144.12px" height="400px" viewBox="0 0 572.06 200">
-            	<g id="bird">
+
+        val content = svg(width="1144.12px", height="400px", viewBox="0 0 572.06 200") {
+            """
+                <g id="bird">
             		<g id="body">
             			<path id="first" d="M48.42,78.11"/>
             		</g>
@@ -75,11 +59,11 @@ internal class SVGDeserializerTest {
             			<path id="second" d="M48.42,78.11"/>
             		</g>
             	</g>
-            </svg>
-        """.trimIndent()
+            """
+        }
         assertEquals(
             actual = deserializer.deserialize(content),
-            expected = SVG(
+            expected = testSVG(
                 width = "1144.12px",
                 height = "400px",
                 viewBox = "0 0 572.06 200",
@@ -109,18 +93,14 @@ internal class SVGDeserializerTest {
 
     @Test
     fun parse_svg_with_strokes() {
-        val svg = """
-            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        val svg = svg {
+            """
             <path d="M12.5 12V7.5" stroke="#888888" stroke-width="1.5" stroke-linecap="butt" stroke-linejoin="round" stroke-opacity="0.5" stroke-miterlimit="1"/>
-            </svg>
-        """.trimIndent()
+            """
+        }
         assertEquals(
             actual = deserializer.deserialize(svg),
-            expected = SVG(
-                width = "25",
-                height = "24",
-                viewBox = "0 0 25 24",
-                fill = "none",
+            expected = testSVG(
                 children = listOf(
                     SVG.Path(
                         pathData = "M12.5 12V7.5",
@@ -138,16 +118,10 @@ internal class SVGDeserializerTest {
 
     @Test
     fun parse_svg_with_circle() {
-        val svg = """
-            <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="30" fill="green" stroke="yellow" stroke-width="10"/>
-            </svg>
-        """.trimIndent()
+        val svg = svg { """<circle cx="50" cy="50" r="30" fill="green" stroke="yellow" stroke-width="10"/>""" }
         assertEquals(
             actual = deserializer.deserialize(svg),
-            expected = SVG(
-                width = "100",
-                height = "100",
+            expected = testSVG(
                 children = listOf(
                     SVG.Circle(
                         centerX = "50",
@@ -159,6 +133,50 @@ internal class SVGDeserializerTest {
                     )
                 )
             ),
+        )
+    }
+
+    @Test
+    fun `parse SVG with rectangle`() {
+        val svg = svg {
+            """<rect width="150" height="50" fill="red" y="50" />"""
+        }
+        assertEquals(
+            actual = deserializer.deserialize(svg),
+            expected = testSVG(
+                children = listOf(
+                    SVG.Rectangle(
+                        width = "150",
+                        height = "50",
+                        fill = "red",
+                        y = "50",
+                    )
+                )
+            )
+        )
+    }
+
+    @Test
+    fun `parse SVG with mixed children order`() {
+        val svg = svg {
+            """
+                <g id="head">
+                </g>
+                <rect width="150" height="50" />
+                <g id="foot">
+                </g>
+            """.trimIndent()
+        }
+
+        assertEquals(
+            actual = deserializer.deserialize(svg),
+            expected = testSVG(
+                children = listOf(
+                    SVG.Group(name = "head"),
+                    SVG.Rectangle(width = "150", height = "50"),
+                    SVG.Group(name = "foot"),
+                )
+            )
         )
     }
 }
