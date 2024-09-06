@@ -1,10 +1,14 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform) apply false
-    alias(libs.plugins.ktlint)
     alias(libs.plugins.kotlin.kover)
+    alias(libs.plugins.ktlint)
 }
 
 dependencies {
+    kover(project(":core"))
+    kover(project(":svg"))
+    kover(project(":vector-drawable"))
+
     kover(project(":cli"))
 }
 
