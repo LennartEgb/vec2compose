@@ -16,25 +16,32 @@ data class SVG(
     @SerialName("height") val height: String,
     @SerialName("viewBox") val viewBox: String? = null,
     @SerialName("fill") val fill: String? = null,
-    @XmlPolyChildren(["g", "path", "circle"])
+    @XmlPolyChildren([GROUP, PATH, CIRCLE, RECTANGLE])
     val children: List<@Polymorphic Child> = emptyList(),
 ) {
+
+    companion object {
+        const val GROUP = "g"
+        const val PATH = "path"
+        const val CIRCLE = "circle"
+        const val RECTANGLE = "rect"
+    }
 
     sealed interface Child
 
     @Serializable
-    @SerialName("g")
-    @XmlSerialName("g")
+    @SerialName(GROUP)
+    @XmlSerialName(GROUP)
     data class Group(
         @SerialName("id") val name: String? = null,
         @SerialName("transform") val transform: String? = null,
-        @XmlPolyChildren(["g", "path", "circle"])
+        @XmlPolyChildren([GROUP, PATH, CIRCLE, RECTANGLE])
         val children: List<@Polymorphic Child> = emptyList(),
     ) : Child
 
     @Serializable
-    @SerialName("path")
-    @XmlSerialName("path")
+    @SerialName(PATH)
+    @XmlSerialName(PATH)
     data class Path(
         @SerialName("id") val id: String = "",
         @SerialName("d") val pathData: String,
@@ -50,8 +57,8 @@ data class SVG(
     ) : Child
 
     @Serializable
-    @SerialName("circle")
-    @XmlSerialName("circle")
+    @SerialName(CIRCLE)
+    @XmlSerialName(CIRCLE)
     data class Circle(
         @SerialName("cx") val centerX: String,
         @SerialName("cy") val centerY: String,
@@ -61,5 +68,18 @@ data class SVG(
         @SerialName("stroke") val stroke: String? = null,
         @SerialName("stroke-width") val strokeWidth: String? = null,
         @SerialName("opacity") val opacity: String = "1",
+    ) : Child
+
+    @Serializable
+    @SerialName(RECTANGLE)
+    @XmlSerialName(RECTANGLE)
+    data class Rectangle(
+        @SerialName("width") val width: String? = null,
+        @SerialName("height") val height: String? = null,
+        @SerialName("x") val x: String = "0",
+        @SerialName("y") val y: String = "0",
+        @SerialName("rx") val horizontalCornerRadius: String? = null,
+        @SerialName("ry") val verticalCornerRadius: String? = null,
+        @SerialName("fill") val fill: String? = null,
     ) : Child
 }

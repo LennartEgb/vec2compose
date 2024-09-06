@@ -35,6 +35,7 @@ internal class SVGParser(
         is SVG.Circle -> toVectorPath()
         is SVG.Group -> toVectorGroup()
         is SVG.Path -> toVectorPath()
+        is SVG.Rectangle -> toVectorPath()
     }
 
     private fun SVG.Group.toVectorGroup(): VectorSet.Group {
@@ -60,6 +61,26 @@ internal class SVGParser(
             fillColor = fillColor,
             alpha = fillOpacity,
             stroke = stroke,
+        )
+    }
+
+    private fun SVG.Rectangle.toVectorPath(): VectorSet.Path {
+        val x = x.toFloat()
+        val y = y.toFloat()
+        val width = width?.toFloat() ?: 0f
+        val height = height?.toFloat() ?: 0f
+        return VectorSet.Path(
+            fillType = VectorSet.Path.FillType.Default,
+            fillColor = fill?.let(colorParser::parse),
+            alpha = 1f,
+            stroke = VectorSet.Path.Stroke(width = 0f),
+            commands = listOf(
+                Command.MoveTo(x = x, y = y, isAbsolute = true),
+                Command.LineTo(x = x + width, y = y, isAbsolute = true),
+                Command.LineTo(x = x + width, y = y + height, isAbsolute = true),
+                Command.LineTo(x = x, y = y + height, isAbsolute = true),
+                Command.Close,
+            ),
         )
     }
 
