@@ -36,6 +36,7 @@ internal class SVGParser(
         is SVG.Group -> toVectorGroup()
         is SVG.Path -> toVectorPath()
         is SVG.Rectangle -> toVectorPath()
+        is SVG.Ellipse -> TODO()
     }
 
     private fun SVG.Group.toVectorGroup(): VectorSet.Group {
