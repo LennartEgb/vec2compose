@@ -88,9 +88,15 @@ data class SVG(
     @SerialName(ELLIPSE)
     @XmlSerialName(ELLIPSE)
     data class Ellipse(
-        @SerialName("cx") val centerX: String,
-        @SerialName("cy") val centerY: String,
-        @SerialName("rx") val radiusX: String,
-        @SerialName("ry") val radiusY: String,
+        @SerialName("cx") val centerX: String = "0",
+        @SerialName("cy") val centerY: String = "0",
+        @SerialName("rx") val radiusX: String? = null,
+        @SerialName("ry") val radiusY: String? = null,
+        @SerialName("fill") val fill: String? = null,
+        @SerialName("stroke") val stroke: String? = null,
+        @SerialName("stroke-width") val strokeWidth: String? = null,
+        @SerialName("stroke-linecap") val strokeLineCap: String? = null,
+        @SerialName("stroke-linejoin") val strokeLineJoin: String? = null,
+        @SerialName("stroke-miterlimit") val strokeMiterLimit: String? = null,
     ) : Child
 }
