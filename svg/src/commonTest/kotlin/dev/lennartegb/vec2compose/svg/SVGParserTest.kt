@@ -1,7 +1,9 @@
 package dev.lennartegb.vec2compose.svg
 
+import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
 import dev.lennartegb.vec2compose.core.VectorSet
+import dev.lennartegb.vec2compose.core.commands.Command
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -10,14 +12,15 @@ internal class SVGParserTest {
     private val parser = SVGParser()
 
     private val VectorSet.groups: List<VectorSet.Group> get() = nodes.filterIsInstance<VectorSet.Group>()
-    private val VectorSet.paths: List<VectorSet.Path> get() = nodes.filterIsInstance<VectorSet.Path>()
 
     @Test
     fun parse_SVG_file_with_correct_fill_color() {
         val svg = svg {
-            """<path d="" fill="none"/>
+            """
+            <path d="" fill="none"/>
             <path fill="#fff" d=""/>
-            <path d=""/>"""
+            <path d=""/>
+            """
         }
         val expected = listOf(
             VectorSet.Path(
@@ -49,8 +52,19 @@ internal class SVGParserTest {
     fun parse_file_with_group_rotation() {
         val svg = svg { """<g transform="rotate(45 0 0)"/>""" }
         assertEquals(
-            actual = parser.parse(svg).map { it.groups.map { it.rotate } },
-            expected = Result.success(listOf(45f)),
+            actual = parser.parse(svg).map { it.nodes },
+            expected = Result.success(
+                listOf(
+                    VectorSet.Group(
+                        name = null,
+                        nodes = emptyList(),
+                        rotate = 45f,
+                        pivot = Translation(0f, 0f),
+                        translation = Translation(0f, 0f),
+                        scale = Scale(1f, 1f),
+                    )
+                )
+            ),
         )
     }
 
@@ -77,7 +91,7 @@ internal class SVGParserTest {
         val svg = svg { """<path d="" fill="none"/>""" }
 
         assertEquals(
-            actual = parser.parse(svg).map { it.paths },
+            actual = parser.parse(svg).map { it.nodes },
             expected = Result.success(
                 listOf(
                     VectorSet.Path(
@@ -88,6 +102,64 @@ internal class SVGParserTest {
                     )
                 )
             ),
+        )
+    }
+
+    @Test
+    fun `parse ellipse from SVG`() {
+        val svg = svg {
+            """<ellipse cx="10" cy="20" rx="10" ry="20" fill="red" stroke="blue" stroke-width="3"/>"""
+        }
+        assertEquals(
+            actual = parser.parse(svg).map { it.nodes },
+            expected = Result.success(
+                listOf(
+                    VectorSet.Path(
+                        fillType = VectorSet.Path.FillType.Default,
+                        fillColor = VectorSet.Path.FillColor(
+                            red = 0xFF,
+                            green = 0x00,
+                            blue = 0x00,
+                            alpha = 0xFF
+                        ),
+                        alpha = 1f,
+                        stroke = VectorSet.Path.Stroke(
+                            color = VectorSet.Path.FillColor(
+                                red = 0x00,
+                                green = 0x00,
+                                blue = 0xFF,
+                                alpha = 0xFF
+                            ),
+                            alpha = 1f,
+                            width = 3f,
+                        ),
+                        commands = listOf(
+                            Command.MoveTo(0f, 20f, isAbsolute = true),
+                            Command.ArcTo(
+                                horizontalEllipseRadius = 10f,
+                                verticalEllipseRadius = 20f,
+                                theta = 0f,
+                                isMoreThanHalf = false,
+                                isAbsolute = true,
+                                isPositiveArc = true,
+                                x1 = 20f,
+                                y1 = 20f,
+                            ),
+                            Command.ArcTo(
+                                horizontalEllipseRadius = 10f,
+                                verticalEllipseRadius = 20f,
+                                theta = 0f,
+                                isMoreThanHalf = false,
+                                isAbsolute = true,
+                                isPositiveArc = true,
+                                x1 = 0f,
+                                y1 = 20f,
+                            ),
+                            Command.Close,
+                        ),
+                    )
+                )
+            )
         )
     }
 }

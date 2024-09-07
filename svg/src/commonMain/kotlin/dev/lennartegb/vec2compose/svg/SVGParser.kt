@@ -3,8 +3,15 @@ package dev.lennartegb.vec2compose.svg
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
 import dev.lennartegb.vec2compose.core.VectorSet
+import dev.lennartegb.vec2compose.core.VectorSet.Path.FillType
+import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke
+import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke.Cap
+import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke.Join
 import dev.lennartegb.vec2compose.core.VectorSetParser
-import dev.lennartegb.vec2compose.core.commands.Command
+import dev.lennartegb.vec2compose.core.commands.Command.ArcTo
+import dev.lennartegb.vec2compose.core.commands.Command.Close
+import dev.lennartegb.vec2compose.core.commands.Command.LineTo
+import dev.lennartegb.vec2compose.core.commands.Command.MoveTo
 import dev.lennartegb.vec2compose.core.commands.PathParser
 
 internal class SVGParser(
@@ -36,7 +43,7 @@ internal class SVGParser(
         is SVG.Group -> toVectorGroup()
         is SVG.Path -> toVectorPath()
         is SVG.Rectangle -> toVectorPath()
-        is SVG.Ellipse -> TODO()
+        is SVG.Ellipse -> toVectorPath()
     }
 
     private fun SVG.Group.toVectorGroup(): VectorSet.Group {
@@ -53,8 +60,8 @@ internal class SVGParser(
     private fun SVG.Path.toVectorPath(): VectorSet.Path {
         val stroke = toStroke()
         var fillColor: VectorSet.Path.FillColor? = fill?.let(colorParser::parse)
-        // NOTE: Only when fill and strokeColor is null use black FillColor as default color as fill can be none
-        //       resulting to null.
+        // NOTE: Only when fill and strokeColor is null use black FillColor as default color as
+        //       fill can be none resulting to null.
         fillColor = if (fill == null && strokeColor == null) Black else fillColor
         return VectorSet.Path(
             fillType = parseFillType(fillRule),
@@ -65,31 +72,78 @@ internal class SVGParser(
         )
     }
 
+    private fun SVG.Ellipse.toVectorPath(): VectorSet.Path {
+        val cx = centerX.toFloat()
+        val cy = centerY.toFloat()
+        val radiusX = radiusX?.toFloat() ?: radiusY?.toFloat()
+        ?: error("either rx or ry must be set but were $radiusX and $radiusY")
+        val radiusY = radiusY?.toFloat() ?: radiusX
+
+
+        return VectorSet.Path(
+            fillType = FillType.Default,
+            fillColor = fill?.let { colorParser.parse(it) },
+            stroke = Stroke(
+                color = stroke?.let { colorParser.parse(it) },
+                alpha = if (stroke != null) 1f else 0f,
+                width = strokeWidth?.toFloat() ?: if (stroke != null) 1f else 0f,
+                cap = strokeLineCap?.let(::getStrokeLineCap) ?: Cap.Butt,
+                join = strokeLineJoin?.let(::getStrokeLineJoin) ?: Join.Bevel,
+                miter = strokeMiterLimit?.toFloat() ?: 1f,
+            ),
+            alpha = 1f,
+            commands = listOf(
+                MoveTo(cx - radiusX, cy, isAbsolute = true),
+                ArcTo(
+                    horizontalEllipseRadius = radiusX,
+                    verticalEllipseRadius = radiusY,
+                    theta = 0f,
+                    isMoreThanHalf = false,
+                    isAbsolute = true,
+                    isPositiveArc = true,
+                    x1 = cx + radiusX,
+                    y1 = cy,
+                ),
+                ArcTo(
+                    horizontalEllipseRadius = radiusX,
+                    verticalEllipseRadius = radiusY,
+                    theta = 0f,
+                    isMoreThanHalf = false,
+                    isAbsolute = true,
+                    isPositiveArc = true,
+                    x1 = cx - radiusX,
+                    y1 = cy,
+                ),
+                Close,
+            )
+        )
+    }
+
     private fun SVG.Rectangle.toVectorPath(): VectorSet.Path {
         val x = x.toFloat()
         val y = y.toFloat()
         val width = width?.toFloat() ?: 0f
         val height = height?.toFloat() ?: 0f
         return VectorSet.Path(
-            fillType = VectorSet.Path.FillType.Default,
+            fillType = FillType.Default,
             fillColor = fill?.let(colorParser::parse),
             alpha = 1f,
-            stroke = VectorSet.Path.Stroke(width = 0f),
+            stroke = Stroke(width = 0f),
             commands = listOf(
-                Command.MoveTo(x = x, y = y, isAbsolute = true),
-                Command.LineTo(x = x + width, y = y, isAbsolute = true),
-                Command.LineTo(x = x + width, y = y + height, isAbsolute = true),
-                Command.LineTo(x = x, y = y + height, isAbsolute = true),
-                Command.Close,
+                MoveTo(x = x, y = y, isAbsolute = true),
+                LineTo(x = x + width, y = y, isAbsolute = true),
+                LineTo(x = x + width, y = y + height, isAbsolute = true),
+                LineTo(x = x, y = y + height, isAbsolute = true),
+                Close,
             ),
         )
     }
 
-    private fun SVG.Path.toStroke(): VectorSet.Path.Stroke {
-        return VectorSet.Path.Stroke(
+    private fun SVG.Path.toStroke(): Stroke {
+        return Stroke(
             color = strokeColor?.let(colorParser::parse),
-            alpha = strokeAlpha?.toFloat(), // TODO: support percentage
-            width = strokeWidth?.toFloat(), // TODO: support percentage
+            alpha = strokeAlpha?.toFloat(),
+            width = strokeWidth?.toFloat(),
             cap = strokeLinecap?.let(::getStrokeLineCap),
             join = strokeLinejoin?.let(::getStrokeLineJoin),
             miter = strokeMiter?.toFloat()
@@ -100,19 +154,15 @@ internal class SVGParser(
         val cx = centerX.toFloat()
         val cy = centerY.toFloat()
         val r = radius.toFloat()
-        val color = fill?.let(colorParser::parse) ?: VectorSet.Path.FillColor(
-            0x00,
-            0x00,
-            0x00,
-            alpha = 0xff
-        )
+        val color = fill?.let(colorParser::parse)
+            ?: VectorSet.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff)
 
         return VectorSet.Path(
-            fillType = VectorSet.Path.FillType.Default,
+            fillType = FillType.Default,
             fillColor = color,
             commands = listOf(
-                Command.MoveTo(x = cx - r, y = cy, isAbsolute = true),
-                Command.ArcTo(
+                MoveTo(x = cx - r, y = cy, isAbsolute = true),
+                ArcTo(
                     horizontalEllipseRadius = r,
                     verticalEllipseRadius = r,
                     theta = 0f,
@@ -122,7 +172,7 @@ internal class SVGParser(
                     x1 = cx + r,
                     y1 = cy
                 ),
-                Command.ArcTo(
+                ArcTo(
                     horizontalEllipseRadius = r,
                     verticalEllipseRadius = r,
                     theta = 0f,
@@ -132,65 +182,65 @@ internal class SVGParser(
                     x1 = cx - r,
                     y1 = cy,
                 ),
-                Command.Close
+                Close
             ),
             alpha = opacity.toFloat(),
-            stroke = VectorSet.Path.Stroke(
-
-            ),
+            stroke = Stroke(),
         )
     }
 
-    private fun getStrokeLineJoin(value: String): VectorSet.Path.Stroke.Join {
-        // NOTE: Documentation lists more supported values. Compose only supports three, so we need to ignore
-        //       unsupported values for now.
+    private fun getStrokeLineJoin(value: String): Join {
+        // NOTE: Documentation lists more supported values. Compose only supports three, so we
+        //       need to ignore unsupported values for now.
         //       arcs | bevel | miter | miter-clip | round
         //       @see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linejoin
         return when (value) {
-            "round" -> VectorSet.Path.Stroke.Join.Round
-            "bevel" -> VectorSet.Path.Stroke.Join.Bevel
-            "miter" -> VectorSet.Path.Stroke.Join.Miter
-            else -> error("StrokeJoin not supported. Was: $value. Must be in: ${VectorSet.Path.Stroke.Join.entries}")
+            "round" -> Join.Round
+            "bevel" -> Join.Bevel
+            "miter" -> Join.Miter
+            else -> error("StrokeJoin not supported. Was: $value. Must be in: ${Join.entries}")
         }
     }
 
-    private fun getStrokeLineCap(value: String): VectorSet.Path.Stroke.Cap {
+    private fun getStrokeLineCap(value: String): Cap {
         return when (value) {
-            "butt" -> VectorSet.Path.Stroke.Cap.Butt
-            "round" -> VectorSet.Path.Stroke.Cap.Round
-            "square" -> VectorSet.Path.Stroke.Cap.Square
-            else -> error("StrokeCap not supported. Was: $value. Must be in: ${VectorSet.Path.Stroke.Cap.entries}")
+            "butt" -> Cap.Butt
+            "round" -> Cap.Round
+            "square" -> Cap.Square
+            else -> error("StrokeCap not supported. Was: $value. Must be in: ${Cap.entries}")
         }
     }
 
-    private fun parseFillType(fillRule: String): VectorSet.Path.FillType {
+    private fun parseFillType(fillRule: String): FillType {
         return when (fillRule) {
-            "evenodd" -> VectorSet.Path.FillType.EvenOdd
-            "nonzero" -> VectorSet.Path.FillType.NonZero
-            else -> VectorSet.Path.FillType.Default
+            "evenodd" -> FillType.EvenOdd
+            "nonzero" -> FillType.NonZero
+            else -> FillType.Default
         }
     }
 
     private fun String.getRotation(): Float {
-        return getFunction("rotate")?.let { (a, _, _) -> a } ?: 0f
+        return getFunction("rotate")
+            ?.let { (a, _, _) -> a }
+            ?: 0f
     }
 
     private fun String.getPivot(): Translation {
-        return getFunction("rotate")?.let { (_, x, y) -> Translation(x = x, y = y) } ?: Translation(
-            0f,
-            0f
-        )
+        return getFunction("rotate")
+            ?.let { (_, x, y) -> Translation(x = x, y = y) }
+            ?: Translation(0f, 0f)
     }
 
     private fun String.getTranslation(): Translation {
-        return getFunction("translate")?.let { (x, y) -> Translation(x = x, y = y) } ?: Translation(
-            0f,
-            0f
-        )
+        return getFunction("translate")
+            ?.let { (x, y) -> Translation(x = x, y = y) }
+            ?: Translation(0f, 0f)
     }
 
     private fun String.getScale(): Scale {
-        return getFunction("scale")?.let { (x, y) -> Scale(x = x, y = y) } ?: Scale(0f, 0f)
+        return getFunction("scale")
+            ?.let { (x, y) -> Scale(x = x, y = y) }
+            ?: Scale(1f, 1f)
     }
 
     private fun String.getFunction(key: String): List<Float>? {
