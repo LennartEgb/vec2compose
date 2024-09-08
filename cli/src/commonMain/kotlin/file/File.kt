@@ -1,3 +1,5 @@
+package file
+
 internal data class File(
     val name: String,
     val content: String,
