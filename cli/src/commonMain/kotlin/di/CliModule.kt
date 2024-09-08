@@ -1,3 +1,6 @@
+package di
+
+import file.FileReader
 import dev.lennartegb.vec2compose.core.VectorSetParser
 import dev.lennartegb.vec2compose.core.imagevector.ImageVectorCreator
 import dev.lennartegb.vec2compose.core.imagevector.ImageVectorImportProvider

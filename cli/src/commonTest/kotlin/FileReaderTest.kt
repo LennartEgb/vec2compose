@@ -1,3 +1,5 @@
+import file.File
+import file.FileReader
 import okio.Path.Companion.toPath
 import okio.fakefilesystem.FakeFileSystem
 import kotlin.test.Test
