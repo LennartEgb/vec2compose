@@ -15,6 +15,7 @@ internal class VectorDrawableDeserializer {
             subclass(VectorDrawable.Path::class)
         }
     }
+
     @OptIn(ExperimentalXmlUtilApi::class)
     private val xmlConfig = XML(baseModule) {
         autoPolymorphic = true

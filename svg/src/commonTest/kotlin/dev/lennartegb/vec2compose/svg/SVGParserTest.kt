@@ -46,11 +46,11 @@ internal class SVGParserTest {
                 fillColor = VectorSet.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff),
                 commands = emptyList(),
                 alpha = 1f
-            ),
+            )
         )
         assertEquals(
             actual = parser.parse(content = svg).map { it.nodes },
-            expected = Result.success(expected),
+            expected = Result.success(expected)
         )
     }
 
@@ -67,10 +67,10 @@ internal class SVGParserTest {
                         rotate = 45f,
                         pivot = Translation(0f, 0f),
                         translation = Translation(0f, 0f),
-                        scale = Scale(1f, 1f),
+                        scale = Scale(1f, 1f)
                     )
                 )
-            ),
+            )
         )
     }
 
@@ -79,7 +79,7 @@ internal class SVGParserTest {
         val svg = svg { """<g transform="rotate(45 20 30)"/>""" }
         assertEquals(
             actual = parser.parse(svg).map { it.groups.map { it.pivot } },
-            expected = Result.success(listOf(Translation(20f, 30f))),
+            expected = Result.success(listOf(Translation(20f, 30f)))
         )
     }
 
@@ -88,7 +88,7 @@ internal class SVGParserTest {
         val svg = svg { """<g transform="translate(20 30)"/>""" }
         assertEquals(
             actual = parser.parse(svg).map { set -> set.groups.map { it.translation } },
-            expected = Result.success(listOf(Translation(20f, 30f))),
+            expected = Result.success(listOf(Translation(20f, 30f)))
         )
     }
 
@@ -107,7 +107,7 @@ internal class SVGParserTest {
                         alpha = 1f
                     )
                 )
-            ),
+            )
         )
     }
 
@@ -143,7 +143,7 @@ internal class SVGParserTest {
                                 alpha = 0xFF
                             ),
                             alpha = 1f,
-                            width = 3f,
+                            width = 3f
                         ),
                         commands = listOf(
                             Command.MoveTo(0f, 20f, isAbsolute = true),
@@ -155,7 +155,7 @@ internal class SVGParserTest {
                                 isAbsolute = true,
                                 isPositiveArc = true,
                                 x1 = 20f,
-                                y1 = 20f,
+                                y1 = 20f
                             ),
                             Command.ArcTo(
                                 horizontalEllipseRadius = 10f,
@@ -165,10 +165,10 @@ internal class SVGParserTest {
                                 isAbsolute = true,
                                 isPositiveArc = true,
                                 x1 = 0f,
-                                y1 = 20f,
+                                y1 = 20f
                             ),
-                            Command.Close,
-                        ),
+                            Command.Close
+                        )
                     )
                 )
             )
@@ -203,7 +203,7 @@ internal class SVGParserTest {
                                 isAbsolute = true,
                                 isPositiveArc = true,
                                 x1 = 10f,
-                                y1 = 5f,
+                                y1 = 5f
                             ),
                             ArcTo(
                                 horizontalEllipseRadius = 5f,
@@ -213,15 +213,15 @@ internal class SVGParserTest {
                                 isAbsolute = true,
                                 isPositiveArc = true,
                                 x1 = 0f,
-                                y1 = 5f,
+                                y1 = 5f
                             ),
-                            Close,
+                            Close
                         ),
                         alpha = 1f,
-                        stroke = Stroke(),
-                    ),
-                ),
-            ),
+                        stroke = Stroke()
+                    )
+                )
+            )
         )
     }
 }

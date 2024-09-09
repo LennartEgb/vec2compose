@@ -5,7 +5,7 @@ internal fun testSVG(
     viewBox: String = "0 0 24 24",
     width: String = "24px",
     fill: String = "#000000",
-    children: List<SVG.Child>,
+    children: List<SVG.Child>
 ) = SVG(
     width = width,
     height = height,
@@ -19,7 +19,7 @@ internal inline fun svg(
     viewBox: String = "0 0 24 24",
     width: String = "24px",
     fill: String = "#000000",
-    block: () -> String,
+    block: () -> String
 ): String {
     return buildString {
         // NOTE: The supported SVGs must have the documented namespace: https://www.w3.org/TR/SVG/struct.html#Namespace
@@ -30,7 +30,7 @@ internal inline fun svg(
                      viewBox="$viewBox"
                      width="$width"
                      fill="$fill">
-                """.trimIndent()
+            """.trimIndent()
         )
         appendLine(block())
         appendLine("</svg>")

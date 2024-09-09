@@ -1,6 +1,5 @@
 package di
 
-import file.FileReader
 import dev.lennartegb.vec2compose.core.VectorSetParser
 import dev.lennartegb.vec2compose.core.imagevector.ImageVectorCreator
 import dev.lennartegb.vec2compose.core.imagevector.ImageVectorImportProvider
@@ -8,6 +7,7 @@ import dev.lennartegb.vec2compose.svg.di.svgModule
 import dev.lennartegb.vec2compose.svg.di.svgQualifier
 import dev.lennartegb.vec2compose.vectorDrawable.di.vectorDrawableModule
 import dev.lennartegb.vec2compose.vectorDrawable.di.vectorDrawableQualifier
+import file.FileReader
 import okio.FileSystem
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -28,13 +28,17 @@ val cliModule = module {
         val name: String = params[1]
         val indentation: String = params[2]
 
-        if (path == null) OutputStrategy(::println) else FileOutputStrategy(
-            name = name,
-            pathname = path,
-            importProvider = get(),
-            fileSystem = get(),
-            indentation = indentation
-        )
+        if (path == null) {
+            OutputStrategy(::println)
+        } else {
+            FileOutputStrategy(
+                name = name,
+                pathname = path,
+                importProvider = get(),
+                fileSystem = get(),
+                indentation = indentation
+            )
+        }
     }
 
     factory<VectorSetParser> { params ->
@@ -55,7 +59,7 @@ fun KoinComponent.injectImageVectorCreator(indentation: String) = inject<ImageVe
 fun KoinComponent.injectOutputStrategy(
     path: String?,
     name: String,
-    indentation: String,
+    indentation: String
 ) = inject<OutputStrategy> { parametersOf(path, name, indentation) }
 
 fun KoinComponent.injectVectorSetParser(fileExtension: String) = inject<VectorSetParser> {

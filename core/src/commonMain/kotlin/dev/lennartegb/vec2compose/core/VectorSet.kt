@@ -7,7 +7,7 @@ data class VectorSet(
     val height: Int,
     val viewportWidth: Float,
     val viewportHeight: Float,
-    val nodes: List<Node>,
+    val nodes: List<Node>
 ) {
 
     sealed interface Node
@@ -19,15 +19,15 @@ data class VectorSet(
         val pivot: Translation,
         val translation: Translation,
         val scale: Scale
-    ): Node
+    ) : Node
 
     data class Path(
         val fillType: FillType,
         val fillColor: FillColor? = null,
         val commands: List<Command>,
         val alpha: Float,
-        val stroke: Stroke = Stroke(),
-    ): Node {
+        val stroke: Stroke = Stroke()
+    ) : Node {
         enum class FillType {
             NonZero,
             EvenOdd;
@@ -43,7 +43,7 @@ data class VectorSet(
             val width: Float = 1f,
             val cap: Cap = Cap.Butt,
             val join: Join = Join.Bevel,
-            val miter: Float = 1f,
+            val miter: Float = 1f
         ) {
 
             // NOTE: constructor with null values to fall back to default values.

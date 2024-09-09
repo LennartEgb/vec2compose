@@ -55,7 +55,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         append(") {").appendLine()
         group.nodes.takeIf { it.isNotEmpty() }
             ?.joinToString(separator = "\n") {
-                when(it) {
+                when (it) {
                     is VectorSet.Group -> createGroup(it, forBuilder = false)
                     is VectorSet.Path -> createPath(it, forBuilder = false)
                 }

@@ -14,7 +14,7 @@ internal class ComposeMethodCreatorTest {
         height = 12,
         viewportWidth = 24f,
         viewportHeight = 48f,
-        nodes = emptyList(),
+        nodes = emptyList()
     )
 
     @Test
@@ -55,8 +55,8 @@ internal class ComposeMethodCreatorTest {
                     width = 1f,
                     cap = VectorSet.Path.Stroke.Cap.Butt,
                     join = VectorSet.Path.Stroke.Join.Bevel,
-                    miter = .25f,
-                ),
+                    miter = .25f
+                )
             )
         )
         assertEquals(
@@ -101,8 +101,8 @@ internal class ComposeMethodCreatorTest {
                     width = 1f,
                     cap = VectorSet.Path.Stroke.Cap.Butt,
                     join = VectorSet.Path.Stroke.Join.Bevel,
-                    miter = .25f,
-                ),
+                    miter = .25f
+                )
             )
         )
         assertEquals(
@@ -138,7 +138,7 @@ internal class ComposeMethodCreatorTest {
                 rotate = 0.25f,
                 pivot = Translation(x = .15f, y = .20f),
                 translation = Translation(x = .25f, y = .30f),
-                scale = Scale(x = .5f, y = .6f),
+                scale = Scale(x = .5f, y = .6f)
             )
         )
         assertEquals(
@@ -171,7 +171,7 @@ internal class ComposeMethodCreatorTest {
                 rotate = 0.25f,
                 pivot = Translation(x = .15f, y = .20f),
                 translation = Translation(x = .25f, y = .30f),
-                scale = Scale(x = .5f, y = .6f),
+                scale = Scale(x = .5f, y = .6f)
             )
         )
         assertEquals(
