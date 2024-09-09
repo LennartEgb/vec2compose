@@ -76,7 +76,7 @@ internal class SVGParser(
         val cx = centerX.toFloat()
         val cy = centerY.toFloat()
         val radiusX = radiusX?.toFloat() ?: radiusY?.toFloat()
-        ?: error("either rx or ry must be set but were $radiusX and $radiusY")
+        requireNotNull(radiusX) { "either rx or ry must be set for ellipse $this" }
         val radiusY = radiusY?.toFloat() ?: radiusX
 
 

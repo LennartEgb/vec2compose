@@ -6,6 +6,7 @@ import dev.lennartegb.vec2compose.core.VectorSet
 import dev.lennartegb.vec2compose.core.commands.Command
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 internal class SVGParserTest {
 
@@ -103,6 +104,12 @@ internal class SVGParserTest {
                 )
             ),
         )
+    }
+
+    @Test
+    fun `parse invalid ellipse from SVG`() {
+        val svg = svg { """<ellipse cx="10" /> """ }
+        assertFailsWith<IllegalArgumentException> { parser.parse(svg).getOrThrow() }
     }
 
     @Test
