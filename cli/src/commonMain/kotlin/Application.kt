@@ -10,6 +10,10 @@ import output.Output
 
 fun interface VectorSetConverter : (VectorSet) -> String
 
+fun String.toOutput(fileSystem: FileSystem) = Output {
+    File.write(fileSystem = fileSystem, path = this, content = it)
+}
+
 internal class Application(
     private val fileSystem: FileSystem = SystemFileSystem,
     private val imageVectorCreator: ImageVectorCreator,
@@ -21,17 +25,18 @@ internal class Application(
 
         val writeFile = arguments.output != null
 
-        val output = arguments.output
-            ?.let { path ->
-                Output { File.write(fileSystem = fileSystem, path = path, content = it) }
-            }
+        val output = arguments.output?.toOutput(fileSystem)
             ?: Output(::println)
 
-        val convert = VectorSetConverter {
+        val convert = VectorSetConverter { set ->
             if (writeFile) {
-                kotlinFileContentCreator.create(packageName = null, name = name, vectorSet = it)
+                kotlinFileContentCreator.create(
+                    packageName = arguments.packageName,
+                    name = name,
+                    vectorSet = set
+                )
             } else {
-                imageVectorCreator.create(name = name, vectorSet = it)
+                imageVectorCreator.create(name = name, vectorSet = set)
             }
         }
 
