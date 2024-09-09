@@ -1,3 +1,5 @@
+# noinspection EditorConfigKeyCorrectness
 [*.{kt,kts}]
+ktlint_code_style = intellij_idea
 indent_size = 4
 indent_style = space
