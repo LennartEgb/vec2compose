@@ -19,6 +19,13 @@ internal class Arguments(args: Array<String>) {
         description = "Output file"
     )
 
+    val packageName: String? by argParser.option(
+        type = ArgType.String,
+        shortName = "p",
+        fullName = "package",
+        description = "Projects package name"
+    )
+
     init {
         argParser.parse(args)
     }

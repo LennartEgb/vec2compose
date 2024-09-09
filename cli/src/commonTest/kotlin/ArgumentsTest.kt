@@ -26,4 +26,16 @@ class ArgumentsTest {
         val arguments = Arguments(arrayOf("-i", "input.svg", "--output", "Output.kt"))
         assertEquals(expected = "Output.kt", actual = arguments.output)
     }
+
+    @Test
+    fun `get package name with short name`() {
+        val arguments = Arguments(arrayOf("-i", "input.svg", "-p", "com.example.icons"))
+        assertEquals(expected = "com.example.icons", actual = arguments.packageName)
+    }
+
+    @Test
+    fun `get package name with full name`() {
+        val arguments = Arguments(arrayOf("-i", "input.svg", "--package", "com.example.icons"))
+        assertEquals(expected = "com.example.icons", actual = arguments.packageName)
+    }
 }
