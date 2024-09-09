@@ -13,10 +13,22 @@ dependencies {
 }
 
 tasks.register<Copy>("assembleCli") {
-    dependsOn(":cli:nativeBinaries")
+    val os = getHostOs()
+    dependsOn(":cli:${os}Binaries")
 
-    from("${project.projectDir}/cli/build/bin/native/releaseExecutable/cli.kexe") {
+    from("${project.projectDir}/cli/build/bin/$os/releaseExecutable/cli.kexe") {
         rename { project.name }
     }
     into("${project.rootDir}/dist")
+}
+
+fun getHostOs(): String {
+    val systemOs = System.getProperty("os.name")
+    val isMingwX64 = systemOs.startsWith("Windows")
+    return when {
+        systemOs == "Mac OS X" -> "macosX64"
+        systemOs == "Linux" -> "linuxX64"
+        isMingwX64 -> "mingwX64"
+        else -> throw GradleException("Host OS is not supported.")
+    }
 }
