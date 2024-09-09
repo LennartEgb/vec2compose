@@ -18,16 +18,10 @@ internal class FileOutputStrategy(
             appendLine()
             appendLine("private var cache: ImageVector? = null")
             appendLine("val $name: ImageVector")
-            "get() = cache ?: $content.also { cache = it }".lines().forEach { line ->
-                indent()
-                appendLine(line)
-            }
+            appendLine("get() = cache ?: $content.also { cache = it }".prependIndent(indentation))
         }
         fileSystem.write(pathname.toPath()) {
             writeUtf8(output)
         }
     }
-
-    private fun StringBuilder.indent() = append(indentation)
-
 }
