@@ -18,7 +18,7 @@ data class SVG(
     @SerialName("viewBox") val viewBox: String? = null,
     @SerialName("fill") val fill: String? = null,
     @XmlPolyChildren([GROUP, PATH, CIRCLE, RECTANGLE, ELLIPSE])
-    val children: List<@Polymorphic Child> = emptyList(),
+    val children: List<@Polymorphic Child> = emptyList()
 ) {
 
     companion object {
@@ -38,7 +38,7 @@ data class SVG(
         @SerialName("id") val name: String? = null,
         @SerialName("transform") val transform: String? = null,
         @XmlPolyChildren([GROUP, PATH, CIRCLE, RECTANGLE, ELLIPSE])
-        val children: List<@Polymorphic Child> = emptyList(),
+        val children: List<@Polymorphic Child> = emptyList()
     ) : Child
 
     @Serializable
@@ -55,7 +55,7 @@ data class SVG(
         @SerialName("stroke-linecap") val strokeLinecap: String? = null,
         @SerialName("stroke-linejoin") val strokeLinejoin: String? = null,
         @SerialName("stroke-opacity") val strokeAlpha: String? = null,
-        @SerialName("stroke-miterlimit") val strokeMiter: String? = null,
+        @SerialName("stroke-miterlimit") val strokeMiter: String? = null
     ) : Child
 
     @Serializable
@@ -69,7 +69,7 @@ data class SVG(
         @SerialName("fill") val fill: String? = null,
         @SerialName("stroke") val stroke: String? = null,
         @SerialName("stroke-width") val strokeWidth: String? = null,
-        @SerialName("opacity") val opacity: String = "1",
+        @SerialName("opacity") val opacity: String = "1"
     ) : Child
 
     @Serializable
@@ -82,7 +82,7 @@ data class SVG(
         @SerialName("y") val y: String = "0",
         @SerialName("rx") val horizontalCornerRadius: String? = null,
         @SerialName("ry") val verticalCornerRadius: String? = null,
-        @SerialName("fill") val fill: String? = null,
+        @SerialName("fill") val fill: String? = null
     ) : Child
 
     @Serializable
@@ -98,6 +98,6 @@ data class SVG(
         @SerialName("stroke-width") val strokeWidth: String? = null,
         @SerialName("stroke-linecap") val strokeLineCap: String? = null,
         @SerialName("stroke-linejoin") val strokeLineJoin: String? = null,
-        @SerialName("stroke-miterlimit") val strokeMiterLimit: String? = null,
+        @SerialName("stroke-miterlimit") val strokeMiterLimit: String? = null
     ) : Child
 }

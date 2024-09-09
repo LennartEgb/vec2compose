@@ -17,7 +17,7 @@ import dev.lennartegb.vec2compose.core.commands.PathParser
 internal class SVGParser(
     private val colorParser: SVGColorParser = SVGColorParser(),
     private val pathParser: PathParser = PathParser(),
-    private val deserializer: SVGDeserializer = SVGDeserializer(),
+    private val deserializer: SVGDeserializer = SVGDeserializer()
 ) : VectorSetParser {
 
     override fun parse(content: String): Result<VectorSet> =
@@ -34,7 +34,7 @@ internal class SVGParser(
             height = height,
             viewportWidth = rect[2] - rect[0],
             viewportHeight = rect[3] - rect[1],
-            nodes = children.map { it.toNode() },
+            nodes = children.map { it.toNode() }
         )
     }
 
@@ -68,7 +68,7 @@ internal class SVGParser(
             commands = pathParser.parse(pathData),
             fillColor = fillColor,
             alpha = fillOpacity,
-            stroke = stroke,
+            stroke = stroke
         )
     }
 
@@ -79,7 +79,6 @@ internal class SVGParser(
         requireNotNull(radiusX) { "either rx or ry must be set for ellipse $this" }
         val radiusY = radiusY?.toFloat() ?: radiusX
 
-
         return VectorSet.Path(
             fillType = FillType.Default,
             fillColor = fill?.let { colorParser.parse(it) },
@@ -89,7 +88,7 @@ internal class SVGParser(
                 width = strokeWidth?.toFloat() ?: if (stroke != null) 1f else 0f,
                 cap = strokeLineCap?.let(::getStrokeLineCap) ?: Cap.Butt,
                 join = strokeLineJoin?.let(::getStrokeLineJoin) ?: Join.Bevel,
-                miter = strokeMiterLimit?.toFloat() ?: 1f,
+                miter = strokeMiterLimit?.toFloat() ?: 1f
             ),
             alpha = 1f,
             commands = listOf(
@@ -102,7 +101,7 @@ internal class SVGParser(
                     isAbsolute = true,
                     isPositiveArc = true,
                     x1 = cx + radiusX,
-                    y1 = cy,
+                    y1 = cy
                 ),
                 ArcTo(
                     horizontalEllipseRadius = radiusX,
@@ -112,9 +111,9 @@ internal class SVGParser(
                     isAbsolute = true,
                     isPositiveArc = true,
                     x1 = cx - radiusX,
-                    y1 = cy,
+                    y1 = cy
                 ),
-                Close,
+                Close
             )
         )
     }
@@ -134,8 +133,8 @@ internal class SVGParser(
                 LineTo(x = x + width, y = y, isAbsolute = true),
                 LineTo(x = x + width, y = y + height, isAbsolute = true),
                 LineTo(x = x, y = y + height, isAbsolute = true),
-                Close,
-            ),
+                Close
+            )
         )
     }
 
@@ -180,12 +179,12 @@ internal class SVGParser(
                     isAbsolute = true,
                     isPositiveArc = true,
                     x1 = cx - r,
-                    y1 = cy,
+                    y1 = cy
                 ),
                 Close
             ),
             alpha = opacity.toFloat(),
-            stroke = Stroke(),
+            stroke = Stroke()
         )
     }
 
@@ -250,6 +249,7 @@ internal class SVGParser(
         return functionStart.substring(1 until endIndex).split(" ").map { it.toFloat() }
     }
 
+    @Suppress("PrivatePropertyName", "ktlint")
     private val Black: VectorSet.Path.FillColor =
         VectorSet.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff)
 }

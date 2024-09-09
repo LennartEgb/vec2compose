@@ -12,7 +12,7 @@ private typealias DpString = String
 internal class VectorDrawableParser(
     private val pathParser: PathParser,
     private val colorParser: HexColorParser,
-    private val deserializer: VectorDrawableDeserializer = VectorDrawableDeserializer(),
+    private val deserializer: VectorDrawableDeserializer = VectorDrawableDeserializer()
 ) : VectorSetParser {
 
     override fun parse(content: String): Result<VectorSet> {
@@ -74,7 +74,7 @@ internal class VectorDrawableParser(
             width = strokeWidth?.toFloat(),
             cap = strokeLineCap?.let(::getCap),
             join = strokeLineJoin?.let(::getJoin),
-            miter = strokeMiterLimit?.toFloat(),
+            miter = strokeMiterLimit?.toFloat()
         )
     }
 

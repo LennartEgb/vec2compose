@@ -13,7 +13,7 @@ internal class OutputStrategyFactory(private val fileSystem: FileSystem) {
                 pathname = it,
                 importProvider = importProvider,
                 fileSystem = fileSystem,
-                indentation = indentation,
+                indentation = indentation
             )
         } ?: OutputStrategy(::println)
     }

@@ -19,12 +19,11 @@ internal data class VectorDrawable(
     @XmlSerialName("tint", androidNamespace) val tint: String? = null,
 
     @XmlPolyChildren([GROUP, PATH])
-    val children: List<@Polymorphic Child>,
+    val children: List<@Polymorphic Child>
 ) {
     companion object {
         const val GROUP = "group"
         const val PATH = "path"
-
     }
 
     sealed interface Child
@@ -43,7 +42,7 @@ internal data class VectorDrawable(
         @XmlSerialName("rotation", androidNamespace) val rotation: Float? = null,
 
         @XmlPolyChildren([GROUP, PATH])
-        val children: List<@Polymorphic Child>,
+        val children: List<@Polymorphic Child>
     ) : Child
 
     @Serializable
@@ -60,6 +59,6 @@ internal data class VectorDrawable(
         @XmlSerialName("strokeLineJoin", androidNamespace) val strokeLineJoin: String? = null,
         @XmlSerialName("strokeColor", androidNamespace) val strokeColor: String? = null,
         @XmlSerialName("strokeAlpha", androidNamespace) val strokeAlpha: String? = null,
-        @XmlSerialName("strokeMiterLimit", androidNamespace) val strokeMiterLimit: String? = null,
+        @XmlSerialName("strokeMiterLimit", androidNamespace) val strokeMiterLimit: String? = null
     ) : Child
 }

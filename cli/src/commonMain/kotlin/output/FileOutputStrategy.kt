@@ -9,7 +9,7 @@ internal class FileOutputStrategy(
     private val pathname: String,
     private val importProvider: ImageVectorImportProvider,
     private val fileSystem: FileSystem,
-    private val indentation: String = "\t",
+    private val indentation: String = "\t"
 ) : OutputStrategy {
 
     override fun write(content: String) {

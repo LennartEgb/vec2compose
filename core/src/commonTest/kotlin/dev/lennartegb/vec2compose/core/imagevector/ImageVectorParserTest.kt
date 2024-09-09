@@ -27,7 +27,7 @@ internal class ImageVectorParserTest {
                     ),
                     alpha = 1f
                 )
-            ),
+            )
         )
 
         val expected = """
@@ -78,7 +78,7 @@ internal class ImageVectorParserTest {
                     ),
                     alpha = .5f
                 )
-            ),
+            )
         )
 
         val expected = """

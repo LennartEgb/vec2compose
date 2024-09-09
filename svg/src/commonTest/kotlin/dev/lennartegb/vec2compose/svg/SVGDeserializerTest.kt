@@ -22,8 +22,8 @@ internal class SVGDeserializerTest {
                 children = listOf(
                     SVG.Path(fillRule = "nonzero", pathData = "M0 0h24v24H0z", fill = "none"),
                     SVG.Path(fillRule = "nonzero", pathData = "M15.5 14h-.79l-.28-.27C15.41")
-                ),
-            ),
+                )
+            )
         )
     }
 
@@ -40,7 +40,7 @@ internal class SVGDeserializerTest {
             children = listOf(
                 SVG.Path(fillRule = "evenodd", pathData = "M0 0h24v24H0z", fill = "none"),
                 SVG.Path(fillRule = "nonzero", pathData = "M15.5 14h-.79l-.28-.27C15.41")
-            ),
+            )
         )
 
         assertEquals(actual = deserializer.deserialize(content), expected = expected)
@@ -48,8 +48,7 @@ internal class SVGDeserializerTest {
 
     @Test
     fun parse_SVG_with_groups() {
-
-        val content = svg(width="1144.12px", height="400px", viewBox="0 0 572.06 200") {
+        val content = svg(width = "1144.12px", height = "400px", viewBox = "0 0 572.06 200") {
             """
                 <g id="bird">
             		<g id="body">
@@ -129,10 +128,10 @@ internal class SVGDeserializerTest {
                         radius = "30",
                         fill = "green",
                         stroke = "yellow",
-                        strokeWidth = "10",
+                        strokeWidth = "10"
                     )
                 )
-            ),
+            )
         )
     }
 
@@ -149,7 +148,7 @@ internal class SVGDeserializerTest {
                         width = "150",
                         height = "50",
                         fill = "red",
-                        y = "50",
+                        y = "50"
                     )
                 )
             )
@@ -174,7 +173,7 @@ internal class SVGDeserializerTest {
                 children = listOf(
                     SVG.Group(name = "head"),
                     SVG.Rectangle(width = "150", height = "50"),
-                    SVG.Group(name = "foot"),
+                    SVG.Group(name = "foot")
                 )
             )
         )

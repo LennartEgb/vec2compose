@@ -110,7 +110,7 @@ internal class VectorDrawableParserTest {
              android:strokeAlpha=".5"
              android:strokeMiterLimit="2"
              />
-        """.trimIndent()
+            """.trimIndent()
         )
         val result = parser.parse(vector).getOrThrow()
         assertEquals(
@@ -131,10 +131,10 @@ internal class VectorDrawableParserTest {
                             width = 42f,
                             cap = VectorSet.Path.Stroke.Cap.Butt,
                             join = VectorSet.Path.Stroke.Join.Bevel,
-                            miter = 2f,
-                        ),
+                            miter = 2f
+                        )
                     )
-                ),
+                )
             )
         )
     }
@@ -153,13 +153,11 @@ internal class VectorDrawableParserTest {
         appendLine("</vector>")
     }
 
-    private fun vectorSet(
-        nodes: List<VectorSet.Node> = emptyList(),
-    ): VectorSet = VectorSet(
+    private fun vectorSet(nodes: List<VectorSet.Node> = emptyList()): VectorSet = VectorSet(
         width = 24,
         height = 24,
         viewportWidth = 24f,
         viewportHeight = 24f,
-        nodes = nodes,
+        nodes = nodes
     )
 }

@@ -17,7 +17,7 @@ class CommandsTest {
                 isPositiveArc = true,
                 x1 = 4f,
                 y1 = 5f,
-                isAbsolute = true,
+                isAbsolute = true
             ).method,
             expected = "arcTo(1.0f, 2.0f, 3.0f, false, true, 4.0f, 5.0f)"
         )
@@ -34,7 +34,7 @@ class CommandsTest {
                 isPositiveArc = true,
                 x1 = 4f,
                 y1 = 5f,
-                isAbsolute = false,
+                isAbsolute = false
             ).method,
             expected = "arcToRelative(1.0f, 2.0f, 3.0f, false, true, 4.0f, 5.0f)"
         )
@@ -52,7 +52,7 @@ class CommandsTest {
     fun `CurveTo with absolute=true method returns curveTo`() {
         assertEquals(
             actual = Command.CurveTo(1f, 2f, 3f, 4f, 5f, 6f, isAbsolute = true).method,
-            expected = "curveTo(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f)",
+            expected = "curveTo(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f)"
         )
     }
 
@@ -60,7 +60,7 @@ class CommandsTest {
     fun `CurveTo with absolute=false method returns curveToRelative`() {
         assertEquals(
             actual = Command.CurveTo(1f, 2f, 3f, 4f, 5f, 6f, isAbsolute = false).method,
-            expected = "curveToRelative(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f)",
+            expected = "curveToRelative(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f)"
         )
     }
 
@@ -68,7 +68,7 @@ class CommandsTest {
     fun `HorizontalLineTo with absolute=true method returns horizontalLineTo`() {
         assertEquals(
             actual = Command.HorizontalLineTo(x = 10f, isAbsolute = true).method,
-            expected = "horizontalLineTo(10.0f)",
+            expected = "horizontalLineTo(10.0f)"
         )
     }
 
@@ -76,7 +76,7 @@ class CommandsTest {
     fun `HorizontalLineTo with absolute=false method returns horizontalLineTo`() {
         assertEquals(
             actual = Command.HorizontalLineTo(x = 10f, isAbsolute = false).method,
-            expected = "horizontalLineToRelative(10.0f)",
+            expected = "horizontalLineToRelative(10.0f)"
         )
     }
 
@@ -84,7 +84,7 @@ class CommandsTest {
     fun `LineTo with absolute=true method returns lineTo`() {
         assertEquals(
             actual = Command.LineTo(x = 10f, y = 20f, isAbsolute = true).method,
-            expected = "lineTo(10.0f, 20.0f)",
+            expected = "lineTo(10.0f, 20.0f)"
         )
     }
 
@@ -92,7 +92,7 @@ class CommandsTest {
     fun `LineTo with absolute=false method returns lineToRelative`() {
         assertEquals(
             actual = Command.LineTo(x = 10f, y = 20f, isAbsolute = false).method,
-            expected = "lineToRelative(10.0f, 20.0f)",
+            expected = "lineToRelative(10.0f, 20.0f)"
         )
     }
 
@@ -100,7 +100,7 @@ class CommandsTest {
     fun `MoveTo with absolute=true method returns moveTo`() {
         assertEquals(
             actual = Command.MoveTo(x = 10f, y = 20f, isAbsolute = true).method,
-            expected = "moveTo(10.0f, 20.0f)",
+            expected = "moveTo(10.0f, 20.0f)"
         )
     }
 
@@ -108,7 +108,7 @@ class CommandsTest {
     fun `MoveTo with absolute=false method returns moveToRelative`() {
         assertEquals(
             actual = Command.MoveTo(x = 10f, y = 20f, isAbsolute = false).method,
-            expected = "moveToRelative(10.0f, 20.0f)",
+            expected = "moveToRelative(10.0f, 20.0f)"
         )
     }
 
@@ -122,7 +122,7 @@ class CommandsTest {
                 y2 = 4f,
                 isAbsolute = true
             ).method,
-            expected = "quadTo(1.0f, 2.0f, 3.0f, 4.0f)",
+            expected = "quadTo(1.0f, 2.0f, 3.0f, 4.0f)"
         )
     }
 
@@ -136,7 +136,7 @@ class CommandsTest {
                 y2 = 4f,
                 isAbsolute = false
             ).method,
-            expected = "quadToRelative(1.0f, 2.0f, 3.0f, 4.0f)",
+            expected = "quadToRelative(1.0f, 2.0f, 3.0f, 4.0f)"
         )
     }
 
@@ -150,7 +150,7 @@ class CommandsTest {
                 y2 = 4f,
                 isAbsolute = true
             ).method,
-            expected = "reflectiveCurveTo(1.0f, 2.0f, 3.0f, 4.0f)",
+            expected = "reflectiveCurveTo(1.0f, 2.0f, 3.0f, 4.0f)"
         )
     }
 
@@ -164,7 +164,7 @@ class CommandsTest {
                 y2 = 4f,
                 isAbsolute = false
             ).method,
-            expected = "reflectiveCurveToRelative(1.0f, 2.0f, 3.0f, 4.0f)",
+            expected = "reflectiveCurveToRelative(1.0f, 2.0f, 3.0f, 4.0f)"
         )
     }
 
@@ -172,7 +172,7 @@ class CommandsTest {
     fun `ReflectiveQuadraticBezierTo with absolute=true method returns reflectiveQuadraticBezierTo`() {
         assertEquals(
             actual = Command.ReflectiveQuadraticBezierTo(x = 1f, y = 2f, isAbsolute = true).method,
-            expected = "reflectiveQuadTo(1.0f, 2.0f)",
+            expected = "reflectiveQuadTo(1.0f, 2.0f)"
         )
     }
 
@@ -180,7 +180,7 @@ class CommandsTest {
     fun `ReflectiveQuadraticBezierTo with absolute=false method returns reflectiveQuadraticBezierTo`() {
         assertEquals(
             actual = Command.ReflectiveQuadraticBezierTo(x = 1f, y = 2f, isAbsolute = false).method,
-            expected = "reflectiveQuadToRelative(1.0f, 2.0f)",
+            expected = "reflectiveQuadToRelative(1.0f, 2.0f)"
         )
     }
 
@@ -188,7 +188,7 @@ class CommandsTest {
     fun `VerticalLineTo with absolute=true method returns verticalLineTo`() {
         assertEquals(
             actual = Command.VerticalLineTo(y = 2f, isAbsolute = true).method,
-            expected = "verticalLineTo(2.0f)",
+            expected = "verticalLineTo(2.0f)"
         )
     }
 
@@ -196,7 +196,7 @@ class CommandsTest {
     fun `VerticalLineTo with absolute=false method returns verticalLineToRelative`() {
         assertEquals(
             actual = Command.VerticalLineTo(y = 2f, isAbsolute = false).method,
-            expected = "verticalLineToRelative(2.0f)",
+            expected = "verticalLineToRelative(2.0f)"
         )
     }
 }

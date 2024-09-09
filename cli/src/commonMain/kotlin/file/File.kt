@@ -2,7 +2,7 @@ package file
 
 internal data class File(
     val name: String,
-    val content: String,
+    val content: String
 ) {
     val extension: String get() = name.takeLastWhile { it != '.' }
 }
