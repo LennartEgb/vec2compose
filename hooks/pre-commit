@@ -1,11 +1,4 @@
 #!/bin/bash
 
-# Run the Gradle ktlintCheck task
 ./gradlew ktlintCheck
-
-# Check the exit code of the previous command
-if [ $? -ne 0 ]; then
-  echo "ktlintCheck task failed. Aborting commit."
-  exit 1
-fi
-
+exit $?
