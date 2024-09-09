@@ -18,7 +18,7 @@ internal class ComposeMethodCreatorTest {
     )
 
     @Test
-    fun parse_constructor_returns_builder() {
+    fun `parse constructor returns builder`() {
         val creator = ComposeMethodCreator(indentation = "  ")
         val actual = creator.createConstructor(name = "hello", set = testVectorSet)
         assertEquals(
@@ -36,13 +36,18 @@ internal class ComposeMethodCreatorTest {
     }
 
     @Test
-    fun parse_path() {
+    fun `parse path`() {
         val creator = ComposeMethodCreator(indentation = "  ")
         val actual = creator.createPath(
             forBuilder = false,
             path = VectorSet.Path(
                 fillType = VectorSet.Path.FillType.EvenOdd,
-                fillColor = VectorSet.Path.FillColor(red = 0xff, green = 0xff, blue = 0xff, alpha = 0xff),
+                fillColor = VectorSet.Path.FillColor(
+                    red = 0xff,
+                    green = 0xff,
+                    blue = 0xff,
+                    alpha = 0xff
+                ),
                 commands = listOf(
                     Command.MoveTo(2f, 2f, isAbsolute = false),
                     Command.LineTo(4f, 4f, isAbsolute = false),
@@ -82,13 +87,18 @@ internal class ComposeMethodCreatorTest {
     }
 
     @Test
-    fun parse_path_for_builder() {
+    fun `parse path for builder`() {
         val creator = ComposeMethodCreator(indentation = "  ")
         val actual = creator.createPath(
             forBuilder = true,
             path = VectorSet.Path(
                 fillType = VectorSet.Path.FillType.EvenOdd,
-                fillColor = VectorSet.Path.FillColor(red = 0xff, green = 0xff, blue = 0xff, alpha = 0xff),
+                fillColor = VectorSet.Path.FillColor(
+                    red = 0xff,
+                    green = 0xff,
+                    blue = 0xff,
+                    alpha = 0xff
+                ),
                 commands = listOf(
                     Command.MoveTo(2f, 2f, isAbsolute = true),
                     Command.LineTo(4f, 4f, isAbsolute = true),
@@ -128,13 +138,33 @@ internal class ComposeMethodCreatorTest {
     }
 
     @Test
-    fun parse_group() {
-        val creator = ComposeMethodCreator(indentation = "  ")
+    fun `parse group with path`() {
+        val creator = ComposeMethodCreator(indentation = " ".repeat(4))
         val actual = creator.createGroup(
             forBuilder = false,
             group = VectorSet.Group(
                 name = "group",
-                nodes = emptyList(),
+                nodes = listOf(
+                    VectorSet.Path(
+                        fillType = VectorSet.Path.FillType.EvenOdd,
+                        fillColor = VectorSet.Path.FillColor(
+                            red = 0xff,
+                            green = 0xff,
+                            blue = 0xff,
+                            alpha = 0xff
+                        ),
+                        commands = emptyList(),
+                        alpha = .5f,
+                        stroke = VectorSet.Path.Stroke(
+                            color = null,
+                            alpha = .75f,
+                            width = 1f,
+                            cap = VectorSet.Path.Stroke.Cap.Square,
+                            join = VectorSet.Path.Stroke.Join.Bevel,
+                            miter = .25f
+                        )
+                    )
+                ),
                 rotate = 0.25f,
                 pivot = Translation(x = .15f, y = .20f),
                 translation = Translation(x = .25f, y = .30f),
@@ -145,23 +175,35 @@ internal class ComposeMethodCreatorTest {
             actual = actual,
             expected = """
                 group(
-                  name = "group",
-                  rotate = 0.25f,
-                  pivotX = 0.15f,
-                  pivotY = 0.2f,
-                  scaleX = 0.5f,
-                  scaleY = 0.6f,
-                  translationX = 0.25f,
-                  translationY = 0.3f,
-                  clipPathData = emptyList()
+                    name = "group",
+                    rotate = 0.25f,
+                    pivotX = 0.15f,
+                    pivotY = 0.2f,
+                    scaleX = 0.5f,
+                    scaleY = 0.6f,
+                    translationX = 0.25f,
+                    translationY = 0.3f,
+                    clipPathData = emptyList()
                 ) {
+                    path(
+                        fill = SolidColor(Color(0xffffffff)),
+                        fillAlpha = 0.5f,
+                        stroke = null,
+                        strokeAlpha = 0.75f,
+                        strokeLineWidth = 1.0f,
+                        strokeLineCap = StrokeCap.Square,
+                        strokeLineJoin = StrokeJoin.Bevel,
+                        strokeLineMiter = 0.25f,
+                        pathFillType = PathFillType.EvenOdd
+                    ) {
+                    }
                 }
             """.trimIndent()
         )
     }
 
     @Test
-    fun parse_group_for_builder() {
+    fun `parse group for builder`() {
         val creator = ComposeMethodCreator(indentation = "  ")
         val actual = creator.createGroup(
             forBuilder = true,
