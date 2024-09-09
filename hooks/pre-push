@@ -1,10 +1,4 @@
 #!/bin/sh
 
 ./gradlew allTests
-status=$?
-# Check the exit code of the previous command
-
-if [ $status -ne 0 ]; then
-  echo "Gradle test task failed. Exiting..."
-  exit 1
-fi
+exit $?
