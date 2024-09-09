@@ -3,7 +3,12 @@ package dev.lennartegb.vec2compose.svg
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
 import dev.lennartegb.vec2compose.core.VectorSet
+import dev.lennartegb.vec2compose.core.VectorSet.Path.FillType
+import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke
 import dev.lennartegb.vec2compose.core.commands.Command
+import dev.lennartegb.vec2compose.core.commands.Command.ArcTo
+import dev.lennartegb.vec2compose.core.commands.Command.Close
+import dev.lennartegb.vec2compose.core.commands.Command.MoveTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -15,7 +20,7 @@ internal class SVGParserTest {
     private val VectorSet.groups: List<VectorSet.Group> get() = nodes.filterIsInstance<VectorSet.Group>()
 
     @Test
-    fun parse_SVG_file_with_correct_fill_color() {
+    fun `parse SVG file with correct fill color`() {
         val svg = svg {
             """
             <path d="" fill="none"/>
@@ -50,7 +55,7 @@ internal class SVGParserTest {
     }
 
     @Test
-    fun parse_file_with_group_rotation() {
+    fun `parse file with group rotation`() {
         val svg = svg { """<g transform="rotate(45 0 0)"/>""" }
         assertEquals(
             actual = parser.parse(svg).map { it.nodes },
@@ -70,7 +75,7 @@ internal class SVGParserTest {
     }
 
     @Test
-    fun parse_file_with_group_pivot() {
+    fun `parse file with group pivot`() {
         val svg = svg { """<g transform="rotate(45 20 30)"/>""" }
         assertEquals(
             actual = parser.parse(svg).map { it.groups.map { it.pivot } },
@@ -79,7 +84,7 @@ internal class SVGParserTest {
     }
 
     @Test
-    fun parse_file_with_group_translate() {
+    fun `parse file with group translate`() {
         val svg = svg { """<g transform="translate(20 30)"/>""" }
         assertEquals(
             actual = parser.parse(svg).map { set -> set.groups.map { it.translation } },
@@ -88,7 +93,7 @@ internal class SVGParserTest {
     }
 
     @Test
-    fun parse_path_data_with_fill_none() {
+    fun `parse path data with fill none`() {
         val svg = svg { """<path d="" fill="none"/>""" }
 
         assertEquals(
@@ -167,6 +172,56 @@ internal class SVGParserTest {
                     )
                 )
             )
+        )
+    }
+
+    @Test
+    fun `parse circle from SVG`() {
+        val svg = svg {
+            """
+            <circle cx="5" cy="5" r="5" />
+            """
+        }
+        assertEquals(
+            actual = parser.parse(svg).getOrThrow(),
+            expected = VectorSet(
+                width = 24,
+                height = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
+                nodes = listOf(
+                    VectorSet.Path(
+                        fillType = FillType.Default,
+                        fillColor = VectorSet.Path.FillColor(0x00, 0x00, 0x00, 0xFF),
+                        commands = listOf(
+                            MoveTo(x = 0f, y = 5f, isAbsolute = true),
+                            ArcTo(
+                                horizontalEllipseRadius = 5f,
+                                verticalEllipseRadius = 5f,
+                                theta = 0f,
+                                isMoreThanHalf = false,
+                                isAbsolute = true,
+                                isPositiveArc = true,
+                                x1 = 10f,
+                                y1 = 5f,
+                            ),
+                            ArcTo(
+                                horizontalEllipseRadius = 5f,
+                                verticalEllipseRadius = 5f,
+                                theta = 0f,
+                                isMoreThanHalf = false,
+                                isAbsolute = true,
+                                isPositiveArc = true,
+                                x1 = 0f,
+                                y1 = 5f,
+                            ),
+                            Close,
+                        ),
+                        alpha = 1f,
+                        stroke = Stroke(),
+                    ),
+                ),
+            ),
         )
     }
 }
