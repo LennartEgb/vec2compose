@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlPolyChildren
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
 
+@Suppress("ktlint")
 private const val androidNamespace = "http://schemas.android.com/apk/res/android"
 
 @XmlSerialName("vector")

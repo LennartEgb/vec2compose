@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 import nl.adaptivity.xmlutil.serialization.XmlPolyChildren
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
 
+@Suppress("ktlint")
 private const val svgNamespace = "http://www.w3.org/2000/svg"
 
 @Serializable
