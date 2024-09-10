@@ -12,8 +12,23 @@ import dev.lennartegb.vec2compose.core.commands.ReflectiveQuadraticBezierTo
 import dev.lennartegb.vec2compose.core.commands.VerticalLineTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 internal class CommandParserTest {
+
+    @Test
+    fun `parse invalid command throws IllegalArgumentException`() {
+        assertFailsWith<IllegalArgumentException> {
+            parseCommand("ø")
+        }
+    }
+
+    @Test
+    fun `parse valid command with invalid parameters throws IllegalArgumentException`() {
+        assertFailsWith<IllegalArgumentException> {
+            parseCommand("M1")
+        }
+    }
 
     @Test
     fun `parse Move command`() {

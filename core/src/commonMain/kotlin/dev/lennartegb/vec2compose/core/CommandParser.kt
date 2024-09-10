@@ -13,34 +13,9 @@ import dev.lennartegb.vec2compose.core.commands.ReflectiveQuadraticBezierTo
 import dev.lennartegb.vec2compose.core.commands.VerticalLineTo
 
 private val regex = "[+-]?\\d*[.]?\\d+".toRegex()
-private val validCommands: CharArray = charArrayOf(
-    'A',
-    'a',
-    'C',
-    'c',
-    'H',
-    'h',
-    'L',
-    'l',
-    'M',
-    'm',
-    'Q',
-    'q',
-    'S',
-    's',
-    'T',
-    't',
-    'V',
-    'v',
-    'Z',
-    'z'
-)
 
 internal fun parseCommand(value: String): List<Command> {
     val command = value.first()
-    require(command in validCommands) {
-        "First character must be a command identifier but was $command. Command was: $value"
-    }
     val isAbsolute = command.isUpperCase()
     val eventString = value.drop(1)
     return when (command.uppercase()) {
@@ -54,7 +29,7 @@ internal fun parseCommand(value: String): List<Command> {
         "T" -> createReflectiveQuadraticBezier(eventString, isAbsolute = isAbsolute)
         "V" -> createVerticalLinesTo(eventString, isAbsolute = isAbsolute)
         "Z" -> listOf(Close)
-        else -> error("No command found for $value")
+        else -> throw IllegalArgumentException("No command found for $value")
     }
 }
 
@@ -173,5 +148,5 @@ private fun String.prepare(): List<Float> =
     regex.findAll(this).map { it.value }.map(String::toFloat).toList()
 
 private fun <T> List<T>.validate(count: Int, name: String): List<T> = apply {
-    check(value = size % count == 0) { "$name needs $count parameters but was $this" }
+    require(value = size % count == 0) { "$name needs $count parameters but was $this" }
 }
