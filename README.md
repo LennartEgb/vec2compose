@@ -1,6 +1,6 @@
 # vec2compose
 ![Github Actions Status](https://github.com/lennartegb/vec2compose/actions/workflows/ci.yml/badge.svg)
-[![codecov](https://codecov.io/github/LennartEgb/vec2compose/graph/badge.svg?token=3GZE97P1A2)](https://codecov.io/github/LennartEgb/vec2compose)
+[![codecov](https://codecov.io/github/LennartEgb/vec2compose/branch/main/graph/badge.svg?token=3GZE97P1A2)](https://codecov.io/github/LennartEgb/vec2compose)
 
 <p align=center>
     <img width=400 src="art/logo.png" alt="random logo showing svg and xml logo pointing to jetpack compose logo"/> 
