@@ -3,10 +3,32 @@ package dev.lennartegb.vec2compose.core
 import dev.lennartegb.vec2compose.core.commands.Command
 
 private val regex = "[+-]?\\d*[.]?\\d+".toRegex()
+private val validCommands: CharArray = charArrayOf(
+    'A',
+    'a',
+    'C',
+    'c',
+    'H',
+    'h',
+    'L',
+    'l',
+    'M',
+    'm',
+    'Q',
+    'q',
+    'S',
+    's',
+    'T',
+    't',
+    'V',
+    'v',
+    'Z',
+    'z'
+)
 
 internal fun parseCommand(value: String): List<Command> {
     val command = value.first()
-    require(command in Command.validCommands) {
+    require(command in validCommands) {
         "First character must be a command identifier but was $command. Command was: $value"
     }
     val isAbsolute = command.isUpperCase()
