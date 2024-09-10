@@ -1,5 +1,6 @@
 package dev.lennartegb.vec2compose.core.imagevector
 
+import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Command
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -9,7 +10,7 @@ class CommandsTest {
     @Test
     fun `ArcTo method with absolute=true returns arcTo`() {
         assertEquals(
-            actual = Command.ArcTo(
+            actual = ArcTo(
                 horizontalEllipseRadius = 1f,
                 verticalEllipseRadius = 2f,
                 theta = 3f,
@@ -26,7 +27,7 @@ class CommandsTest {
     @Test
     fun `ArcTo method with absolute=false returns arcToRelative`() {
         assertEquals(
-            actual = Command.ArcTo(
+            actual = ArcTo(
                 horizontalEllipseRadius = 1f,
                 verticalEllipseRadius = 2f,
                 theta = 3f,

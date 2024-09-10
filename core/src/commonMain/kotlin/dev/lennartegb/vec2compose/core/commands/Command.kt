@@ -8,20 +8,6 @@ sealed interface Command {
     val isAbsolute: Boolean
 
     /**
-     * Arc to command indicated by a/A
-     */
-    data class ArcTo(
-        val horizontalEllipseRadius: Float,
-        val verticalEllipseRadius: Float,
-        val theta: Float,
-        val isMoreThanHalf: Boolean,
-        val isPositiveArc: Boolean,
-        val x1: Float,
-        val y1: Float,
-        override val isAbsolute: Boolean
-    ) : Command
-
-    /**
      * Close command indicated by z/Z
      */
     data object Close : Command {

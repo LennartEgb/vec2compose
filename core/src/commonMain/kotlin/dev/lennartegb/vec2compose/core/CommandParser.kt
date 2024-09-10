@@ -1,5 +1,6 @@
 package dev.lennartegb.vec2compose.core
 
+import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Command
 
 private val regex = "[+-]?\\d*[.]?\\d+".toRegex()
@@ -53,7 +54,7 @@ private fun createArcTo(eventString: String, isAbsolute: Boolean): List<Command>
         .validate(count = 7, name = "ArcTo")
         .windowed(size = 7, step = 7, partialWindows = false)
         .map {
-            Command.ArcTo(
+            ArcTo(
                 horizontalEllipseRadius = it[0],
                 verticalEllipseRadius = it[1],
                 theta = it[2],

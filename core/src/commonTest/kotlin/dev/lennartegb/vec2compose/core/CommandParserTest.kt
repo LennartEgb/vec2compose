@@ -1,5 +1,6 @@
 package dev.lennartegb.vec2compose.core
 
+import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Command
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -195,7 +196,7 @@ internal class CommandParserTest {
         val arcPath = "A25,25 -30 0,1 50,-25"
         assertEquals(
             expected = listOf(
-                Command.ArcTo(
+                ArcTo(
                     horizontalEllipseRadius = 25f,
                     verticalEllipseRadius = 25f,
                     theta = -30f,
@@ -215,7 +216,7 @@ internal class CommandParserTest {
         val arcPath = "a25,25 -30 0,1 50,-25"
         assertEquals(
             expected = listOf(
-                Command.ArcTo(
+                ArcTo(
                     horizontalEllipseRadius = 25f,
                     verticalEllipseRadius = 25f,
                     theta = -30f,
