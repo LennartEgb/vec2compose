@@ -6,6 +6,7 @@ import kotlin.test.AfterTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
 class FileTest {
@@ -54,5 +55,6 @@ class FileTest {
         file.write(fileSystem = fileSystem, path = path)
 
         assertTrue(fileSystem.exists(path = ioPath))
+        assertNotEquals(illegal = "", actual = File.read(fileSystem, path).content)
     }
 }

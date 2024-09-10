@@ -5,7 +5,6 @@ import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Cap.Butt
 import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Cap.Square
 import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join.Bevel
 import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join.Miter
-import dev.lennartegb.vec2compose.core.commands.Command
 
 internal class ComposeMethodCreator(private val indentation: CharSequence) {
 
@@ -22,8 +21,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
     fun createPath(path: ImageVector.Path, forBuilder: Boolean = true): String = buildString {
         if (forBuilder) append(".")
         append("path(").appendLine()
-        val fillColor = path.fillColor?.solid()
-        indent().append("fill = $fillColor,").appendLine()
+        indent().append("fill = ${path.fillColor?.solid()},").appendLine()
         indent().append("fillAlpha = ${path.alpha}f,").appendLine()
         indent().append("stroke = ${path.stroke.color?.solid()},").appendLine()
         indent().append("strokeAlpha = ${path.stroke.alpha}f,").appendLine()
@@ -34,8 +32,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         indent().append("pathFillType = ${path.fillType.composeName}").appendLine()
         append(") {").appendLine()
 
-        path.commands.map(Command::method)
-            .forEach { indent().append(it).appendLine() }
+        path.commands.forEach { indent().append(it).appendLine() }
 
         append("}")
     }.removePrefix(indentation)
@@ -74,7 +71,9 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
             ImageVector.Path.FillType.EvenOdd -> "PathFillType.EvenOdd"
         }
 
-    private fun ImageVector.Path.FillColor?.solid(): String = this?.let { "SolidColor($it)" } ?: "null"
+    private fun ImageVector.Path.FillColor?.solid(): String =
+        this?.let { "SolidColor($it)" } ?: "null"
+
     private fun ImageVector.Path.Stroke.Cap.property(): String = when (this) {
         Butt -> "StrokeCap.Butt"
         Square -> "StrokeCap.Square"

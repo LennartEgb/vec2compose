@@ -3,7 +3,9 @@ package dev.lennartegb.vec2compose.core.imagevector
 import dev.lennartegb.vec2compose.core.ImageVector
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
-import dev.lennartegb.vec2compose.core.commands.Command
+import dev.lennartegb.vec2compose.core.commands.Close
+import dev.lennartegb.vec2compose.core.commands.LineTo
+import dev.lennartegb.vec2compose.core.commands.MoveTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -49,9 +51,9 @@ internal class ComposeMethodCreatorTest {
                     alpha = 0xff
                 ),
                 commands = listOf(
-                    Command.MoveTo(2f, 2f, isAbsolute = false),
-                    Command.LineTo(4f, 4f, isAbsolute = false),
-                    Command.Close
+                    MoveTo(2f, 2f, isAbsolute = false),
+                    LineTo(4f, 4f, isAbsolute = false),
+                    Close
                 ),
                 alpha = .5f,
                 stroke = ImageVector.Path.Stroke(
@@ -93,16 +95,11 @@ internal class ComposeMethodCreatorTest {
             forBuilder = true,
             path = ImageVector.Path(
                 fillType = ImageVector.Path.FillType.EvenOdd,
-                fillColor = ImageVector.Path.FillColor(
-                    red = 0xff,
-                    green = 0xff,
-                    blue = 0xff,
-                    alpha = 0xff
-                ),
+                fillColor = null,
                 commands = listOf(
-                    Command.MoveTo(2f, 2f, isAbsolute = true),
-                    Command.LineTo(4f, 4f, isAbsolute = true),
-                    Command.Close
+                    MoveTo(2f, 2f, isAbsolute = true),
+                    LineTo(4f, 4f, isAbsolute = true),
+                    Close
                 ),
                 alpha = .5f,
                 stroke = ImageVector.Path.Stroke(
@@ -119,7 +116,7 @@ internal class ComposeMethodCreatorTest {
             actual = actual,
             expected = """
                 .path(
-                  fill = SolidColor(Color(0xffffffff)),
+                  fill = null,
                   fillAlpha = 0.5f,
                   stroke = null,
                   strokeAlpha = 0.75f,

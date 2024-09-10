@@ -5,18 +5,16 @@ import dev.lennartegb.vec2compose.core.ImageVector
 import dev.lennartegb.vec2compose.core.ImageVectorParser
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
-import dev.lennartegb.vec2compose.core.commands.PathParser
+import dev.lennartegb.vec2compose.core.parsePath
 
 private typealias DpString = String
 
 fun xmlImageVectorParser(): ImageVectorParser = VectorDrawableParser(
-    pathParser = PathParser(),
     colorParser = HexColorParser(),
     deserializer = VectorDrawableDeserializer()
 )
 
 internal class VectorDrawableParser(
-    private val pathParser: PathParser,
     private val colorParser: HexColorParser,
     private val deserializer: VectorDrawableDeserializer = VectorDrawableDeserializer()
 ) : ImageVectorParser {
@@ -66,7 +64,7 @@ internal class VectorDrawableParser(
     private fun VectorDrawable.Path.toVectorPath(): ImageVector.Path {
         return ImageVector.Path(
             fillType = ImageVector.Path.FillType.parse(fillType),
-            commands = pathParser.parse(pathData),
+            commands = parsePath(pathData),
             fillColor = fillColor?.let(colorParser::parse),
             alpha = alpha,
             stroke = toStroke()

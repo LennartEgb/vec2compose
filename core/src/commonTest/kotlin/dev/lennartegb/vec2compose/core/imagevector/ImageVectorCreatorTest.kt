@@ -1,13 +1,17 @@
 package dev.lennartegb.vec2compose.core.imagevector
 
 import dev.lennartegb.vec2compose.core.ImageVector
-import dev.lennartegb.vec2compose.core.commands.Command
+import dev.lennartegb.vec2compose.core.Scale
+import dev.lennartegb.vec2compose.core.Translation
+import dev.lennartegb.vec2compose.core.commands.Close
+import dev.lennartegb.vec2compose.core.commands.LineTo
+import dev.lennartegb.vec2compose.core.commands.MoveTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-internal class ImageVectorParserTest {
+internal class ImageVectorCreatorTest {
 
-    private val imageVectorParser = ImageVectorCreator(indentation = "    ")
+    private val imageVectorCreator = ImageVectorCreator(indentation = "    ")
 
     @Test
     fun `parse ImageVector with FillType NonZero to ImageVector string`() {
@@ -20,10 +24,10 @@ internal class ImageVectorParserTest {
                 ImageVector.Path(
                     fillType = ImageVector.Path.FillType.NonZero,
                     commands = listOf(
-                        Command.MoveTo(x = 1f, y = 2f, isAbsolute = true),
-                        Command.LineTo(x = 2f, y = 2f, isAbsolute = true),
-                        Command.LineTo(x = 1f, y = 2f, isAbsolute = false),
-                        Command.Close
+                        MoveTo(x = 1f, y = 2f, isAbsolute = true),
+                        LineTo(x = 2f, y = 2f, isAbsolute = true),
+                        LineTo(x = 1f, y = 2f, isAbsolute = false),
+                        Close
                     ),
                     alpha = 1f
                 )
@@ -56,7 +60,7 @@ internal class ImageVectorParserTest {
         """.trimIndent()
         assertEquals(
             expected = expected,
-            actual = imageVectorParser.create(name = "ic_icon", imageVector = set)
+            actual = imageVectorCreator.create(name = "ic_icon", imageVector = set)
         )
     }
 
@@ -71,10 +75,10 @@ internal class ImageVectorParserTest {
                 ImageVector.Path(
                     fillType = ImageVector.Path.FillType.EvenOdd,
                     commands = listOf(
-                        Command.MoveTo(x = 1f, y = 2f, isAbsolute = true),
-                        Command.LineTo(x = 2f, y = 2f, isAbsolute = true),
-                        Command.LineTo(x = 1f, y = 2f, isAbsolute = false),
-                        Command.Close
+                        MoveTo(x = 1f, y = 2f, isAbsolute = true),
+                        LineTo(x = 2f, y = 2f, isAbsolute = true),
+                        LineTo(x = 1f, y = 2f, isAbsolute = false),
+                        Close
                     ),
                     alpha = .5f
                 )
@@ -107,7 +111,50 @@ internal class ImageVectorParserTest {
         """.trimIndent()
         assertEquals(
             expected = expected,
-            actual = imageVectorParser.create(name = "ic_icon", imageVector = set)
+            actual = imageVectorCreator.create(name = "ic_icon", imageVector = set)
+        )
+    }
+
+    @Test
+    fun `parse ImageVector with Group to ImageVector string`() {
+        val imageVector = ImageVector(
+            width = 24,
+            height = 25,
+            viewportWidth = 26f,
+            viewportHeight = 27f,
+            nodes = listOf(
+                ImageVector.Group(
+                    name = null,
+                    rotate = 0f,
+                    pivot = Translation(0f, 0f),
+                    translation = Translation(0f, 0f),
+                    scale = Scale(1f, 1f),
+                    nodes = emptyList()
+                )
+            )
+        )
+
+        assertEquals(
+            actual = imageVectorCreator.create(name = "icon", imageVector = imageVector),
+            expected = """
+            ImageVector.Builder(
+                name = "icon",
+                defaultWidth = 24.dp,
+                defaultHeight = 25.dp,
+                viewportWidth = 26.0f,
+                viewportHeight = 27.0f
+            ).group(
+                rotate = 0.0f,
+                pivotX = 0.0f,
+                pivotY = 0.0f,
+                scaleX = 1.0f,
+                scaleY = 1.0f,
+                translationX = 0.0f,
+                translationY = 0.0f,
+                clipPathData = emptyList()
+            ) {
+            }.build()
+            """.trimIndent()
         )
     }
 }

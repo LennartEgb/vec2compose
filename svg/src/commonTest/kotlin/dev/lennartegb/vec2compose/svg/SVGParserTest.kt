@@ -5,10 +5,9 @@ import dev.lennartegb.vec2compose.core.ImageVector.Path.FillType
 import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
-import dev.lennartegb.vec2compose.core.commands.Command
-import dev.lennartegb.vec2compose.core.commands.Command.ArcTo
-import dev.lennartegb.vec2compose.core.commands.Command.Close
-import dev.lennartegb.vec2compose.core.commands.Command.MoveTo
+import dev.lennartegb.vec2compose.core.commands.ArcTo
+import dev.lennartegb.vec2compose.core.commands.Close
+import dev.lennartegb.vec2compose.core.commands.MoveTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -146,8 +145,8 @@ internal class SVGParserTest {
                             width = 3f
                         ),
                         commands = listOf(
-                            Command.MoveTo(0f, 20f, isAbsolute = true),
-                            Command.ArcTo(
+                            MoveTo(0f, 20f, isAbsolute = true),
+                            ArcTo(
                                 horizontalEllipseRadius = 10f,
                                 verticalEllipseRadius = 20f,
                                 theta = 0f,
@@ -157,7 +156,7 @@ internal class SVGParserTest {
                                 x1 = 20f,
                                 y1 = 20f
                             ),
-                            Command.ArcTo(
+                            ArcTo(
                                 horizontalEllipseRadius = 10f,
                                 verticalEllipseRadius = 20f,
                                 theta = 0f,
@@ -167,7 +166,7 @@ internal class SVGParserTest {
                                 x1 = 0f,
                                 y1 = 20f
                             ),
-                            Command.Close
+                            Close
                         )
                     )
                 )

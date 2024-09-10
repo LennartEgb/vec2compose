@@ -1,15 +1,24 @@
 package dev.lennartegb.vec2compose.core.imagevector
 
-import dev.lennartegb.vec2compose.core.commands.Command
+import dev.lennartegb.vec2compose.core.commands.ArcTo
+import dev.lennartegb.vec2compose.core.commands.Close
+import dev.lennartegb.vec2compose.core.commands.CurveTo
+import dev.lennartegb.vec2compose.core.commands.HorizontalLineTo
+import dev.lennartegb.vec2compose.core.commands.LineTo
+import dev.lennartegb.vec2compose.core.commands.MoveTo
+import dev.lennartegb.vec2compose.core.commands.QuadraticBezierTo
+import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
+import dev.lennartegb.vec2compose.core.commands.ReflectiveQuadraticBezierTo
+import dev.lennartegb.vec2compose.core.commands.VerticalLineTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class CommandsTest {
 
     @Test
-    fun `ArcTo method with absolute=true returns arcTo`() {
+    fun `ArcTo toString with absolute=true returns arcTo`() {
         assertEquals(
-            actual = Command.ArcTo(
+            actual = ArcTo(
                 horizontalEllipseRadius = 1f,
                 verticalEllipseRadius = 2f,
                 theta = 3f,
@@ -18,15 +27,15 @@ class CommandsTest {
                 x1 = 4f,
                 y1 = 5f,
                 isAbsolute = true
-            ).method,
+            ).toString(),
             expected = "arcTo(1.0f, 2.0f, 3.0f, false, true, 4.0f, 5.0f)"
         )
     }
 
     @Test
-    fun `ArcTo method with absolute=false returns arcToRelative`() {
+    fun `ArcTo toString with absolute=false returns arcToRelative`() {
         assertEquals(
-            actual = Command.ArcTo(
+            actual = ArcTo(
                 horizontalEllipseRadius = 1f,
                 verticalEllipseRadius = 2f,
                 theta = 3f,
@@ -35,167 +44,164 @@ class CommandsTest {
                 x1 = 4f,
                 y1 = 5f,
                 isAbsolute = false
-            ).method,
+            ).toString(),
             expected = "arcToRelative(1.0f, 2.0f, 3.0f, false, true, 4.0f, 5.0f)"
         )
     }
 
     @Test
-    fun `Close method returns close`() {
-        assertEquals(
-            actual = Command.Close.method,
-            expected = "close()"
-        )
+    fun `Close toString returns close`() {
+        assertEquals(actual = "$Close", expected = "close()")
     }
 
     @Test
-    fun `CurveTo with absolute=true method returns curveTo`() {
+    fun `CurveTo toString with absolute=true returns curveTo`() {
         assertEquals(
-            actual = Command.CurveTo(1f, 2f, 3f, 4f, 5f, 6f, isAbsolute = true).method,
+            actual = CurveTo(1f, 2f, 3f, 4f, 5f, 6f, isAbsolute = true).toString(),
             expected = "curveTo(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f)"
         )
     }
 
     @Test
-    fun `CurveTo with absolute=false method returns curveToRelative`() {
+    fun `CurveTo toString with absolute=false returns curveToRelative`() {
         assertEquals(
-            actual = Command.CurveTo(1f, 2f, 3f, 4f, 5f, 6f, isAbsolute = false).method,
+            actual = CurveTo(1f, 2f, 3f, 4f, 5f, 6f, isAbsolute = false).toString(),
             expected = "curveToRelative(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f)"
         )
     }
 
     @Test
-    fun `HorizontalLineTo with absolute=true method returns horizontalLineTo`() {
+    fun `HorizontalLineTo toString with absolute=true returns horizontalLineTo`() {
         assertEquals(
-            actual = Command.HorizontalLineTo(x = 10f, isAbsolute = true).method,
+            actual = HorizontalLineTo(x = 10f, isAbsolute = true).toString(),
             expected = "horizontalLineTo(10.0f)"
         )
     }
 
     @Test
-    fun `HorizontalLineTo with absolute=false method returns horizontalLineTo`() {
+    fun `HorizontalLineTo toString with absolute=false returns horizontalLineTo`() {
         assertEquals(
-            actual = Command.HorizontalLineTo(x = 10f, isAbsolute = false).method,
+            actual = HorizontalLineTo(x = 10f, isAbsolute = false).toString(),
             expected = "horizontalLineToRelative(10.0f)"
         )
     }
 
     @Test
-    fun `LineTo with absolute=true method returns lineTo`() {
+    fun `LineTo toString with absolute=true returns lineTo`() {
         assertEquals(
-            actual = Command.LineTo(x = 10f, y = 20f, isAbsolute = true).method,
+            actual = LineTo(x = 10f, y = 20f, isAbsolute = true).toString(),
             expected = "lineTo(10.0f, 20.0f)"
         )
     }
 
     @Test
-    fun `LineTo with absolute=false method returns lineToRelative`() {
+    fun `LineTo toString with absolute=false returns lineToRelative`() {
         assertEquals(
-            actual = Command.LineTo(x = 10f, y = 20f, isAbsolute = false).method,
+            actual = LineTo(x = 10f, y = 20f, isAbsolute = false).toString(),
             expected = "lineToRelative(10.0f, 20.0f)"
         )
     }
 
     @Test
-    fun `MoveTo with absolute=true method returns moveTo`() {
+    fun `MoveTo toString with absolute=true returns moveTo`() {
         assertEquals(
-            actual = Command.MoveTo(x = 10f, y = 20f, isAbsolute = true).method,
+            actual = MoveTo(x = 10f, y = 20f, isAbsolute = true).toString(),
             expected = "moveTo(10.0f, 20.0f)"
         )
     }
 
     @Test
-    fun `MoveTo with absolute=false method returns moveToRelative`() {
+    fun `MoveTo toString with absolute=false returns moveToRelative`() {
         assertEquals(
-            actual = Command.MoveTo(x = 10f, y = 20f, isAbsolute = false).method,
+            actual = MoveTo(x = 10f, y = 20f, isAbsolute = false).toString(),
             expected = "moveToRelative(10.0f, 20.0f)"
         )
     }
 
     @Test
-    fun `QuadraticBezierTo with absolute=true method returns quadTo`() {
+    fun `QuadraticBezierTo toString with absolute=true returns quadTo`() {
         assertEquals(
-            actual = Command.QuadraticBezierTo(
+            actual = QuadraticBezierTo(
                 x1 = 1f,
                 y1 = 2f,
                 x2 = 3f,
                 y2 = 4f,
                 isAbsolute = true
-            ).method,
+            ).toString(),
             expected = "quadTo(1.0f, 2.0f, 3.0f, 4.0f)"
         )
     }
 
     @Test
-    fun `QuadraticBezierTo with absolute=false method returns quadToRelative`() {
+    fun `QuadraticBezierTo toString with absolute=false returns quadToRelative`() {
         assertEquals(
-            actual = Command.QuadraticBezierTo(
+            actual = QuadraticBezierTo(
                 x1 = 1f,
                 y1 = 2f,
                 x2 = 3f,
                 y2 = 4f,
                 isAbsolute = false
-            ).method,
+            ).toString(),
             expected = "quadToRelative(1.0f, 2.0f, 3.0f, 4.0f)"
         )
     }
 
     @Test
-    fun `ReflectiveCurveTo with absolute=true method returns reflectiveCurveTo`() {
+    fun `ReflectiveCurveTo toString with absolute=true returns reflectiveCurveTo`() {
         assertEquals(
-            actual = Command.ReflectiveCurveTo(
+            actual = ReflectiveCurveTo(
                 x1 = 1f,
                 y1 = 2f,
                 x2 = 3f,
                 y2 = 4f,
                 isAbsolute = true
-            ).method,
+            ).toString(),
             expected = "reflectiveCurveTo(1.0f, 2.0f, 3.0f, 4.0f)"
         )
     }
 
     @Test
-    fun `ReflectiveCurveTo with absolute=false method returns reflectiveCurveToRelative`() {
+    fun `ReflectiveCurveTo toString with absolute=false returns reflectiveCurveToRelative`() {
         assertEquals(
-            actual = Command.ReflectiveCurveTo(
+            actual = ReflectiveCurveTo(
                 x1 = 1f,
                 y1 = 2f,
                 x2 = 3f,
                 y2 = 4f,
                 isAbsolute = false
-            ).method,
+            ).toString(),
             expected = "reflectiveCurveToRelative(1.0f, 2.0f, 3.0f, 4.0f)"
         )
     }
 
     @Test
-    fun `ReflectiveQuadraticBezierTo with absolute=true method returns reflectiveQuadraticBezierTo`() {
+    fun `ReflectiveQuadraticBezierTo toString with absolute=true returns reflectiveQuadraticBezierTo`() {
         assertEquals(
-            actual = Command.ReflectiveQuadraticBezierTo(x = 1f, y = 2f, isAbsolute = true).method,
+            actual = ReflectiveQuadraticBezierTo(x = 1f, y = 2f, isAbsolute = true).toString(),
             expected = "reflectiveQuadTo(1.0f, 2.0f)"
         )
     }
 
     @Test
-    fun `ReflectiveQuadraticBezierTo with absolute=false method returns reflectiveQuadraticBezierTo`() {
+    fun `ReflectiveQuadraticBezierTo toString with absolute=false returns reflectiveQuadraticBezierTo`() {
         assertEquals(
-            actual = Command.ReflectiveQuadraticBezierTo(x = 1f, y = 2f, isAbsolute = false).method,
+            actual = ReflectiveQuadraticBezierTo(x = 1f, y = 2f, isAbsolute = false).toString(),
             expected = "reflectiveQuadToRelative(1.0f, 2.0f)"
         )
     }
 
     @Test
-    fun `VerticalLineTo with absolute=true method returns verticalLineTo`() {
+    fun `VerticalLineTo toString with absolute=true returns verticalLineTo`() {
         assertEquals(
-            actual = Command.VerticalLineTo(y = 2f, isAbsolute = true).method,
+            actual = VerticalLineTo(y = 2f, isAbsolute = true).toString(),
             expected = "verticalLineTo(2.0f)"
         )
     }
 
     @Test
-    fun `VerticalLineTo with absolute=false method returns verticalLineToRelative`() {
+    fun `VerticalLineTo toString with absolute=false returns verticalLineToRelative`() {
         assertEquals(
-            actual = Command.VerticalLineTo(y = 2f, isAbsolute = false).method,
+            actual = VerticalLineTo(y = 2f, isAbsolute = false).toString(),
             expected = "verticalLineToRelative(2.0f)"
         )
     }
