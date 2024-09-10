@@ -10,22 +10,13 @@ class ImageVectorCreator(indentation: CharSequence) {
     fun create(name: String, imageVector: ImageVector): String {
         return buildString {
             append(composeMethodCreator.createConstructor(name, imageVector))
-            val nodes = imageVector.nodes.mergeLines { node ->
+            imageVector.nodes.joinToString(separator = "") { node ->
                 when (node) {
                     is ImageVector.Group -> composeMethodCreator.createGroup(node)
                     is ImageVector.Path -> composeMethodCreator.createPath(node)
                 }
-            }
-            val nodeIndices = nodes.indices
-            nodes.forEachIndexed { index, line ->
-                append(line)
-                if (index != nodeIndices.last) appendLine()
-            }
+            }.also { append(it) }
             append(".build()")
         }.replace(emptyLineRegex, "")
-    }
-
-    private fun <T> List<T>.mergeLines(transform: (T) -> String): List<String> {
-        return joinToString(separator = "", transform = transform).lines()
     }
 }

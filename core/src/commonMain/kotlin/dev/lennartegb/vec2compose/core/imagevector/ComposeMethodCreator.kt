@@ -5,7 +5,6 @@ import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Cap.Butt
 import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Cap.Square
 import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join.Bevel
 import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join.Miter
-import dev.lennartegb.vec2compose.core.commands.Command
 
 internal class ComposeMethodCreator(private val indentation: CharSequence) {
 
@@ -34,8 +33,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         indent().append("pathFillType = ${path.fillType.composeName}").appendLine()
         append(") {").appendLine()
 
-        path.commands.map(Command::toString)
-            .forEach { indent().append(it).appendLine() }
+        path.commands.forEach { indent().append(it).appendLine() }
 
         append("}")
     }.removePrefix(indentation)
