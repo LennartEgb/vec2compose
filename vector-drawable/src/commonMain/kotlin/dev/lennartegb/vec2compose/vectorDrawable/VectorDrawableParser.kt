@@ -3,9 +3,9 @@ package dev.lennartegb.vec2compose.vectorDrawable
 import dev.lennartegb.vec2compose.core.HexColorParser
 import dev.lennartegb.vec2compose.core.ImageVector
 import dev.lennartegb.vec2compose.core.ImageVectorParser
-import dev.lennartegb.vec2compose.core.PathParser
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
+import dev.lennartegb.vec2compose.core.parsePath
 
 private typealias DpString = String
 
@@ -64,7 +64,7 @@ internal class VectorDrawableParser(
     private fun VectorDrawable.Path.toVectorPath(): ImageVector.Path {
         return ImageVector.Path(
             fillType = ImageVector.Path.FillType.parse(fillType),
-            commands = PathParser.parse(pathData),
+            commands = parsePath(pathData),
             fillColor = fillColor?.let(colorParser::parse),
             alpha = alpha,
             stroke = toStroke()

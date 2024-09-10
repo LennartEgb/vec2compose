@@ -10,7 +10,7 @@ internal class PathParserTest {
         val pathSample = "M27.05,24.55L12.15,19.65C11.85,19.35 11.483,19.2 11.05,19.2"
 
         assertEquals(
-            actual = PathParser.parse(pathSample),
+            actual = parsePath(pathSample),
             expected = listOf(
                 Command.MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true),
                 Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true),
@@ -24,7 +24,7 @@ internal class PathParserTest {
         val pathSample = "M27.05,24.55L12.15,19.65C11.85,19.35 11.483,19.2 11.05,19.2Z"
 
         assertEquals(
-            actual = PathParser.parse(pathSample),
+            actual = parsePath(pathSample),
             expected = listOf(
                 Command.MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true),
                 Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true),
