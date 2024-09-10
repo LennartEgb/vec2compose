@@ -6,19 +6,18 @@ import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke
 import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Cap
 import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join
 import dev.lennartegb.vec2compose.core.ImageVectorParser
+import dev.lennartegb.vec2compose.core.PathParser
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
 import dev.lennartegb.vec2compose.core.commands.Command.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Command.Close
 import dev.lennartegb.vec2compose.core.commands.Command.LineTo
 import dev.lennartegb.vec2compose.core.commands.Command.MoveTo
-import dev.lennartegb.vec2compose.core.commands.PathParser
 
 fun svgImageVectorParser(): ImageVectorParser = SVGParser()
 
 internal class SVGParser(
     private val colorParser: SVGColorParser = SVGColorParser(),
-    private val pathParser: PathParser = PathParser(),
     private val deserializer: SVGDeserializer = SVGDeserializer()
 ) : ImageVectorParser {
 
@@ -67,7 +66,7 @@ internal class SVGParser(
         fillColor = if (fill == null && strokeColor == null) Black else fillColor
         return ImageVector.Path(
             fillType = parseFillType(fillRule),
-            commands = pathParser.parse(pathData),
+            commands = PathParser.parse(pathData),
             fillColor = fillColor,
             alpha = fillOpacity,
             stroke = stroke

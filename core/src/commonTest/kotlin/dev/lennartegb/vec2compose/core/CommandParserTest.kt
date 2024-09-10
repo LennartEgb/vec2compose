@@ -1,18 +1,17 @@
 package dev.lennartegb.vec2compose.core.commands
 
+import dev.lennartegb.vec2compose.core.CommandParser
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class CommandParserTest {
-
-    private val commandParser = CommandParser()
 
     @Test
     fun parse_Move_command() {
         val movePath = "M27.05,24.55"
         assertEquals(
             expected = listOf(Command.MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true)),
-            actual = commandParser.parse(movePath)
+            actual = CommandParser.parse(movePath)
         )
     }
 
@@ -25,7 +24,7 @@ internal class CommandParserTest {
                 Command.MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true),
                 Command.LineTo(x = 27.05f, y = 24.55f, isAbsolute = true)
             ),
-            actual = commandParser.parse(movePath)
+            actual = CommandParser.parse(movePath)
         )
     }
 
@@ -34,7 +33,7 @@ internal class CommandParserTest {
         val linePath = "L12.15,19.65"
         assertEquals(
             expected = listOf(Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true)),
-            actual = commandParser.parse(linePath)
+            actual = CommandParser.parse(linePath)
         )
     }
 
@@ -46,7 +45,7 @@ internal class CommandParserTest {
                 Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true),
                 Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true)
             ),
-            actual = commandParser.parse(linePath)
+            actual = CommandParser.parse(linePath)
         )
     }
 
@@ -65,7 +64,7 @@ internal class CommandParserTest {
                     isAbsolute = true
                 )
             ),
-            actual = commandParser.parse(curveToPath)
+            actual = CommandParser.parse(curveToPath)
         )
     }
 
@@ -74,7 +73,7 @@ internal class CommandParserTest {
         val closePath = "Z"
         assertEquals(
             expected = listOf(Command.Close),
-            actual = commandParser.parse(closePath)
+            actual = CommandParser.parse(closePath)
         )
     }
 
@@ -83,7 +82,7 @@ internal class CommandParserTest {
         val closePath = "z"
         assertEquals(
             expected = listOf(Command.Close),
-            actual = commandParser.parse(closePath)
+            actual = CommandParser.parse(closePath)
         )
     }
 
@@ -92,7 +91,7 @@ internal class CommandParserTest {
         val horizontalLineToPath = "H20.05"
         assertEquals(
             expected = listOf(Command.HorizontalLineTo(x = 20.05f, isAbsolute = true)),
-            actual = commandParser.parse(horizontalLineToPath)
+            actual = CommandParser.parse(horizontalLineToPath)
         )
     }
 
@@ -104,7 +103,7 @@ internal class CommandParserTest {
                 Command.HorizontalLineTo(x = 20.05f, isAbsolute = true),
                 Command.HorizontalLineTo(x = 20.05f, isAbsolute = true)
             ),
-            actual = commandParser.parse(horizontalLineToPath)
+            actual = CommandParser.parse(horizontalLineToPath)
         )
     }
 
@@ -113,7 +112,7 @@ internal class CommandParserTest {
         val horizontalLineToPath = "h20.05"
         assertEquals(
             expected = listOf(Command.HorizontalLineTo(x = 20.05f, isAbsolute = false)),
-            actual = commandParser.parse(horizontalLineToPath)
+            actual = CommandParser.parse(horizontalLineToPath)
         )
     }
 
@@ -122,7 +121,7 @@ internal class CommandParserTest {
         val horizontalLineToPath = "V20.05"
         assertEquals(
             expected = listOf(Command.VerticalLineTo(y = 20.05f, isAbsolute = true)),
-            actual = commandParser.parse(horizontalLineToPath)
+            actual = CommandParser.parse(horizontalLineToPath)
         )
     }
 
@@ -134,7 +133,7 @@ internal class CommandParserTest {
                 Command.VerticalLineTo(y = 20.05f, isAbsolute = true),
                 Command.VerticalLineTo(y = 20.05f, isAbsolute = true)
             ),
-            actual = commandParser.parse(horizontalLineToPath)
+            actual = CommandParser.parse(horizontalLineToPath)
         )
     }
 
@@ -151,7 +150,7 @@ internal class CommandParserTest {
                     isAbsolute = false
                 )
             ),
-            actual = commandParser.parse(horizontalLineToPath)
+            actual = CommandParser.parse(horizontalLineToPath)
         )
     }
 
@@ -160,7 +159,7 @@ internal class CommandParserTest {
         val quadraticBezierToPath = "Q400,50 600,300"
         assertEquals(
             expected = listOf(Command.QuadraticBezierTo(400f, 50f, 600f, 300f, isAbsolute = true)),
-            actual = commandParser.parse(quadraticBezierToPath)
+            actual = CommandParser.parse(quadraticBezierToPath)
         )
     }
 
@@ -169,7 +168,7 @@ internal class CommandParserTest {
         val quadraticBezierToPath = "q400,50 600,300"
         assertEquals(
             expected = listOf(Command.QuadraticBezierTo(400f, 50f, 600f, 300f, isAbsolute = false)),
-            actual = commandParser.parse(quadraticBezierToPath)
+            actual = CommandParser.parse(quadraticBezierToPath)
         )
     }
 
@@ -178,7 +177,7 @@ internal class CommandParserTest {
         val quadraticBezierToPath = "T1000,300"
         assertEquals(
             expected = listOf(Command.ReflectiveQuadraticBezierTo(1000f, 300f, isAbsolute = true)),
-            actual = commandParser.parse(quadraticBezierToPath)
+            actual = CommandParser.parse(quadraticBezierToPath)
         )
     }
 
@@ -187,7 +186,7 @@ internal class CommandParserTest {
         val quadraticBezierToPath = "t1000,300"
         assertEquals(
             expected = listOf(Command.ReflectiveQuadraticBezierTo(1000f, 300f, isAbsolute = false)),
-            actual = commandParser.parse(quadraticBezierToPath)
+            actual = CommandParser.parse(quadraticBezierToPath)
         )
     }
 
@@ -207,7 +206,7 @@ internal class CommandParserTest {
                     isAbsolute = true
                 )
             ),
-            actual = commandParser.parse(arcPath)
+            actual = CommandParser.parse(arcPath)
         )
     }
 
@@ -227,7 +226,7 @@ internal class CommandParserTest {
                     isAbsolute = false
                 )
             ),
-            actual = commandParser.parse(arcPath)
+            actual = CommandParser.parse(arcPath)
         )
     }
 }

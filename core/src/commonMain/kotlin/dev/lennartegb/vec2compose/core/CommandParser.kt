@@ -1,6 +1,8 @@
-package dev.lennartegb.vec2compose.core.commands
+package dev.lennartegb.vec2compose.core
 
-class CommandParser {
+import dev.lennartegb.vec2compose.core.commands.Command
+
+internal object CommandParser {
 
     private val valueRegex = "[+-]?\\d*[.]?\\d+".toRegex()
 
@@ -55,7 +57,15 @@ class CommandParser {
         return eventString.prepare()
             .validate(count = 4, "Quadratic bezier")
             .windowed(size = 4, step = 4, partialWindows = false)
-            .map { Command.QuadraticBezierTo(x1 = it[0], y1 = it[1], x2 = it[2], y2 = it[3], isAbsolute = isAbsolute) }
+            .map {
+                Command.QuadraticBezierTo(
+                    x1 = it[0],
+                    y1 = it[1],
+                    x2 = it[2],
+                    y2 = it[3],
+                    isAbsolute = isAbsolute
+                )
+            }
     }
 
     private fun createHorizontalLinesTo(eventString: String, isAbsolute: Boolean): List<Command> {
@@ -74,7 +84,15 @@ class CommandParser {
         return eventString.prepare()
             .validate(4, "Reflective curve")
             .windowed(size = 4, step = 4, partialWindows = false)
-            .map { Command.ReflectiveCurveTo(x1 = it[0], y1 = it[1], x2 = it[2], y2 = it[3], isAbsolute = isAbsolute) }
+            .map {
+                Command.ReflectiveCurveTo(
+                    x1 = it[0],
+                    y1 = it[1],
+                    x2 = it[2],
+                    y2 = it[3],
+                    isAbsolute = isAbsolute
+                )
+            }
     }
 
     private fun createMoves(eventString: String, isAbsolute: Boolean): List<Command> {
@@ -84,7 +102,13 @@ class CommandParser {
         val moveTo = commands.first().let {
             Command.MoveTo(x = it[0], y = it[1], isAbsolute = isAbsolute)
         }
-        val lineTo = commands.drop(1).map { Command.LineTo(x = it[0], y = it[1], isAbsolute = isAbsolute) }
+        val lineTo = commands.drop(1).map {
+            Command.LineTo(
+                x = it[0],
+                y = it[1],
+                isAbsolute = isAbsolute
+            )
+        }
         return listOf(moveTo) + lineTo
     }
 
@@ -99,7 +123,17 @@ class CommandParser {
         return eventString.prepare()
             .validate(6, "Curve")
             .windowed(size = 6, step = 6, partialWindows = false)
-            .map { Command.CurveTo(it[0], it[1], it[2], it[3], it[4], it[5], isAbsolute = isAbsolute) }
+            .map {
+                Command.CurveTo(
+                    it[0],
+                    it[1],
+                    it[2],
+                    it[3],
+                    it[4],
+                    it[5],
+                    isAbsolute = isAbsolute
+                )
+            }
     }
 
     private fun String.prepare(): List<Float> = valueRegex.findAll(this).map { it.value }.map(String::toFloat).toList()
