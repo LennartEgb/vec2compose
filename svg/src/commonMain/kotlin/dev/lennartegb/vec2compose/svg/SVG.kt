@@ -12,7 +12,7 @@ private const val svgNamespace = "http://www.w3.org/2000/svg"
 @Serializable
 @SerialName("svg")
 @XmlSerialName("svg", namespace = svgNamespace)
-data class SVG(
+internal data class SVG(
     @SerialName("width") val width: String,
     @SerialName("height") val height: String,
     @SerialName("viewBox") val viewBox: String? = null,

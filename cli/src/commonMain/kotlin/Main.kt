@@ -1,7 +1,15 @@
-import di.cliModule
-import org.koin.core.context.startKoin
+import dev.lennartegb.vec2compose.core.KotlinFileContentCreator
+import dev.lennartegb.vec2compose.core.imagevector.ImageVectorCreator
 
 fun main(args: Array<String>) {
-    startKoin { modules(cliModule) }
-    Application(indentation = "    ").run(Arguments(args))
+    val indentation = " ".repeat(4)
+    val imageVectorCreator = ImageVectorCreator(indentation = indentation)
+    val kotlinFileContentCreator = KotlinFileContentCreator(
+        indentation = indentation,
+        imageVectorCreator = imageVectorCreator
+    )
+    Application(
+        kotlinFileContentCreator = kotlinFileContentCreator,
+        imageVectorCreator = imageVectorCreator
+    ).run(Arguments(args))
 }

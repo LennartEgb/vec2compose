@@ -14,6 +14,8 @@ import dev.lennartegb.vec2compose.core.commands.Command.LineTo
 import dev.lennartegb.vec2compose.core.commands.Command.MoveTo
 import dev.lennartegb.vec2compose.core.commands.PathParser
 
+fun svgVectorSetParser(): VectorSetParser = SVGParser()
+
 internal class SVGParser(
     private val colorParser: SVGColorParser = SVGColorParser(),
     private val pathParser: PathParser = PathParser(),

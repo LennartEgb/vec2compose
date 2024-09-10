@@ -1,15 +1,18 @@
 package dev.lennartegb.vec2compose.core.imagevector
 
-class ImageVectorImportProvider {
-    fun createImports(hasGroup: Boolean): List<String> = listOfNotNull(
-        "import androidx.compose.ui.graphics.Color",
-        "import androidx.compose.ui.graphics.PathFillType",
-        "import androidx.compose.ui.graphics.SolidColor",
-        "import androidx.compose.ui.graphics.StrokeCap",
-        "import androidx.compose.ui.graphics.StrokeJoin",
-        "import androidx.compose.ui.graphics.vector.ImageVector",
-        if (hasGroup) "import androidx.compose.ui.graphics.vector.group" else null,
-        "import androidx.compose.ui.graphics.vector.path",
+fun interface ImageVectorImportProvider {
+    fun getImports(hasGroup: Boolean): String
+}
+
+@Suppress("ktlint")
+fun ImageVectorImportProvider() = ImageVectorImportProvider { hasGroup ->
+    "import androidx.compose.ui.graphics.Color\n" +
+        "import androidx.compose.ui.graphics.PathFillType\n" +
+        "import androidx.compose.ui.graphics.SolidColor\n" +
+        "import androidx.compose.ui.graphics.StrokeCap\n" +
+        "import androidx.compose.ui.graphics.StrokeJoin\n" +
+        "import androidx.compose.ui.graphics.vector.ImageVector\n" +
+        "import androidx.compose.ui.graphics.vector.group\n".takeIf { hasGroup }.orEmpty() +
+        "import androidx.compose.ui.graphics.vector.path\n" +
         "import androidx.compose.ui.unit.dp"
-    )
 }

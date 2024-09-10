@@ -20,11 +20,9 @@ kotlin {
             implementation(project(":vector-drawable"))
             implementation(libs.kotlin.cli)
             implementation(libs.okio)
-            implementation(libs.koin.core)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
-            implementation(libs.koin.test)
             implementation(libs.okio.fakefilesystem)
         }
     }

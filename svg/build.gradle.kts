@@ -15,11 +15,9 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":core"))
             implementation(libs.bundles.xmlutil)
-            implementation(libs.koin.core)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
-            implementation(libs.koin.test)
         }
     }
 }
