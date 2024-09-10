@@ -7,6 +7,7 @@ import dev.lennartegb.vec2compose.core.commands.CurveTo
 import dev.lennartegb.vec2compose.core.commands.HorizontalLineTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
+import dev.lennartegb.vec2compose.core.commands.QuadraticBezierTo
 import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
 import dev.lennartegb.vec2compose.core.commands.VerticalLineTo
 
@@ -89,7 +90,7 @@ private fun createQuadraticBezier(eventString: String, isAbsolute: Boolean): Lis
         .validate(count = 4, "Quadratic bezier")
         .windowed(size = 4, step = 4, partialWindows = false)
         .map {
-            Command.QuadraticBezierTo(
+            QuadraticBezierTo(
                 x1 = it[0],
                 y1 = it[1],
                 x2 = it[2],

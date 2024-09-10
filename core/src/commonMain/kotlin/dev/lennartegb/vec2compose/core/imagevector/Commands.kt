@@ -7,6 +7,7 @@ import dev.lennartegb.vec2compose.core.commands.CurveTo
 import dev.lennartegb.vec2compose.core.commands.HorizontalLineTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
+import dev.lennartegb.vec2compose.core.commands.QuadraticBezierTo
 import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
 import dev.lennartegb.vec2compose.core.commands.VerticalLineTo
 
@@ -20,7 +21,7 @@ private val Command.methodName: String
         is HorizontalLineTo -> if (isAbsolute) "horizontalLineTo" else "horizontalLineToRelative"
         is LineTo -> if (isAbsolute) "lineTo" else "lineToRelative"
         is MoveTo -> if (isAbsolute) "moveTo" else "moveToRelative"
-        is Command.QuadraticBezierTo -> if (isAbsolute) "quadTo" else "quadToRelative"
+        is QuadraticBezierTo -> if (isAbsolute) "quadTo" else "quadToRelative"
         is ReflectiveCurveTo -> if (isAbsolute) "reflectiveCurveTo" else "reflectiveCurveToRelative"
         is Command.ReflectiveQuadraticBezierTo -> if (isAbsolute) "reflectiveQuadTo" else "reflectiveQuadToRelative"
         is VerticalLineTo -> if (isAbsolute) "verticalLineTo" else "verticalLineToRelative"
@@ -37,7 +38,7 @@ private val Command.methodParams: String
         is HorizontalLineTo -> "${x}f"
         is LineTo -> floatParams(x, y)
         is MoveTo -> floatParams(x, y)
-        is Command.QuadraticBezierTo -> floatParams(x1, y1, x2, y2)
+        is QuadraticBezierTo -> floatParams(x1, y1, x2, y2)
         is ReflectiveCurveTo -> floatParams(x1, y1, x2, y2)
         is Command.ReflectiveQuadraticBezierTo -> floatParams(x, y)
         is VerticalLineTo -> "${y}f"

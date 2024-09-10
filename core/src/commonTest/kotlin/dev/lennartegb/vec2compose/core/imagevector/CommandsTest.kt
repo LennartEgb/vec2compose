@@ -7,6 +7,7 @@ import dev.lennartegb.vec2compose.core.commands.CurveTo
 import dev.lennartegb.vec2compose.core.commands.HorizontalLineTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
+import dev.lennartegb.vec2compose.core.commands.QuadraticBezierTo
 import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
 import dev.lennartegb.vec2compose.core.commands.VerticalLineTo
 import kotlin.test.Test
@@ -123,7 +124,7 @@ class CommandsTest {
     @Test
     fun `QuadraticBezierTo with absolute=true method returns quadTo`() {
         assertEquals(
-            actual = Command.QuadraticBezierTo(
+            actual = QuadraticBezierTo(
                 x1 = 1f,
                 y1 = 2f,
                 x2 = 3f,
@@ -137,7 +138,7 @@ class CommandsTest {
     @Test
     fun `QuadraticBezierTo with absolute=false method returns quadToRelative`() {
         assertEquals(
-            actual = Command.QuadraticBezierTo(
+            actual = QuadraticBezierTo(
                 x1 = 1f,
                 y1 = 2f,
                 x2 = 3f,
