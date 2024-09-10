@@ -57,4 +57,34 @@ class FileTest {
         assertTrue(fileSystem.exists(path = ioPath))
         assertNotEquals(illegal = "", actual = File.read(fileSystem, path).content)
     }
+
+    @Test
+    fun `nameWithoutExtension returns name without file extension`() {
+        val file = File(name = "Hello.kt", content = "Hello Vector")
+        assertEquals(actual = file.nameWithoutExtension, expected = "Hello")
+    }
+
+    @Test
+    fun `ic close XML file is parsed to IcClose`() {
+        val file = File(name = "ic_close.xml", content = "Hello Vector")
+        assertEquals(expected = "IcClose", actual = file.nameWithoutExtension)
+    }
+
+    @Test
+    fun `account circle SVG file is parsed to AccountCircle`() {
+        val file = File(name = "account-circle.svg", content = "Hello Vector")
+        assertEquals(expected = "AccountCircle", actual = file.nameWithoutExtension)
+    }
+
+    @Test
+    fun `where To Vote XML file is parsed to WhereToVote`() {
+        val file = File(name = "Where To Vote.xml", content = "Hello Vector")
+        assertEquals(expected = "WhereToVote", actual = file.nameWithoutExtension)
+    }
+
+    @Test
+    fun `where ic search 24 is parsed   to IcSearch24`() {
+        val file = File(name = "ic_search_24.xml", content = "Hello Vector")
+        assertEquals(expected = "IcSearch24", actual = file.nameWithoutExtension)
+    }
 }

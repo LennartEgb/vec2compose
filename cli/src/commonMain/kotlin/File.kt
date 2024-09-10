@@ -29,5 +29,12 @@ internal data class File(
         write(fileSystem = fileSystem, path = path, content = content)
     }
 
+    val nameWithoutExtension: String
+        get() {
+            val regex = "[-_ ]".toRegex()
+            return name.takeWhile { it != '.' }.split(regex).joinToString(separator = "") { word ->
+                word.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+            }
+        }
     val extension: String get() = name.takeLastWhile { it != '.' }
 }

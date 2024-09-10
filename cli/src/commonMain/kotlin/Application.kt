@@ -5,7 +5,6 @@ import dev.lennartegb.vec2compose.svg.svgImageVectorParser
 import dev.lennartegb.vec2compose.vectorDrawable.xmlImageVectorParser
 import kotlinx.io.files.FileSystem
 import kotlinx.io.files.SystemFileSystem
-import output.NameFormatter
 import output.Output
 
 fun interface ImageVectorConverter : (ImageVector) -> String
@@ -21,7 +20,7 @@ internal class Application(
 ) {
     fun run(arguments: Arguments) {
         val file = File.read(fileSystem = fileSystem, path = arguments.input)
-        val name = NameFormatter.format(file.name)
+        val name = file.nameWithoutExtension
 
         val writeFile = arguments.output != null
 
