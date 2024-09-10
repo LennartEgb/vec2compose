@@ -44,4 +44,42 @@ class KotlinFileContentCreatorTest {
             """.trimIndent()
         )
     }
+
+    @Test
+    fun `create file content for ImageVector without package`() {
+        val indentation = "    "
+        val creator = KotlinFileContentCreator(
+            importProvider = { "IMPORTS" },
+            imageVectorCreator = ImageVectorCreator(indentation),
+            indentation = indentation
+        )
+        val actual = creator.create(
+            name = "Home",
+            packageName = null,
+            vectorSet = VectorSet(
+                width = 24,
+                height = 25,
+                viewportWidth = 26f,
+                viewportHeight = 27f,
+                nodes = emptyList()
+            )
+        )
+        assertEquals(
+            actual = actual,
+            expected = """
+                IMPORTS
+                
+                private var cache: ImageVector? = null
+                val Home: ImageVector
+                    get() = cache ?: ImageVector.Builder(
+                        name = "Home",
+                        defaultWidth = 24.dp,
+                        defaultHeight = 25.dp,
+                        viewportWidth = 26.0f,
+                        viewportHeight = 27.0f
+                    ).build().also { cache = it }
+                
+            """.trimIndent()
+        )
+    }
 }
