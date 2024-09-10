@@ -8,9 +8,9 @@ class KotlinFileContentCreator(
     private val importProvider: ImageVectorImportProvider = ImageVectorImportProvider(),
     private val imageVectorCreator: ImageVectorCreator = ImageVectorCreator(indentation)
 ) {
-    fun create(packageName: String?, name: String, vectorSet: VectorSet): String {
-        val hasGroups = vectorSet.nodes.any { it is VectorSet.Group }
-        val content = imageVectorCreator.create(name = name, vectorSet = vectorSet)
+    fun create(packageName: String?, name: String, imageVector: ImageVector): String {
+        val hasGroups = imageVector.nodes.any { it is ImageVector.Group }
+        val content = imageVectorCreator.create(name = name, imageVector = imageVector)
         return buildString {
             if (packageName != null) {
                 appendSection("package $packageName")

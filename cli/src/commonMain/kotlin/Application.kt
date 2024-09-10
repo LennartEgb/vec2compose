@@ -1,14 +1,14 @@
+import dev.lennartegb.vec2compose.core.ImageVector
 import dev.lennartegb.vec2compose.core.KotlinFileContentCreator
-import dev.lennartegb.vec2compose.core.VectorSet
 import dev.lennartegb.vec2compose.core.imagevector.ImageVectorCreator
-import dev.lennartegb.vec2compose.svg.svgVectorSetParser
-import dev.lennartegb.vec2compose.vectorDrawable.vectorSetParser
+import dev.lennartegb.vec2compose.svg.svgImageVectorParser
+import dev.lennartegb.vec2compose.vectorDrawable.xmlImageVectorParser
 import kotlinx.io.files.FileSystem
 import kotlinx.io.files.SystemFileSystem
 import output.NameFormatter
 import output.Output
 
-fun interface VectorSetConverter : (VectorSet) -> String
+fun interface ImageVectorConverter : (ImageVector) -> String
 
 fun String.toOutput(fileSystem: FileSystem) = Output {
     File.write(fileSystem = fileSystem, path = this, content = it)
@@ -28,25 +28,25 @@ internal class Application(
         val output = arguments.output?.toOutput(fileSystem)
             ?: Output(::println)
 
-        val convert = VectorSetConverter { set ->
+        val convert = ImageVectorConverter { set ->
             if (writeFile) {
                 kotlinFileContentCreator.create(
                     packageName = arguments.packageName,
                     name = name,
-                    vectorSet = set
+                    imageVector = set
                 )
             } else {
-                imageVectorCreator.create(name = name, vectorSet = set)
+                imageVectorCreator.create(name = name, imageVector = set)
             }
         }
 
-        val vectorSetParser = when (file.extension) {
-            "svg" -> svgVectorSetParser()
-            "xml" -> vectorSetParser()
+        val imageVectorParser = when (file.extension) {
+            "svg" -> svgImageVectorParser()
+            "xml" -> xmlImageVectorParser()
             else -> throw IllegalArgumentException("${file.extension} files are not supported")
         }
 
-        vectorSetParser.parse(file.content)
+        imageVectorParser.parse(file.content)
             .mapCatching { convert(it) }
             .onSuccess { output(it) }
             .onFailure { println("Error occurred: ${it.message}") }

@@ -1,37 +1,37 @@
 package dev.lennartegb.vec2compose.svg
 
+import dev.lennartegb.vec2compose.core.ImageVector
+import dev.lennartegb.vec2compose.core.ImageVector.Path.FillType
+import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke
+import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Cap
+import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join
+import dev.lennartegb.vec2compose.core.ImageVectorParser
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
-import dev.lennartegb.vec2compose.core.VectorSet
-import dev.lennartegb.vec2compose.core.VectorSet.Path.FillType
-import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke
-import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke.Cap
-import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke.Join
-import dev.lennartegb.vec2compose.core.VectorSetParser
 import dev.lennartegb.vec2compose.core.commands.Command.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Command.Close
 import dev.lennartegb.vec2compose.core.commands.Command.LineTo
 import dev.lennartegb.vec2compose.core.commands.Command.MoveTo
 import dev.lennartegb.vec2compose.core.commands.PathParser
 
-fun svgVectorSetParser(): VectorSetParser = SVGParser()
+fun svgImageVectorParser(): ImageVectorParser = SVGParser()
 
 internal class SVGParser(
     private val colorParser: SVGColorParser = SVGColorParser(),
     private val pathParser: PathParser = PathParser(),
     private val deserializer: SVGDeserializer = SVGDeserializer()
-) : VectorSetParser {
+) : ImageVectorParser {
 
-    override fun parse(content: String): Result<VectorSet> =
-        runCatching { deserializer.deserialize(content).toVectorSet() }
+    override fun parse(content: String): Result<ImageVector> =
+        runCatching { deserializer.deserialize(content).toImageVector() }
 
-    private fun SVG.toVectorSet(): VectorSet {
+    private fun SVG.toImageVector(): ImageVector {
         val width = width.filter { it.isDigit() }.toInt()
         val height = height.filter { it.isDigit() }.toInt()
         val rect: List<Float> = viewBox?.split(" ")
             ?.map { it.toFloat() }
             ?: listOf(0f, 0f, width.toFloat(), height.toFloat())
-        return VectorSet(
+        return ImageVector(
             width = width,
             height = height,
             viewportWidth = rect[2] - rect[0],
@@ -40,7 +40,7 @@ internal class SVGParser(
         )
     }
 
-    private fun SVG.Child.toNode(): VectorSet.Node = when (this) {
+    private fun SVG.Child.toNode(): ImageVector.Node = when (this) {
         is SVG.Circle -> toVectorPath()
         is SVG.Group -> toVectorGroup()
         is SVG.Path -> toVectorPath()
@@ -48,8 +48,8 @@ internal class SVGParser(
         is SVG.Ellipse -> toVectorPath()
     }
 
-    private fun SVG.Group.toVectorGroup(): VectorSet.Group {
-        return VectorSet.Group(
+    private fun SVG.Group.toVectorGroup(): ImageVector.Group {
+        return ImageVector.Group(
             name = name,
             nodes = children.map { it.toNode() },
             rotate = transform?.getRotation() ?: 0f,
@@ -59,13 +59,13 @@ internal class SVGParser(
         )
     }
 
-    private fun SVG.Path.toVectorPath(): VectorSet.Path {
+    private fun SVG.Path.toVectorPath(): ImageVector.Path {
         val stroke = toStroke()
-        var fillColor: VectorSet.Path.FillColor? = fill?.let(colorParser::parse)
+        var fillColor: ImageVector.Path.FillColor? = fill?.let(colorParser::parse)
         // NOTE: Only when fill and strokeColor is null use black FillColor as default color as
         //       fill can be none resulting to null.
         fillColor = if (fill == null && strokeColor == null) Black else fillColor
-        return VectorSet.Path(
+        return ImageVector.Path(
             fillType = parseFillType(fillRule),
             commands = pathParser.parse(pathData),
             fillColor = fillColor,
@@ -74,14 +74,14 @@ internal class SVGParser(
         )
     }
 
-    private fun SVG.Ellipse.toVectorPath(): VectorSet.Path {
+    private fun SVG.Ellipse.toVectorPath(): ImageVector.Path {
         val cx = centerX.toFloat()
         val cy = centerY.toFloat()
         val radiusX = radiusX?.toFloat() ?: radiusY?.toFloat()
         requireNotNull(radiusX) { "either rx or ry must be set for ellipse $this" }
         val radiusY = radiusY?.toFloat() ?: radiusX
 
-        return VectorSet.Path(
+        return ImageVector.Path(
             fillType = FillType.Default,
             fillColor = fill?.let { colorParser.parse(it) },
             stroke = Stroke(
@@ -120,12 +120,12 @@ internal class SVGParser(
         )
     }
 
-    private fun SVG.Rectangle.toVectorPath(): VectorSet.Path {
+    private fun SVG.Rectangle.toVectorPath(): ImageVector.Path {
         val x = x.toFloat()
         val y = y.toFloat()
         val width = width?.toFloat() ?: 0f
         val height = height?.toFloat() ?: 0f
-        return VectorSet.Path(
+        return ImageVector.Path(
             fillType = FillType.Default,
             fillColor = fill?.let(colorParser::parse),
             alpha = 1f,
@@ -151,14 +151,14 @@ internal class SVGParser(
         )
     }
 
-    private fun SVG.Circle.toVectorPath(): VectorSet.Path {
+    private fun SVG.Circle.toVectorPath(): ImageVector.Path {
         val cx = centerX.toFloat()
         val cy = centerY.toFloat()
         val r = radius.toFloat()
         val color = fill?.let(colorParser::parse)
-            ?: VectorSet.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff)
+            ?: ImageVector.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff)
 
-        return VectorSet.Path(
+        return ImageVector.Path(
             fillType = FillType.Default,
             fillColor = color,
             commands = listOf(
@@ -252,6 +252,6 @@ internal class SVGParser(
     }
 
     @Suppress("PrivatePropertyName", "ktlint")
-    private val Black: VectorSet.Path.FillColor =
-        VectorSet.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff)
+    private val Black: ImageVector.Path.FillColor =
+        ImageVector.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff)
 }

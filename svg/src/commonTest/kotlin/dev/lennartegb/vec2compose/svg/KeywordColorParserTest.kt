@@ -1,6 +1,6 @@
 package dev.lennartegb.vec2compose.svg
 
-import dev.lennartegb.vec2compose.core.VectorSet.Path.FillColor
+import dev.lennartegb.vec2compose.core.ImageVector.Path.FillColor
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull

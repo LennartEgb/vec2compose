@@ -1,15 +1,15 @@
 package dev.lennartegb.vec2compose.core.imagevector
 
+import dev.lennartegb.vec2compose.core.ImageVector
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
-import dev.lennartegb.vec2compose.core.VectorSet
 import dev.lennartegb.vec2compose.core.commands.Command
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class ComposeMethodCreatorTest {
 
-    private val testVectorSet = VectorSet(
+    private val testImageVector = ImageVector(
         width = 6,
         height = 12,
         viewportWidth = 24f,
@@ -20,7 +20,7 @@ internal class ComposeMethodCreatorTest {
     @Test
     fun `parse constructor returns builder`() {
         val creator = ComposeMethodCreator(indentation = "  ")
-        val actual = creator.createConstructor(name = "hello", set = testVectorSet)
+        val actual = creator.createConstructor(name = "hello", set = testImageVector)
         assertEquals(
             expected = """
                 ImageVector.Builder(
@@ -40,9 +40,9 @@ internal class ComposeMethodCreatorTest {
         val creator = ComposeMethodCreator(indentation = "  ")
         val actual = creator.createPath(
             forBuilder = false,
-            path = VectorSet.Path(
-                fillType = VectorSet.Path.FillType.EvenOdd,
-                fillColor = VectorSet.Path.FillColor(
+            path = ImageVector.Path(
+                fillType = ImageVector.Path.FillType.EvenOdd,
+                fillColor = ImageVector.Path.FillColor(
                     red = 0xff,
                     green = 0xff,
                     blue = 0xff,
@@ -54,12 +54,12 @@ internal class ComposeMethodCreatorTest {
                     Command.Close
                 ),
                 alpha = .5f,
-                stroke = VectorSet.Path.Stroke(
+                stroke = ImageVector.Path.Stroke(
                     color = null,
                     alpha = .75f,
                     width = 1f,
-                    cap = VectorSet.Path.Stroke.Cap.Butt,
-                    join = VectorSet.Path.Stroke.Join.Bevel,
+                    cap = ImageVector.Path.Stroke.Cap.Butt,
+                    join = ImageVector.Path.Stroke.Join.Bevel,
                     miter = .25f
                 )
             )
@@ -91,9 +91,9 @@ internal class ComposeMethodCreatorTest {
         val creator = ComposeMethodCreator(indentation = "  ")
         val actual = creator.createPath(
             forBuilder = true,
-            path = VectorSet.Path(
-                fillType = VectorSet.Path.FillType.EvenOdd,
-                fillColor = VectorSet.Path.FillColor(
+            path = ImageVector.Path(
+                fillType = ImageVector.Path.FillType.EvenOdd,
+                fillColor = ImageVector.Path.FillColor(
                     red = 0xff,
                     green = 0xff,
                     blue = 0xff,
@@ -105,12 +105,12 @@ internal class ComposeMethodCreatorTest {
                     Command.Close
                 ),
                 alpha = .5f,
-                stroke = VectorSet.Path.Stroke(
+                stroke = ImageVector.Path.Stroke(
                     color = null,
                     alpha = .75f,
                     width = 1f,
-                    cap = VectorSet.Path.Stroke.Cap.Butt,
-                    join = VectorSet.Path.Stroke.Join.Bevel,
+                    cap = ImageVector.Path.Stroke.Cap.Butt,
+                    join = ImageVector.Path.Stroke.Join.Bevel,
                     miter = .25f
                 )
             )
@@ -142,12 +142,12 @@ internal class ComposeMethodCreatorTest {
         val creator = ComposeMethodCreator(indentation = " ".repeat(4))
         val actual = creator.createGroup(
             forBuilder = false,
-            group = VectorSet.Group(
+            group = ImageVector.Group(
                 name = "group",
                 nodes = listOf(
-                    VectorSet.Path(
-                        fillType = VectorSet.Path.FillType.EvenOdd,
-                        fillColor = VectorSet.Path.FillColor(
+                    ImageVector.Path(
+                        fillType = ImageVector.Path.FillType.EvenOdd,
+                        fillColor = ImageVector.Path.FillColor(
                             red = 0xff,
                             green = 0xff,
                             blue = 0xff,
@@ -155,12 +155,12 @@ internal class ComposeMethodCreatorTest {
                         ),
                         commands = emptyList(),
                         alpha = .5f,
-                        stroke = VectorSet.Path.Stroke(
+                        stroke = ImageVector.Path.Stroke(
                             color = null,
                             alpha = .75f,
                             width = 1f,
-                            cap = VectorSet.Path.Stroke.Cap.Square,
-                            join = VectorSet.Path.Stroke.Join.Bevel,
+                            cap = ImageVector.Path.Stroke.Cap.Square,
+                            join = ImageVector.Path.Stroke.Join.Bevel,
                             miter = .25f
                         )
                     )
@@ -207,7 +207,7 @@ internal class ComposeMethodCreatorTest {
         val creator = ComposeMethodCreator(indentation = "  ")
         val actual = creator.createGroup(
             forBuilder = true,
-            group = VectorSet.Group(
+            group = ImageVector.Group(
                 name = "group",
                 nodes = emptyList(),
                 rotate = 0.25f,

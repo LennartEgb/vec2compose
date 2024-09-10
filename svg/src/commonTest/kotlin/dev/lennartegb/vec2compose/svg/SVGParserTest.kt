@@ -1,10 +1,10 @@
 package dev.lennartegb.vec2compose.svg
 
+import dev.lennartegb.vec2compose.core.ImageVector
+import dev.lennartegb.vec2compose.core.ImageVector.Path.FillType
+import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
-import dev.lennartegb.vec2compose.core.VectorSet
-import dev.lennartegb.vec2compose.core.VectorSet.Path.FillType
-import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke
 import dev.lennartegb.vec2compose.core.commands.Command
 import dev.lennartegb.vec2compose.core.commands.Command.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Command.Close
@@ -15,8 +15,8 @@ import kotlin.test.assertFailsWith
 
 internal class SVGParserTest {
 
-    private val VectorSet.groups: List<VectorSet.Group>
-        get() = nodes.filterIsInstance<VectorSet.Group>()
+    private val ImageVector.groups: List<ImageVector.Group>
+        get() = nodes.filterIsInstance<ImageVector.Group>()
 
     @Test
     fun `parse SVG file with correct fill color`() {
@@ -28,27 +28,27 @@ internal class SVGParserTest {
             """
         }
         val expected = listOf(
-            VectorSet.Path(
+            ImageVector.Path(
                 fillType = FillType.Default,
                 fillColor = null,
                 commands = emptyList(),
                 alpha = 1f
             ),
-            VectorSet.Path(
+            ImageVector.Path(
                 fillType = FillType.Default,
-                fillColor = VectorSet.Path.FillColor(0xff, 0xff, 0xff, 0xff),
+                fillColor = ImageVector.Path.FillColor(0xff, 0xff, 0xff, 0xff),
                 commands = emptyList(),
                 alpha = 1f
             ),
-            VectorSet.Path(
+            ImageVector.Path(
                 fillType = FillType.Default,
-                fillColor = VectorSet.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff),
+                fillColor = ImageVector.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff),
                 commands = emptyList(),
                 alpha = 1f
             )
         )
         assertEquals(
-            actual = svgVectorSetParser().parse(content = svg).map { it.nodes },
+            actual = svgImageVectorParser().parse(content = svg).map { it.nodes },
             expected = Result.success(expected)
         )
     }
@@ -57,10 +57,10 @@ internal class SVGParserTest {
     fun `parse file with group rotation`() {
         val svg = svg { """<g transform="rotate(45 0 0)"/>""" }
         assertEquals(
-            actual = svgVectorSetParser().parse(svg).map { it.nodes },
+            actual = svgImageVectorParser().parse(svg).map { it.nodes },
             expected = Result.success(
                 listOf(
-                    VectorSet.Group(
+                    ImageVector.Group(
                         name = null,
                         nodes = emptyList(),
                         rotate = 45f,
@@ -77,7 +77,7 @@ internal class SVGParserTest {
     fun `parse file with group pivot`() {
         val svg = svg { """<g transform="rotate(45 20 30)"/>""" }
         assertEquals(
-            actual = svgVectorSetParser().parse(svg).map { it.groups.map { it.pivot } },
+            actual = svgImageVectorParser().parse(svg).map { it.groups.map { it.pivot } },
             expected = Result.success(listOf(Translation(20f, 30f)))
         )
     }
@@ -86,7 +86,7 @@ internal class SVGParserTest {
     fun `parse file with group translate`() {
         val svg = svg { """<g transform="translate(20 30)"/>""" }
         assertEquals(
-            actual = svgVectorSetParser().parse(svg)
+            actual = svgImageVectorParser().parse(svg)
                 .map { set -> set.groups.map { it.translation } },
             expected = Result.success(listOf(Translation(20f, 30f)))
         )
@@ -97,10 +97,10 @@ internal class SVGParserTest {
         val svg = svg { """<path d="" fill="none"/>""" }
 
         assertEquals(
-            actual = svgVectorSetParser().parse(svg).map { it.nodes },
+            actual = svgImageVectorParser().parse(svg).map { it.nodes },
             expected = Result.success(
                 listOf(
-                    VectorSet.Path(
+                    ImageVector.Path(
                         fillType = FillType.Default,
                         fillColor = null,
                         commands = emptyList(),
@@ -114,7 +114,7 @@ internal class SVGParserTest {
     @Test
     fun `parse invalid ellipse from SVG`() {
         val svg = svg { """<ellipse cx="10" /> """ }
-        assertFailsWith<IllegalArgumentException> { svgVectorSetParser().parse(svg).getOrThrow() }
+        assertFailsWith<IllegalArgumentException> { svgImageVectorParser().parse(svg).getOrThrow() }
     }
 
     @Test
@@ -123,20 +123,20 @@ internal class SVGParserTest {
             """<ellipse cx="10" cy="20" rx="10" ry="20" fill="red" stroke="blue" stroke-width="3"/>"""
         }
         assertEquals(
-            actual = svgVectorSetParser().parse(svg).map { it.nodes },
+            actual = svgImageVectorParser().parse(svg).map { it.nodes },
             expected = Result.success(
                 listOf(
-                    VectorSet.Path(
+                    ImageVector.Path(
                         fillType = FillType.Default,
-                        fillColor = VectorSet.Path.FillColor(
+                        fillColor = ImageVector.Path.FillColor(
                             red = 0xFF,
                             green = 0x00,
                             blue = 0x00,
                             alpha = 0xFF
                         ),
                         alpha = 1f,
-                        stroke = VectorSet.Path.Stroke(
-                            color = VectorSet.Path.FillColor(
+                        stroke = ImageVector.Path.Stroke(
+                            color = ImageVector.Path.FillColor(
                                 red = 0x00,
                                 green = 0x00,
                                 blue = 0xFF,
@@ -183,16 +183,16 @@ internal class SVGParserTest {
             """
         }
         assertEquals(
-            actual = svgVectorSetParser().parse(svg).getOrThrow(),
-            expected = VectorSet(
+            actual = svgImageVectorParser().parse(svg).getOrThrow(),
+            expected = ImageVector(
                 width = 24,
                 height = 24,
                 viewportWidth = 24f,
                 viewportHeight = 24f,
                 nodes = listOf(
-                    VectorSet.Path(
+                    ImageVector.Path(
                         fillType = FillType.Default,
-                        fillColor = VectorSet.Path.FillColor(0x00, 0x00, 0x00, 0xFF),
+                        fillColor = ImageVector.Path.FillColor(0x00, 0x00, 0x00, 0xFF),
                         commands = listOf(
                             MoveTo(x = 0f, y = 5f, isAbsolute = true),
                             ArcTo(

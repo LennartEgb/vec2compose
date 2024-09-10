@@ -16,7 +16,7 @@ class KotlinFileContentCreatorTest {
         val actual = creator.create(
             name = "Home",
             packageName = "com.example.icons",
-            vectorSet = VectorSet(
+            imageVector = ImageVector(
                 width = 24,
                 height = 25,
                 viewportWidth = 26f,
@@ -56,7 +56,7 @@ class KotlinFileContentCreatorTest {
         val actual = creator.create(
             name = "Home",
             packageName = null,
-            vectorSet = VectorSet(
+            imageVector = ImageVector(
                 width = 24,
                 height = 25,
                 viewportWidth = 26f,

@@ -1,6 +1,6 @@
 package dev.lennartegb.vec2compose.core.imagevector
 
-import dev.lennartegb.vec2compose.core.VectorSet
+import dev.lennartegb.vec2compose.core.ImageVector
 import dev.lennartegb.vec2compose.core.commands.Command
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -10,15 +10,15 @@ internal class ImageVectorParserTest {
     private val imageVectorParser = ImageVectorCreator(indentation = "    ")
 
     @Test
-    fun parse_VectorSet_with_FillType_NonZero_to_ImageVector_string() {
-        val set = VectorSet(
+    fun `parse ImageVector with FillType NonZero to ImageVector string`() {
+        val set = ImageVector(
             width = 24,
             height = 24,
             viewportWidth = 48f,
             viewportHeight = 42f,
             nodes = listOf(
-                VectorSet.Path(
-                    fillType = VectorSet.Path.FillType.NonZero,
+                ImageVector.Path(
+                    fillType = ImageVector.Path.FillType.NonZero,
                     commands = listOf(
                         Command.MoveTo(x = 1f, y = 2f, isAbsolute = true),
                         Command.LineTo(x = 2f, y = 2f, isAbsolute = true),
@@ -56,20 +56,20 @@ internal class ImageVectorParserTest {
         """.trimIndent()
         assertEquals(
             expected = expected,
-            actual = imageVectorParser.create(name = "ic_icon", vectorSet = set)
+            actual = imageVectorParser.create(name = "ic_icon", imageVector = set)
         )
     }
 
     @Test
-    fun parse_VectorSet_with_FillType_EvenOdd_to_ImageVector_string() {
-        val set = VectorSet(
+    fun `parse ImageVector with FillType EvenOdd to ImageVector string`() {
+        val set = ImageVector(
             width = 24,
             height = 24,
             viewportWidth = 48f,
             viewportHeight = 42f,
             nodes = listOf(
-                VectorSet.Path(
-                    fillType = VectorSet.Path.FillType.EvenOdd,
+                ImageVector.Path(
+                    fillType = ImageVector.Path.FillType.EvenOdd,
                     commands = listOf(
                         Command.MoveTo(x = 1f, y = 2f, isAbsolute = true),
                         Command.LineTo(x = 2f, y = 2f, isAbsolute = true),
@@ -107,7 +107,7 @@ internal class ImageVectorParserTest {
         """.trimIndent()
         assertEquals(
             expected = expected,
-            actual = imageVectorParser.create(name = "ic_icon", vectorSet = set)
+            actual = imageVectorParser.create(name = "ic_icon", imageVector = set)
         )
     }
 }
