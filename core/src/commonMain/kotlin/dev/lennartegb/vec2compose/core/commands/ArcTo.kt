@@ -12,4 +12,14 @@ data class ArcTo(
     val x1: Float,
     val y1: Float,
     override val isAbsolute: Boolean
-) : Command
+) : Command {
+    override fun toString(): String {
+        var method = "arcTo"
+        if (!isAbsolute) {
+            method += "Relative"
+        }
+        method += "(${horizontalEllipseRadius}f, ${verticalEllipseRadius}f, ${theta}f" +
+            ", $isMoreThanHalf, $isPositiveArc, ${x1}f, ${y1}f)"
+        return method
+    }
+}

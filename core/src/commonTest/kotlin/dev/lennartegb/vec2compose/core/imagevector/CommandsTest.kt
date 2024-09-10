@@ -33,6 +33,23 @@ class CommandsTest {
     }
 
     @Test
+    fun `ArcTo toString with absolute=true returns arcTo`() {
+        assertEquals(
+            actual = ArcTo(
+                horizontalEllipseRadius = 1f,
+                verticalEllipseRadius = 2f,
+                theta = 3f,
+                isMoreThanHalf = false,
+                isPositiveArc = true,
+                x1 = 4f,
+                y1 = 5f,
+                isAbsolute = true
+            ).toString(),
+            expected = "arcTo(1.0f, 2.0f, 3.0f, false, true, 4.0f, 5.0f)"
+        )
+    }
+
+    @Test
     fun `ArcTo method with absolute=false returns arcToRelative`() {
         assertEquals(
             actual = ArcTo(
@@ -45,6 +62,23 @@ class CommandsTest {
                 y1 = 5f,
                 isAbsolute = false
             ).method,
+            expected = "arcToRelative(1.0f, 2.0f, 3.0f, false, true, 4.0f, 5.0f)"
+        )
+    }
+
+    @Test
+    fun `ArcTo toString with absolute=false returns arcToRelative`() {
+        assertEquals(
+            actual = ArcTo(
+                horizontalEllipseRadius = 1f,
+                verticalEllipseRadius = 2f,
+                theta = 3f,
+                isMoreThanHalf = false,
+                isPositiveArc = true,
+                x1 = 4f,
+                y1 = 5f,
+                isAbsolute = false
+            ).toString(),
             expected = "arcToRelative(1.0f, 2.0f, 3.0f, false, true, 4.0f, 5.0f)"
         )
     }
