@@ -279,7 +279,7 @@ class CommandsTest {
     }
 
     @Test
-    fun `ReflectiveCurveTo with absolute=true method returns reflectiveCurveTo`() {
+    fun `ReflectiveCurveTo method with absolute=true returns reflectiveCurveTo`() {
         assertEquals(
             actual = ReflectiveCurveTo(
                 x1 = 1f,
@@ -293,7 +293,21 @@ class CommandsTest {
     }
 
     @Test
-    fun `ReflectiveCurveTo with absolute=false method returns reflectiveCurveToRelative`() {
+    fun `ReflectiveCurveTo toString with absolute=true returns reflectiveCurveTo`() {
+        assertEquals(
+            actual = ReflectiveCurveTo(
+                x1 = 1f,
+                y1 = 2f,
+                x2 = 3f,
+                y2 = 4f,
+                isAbsolute = true
+            ).toString(),
+            expected = "reflectiveCurveTo(1.0f, 2.0f, 3.0f, 4.0f)"
+        )
+    }
+
+    @Test
+    fun `ReflectiveCurveTo method with absolute=false returns reflectiveCurveToRelative`() {
         assertEquals(
             actual = ReflectiveCurveTo(
                 x1 = 1f,
@@ -302,6 +316,20 @@ class CommandsTest {
                 y2 = 4f,
                 isAbsolute = false
             ).method,
+            expected = "reflectiveCurveToRelative(1.0f, 2.0f, 3.0f, 4.0f)"
+        )
+    }
+
+    @Test
+    fun `ReflectiveCurveTo toString with absolute=false returns reflectiveCurveToRelative`() {
+        assertEquals(
+            actual = ReflectiveCurveTo(
+                x1 = 1f,
+                y1 = 2f,
+                x2 = 3f,
+                y2 = 4f,
+                isAbsolute = false
+            ).toString(),
             expected = "reflectiveCurveToRelative(1.0f, 2.0f, 3.0f, 4.0f)"
         )
     }
