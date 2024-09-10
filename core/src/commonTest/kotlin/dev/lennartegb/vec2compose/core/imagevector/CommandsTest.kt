@@ -3,6 +3,7 @@ package dev.lennartegb.vec2compose.core.imagevector
 import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
+import dev.lennartegb.vec2compose.core.commands.MoveTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -101,7 +102,7 @@ class CommandsTest {
     @Test
     fun `MoveTo with absolute=true method returns moveTo`() {
         assertEquals(
-            actual = Command.MoveTo(x = 10f, y = 20f, isAbsolute = true).method,
+            actual = MoveTo(x = 10f, y = 20f, isAbsolute = true).method,
             expected = "moveTo(10.0f, 20.0f)"
         )
     }
@@ -109,7 +110,7 @@ class CommandsTest {
     @Test
     fun `MoveTo with absolute=false method returns moveToRelative`() {
         assertEquals(
-            actual = Command.MoveTo(x = 10f, y = 20f, isAbsolute = false).method,
+            actual = MoveTo(x = 10f, y = 20f, isAbsolute = false).method,
             expected = "moveToRelative(10.0f, 20.0f)"
         )
     }

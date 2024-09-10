@@ -3,6 +3,7 @@ package dev.lennartegb.vec2compose.core
 import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
+import dev.lennartegb.vec2compose.core.commands.MoveTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -12,7 +13,7 @@ internal class CommandParserTest {
     fun `parse Move command`() {
         val movePath = "M27.05,24.55"
         assertEquals(
-            expected = listOf(Command.MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true)),
+            expected = listOf(MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true)),
             actual = parseCommand(movePath)
         )
     }
@@ -23,7 +24,7 @@ internal class CommandParserTest {
         val movePath = "M27.05,24.55 27.05,24.55"
         assertEquals(
             expected = listOf(
-                Command.MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true),
+                MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true),
                 Command.LineTo(x = 27.05f, y = 24.55f, isAbsolute = true)
             ),
             actual = parseCommand(movePath)
