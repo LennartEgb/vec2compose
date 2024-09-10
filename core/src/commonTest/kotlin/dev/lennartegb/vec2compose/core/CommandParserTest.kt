@@ -4,6 +4,7 @@ import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
 import dev.lennartegb.vec2compose.core.commands.CurveTo
+import dev.lennartegb.vec2compose.core.commands.HorizontalLineTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
@@ -96,7 +97,7 @@ internal class CommandParserTest {
     fun `parse HorizontalLineTo path`() {
         val horizontalLineToPath = "H20.05"
         assertEquals(
-            expected = listOf(Command.HorizontalLineTo(x = 20.05f, isAbsolute = true)),
+            expected = listOf(HorizontalLineTo(x = 20.05f, isAbsolute = true)),
             actual = parseCommand(horizontalLineToPath)
         )
     }
@@ -106,8 +107,8 @@ internal class CommandParserTest {
         val horizontalLineToPath = "H20.05 20.05"
         assertEquals(
             expected = listOf(
-                Command.HorizontalLineTo(x = 20.05f, isAbsolute = true),
-                Command.HorizontalLineTo(x = 20.05f, isAbsolute = true)
+                HorizontalLineTo(x = 20.05f, isAbsolute = true),
+                HorizontalLineTo(x = 20.05f, isAbsolute = true)
             ),
             actual = parseCommand(horizontalLineToPath)
         )
@@ -117,7 +118,7 @@ internal class CommandParserTest {
     fun `parse HorizontalLineTo path with relative command`() {
         val horizontalLineToPath = "h20.05"
         assertEquals(
-            expected = listOf(Command.HorizontalLineTo(x = 20.05f, isAbsolute = false)),
+            expected = listOf(HorizontalLineTo(x = 20.05f, isAbsolute = false)),
             actual = parseCommand(horizontalLineToPath)
         )
     }

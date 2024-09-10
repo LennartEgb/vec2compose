@@ -4,6 +4,7 @@ import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
 import dev.lennartegb.vec2compose.core.commands.CurveTo
+import dev.lennartegb.vec2compose.core.commands.HorizontalLineTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
@@ -73,7 +74,7 @@ class CommandsTest {
     @Test
     fun `HorizontalLineTo with absolute=true method returns horizontalLineTo`() {
         assertEquals(
-            actual = Command.HorizontalLineTo(x = 10f, isAbsolute = true).method,
+            actual = HorizontalLineTo(x = 10f, isAbsolute = true).method,
             expected = "horizontalLineTo(10.0f)"
         )
     }
@@ -81,7 +82,7 @@ class CommandsTest {
     @Test
     fun `HorizontalLineTo with absolute=false method returns horizontalLineTo`() {
         assertEquals(
-            actual = Command.HorizontalLineTo(x = 10f, isAbsolute = false).method,
+            actual = HorizontalLineTo(x = 10f, isAbsolute = false).method,
             expected = "horizontalLineToRelative(10.0f)"
         )
     }

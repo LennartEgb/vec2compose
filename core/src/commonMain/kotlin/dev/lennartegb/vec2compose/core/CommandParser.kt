@@ -4,6 +4,7 @@ import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
 import dev.lennartegb.vec2compose.core.commands.CurveTo
+import dev.lennartegb.vec2compose.core.commands.HorizontalLineTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
@@ -100,7 +101,7 @@ private fun createQuadraticBezier(eventString: String, isAbsolute: Boolean): Lis
 private fun createHorizontalLinesTo(eventString: String, isAbsolute: Boolean): List<Command> {
     return eventString.prepare()
         .validate(1, "Horizontal line")
-        .map { Command.HorizontalLineTo(it, isAbsolute) }
+        .map { HorizontalLineTo(it, isAbsolute) }
 }
 
 private fun createVerticalLinesTo(eventString: String, isAbsolute: Boolean): List<Command> {
