@@ -3,6 +3,7 @@ package dev.lennartegb.vec2compose.core
 import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
+import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -25,7 +26,7 @@ internal class CommandParserTest {
         assertEquals(
             expected = listOf(
                 MoveTo(x = 27.05f, y = 24.55f, isAbsolute = true),
-                Command.LineTo(x = 27.05f, y = 24.55f, isAbsolute = true)
+                LineTo(x = 27.05f, y = 24.55f, isAbsolute = true)
             ),
             actual = parseCommand(movePath)
         )
@@ -35,7 +36,7 @@ internal class CommandParserTest {
     fun `parse LineTo path`() {
         val linePath = "L12.15,19.65"
         assertEquals(
-            expected = listOf(Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true)),
+            expected = listOf(LineTo(x = 12.15f, y = 19.65f, isAbsolute = true)),
             actual = parseCommand(linePath)
         )
     }
@@ -45,8 +46,8 @@ internal class CommandParserTest {
         val linePath = "L12.15,19.65 12.15,19.65"
         assertEquals(
             expected = listOf(
-                Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true),
-                Command.LineTo(x = 12.15f, y = 19.65f, isAbsolute = true)
+                LineTo(x = 12.15f, y = 19.65f, isAbsolute = true),
+                LineTo(x = 12.15f, y = 19.65f, isAbsolute = true)
             ),
             actual = parseCommand(linePath)
         )

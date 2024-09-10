@@ -3,6 +3,7 @@ package dev.lennartegb.vec2compose.core
 import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
+import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 
 private val regex = "[+-]?\\d*[.]?\\d+".toRegex()
@@ -129,7 +130,7 @@ private fun createMoves(eventString: String, isAbsolute: Boolean): List<Command>
         MoveTo(x = it[0], y = it[1], isAbsolute = isAbsolute)
     }
     val lineTo = commands.drop(1).map {
-        Command.LineTo(
+        LineTo(
             x = it[0],
             y = it[1],
             isAbsolute = isAbsolute
@@ -142,7 +143,7 @@ private fun createLinesTo(eventString: String, isAbsolute: Boolean): List<Comman
     return eventString.prepare()
         .validate(2, "Line")
         .windowed(size = 2, step = 2, partialWindows = false)
-        .map { Command.LineTo(x = it[0], y = it[1], isAbsolute = isAbsolute) }
+        .map { LineTo(x = it[0], y = it[1], isAbsolute = isAbsolute) }
 }
 
 private fun createCurvesTo(eventString: String, isAbsolute: Boolean): List<Command> {

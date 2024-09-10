@@ -4,7 +4,7 @@ import dev.lennartegb.vec2compose.core.ImageVector
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
 import dev.lennartegb.vec2compose.core.commands.Close
-import dev.lennartegb.vec2compose.core.commands.Command
+import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -52,7 +52,7 @@ internal class ComposeMethodCreatorTest {
                 ),
                 commands = listOf(
                     MoveTo(2f, 2f, isAbsolute = false),
-                    Command.LineTo(4f, 4f, isAbsolute = false),
+                    LineTo(4f, 4f, isAbsolute = false),
                     Close
                 ),
                 alpha = .5f,
@@ -103,7 +103,7 @@ internal class ComposeMethodCreatorTest {
                 ),
                 commands = listOf(
                     MoveTo(2f, 2f, isAbsolute = true),
-                    Command.LineTo(4f, 4f, isAbsolute = true),
+                    LineTo(4f, 4f, isAbsolute = true),
                     Close
                 ),
                 alpha = .5f,

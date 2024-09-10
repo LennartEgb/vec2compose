@@ -8,11 +8,6 @@ sealed interface Command {
     val isAbsolute: Boolean
 
     /**
-     * Line to command indicated by l/L
-     */
-    data class LineTo(val x: Float, val y: Float, override val isAbsolute: Boolean) : Command
-
-    /**
      * Curve to command indicated by c/C
      */
     data class CurveTo(

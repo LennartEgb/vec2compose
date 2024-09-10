@@ -10,7 +10,7 @@ import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
 import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
-import dev.lennartegb.vec2compose.core.commands.Command.LineTo
+import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import dev.lennartegb.vec2compose.core.parsePath
 
