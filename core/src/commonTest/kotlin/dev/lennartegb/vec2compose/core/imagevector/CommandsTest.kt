@@ -127,7 +127,7 @@ class CommandsTest {
     }
 
     @Test
-    fun `HorizontalLineTo with absolute=true method returns horizontalLineTo`() {
+    fun `HorizontalLineTo method with absolute=true returns horizontalLineTo`() {
         assertEquals(
             actual = HorizontalLineTo(x = 10f, isAbsolute = true).method,
             expected = "horizontalLineTo(10.0f)"
@@ -135,9 +135,25 @@ class CommandsTest {
     }
 
     @Test
-    fun `HorizontalLineTo with absolute=false method returns horizontalLineTo`() {
+    fun `HorizontalLineTo toString with absolute=true returns horizontalLineTo`() {
+        assertEquals(
+            actual = HorizontalLineTo(x = 10f, isAbsolute = true).toString(),
+            expected = "horizontalLineTo(10.0f)"
+        )
+    }
+
+    @Test
+    fun `HorizontalLineTo method with absolute=false returns horizontalLineTo`() {
         assertEquals(
             actual = HorizontalLineTo(x = 10f, isAbsolute = false).method,
+            expected = "horizontalLineToRelative(10.0f)"
+        )
+    }
+
+    @Test
+    fun `HorizontalLineTo toString with absolute=false returns horizontalLineTo`() {
+        assertEquals(
+            actual = HorizontalLineTo(x = 10f, isAbsolute = false).toString(),
             expected = "horizontalLineToRelative(10.0f)"
         )
     }
