@@ -367,7 +367,7 @@ class CommandsTest {
     }
 
     @Test
-    fun `VerticalLineTo with absolute=true method returns verticalLineTo`() {
+    fun `VerticalLineTo method with absolute=true returns verticalLineTo`() {
         assertEquals(
             actual = VerticalLineTo(y = 2f, isAbsolute = true).method,
             expected = "verticalLineTo(2.0f)"
@@ -375,9 +375,25 @@ class CommandsTest {
     }
 
     @Test
-    fun `VerticalLineTo with absolute=false method returns verticalLineToRelative`() {
+    fun `VerticalLineTo toString with absolute=true returns verticalLineTo`() {
+        assertEquals(
+            actual = VerticalLineTo(y = 2f, isAbsolute = true).toString(),
+            expected = "verticalLineTo(2.0f)"
+        )
+    }
+
+    @Test
+    fun `VerticalLineTo method with absolute=false returns verticalLineToRelative`() {
         assertEquals(
             actual = VerticalLineTo(y = 2f, isAbsolute = false).method,
+            expected = "verticalLineToRelative(2.0f)"
+        )
+    }
+
+    @Test
+    fun `VerticalLineTo toString with absolute=false returns verticalLineToRelative`() {
+        assertEquals(
+            actual = VerticalLineTo(y = 2f, isAbsolute = false).toString(),
             expected = "verticalLineToRelative(2.0f)"
         )
     }
