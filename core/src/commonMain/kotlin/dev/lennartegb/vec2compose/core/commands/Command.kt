@@ -8,19 +8,6 @@ sealed interface Command {
     val isAbsolute: Boolean
 
     /**
-     * Curve to command indicated by c/C
-     */
-    data class CurveTo(
-        val x1: Float,
-        val y1: Float,
-        val x2: Float,
-        val y2: Float,
-        val x3: Float,
-        val y3: Float,
-        override val isAbsolute: Boolean
-    ) : Command
-
-    /**
      * Reflective curve to command indicated by s/S
      */
     data class ReflectiveCurveTo(

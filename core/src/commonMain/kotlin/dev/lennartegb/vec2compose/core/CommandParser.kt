@@ -3,6 +3,7 @@ package dev.lennartegb.vec2compose.core
 import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
+import dev.lennartegb.vec2compose.core.commands.CurveTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 
@@ -151,7 +152,7 @@ private fun createCurvesTo(eventString: String, isAbsolute: Boolean): List<Comma
         .validate(6, "Curve")
         .windowed(size = 6, step = 6, partialWindows = false)
         .map {
-            Command.CurveTo(
+            CurveTo(
                 it[0],
                 it[1],
                 it[2],

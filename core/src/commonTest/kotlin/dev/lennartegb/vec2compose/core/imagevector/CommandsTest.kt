@@ -3,6 +3,7 @@ package dev.lennartegb.vec2compose.core.imagevector
 import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
+import dev.lennartegb.vec2compose.core.commands.CurveTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import kotlin.test.Test
@@ -55,7 +56,7 @@ class CommandsTest {
     @Test
     fun `CurveTo with absolute=true method returns curveTo`() {
         assertEquals(
-            actual = Command.CurveTo(1f, 2f, 3f, 4f, 5f, 6f, isAbsolute = true).method,
+            actual = CurveTo(1f, 2f, 3f, 4f, 5f, 6f, isAbsolute = true).method,
             expected = "curveTo(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f)"
         )
     }
@@ -63,7 +64,7 @@ class CommandsTest {
     @Test
     fun `CurveTo with absolute=false method returns curveToRelative`() {
         assertEquals(
-            actual = Command.CurveTo(1f, 2f, 3f, 4f, 5f, 6f, isAbsolute = false).method,
+            actual = CurveTo(1f, 2f, 3f, 4f, 5f, 6f, isAbsolute = false).method,
             expected = "curveToRelative(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f)"
         )
     }

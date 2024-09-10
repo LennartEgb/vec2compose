@@ -3,6 +3,7 @@ package dev.lennartegb.vec2compose.core
 import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
+import dev.lennartegb.vec2compose.core.commands.CurveTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import kotlin.test.Test
@@ -58,7 +59,7 @@ internal class CommandParserTest {
         val curveToPath = "C11.85,19.35 11.483,19.2 11.05,19.2"
         assertEquals(
             expected = listOf(
-                Command.CurveTo(
+                CurveTo(
                     x1 = 11.85f,
                     y1 = 19.35f,
                     x2 = 11.483f,

@@ -3,6 +3,7 @@ package dev.lennartegb.vec2compose.core.imagevector
 import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
+import dev.lennartegb.vec2compose.core.commands.CurveTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 
@@ -12,7 +13,7 @@ private val Command.methodName: String
     get() = when (this) {
         is ArcTo -> if (isAbsolute) "arcTo" else "arcToRelative"
         is Close -> "close"
-        is Command.CurveTo -> if (isAbsolute) "curveTo" else "curveToRelative"
+        is CurveTo -> if (isAbsolute) "curveTo" else "curveToRelative"
         is Command.HorizontalLineTo -> if (isAbsolute) "horizontalLineTo" else "horizontalLineToRelative"
         is LineTo -> if (isAbsolute) "lineTo" else "lineToRelative"
         is MoveTo -> if (isAbsolute) "moveTo" else "moveToRelative"
@@ -29,7 +30,7 @@ private val Command.methodParams: String
             floatParams(x1, y1)
 
         Close -> ""
-        is Command.CurveTo -> floatParams(x1, y1, x2, y2, x3, y3)
+        is CurveTo -> floatParams(x1, y1, x2, y2, x3, y3)
         is Command.HorizontalLineTo -> "${x}f"
         is LineTo -> floatParams(x, y)
         is MoveTo -> floatParams(x, y)
