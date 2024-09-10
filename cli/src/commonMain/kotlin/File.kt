@@ -19,8 +19,8 @@ internal data class File(
         }
 
         fun write(fileSystem: FileSystem, path: String, content: String) {
-            val sink = fileSystem.sink(path = Path(path))
-            sink.buffered().writeString(content)
+            val sink = fileSystem.sink(path = Path(path)).buffered()
+            sink.writeString(content)
             sink.close()
         }
     }
