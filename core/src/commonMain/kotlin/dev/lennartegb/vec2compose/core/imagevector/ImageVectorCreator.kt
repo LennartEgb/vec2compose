@@ -8,15 +8,14 @@ class ImageVectorCreator(indentation: CharSequence) {
     private val composeMethodCreator = ComposeMethodCreator(indentation)
 
     fun create(name: String, imageVector: ImageVector): String {
-        return buildString {
-            append(composeMethodCreator.createConstructor(name, imageVector))
-            imageVector.nodes.joinToString(separator = "") { node ->
-                when (node) {
-                    is ImageVector.Group -> composeMethodCreator.createGroup(node)
-                    is ImageVector.Path -> composeMethodCreator.createPath(node)
-                }
-            }.also { append(it) }
-            append(".build()")
-        }.replace(emptyLineRegex, "")
+        var content = composeMethodCreator.createConstructor(name, imageVector)
+        content += imageVector.nodes.joinToString(separator = "") { node ->
+            when (node) {
+                is ImageVector.Group -> composeMethodCreator.createGroup(node)
+                is ImageVector.Path -> composeMethodCreator.createPath(node)
+            }
+        }
+        content += ".build()"
+        return content.replace(emptyLineRegex, "")
     }
 }
