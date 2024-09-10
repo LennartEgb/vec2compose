@@ -5,11 +5,11 @@ import dev.lennartegb.vec2compose.svg.svgImageVectorParser
 import dev.lennartegb.vec2compose.vectorDrawable.xmlImageVectorParser
 import kotlinx.io.files.FileSystem
 import kotlinx.io.files.SystemFileSystem
-import output.Output
 
-fun interface ImageVectorConverter : (ImageVector) -> String
+private fun interface ImageVectorConverter : (ImageVector) -> String
+private fun interface Output : (String) -> Unit
 
-fun String.toOutput(fileSystem: FileSystem) = Output {
+private fun String.toOutput(fileSystem: FileSystem) = Output {
     File.write(fileSystem = fileSystem, path = this, content = it)
 }
 
