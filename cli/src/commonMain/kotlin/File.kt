@@ -1,5 +1,8 @@
-import okio.FileSystem
-import okio.Path.Companion.toPath
+import kotlinx.io.buffered
+import kotlinx.io.files.FileSystem
+import kotlinx.io.files.Path
+import kotlinx.io.readString
+import kotlinx.io.writeString
 
 internal data class File(
     val name: String,
@@ -7,13 +10,18 @@ internal data class File(
 ) {
     companion object {
         fun read(fileSystem: FileSystem, path: String): File {
-            val okioPath = path.toPath()
-            require(fileSystem.exists(okioPath)) { "File ${okioPath.name} does not exist" }
-            return File(name = okioPath.name, content = fileSystem.read(okioPath) { readUtf8() })
+            val ioPath = Path(path)
+            require(fileSystem.exists(ioPath)) { "File ${ioPath.name} does not exist" }
+            val source = fileSystem.source(ioPath)
+            val content = source.buffered().readString()
+            source.close()
+            return File(name = ioPath.name, content = content)
         }
 
         fun write(fileSystem: FileSystem, path: String, content: String) {
-            fileSystem.write(path.toPath()) { writeUtf8(content) }
+            val sink = fileSystem.sink(path = Path(path))
+            sink.buffered().writeString(content)
+            sink.close()
         }
     }
 
