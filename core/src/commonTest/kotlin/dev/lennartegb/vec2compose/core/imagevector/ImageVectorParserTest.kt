@@ -1,6 +1,7 @@
 package dev.lennartegb.vec2compose.core.imagevector
 
 import dev.lennartegb.vec2compose.core.ImageVector
+import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -23,7 +24,7 @@ internal class ImageVectorParserTest {
                         Command.MoveTo(x = 1f, y = 2f, isAbsolute = true),
                         Command.LineTo(x = 2f, y = 2f, isAbsolute = true),
                         Command.LineTo(x = 1f, y = 2f, isAbsolute = false),
-                        Command.Close
+                        Close
                     ),
                     alpha = 1f
                 )
@@ -74,7 +75,7 @@ internal class ImageVectorParserTest {
                         Command.MoveTo(x = 1f, y = 2f, isAbsolute = true),
                         Command.LineTo(x = 2f, y = 2f, isAbsolute = true),
                         Command.LineTo(x = 1f, y = 2f, isAbsolute = false),
-                        Command.Close
+                        Close
                     ),
                     alpha = .5f
                 )

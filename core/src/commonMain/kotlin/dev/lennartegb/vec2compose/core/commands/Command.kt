@@ -8,13 +8,6 @@ sealed interface Command {
     val isAbsolute: Boolean
 
     /**
-     * Close command indicated by z/Z
-     */
-    data object Close : Command {
-        override val isAbsolute: Boolean = true
-    }
-
-    /**
      * Move to command indicated by m/M.
      */
     data class MoveTo(val x: Float, val y: Float, override val isAbsolute: Boolean) : Command

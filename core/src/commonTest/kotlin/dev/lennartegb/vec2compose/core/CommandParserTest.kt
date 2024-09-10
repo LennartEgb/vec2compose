@@ -1,6 +1,7 @@
 package dev.lennartegb.vec2compose.core
 
 import dev.lennartegb.vec2compose.core.commands.ArcTo
+import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -73,7 +74,7 @@ internal class CommandParserTest {
     fun `parse Close path`() {
         val closePath = "Z"
         assertEquals(
-            expected = listOf(Command.Close),
+            expected = listOf(Close),
             actual = parseCommand(closePath)
         )
     }
@@ -82,7 +83,7 @@ internal class CommandParserTest {
     fun `parse Close path relative with lowercase z`() {
         val closePath = "z"
         assertEquals(
-            expected = listOf(Command.Close),
+            expected = listOf(Close),
             actual = parseCommand(closePath)
         )
     }

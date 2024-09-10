@@ -3,6 +3,7 @@ package dev.lennartegb.vec2compose.core.imagevector
 import dev.lennartegb.vec2compose.core.ImageVector
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
+import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -51,7 +52,7 @@ internal class ComposeMethodCreatorTest {
                 commands = listOf(
                     Command.MoveTo(2f, 2f, isAbsolute = false),
                     Command.LineTo(4f, 4f, isAbsolute = false),
-                    Command.Close
+                    Close
                 ),
                 alpha = .5f,
                 stroke = ImageVector.Path.Stroke(
@@ -102,7 +103,7 @@ internal class ComposeMethodCreatorTest {
                 commands = listOf(
                     Command.MoveTo(2f, 2f, isAbsolute = true),
                     Command.LineTo(4f, 4f, isAbsolute = true),
-                    Command.Close
+                    Close
                 ),
                 alpha = .5f,
                 stroke = ImageVector.Path.Stroke(

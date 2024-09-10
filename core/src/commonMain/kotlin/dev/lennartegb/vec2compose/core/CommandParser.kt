@@ -1,6 +1,7 @@
 package dev.lennartegb.vec2compose.core
 
 import dev.lennartegb.vec2compose.core.commands.ArcTo
+import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
 
 private val regex = "[+-]?\\d*[.]?\\d+".toRegex()
@@ -44,7 +45,7 @@ internal fun parseCommand(value: String): List<Command> {
         "S" -> createReflectiveCurvesTo(eventString, isAbsolute = isAbsolute)
         "T" -> createReflectiveQuadraticBezier(eventString, isAbsolute = isAbsolute)
         "V" -> createVerticalLinesTo(eventString, isAbsolute = isAbsolute)
-        "Z" -> listOf(Command.Close)
+        "Z" -> listOf(Close)
         else -> error("No command found for $value")
     }
 }

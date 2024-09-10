@@ -1,6 +1,7 @@
 package dev.lennartegb.vec2compose.core.imagevector
 
 import dev.lennartegb.vec2compose.core.commands.ArcTo
+import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -44,7 +45,7 @@ class CommandsTest {
     @Test
     fun `Close method returns close`() {
         assertEquals(
-            actual = Command.Close.method,
+            actual = Close.method,
             expected = "close()"
         )
     }

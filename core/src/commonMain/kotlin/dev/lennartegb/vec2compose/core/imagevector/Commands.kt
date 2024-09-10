@@ -1,6 +1,7 @@
 package dev.lennartegb.vec2compose.core.imagevector
 
 import dev.lennartegb.vec2compose.core.commands.ArcTo
+import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.Command
 
 internal val Command.method: String get() = "$methodName($methodParams)"
@@ -8,7 +9,7 @@ internal val Command.method: String get() = "$methodName($methodParams)"
 private val Command.methodName: String
     get() = when (this) {
         is ArcTo -> if (isAbsolute) "arcTo" else "arcToRelative"
-        is Command.Close -> "close"
+        is Close -> "close"
         is Command.CurveTo -> if (isAbsolute) "curveTo" else "curveToRelative"
         is Command.HorizontalLineTo -> if (isAbsolute) "horizontalLineTo" else "horizontalLineToRelative"
         is Command.LineTo -> if (isAbsolute) "lineTo" else "lineToRelative"
@@ -24,7 +25,8 @@ private val Command.methodParams: String
         is ArcTo -> floatParams(horizontalEllipseRadius, verticalEllipseRadius, theta) +
             ", $isMoreThanHalf, $isPositiveArc, " +
             floatParams(x1, y1)
-        Command.Close -> ""
+
+        Close -> ""
         is Command.CurveTo -> floatParams(x1, y1, x2, y2, x3, y3)
         is Command.HorizontalLineTo -> "${x}f"
         is Command.LineTo -> floatParams(x, y)
