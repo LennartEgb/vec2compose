@@ -5,6 +5,7 @@ plugins {
 }
 
 kotlin {
+    jvm()
     configure(listOf(macosX64(), linuxX64(), mingwX64())) {
         binaries {
             executable {
@@ -19,11 +20,10 @@ kotlin {
             implementation(project(":svg"))
             implementation(project(":vector-drawable"))
             implementation(libs.kotlin.cli)
-            implementation(libs.okio)
+            implementation(libs.kotlin.io)
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
-            implementation(libs.okio.fakefilesystem)
         }
     }
 }

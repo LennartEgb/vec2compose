@@ -3,14 +3,15 @@ import dev.lennartegb.vec2compose.core.VectorSet
 import dev.lennartegb.vec2compose.core.imagevector.ImageVectorCreator
 import dev.lennartegb.vec2compose.svg.svgVectorSetParser
 import dev.lennartegb.vec2compose.vectorDrawable.vectorSetParser
-import okio.FileSystem
+import kotlinx.io.files.FileSystem
+import kotlinx.io.files.SystemFileSystem
 import output.NameFormatter
 import output.Output
 
 fun interface VectorSetConverter : (VectorSet) -> String
 
 internal class Application(
-    private val fileSystem: FileSystem = FileSystem.SYSTEM,
+    private val fileSystem: FileSystem = SystemFileSystem,
     private val imageVectorCreator: ImageVectorCreator,
     private val kotlinFileContentCreator: KotlinFileContentCreator
 ) {
