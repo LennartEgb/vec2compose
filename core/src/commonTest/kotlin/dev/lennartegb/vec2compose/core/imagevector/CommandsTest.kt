@@ -223,7 +223,7 @@ class CommandsTest {
     }
 
     @Test
-    fun `QuadraticBezierTo with absolute=true method returns quadTo`() {
+    fun `QuadraticBezierTo method with absolute=true returns quadTo`() {
         assertEquals(
             actual = QuadraticBezierTo(
                 x1 = 1f,
@@ -237,7 +237,21 @@ class CommandsTest {
     }
 
     @Test
-    fun `QuadraticBezierTo with absolute=false method returns quadToRelative`() {
+    fun `QuadraticBezierTo toString with absolute=true returns quadTo`() {
+        assertEquals(
+            actual = QuadraticBezierTo(
+                x1 = 1f,
+                y1 = 2f,
+                x2 = 3f,
+                y2 = 4f,
+                isAbsolute = true
+            ).toString(),
+            expected = "quadTo(1.0f, 2.0f, 3.0f, 4.0f)"
+        )
+    }
+
+    @Test
+    fun `QuadraticBezierTo method with absolute=false returns quadToRelative`() {
         assertEquals(
             actual = QuadraticBezierTo(
                 x1 = 1f,
@@ -246,6 +260,20 @@ class CommandsTest {
                 y2 = 4f,
                 isAbsolute = false
             ).method,
+            expected = "quadToRelative(1.0f, 2.0f, 3.0f, 4.0f)"
+        )
+    }
+
+    @Test
+    fun `QuadraticBezierTo toString with absolute=false returns quadToRelative`() {
+        assertEquals(
+            actual = QuadraticBezierTo(
+                x1 = 1f,
+                y1 = 2f,
+                x2 = 3f,
+                y2 = 4f,
+                isAbsolute = false
+            ).toString(),
             expected = "quadToRelative(1.0f, 2.0f, 3.0f, 4.0f)"
         )
     }
