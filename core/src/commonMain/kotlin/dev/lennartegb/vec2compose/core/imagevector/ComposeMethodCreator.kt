@@ -34,7 +34,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         indent().append("pathFillType = ${path.fillType.composeName}").appendLine()
         append(") {").appendLine()
 
-        path.commands.map(Command::method)
+        path.commands.map(Command::toString)
             .forEach { indent().append(it).appendLine() }
 
         append("}")
@@ -74,7 +74,9 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
             ImageVector.Path.FillType.EvenOdd -> "PathFillType.EvenOdd"
         }
 
-    private fun ImageVector.Path.FillColor?.solid(): String = this?.let { "SolidColor($it)" } ?: "null"
+    private fun ImageVector.Path.FillColor?.solid(): String =
+        this?.let { "SolidColor($it)" } ?: "null"
+
     private fun ImageVector.Path.Stroke.Cap.property(): String = when (this) {
         Butt -> "StrokeCap.Butt"
         Square -> "StrokeCap.Square"
