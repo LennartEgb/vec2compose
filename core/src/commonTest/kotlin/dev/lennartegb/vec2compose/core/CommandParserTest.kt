@@ -8,6 +8,7 @@ import dev.lennartegb.vec2compose.core.commands.HorizontalLineTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
+import dev.lennartegb.vec2compose.core.commands.VerticalLineTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -127,7 +128,7 @@ internal class CommandParserTest {
     fun `parse VerticalLineTo path`() {
         val horizontalLineToPath = "V20.05"
         assertEquals(
-            expected = listOf(Command.VerticalLineTo(y = 20.05f, isAbsolute = true)),
+            expected = listOf(VerticalLineTo(y = 20.05f, isAbsolute = true)),
             actual = parseCommand(horizontalLineToPath)
         )
     }
@@ -137,8 +138,8 @@ internal class CommandParserTest {
         val horizontalLineToPath = "V20.05 20.05"
         assertEquals(
             expected = listOf(
-                Command.VerticalLineTo(y = 20.05f, isAbsolute = true),
-                Command.VerticalLineTo(y = 20.05f, isAbsolute = true)
+                VerticalLineTo(y = 20.05f, isAbsolute = true),
+                VerticalLineTo(y = 20.05f, isAbsolute = true)
             ),
             actual = parseCommand(horizontalLineToPath)
         )

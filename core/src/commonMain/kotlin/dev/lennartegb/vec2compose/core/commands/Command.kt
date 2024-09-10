@@ -8,11 +8,6 @@ sealed interface Command {
     val isAbsolute: Boolean
 
     /**
-     * Vertical line to command indicated by v/V
-     */
-    data class VerticalLineTo(val y: Float, override val isAbsolute: Boolean) : Command
-
-    /**
      * Quadratic bezier to command indicated by q/Q
      */
     data class QuadraticBezierTo(

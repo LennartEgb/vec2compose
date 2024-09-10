@@ -8,6 +8,7 @@ import dev.lennartegb.vec2compose.core.commands.HorizontalLineTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
+import dev.lennartegb.vec2compose.core.commands.VerticalLineTo
 
 private val regex = "[+-]?\\d*[.]?\\d+".toRegex()
 private val validCommands: CharArray = charArrayOf(
@@ -107,7 +108,7 @@ private fun createHorizontalLinesTo(eventString: String, isAbsolute: Boolean): L
 private fun createVerticalLinesTo(eventString: String, isAbsolute: Boolean): List<Command> {
     return eventString.prepare()
         .validate(1, "Vertical line")
-        .map { Command.VerticalLineTo(it, isAbsolute) }
+        .map { VerticalLineTo(it, isAbsolute) }
 }
 
 private fun createReflectiveCurvesTo(eventString: String, isAbsolute: Boolean): List<Command> {

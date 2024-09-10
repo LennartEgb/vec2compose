@@ -8,6 +8,7 @@ import dev.lennartegb.vec2compose.core.commands.HorizontalLineTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
+import dev.lennartegb.vec2compose.core.commands.VerticalLineTo
 
 internal val Command.method: String get() = "$methodName($methodParams)"
 
@@ -22,7 +23,7 @@ private val Command.methodName: String
         is Command.QuadraticBezierTo -> if (isAbsolute) "quadTo" else "quadToRelative"
         is ReflectiveCurveTo -> if (isAbsolute) "reflectiveCurveTo" else "reflectiveCurveToRelative"
         is Command.ReflectiveQuadraticBezierTo -> if (isAbsolute) "reflectiveQuadTo" else "reflectiveQuadToRelative"
-        is Command.VerticalLineTo -> if (isAbsolute) "verticalLineTo" else "verticalLineToRelative"
+        is VerticalLineTo -> if (isAbsolute) "verticalLineTo" else "verticalLineToRelative"
     }
 
 private val Command.methodParams: String
@@ -39,7 +40,7 @@ private val Command.methodParams: String
         is Command.QuadraticBezierTo -> floatParams(x1, y1, x2, y2)
         is ReflectiveCurveTo -> floatParams(x1, y1, x2, y2)
         is Command.ReflectiveQuadraticBezierTo -> floatParams(x, y)
-        is Command.VerticalLineTo -> "${y}f"
+        is VerticalLineTo -> "${y}f"
     }
 
 private fun floatParams(vararg values: Float): String = values.joinToString("f, ", postfix = "f")

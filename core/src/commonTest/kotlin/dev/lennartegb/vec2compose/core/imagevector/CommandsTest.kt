@@ -8,6 +8,7 @@ import dev.lennartegb.vec2compose.core.commands.HorizontalLineTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
+import dev.lennartegb.vec2compose.core.commands.VerticalLineTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -194,7 +195,7 @@ class CommandsTest {
     @Test
     fun `VerticalLineTo with absolute=true method returns verticalLineTo`() {
         assertEquals(
-            actual = Command.VerticalLineTo(y = 2f, isAbsolute = true).method,
+            actual = VerticalLineTo(y = 2f, isAbsolute = true).method,
             expected = "verticalLineTo(2.0f)"
         )
     }
@@ -202,7 +203,7 @@ class CommandsTest {
     @Test
     fun `VerticalLineTo with absolute=false method returns verticalLineToRelative`() {
         assertEquals(
-            actual = Command.VerticalLineTo(y = 2f, isAbsolute = false).method,
+            actual = VerticalLineTo(y = 2f, isAbsolute = false).method,
             expected = "verticalLineToRelative(2.0f)"
         )
     }
