@@ -191,7 +191,7 @@ class CommandsTest {
     }
 
     @Test
-    fun `MoveTo with absolute=true method returns moveTo`() {
+    fun `MoveTo method with absolute=true returns moveTo`() {
         assertEquals(
             actual = MoveTo(x = 10f, y = 20f, isAbsolute = true).method,
             expected = "moveTo(10.0f, 20.0f)"
@@ -199,9 +199,25 @@ class CommandsTest {
     }
 
     @Test
-    fun `MoveTo with absolute=false method returns moveToRelative`() {
+    fun `MoveTo toString with absolute=true returns moveTo`() {
+        assertEquals(
+            actual = MoveTo(x = 10f, y = 20f, isAbsolute = true).toString(),
+            expected = "moveTo(10.0f, 20.0f)"
+        )
+    }
+
+    @Test
+    fun `MoveTo method with absolute=false returns moveToRelative`() {
         assertEquals(
             actual = MoveTo(x = 10f, y = 20f, isAbsolute = false).method,
+            expected = "moveToRelative(10.0f, 20.0f)"
+        )
+    }
+
+    @Test
+    fun `MoveTo toString with absolute=false returns moveToRelative`() {
+        assertEquals(
+            actual = MoveTo(x = 10f, y = 20f, isAbsolute = false).toString(),
             expected = "moveToRelative(10.0f, 20.0f)"
         )
     }
