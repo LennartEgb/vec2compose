@@ -21,8 +21,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
     fun createPath(path: ImageVector.Path, forBuilder: Boolean = true): String = buildString {
         if (forBuilder) append(".")
         append("path(").appendLine()
-        val fillColor = path.fillColor?.solid()
-        indent().append("fill = $fillColor,").appendLine()
+        indent().append("fill = ${path.fillColor?.solid()},").appendLine()
         indent().append("fillAlpha = ${path.alpha}f,").appendLine()
         indent().append("stroke = ${path.stroke.color?.solid()},").appendLine()
         indent().append("strokeAlpha = ${path.stroke.alpha}f,").appendLine()

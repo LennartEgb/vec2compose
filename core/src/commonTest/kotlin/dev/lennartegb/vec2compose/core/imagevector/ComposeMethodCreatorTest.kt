@@ -95,12 +95,7 @@ internal class ComposeMethodCreatorTest {
             forBuilder = true,
             path = ImageVector.Path(
                 fillType = ImageVector.Path.FillType.EvenOdd,
-                fillColor = ImageVector.Path.FillColor(
-                    red = 0xff,
-                    green = 0xff,
-                    blue = 0xff,
-                    alpha = 0xff
-                ),
+                fillColor = null,
                 commands = listOf(
                     MoveTo(2f, 2f, isAbsolute = true),
                     LineTo(4f, 4f, isAbsolute = true),
@@ -121,7 +116,7 @@ internal class ComposeMethodCreatorTest {
             actual = actual,
             expected = """
                 .path(
-                  fill = SolidColor(Color(0xffffffff)),
+                  fill = null,
                   fillAlpha = 0.5f,
                   stroke = null,
                   strokeAlpha = 0.75f,
