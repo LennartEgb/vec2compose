@@ -335,7 +335,7 @@ class CommandsTest {
     }
 
     @Test
-    fun `ReflectiveQuadraticBezierTo with absolute=true method returns reflectiveQuadraticBezierTo`() {
+    fun `ReflectiveQuadraticBezierTo method with absolute=true returns reflectiveQuadraticBezierTo`() {
         assertEquals(
             actual = ReflectiveQuadraticBezierTo(x = 1f, y = 2f, isAbsolute = true).method,
             expected = "reflectiveQuadTo(1.0f, 2.0f)"
@@ -343,9 +343,25 @@ class CommandsTest {
     }
 
     @Test
-    fun `ReflectiveQuadraticBezierTo with absolute=false method returns reflectiveQuadraticBezierTo`() {
+    fun `ReflectiveQuadraticBezierTo toString with absolute=true returns reflectiveQuadraticBezierTo`() {
+        assertEquals(
+            actual = ReflectiveQuadraticBezierTo(x = 1f, y = 2f, isAbsolute = true).toString(),
+            expected = "reflectiveQuadTo(1.0f, 2.0f)"
+        )
+    }
+
+    @Test
+    fun `ReflectiveQuadraticBezierTo method with absolute=false returns reflectiveQuadraticBezierTo`() {
         assertEquals(
             actual = ReflectiveQuadraticBezierTo(x = 1f, y = 2f, isAbsolute = false).method,
+            expected = "reflectiveQuadToRelative(1.0f, 2.0f)"
+        )
+    }
+
+    @Test
+    fun `ReflectiveQuadraticBezierTo toString with absolute=false returns reflectiveQuadraticBezierTo`() {
+        assertEquals(
+            actual = ReflectiveQuadraticBezierTo(x = 1f, y = 2f, isAbsolute = false).toString(),
             expected = "reflectiveQuadToRelative(1.0f, 2.0f)"
         )
     }

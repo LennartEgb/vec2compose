@@ -7,4 +7,13 @@ data class ReflectiveQuadraticBezierTo(
     val x: Float,
     val y: Float,
     override val isAbsolute: Boolean
-) : Command
+) : Command {
+    override fun toString(): String {
+        var method = "reflectiveQuadTo"
+        if (!isAbsolute) {
+            method += "Relative"
+        }
+        method += "(${x}f, ${y}f)"
+        return method
+    }
+}
