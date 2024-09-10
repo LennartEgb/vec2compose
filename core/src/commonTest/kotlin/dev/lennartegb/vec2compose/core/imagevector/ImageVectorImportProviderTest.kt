@@ -9,17 +9,15 @@ class ImageVectorImportProviderTest {
     fun `create imports without groups`() {
         val provider = ImageVectorImportProvider()
         assertEquals(
-            actual = provider.createImports(hasGroup = false),
-            expected = listOf(
-                "import androidx.compose.ui.graphics.Color",
-                "import androidx.compose.ui.graphics.PathFillType",
-                "import androidx.compose.ui.graphics.SolidColor",
-                "import androidx.compose.ui.graphics.StrokeCap",
-                "import androidx.compose.ui.graphics.StrokeJoin",
-                "import androidx.compose.ui.graphics.vector.ImageVector",
-                "import androidx.compose.ui.graphics.vector.path",
+            actual = provider.getImports(hasGroup = false),
+            expected = "import androidx.compose.ui.graphics.Color\n" +
+                "import androidx.compose.ui.graphics.PathFillType\n" +
+                "import androidx.compose.ui.graphics.SolidColor\n" +
+                "import androidx.compose.ui.graphics.StrokeCap\n" +
+                "import androidx.compose.ui.graphics.StrokeJoin\n" +
+                "import androidx.compose.ui.graphics.vector.ImageVector\n" +
+                "import androidx.compose.ui.graphics.vector.path\n" +
                 "import androidx.compose.ui.unit.dp"
-            )
         )
     }
 
@@ -27,18 +25,16 @@ class ImageVectorImportProviderTest {
     fun `create imports with groups`() {
         val provider = ImageVectorImportProvider()
         assertEquals(
-            actual = provider.createImports(hasGroup = true),
-            expected = listOf(
-                "import androidx.compose.ui.graphics.Color",
-                "import androidx.compose.ui.graphics.PathFillType",
-                "import androidx.compose.ui.graphics.SolidColor",
-                "import androidx.compose.ui.graphics.StrokeCap",
-                "import androidx.compose.ui.graphics.StrokeJoin",
-                "import androidx.compose.ui.graphics.vector.ImageVector",
-                "import androidx.compose.ui.graphics.vector.group",
-                "import androidx.compose.ui.graphics.vector.path",
+            actual = provider.getImports(hasGroup = true),
+            expected = "import androidx.compose.ui.graphics.Color\n" +
+                "import androidx.compose.ui.graphics.PathFillType\n" +
+                "import androidx.compose.ui.graphics.SolidColor\n" +
+                "import androidx.compose.ui.graphics.StrokeCap\n" +
+                "import androidx.compose.ui.graphics.StrokeJoin\n" +
+                "import androidx.compose.ui.graphics.vector.ImageVector\n" +
+                "import androidx.compose.ui.graphics.vector.group\n" +
+                "import androidx.compose.ui.graphics.vector.path\n" +
                 "import androidx.compose.ui.unit.dp"
-            )
         )
     }
 }

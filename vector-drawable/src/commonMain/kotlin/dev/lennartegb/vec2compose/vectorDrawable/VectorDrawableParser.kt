@@ -9,6 +9,12 @@ import dev.lennartegb.vec2compose.core.commands.PathParser
 
 private typealias DpString = String
 
+fun vectorSetParser(): VectorSetParser = VectorDrawableParser(
+    pathParser = PathParser(),
+    colorParser = HexColorParser(),
+    deserializer = VectorDrawableDeserializer()
+)
+
 internal class VectorDrawableParser(
     private val pathParser: PathParser,
     private val colorParser: HexColorParser,
