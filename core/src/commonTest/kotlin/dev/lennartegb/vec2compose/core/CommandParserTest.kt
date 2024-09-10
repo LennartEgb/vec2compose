@@ -2,13 +2,13 @@ package dev.lennartegb.vec2compose.core
 
 import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
-import dev.lennartegb.vec2compose.core.commands.Command
 import dev.lennartegb.vec2compose.core.commands.CurveTo
 import dev.lennartegb.vec2compose.core.commands.HorizontalLineTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import dev.lennartegb.vec2compose.core.commands.QuadraticBezierTo
 import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
+import dev.lennartegb.vec2compose.core.commands.ReflectiveQuadraticBezierTo
 import dev.lennartegb.vec2compose.core.commands.VerticalLineTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -185,7 +185,7 @@ internal class CommandParserTest {
     fun `parse reflective quadratic bezier path`() {
         val quadraticBezierToPath = "T1000,300"
         assertEquals(
-            expected = listOf(Command.ReflectiveQuadraticBezierTo(1000f, 300f, isAbsolute = true)),
+            expected = listOf(ReflectiveQuadraticBezierTo(1000f, 300f, isAbsolute = true)),
             actual = parseCommand(quadraticBezierToPath)
         )
     }
@@ -194,7 +194,7 @@ internal class CommandParserTest {
     fun `parse relative reflective quadratic bezier path`() {
         val quadraticBezierToPath = "t1000,300"
         assertEquals(
-            expected = listOf(Command.ReflectiveQuadraticBezierTo(1000f, 300f, isAbsolute = false)),
+            expected = listOf(ReflectiveQuadraticBezierTo(1000f, 300f, isAbsolute = false)),
             actual = parseCommand(quadraticBezierToPath)
         )
     }

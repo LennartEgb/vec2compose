@@ -9,6 +9,7 @@ import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import dev.lennartegb.vec2compose.core.commands.QuadraticBezierTo
 import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
+import dev.lennartegb.vec2compose.core.commands.ReflectiveQuadraticBezierTo
 import dev.lennartegb.vec2compose.core.commands.VerticalLineTo
 
 private val regex = "[+-]?\\d*[.]?\\d+".toRegex()
@@ -78,11 +79,11 @@ private fun createArcTo(eventString: String, isAbsolute: Boolean): List<Command>
 private fun createReflectiveQuadraticBezier(
     eventString: String,
     isAbsolute: Boolean
-): List<Command> {
+): List<ReflectiveQuadraticBezierTo> {
     return eventString.prepare()
         .validate(count = 2, name = "Reflective quadratic bezier")
         .windowed(size = 2, step = 2, partialWindows = false)
-        .map { Command.ReflectiveQuadraticBezierTo(x = it[0], it[1], isAbsolute = isAbsolute) }
+        .map { ReflectiveQuadraticBezierTo(x = it[0], it[1], isAbsolute = isAbsolute) }
 }
 
 private fun createQuadraticBezier(eventString: String, isAbsolute: Boolean): List<Command> {

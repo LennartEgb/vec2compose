@@ -2,13 +2,13 @@ package dev.lennartegb.vec2compose.core.imagevector
 
 import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
-import dev.lennartegb.vec2compose.core.commands.Command
 import dev.lennartegb.vec2compose.core.commands.CurveTo
 import dev.lennartegb.vec2compose.core.commands.HorizontalLineTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import dev.lennartegb.vec2compose.core.commands.QuadraticBezierTo
 import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
+import dev.lennartegb.vec2compose.core.commands.ReflectiveQuadraticBezierTo
 import dev.lennartegb.vec2compose.core.commands.VerticalLineTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -180,7 +180,7 @@ class CommandsTest {
     @Test
     fun `ReflectiveQuadraticBezierTo with absolute=true method returns reflectiveQuadraticBezierTo`() {
         assertEquals(
-            actual = Command.ReflectiveQuadraticBezierTo(x = 1f, y = 2f, isAbsolute = true).method,
+            actual = ReflectiveQuadraticBezierTo(x = 1f, y = 2f, isAbsolute = true).method,
             expected = "reflectiveQuadTo(1.0f, 2.0f)"
         )
     }
@@ -188,7 +188,7 @@ class CommandsTest {
     @Test
     fun `ReflectiveQuadraticBezierTo with absolute=false method returns reflectiveQuadraticBezierTo`() {
         assertEquals(
-            actual = Command.ReflectiveQuadraticBezierTo(x = 1f, y = 2f, isAbsolute = false).method,
+            actual = ReflectiveQuadraticBezierTo(x = 1f, y = 2f, isAbsolute = false).method,
             expected = "reflectiveQuadToRelative(1.0f, 2.0f)"
         )
     }
