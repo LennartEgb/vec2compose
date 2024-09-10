@@ -8,5 +8,5 @@ private val regex = "[A-z][^A-z]*".toRegex()
 
 fun parsePath(pathCode: String): Path = regex
     .findAll(pathCode)
-    .flatMap { CommandParser.parse(it.value) }
+    .flatMap { parseCommand(it.value) }
     .toList()
