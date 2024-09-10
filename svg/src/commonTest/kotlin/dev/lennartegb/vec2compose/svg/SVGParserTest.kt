@@ -15,9 +15,8 @@ import kotlin.test.assertFailsWith
 
 internal class SVGParserTest {
 
-    private val parser = SVGParser()
-
-    private val VectorSet.groups: List<VectorSet.Group> get() = nodes.filterIsInstance<VectorSet.Group>()
+    private val VectorSet.groups: List<VectorSet.Group>
+        get() = nodes.filterIsInstance<VectorSet.Group>()
 
     @Test
     fun `parse SVG file with correct fill color`() {
@@ -30,26 +29,26 @@ internal class SVGParserTest {
         }
         val expected = listOf(
             VectorSet.Path(
-                fillType = VectorSet.Path.FillType.Default,
+                fillType = FillType.Default,
                 fillColor = null,
                 commands = emptyList(),
                 alpha = 1f
             ),
             VectorSet.Path(
-                fillType = VectorSet.Path.FillType.Default,
+                fillType = FillType.Default,
                 fillColor = VectorSet.Path.FillColor(0xff, 0xff, 0xff, 0xff),
                 commands = emptyList(),
                 alpha = 1f
             ),
             VectorSet.Path(
-                fillType = VectorSet.Path.FillType.Default,
+                fillType = FillType.Default,
                 fillColor = VectorSet.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff),
                 commands = emptyList(),
                 alpha = 1f
             )
         )
         assertEquals(
-            actual = parser.parse(content = svg).map { it.nodes },
+            actual = svgVectorSetParser().parse(content = svg).map { it.nodes },
             expected = Result.success(expected)
         )
     }
@@ -58,7 +57,7 @@ internal class SVGParserTest {
     fun `parse file with group rotation`() {
         val svg = svg { """<g transform="rotate(45 0 0)"/>""" }
         assertEquals(
-            actual = parser.parse(svg).map { it.nodes },
+            actual = svgVectorSetParser().parse(svg).map { it.nodes },
             expected = Result.success(
                 listOf(
                     VectorSet.Group(
@@ -78,7 +77,7 @@ internal class SVGParserTest {
     fun `parse file with group pivot`() {
         val svg = svg { """<g transform="rotate(45 20 30)"/>""" }
         assertEquals(
-            actual = parser.parse(svg).map { it.groups.map { it.pivot } },
+            actual = svgVectorSetParser().parse(svg).map { it.groups.map { it.pivot } },
             expected = Result.success(listOf(Translation(20f, 30f)))
         )
     }
@@ -87,7 +86,8 @@ internal class SVGParserTest {
     fun `parse file with group translate`() {
         val svg = svg { """<g transform="translate(20 30)"/>""" }
         assertEquals(
-            actual = parser.parse(svg).map { set -> set.groups.map { it.translation } },
+            actual = svgVectorSetParser().parse(svg)
+                .map { set -> set.groups.map { it.translation } },
             expected = Result.success(listOf(Translation(20f, 30f)))
         )
     }
@@ -97,11 +97,11 @@ internal class SVGParserTest {
         val svg = svg { """<path d="" fill="none"/>""" }
 
         assertEquals(
-            actual = parser.parse(svg).map { it.nodes },
+            actual = svgVectorSetParser().parse(svg).map { it.nodes },
             expected = Result.success(
                 listOf(
                     VectorSet.Path(
-                        fillType = VectorSet.Path.FillType.Default,
+                        fillType = FillType.Default,
                         fillColor = null,
                         commands = emptyList(),
                         alpha = 1f
@@ -114,7 +114,7 @@ internal class SVGParserTest {
     @Test
     fun `parse invalid ellipse from SVG`() {
         val svg = svg { """<ellipse cx="10" /> """ }
-        assertFailsWith<IllegalArgumentException> { parser.parse(svg).getOrThrow() }
+        assertFailsWith<IllegalArgumentException> { svgVectorSetParser().parse(svg).getOrThrow() }
     }
 
     @Test
@@ -123,11 +123,11 @@ internal class SVGParserTest {
             """<ellipse cx="10" cy="20" rx="10" ry="20" fill="red" stroke="blue" stroke-width="3"/>"""
         }
         assertEquals(
-            actual = parser.parse(svg).map { it.nodes },
+            actual = svgVectorSetParser().parse(svg).map { it.nodes },
             expected = Result.success(
                 listOf(
                     VectorSet.Path(
-                        fillType = VectorSet.Path.FillType.Default,
+                        fillType = FillType.Default,
                         fillColor = VectorSet.Path.FillColor(
                             red = 0xFF,
                             green = 0x00,
@@ -183,7 +183,7 @@ internal class SVGParserTest {
             """
         }
         assertEquals(
-            actual = parser.parse(svg).getOrThrow(),
+            actual = svgVectorSetParser().parse(svg).getOrThrow(),
             expected = VectorSet(
                 width = 24,
                 height = 24,
