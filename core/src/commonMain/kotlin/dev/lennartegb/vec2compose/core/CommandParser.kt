@@ -6,6 +6,7 @@ import dev.lennartegb.vec2compose.core.commands.Command
 import dev.lennartegb.vec2compose.core.commands.CurveTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
+import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
 
 private val regex = "[+-]?\\d*[.]?\\d+".toRegex()
 private val validCommands: CharArray = charArrayOf(
@@ -113,7 +114,7 @@ private fun createReflectiveCurvesTo(eventString: String, isAbsolute: Boolean): 
         .validate(4, "Reflective curve")
         .windowed(size = 4, step = 4, partialWindows = false)
         .map {
-            Command.ReflectiveCurveTo(
+            ReflectiveCurveTo(
                 x1 = it[0],
                 y1 = it[1],
                 x2 = it[2],

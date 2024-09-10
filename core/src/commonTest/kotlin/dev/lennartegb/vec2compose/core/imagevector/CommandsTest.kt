@@ -6,6 +6,7 @@ import dev.lennartegb.vec2compose.core.commands.Command
 import dev.lennartegb.vec2compose.core.commands.CurveTo
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
+import dev.lennartegb.vec2compose.core.commands.ReflectiveCurveTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -148,7 +149,7 @@ class CommandsTest {
     @Test
     fun `ReflectiveCurveTo with absolute=true method returns reflectiveCurveTo`() {
         assertEquals(
-            actual = Command.ReflectiveCurveTo(
+            actual = ReflectiveCurveTo(
                 x1 = 1f,
                 y1 = 2f,
                 x2 = 3f,
@@ -162,7 +163,7 @@ class CommandsTest {
     @Test
     fun `ReflectiveCurveTo with absolute=false method returns reflectiveCurveToRelative`() {
         assertEquals(
-            actual = Command.ReflectiveCurveTo(
+            actual = ReflectiveCurveTo(
                 x1 = 1f,
                 y1 = 2f,
                 x2 = 3f,
