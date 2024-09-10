@@ -5,4 +5,5 @@ package dev.lennartegb.vec2compose.core.commands
  */
 data object Close : Command {
     override val isAbsolute: Boolean = true
+    override fun toString(): String = "close()"
 }

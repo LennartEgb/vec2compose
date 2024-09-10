@@ -49,12 +49,15 @@ class CommandsTest {
         )
     }
 
+    // NOTE: will be removed once toString methods are in place
     @Test
     fun `Close method returns close`() {
-        assertEquals(
-            actual = Close.method,
-            expected = "close()"
-        )
+        assertEquals(actual = Close.method, expected = "close()")
+    }
+
+    @Test
+    fun `Close toString returns close`() {
+        assertEquals(actual = "$Close", expected = "close()")
     }
 
     @Test
