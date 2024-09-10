@@ -1,21 +1,12 @@
 package dev.lennartegb.vec2compose.vectorDrawable
 
-import dev.lennartegb.vec2compose.core.HexColorParser
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
 import dev.lennartegb.vec2compose.core.VectorSet
-import dev.lennartegb.vec2compose.core.commands.CommandParser
-import dev.lennartegb.vec2compose.core.commands.PathParser
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class VectorDrawableParserTest {
-
-    private val parser = VectorDrawableParser(
-        deserializer = VectorDrawableDeserializer(),
-        pathParser = PathParser(CommandParser()),
-        colorParser = HexColorParser()
-    )
 
     @Test
     fun parse_valid_VectorDrawable_xml_to_VectorSet() {
@@ -37,7 +28,7 @@ internal class VectorDrawableParserTest {
                     )
                 )
             ),
-            actual = parser.parse(vector).getOrThrow()
+            actual = vectorSetParser().parse(vector).getOrThrow()
         )
     }
 
@@ -61,7 +52,7 @@ internal class VectorDrawableParserTest {
                     )
                 )
             ),
-            actual = parser.parse(v).getOrThrow()
+            actual = vectorSetParser().parse(v).getOrThrow()
         )
     }
 
@@ -81,7 +72,7 @@ internal class VectorDrawableParserTest {
                 />
             """.trimIndent()
         )
-        val result = parser.parse(vector).getOrThrow()
+        val result = vectorSetParser().parse(vector).getOrThrow()
         assertEquals(
             expected = listOf(
                 VectorSet.Group(
@@ -112,7 +103,7 @@ internal class VectorDrawableParserTest {
              />
             """.trimIndent()
         )
-        val result = parser.parse(vector).getOrThrow()
+        val result = vectorSetParser().parse(vector).getOrThrow()
         assertEquals(
             actual = result,
             expected = VectorSet(
