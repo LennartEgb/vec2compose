@@ -1,15 +1,15 @@
 package dev.lennartegb.vec2compose.vectorDrawable
 
+import dev.lennartegb.vec2compose.core.ImageVector
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
-import dev.lennartegb.vec2compose.core.VectorSet
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class VectorDrawableParserTest {
 
     @Test
-    fun parse_valid_VectorDrawable_xml_to_VectorSet() {
+    fun `parse valid VectorDrawable xml to ImageVector`() {
         val vector = vector(
             """
                 <path
@@ -19,21 +19,21 @@ internal class VectorDrawableParserTest {
             """.trimIndent()
         )
         assertEquals(
-            expected = vectorSet(
+            expected = imageVector(
                 nodes = listOf(
-                    VectorSet.Path(
-                        fillType = VectorSet.Path.FillType.NonZero,
+                    ImageVector.Path(
+                        fillType = ImageVector.Path.FillType.NonZero,
                         commands = emptyList(),
                         alpha = .5f
                     )
                 )
             ),
-            actual = vectorSetParser().parse(vector).getOrThrow()
+            actual = xmlImageVectorParser().parse(vector).getOrThrow()
         )
     }
 
     @Test
-    fun parse_valid_VectorDrawable_with_fillType_evenOdd_to_VectorSet() {
+    fun `parse valid VectorDrawable with fillType evenOdd to ImageVector`() {
         val v = vector(
             """
             <path
@@ -43,21 +43,21 @@ internal class VectorDrawableParserTest {
             """.trimIndent()
         )
         assertEquals(
-            expected = vectorSet(
+            expected = imageVector(
                 nodes = listOf(
-                    VectorSet.Path(
-                        fillType = VectorSet.Path.FillType.EvenOdd,
+                    ImageVector.Path(
+                        fillType = ImageVector.Path.FillType.EvenOdd,
                         commands = emptyList(),
                         alpha = 1f
                     )
                 )
             ),
-            actual = vectorSetParser().parse(v).getOrThrow()
+            actual = xmlImageVectorParser().parse(v).getOrThrow()
         )
     }
 
     @Test
-    fun parse_drawable_with_group() {
+    fun `parse drawable with group`() {
         val vector = vector(
             """
                 <group 
@@ -72,10 +72,10 @@ internal class VectorDrawableParserTest {
                 />
             """.trimIndent()
         )
-        val result = vectorSetParser().parse(vector).getOrThrow()
+        val result = xmlImageVectorParser().parse(vector).getOrThrow()
         assertEquals(
             expected = listOf(
-                VectorSet.Group(
+                ImageVector.Group(
                     name = "hi",
                     nodes = emptyList(),
                     rotate = 15f,
@@ -89,7 +89,7 @@ internal class VectorDrawableParserTest {
     }
 
     @Test
-    fun parse_path_with_stroke() {
+    fun `parse path with stroke`() {
         val vector = vector(
             """
              <path
@@ -103,25 +103,25 @@ internal class VectorDrawableParserTest {
              />
             """.trimIndent()
         )
-        val result = vectorSetParser().parse(vector).getOrThrow()
+        val result = xmlImageVectorParser().parse(vector).getOrThrow()
         assertEquals(
             actual = result,
-            expected = VectorSet(
+            expected = ImageVector(
                 width = 24,
                 height = 24,
                 viewportWidth = 24f,
                 viewportHeight = 24f,
                 nodes = listOf(
-                    VectorSet.Path(
+                    ImageVector.Path(
                         commands = emptyList(),
                         alpha = 1f,
-                        fillType = VectorSet.Path.FillType.Default,
-                        stroke = VectorSet.Path.Stroke(
-                            color = VectorSet.Path.FillColor(0xff, 0xff, 0xff, 0xff),
+                        fillType = ImageVector.Path.FillType.Default,
+                        stroke = ImageVector.Path.Stroke(
+                            color = ImageVector.Path.FillColor(0xff, 0xff, 0xff, 0xff),
                             alpha = .5f,
                             width = 42f,
-                            cap = VectorSet.Path.Stroke.Cap.Butt,
-                            join = VectorSet.Path.Stroke.Join.Bevel,
+                            cap = ImageVector.Path.Stroke.Cap.Butt,
+                            join = ImageVector.Path.Stroke.Join.Bevel,
                             miter = 2f
                         )
                     )
@@ -144,7 +144,7 @@ internal class VectorDrawableParserTest {
         appendLine("</vector>")
     }
 
-    private fun vectorSet(nodes: List<VectorSet.Node> = emptyList()): VectorSet = VectorSet(
+    private fun imageVector(nodes: List<ImageVector.Node> = emptyList()): ImageVector = ImageVector(
         width = 24,
         height = 24,
         viewportWidth = 24f,

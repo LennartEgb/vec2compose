@@ -2,7 +2,7 @@ package dev.lennartegb.vec2compose.core
 
 import dev.lennartegb.vec2compose.core.commands.Command
 
-data class VectorSet(
+data class ImageVector(
     val width: Int,
     val height: Int,
     val viewportWidth: Float,

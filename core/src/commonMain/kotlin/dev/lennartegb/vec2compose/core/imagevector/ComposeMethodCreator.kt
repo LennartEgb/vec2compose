@@ -1,15 +1,15 @@
 package dev.lennartegb.vec2compose.core.imagevector
 
-import dev.lennartegb.vec2compose.core.VectorSet
-import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke.Cap.Butt
-import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke.Cap.Square
-import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke.Join.Bevel
-import dev.lennartegb.vec2compose.core.VectorSet.Path.Stroke.Join.Miter
+import dev.lennartegb.vec2compose.core.ImageVector
+import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Cap.Butt
+import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Cap.Square
+import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join.Bevel
+import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join.Miter
 import dev.lennartegb.vec2compose.core.commands.Command
 
 internal class ComposeMethodCreator(private val indentation: CharSequence) {
 
-    fun createConstructor(name: String, set: VectorSet): String = buildString {
+    fun createConstructor(name: String, set: ImageVector): String = buildString {
         append("ImageVector.Builder(").appendLine()
         indent().append("name = \"$name\",").appendLine()
         indent().append("defaultWidth = ${set.width}.dp,").appendLine()
@@ -19,7 +19,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         append(")")
     }
 
-    fun createPath(path: VectorSet.Path, forBuilder: Boolean = true): String = buildString {
+    fun createPath(path: ImageVector.Path, forBuilder: Boolean = true): String = buildString {
         if (forBuilder) append(".")
         append("path(").appendLine()
         val fillColor = path.fillColor?.solid()
@@ -40,7 +40,7 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         append("}")
     }.removePrefix(indentation)
 
-    fun createGroup(group: VectorSet.Group, forBuilder: Boolean = true): String = buildString {
+    fun createGroup(group: ImageVector.Group, forBuilder: Boolean = true): String = buildString {
         if (forBuilder) append(".")
         append("group(").appendLine()
         group.name?.also { indent().append("name = \"$it\",").appendLine() }
@@ -56,8 +56,8 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         group.nodes.takeIf { it.isNotEmpty() }
             ?.joinToString(separator = "\n") {
                 when (it) {
-                    is VectorSet.Group -> createGroup(it, forBuilder = false)
-                    is VectorSet.Path -> createPath(it, forBuilder = false)
+                    is ImageVector.Group -> createGroup(it, forBuilder = false)
+                    is ImageVector.Path -> createPath(it, forBuilder = false)
                 }
             }
             ?.setupIndent()
@@ -68,22 +68,22 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
 
     private fun String.setupIndent(): String = prependIndent(indent = indentation.toString())
     private fun StringBuilder.indent(): StringBuilder = append(indentation)
-    private val VectorSet.Path.FillType.composeName: String
+    private val ImageVector.Path.FillType.composeName: String
         get() = when (this) {
-            VectorSet.Path.FillType.NonZero -> "PathFillType.NonZero"
-            VectorSet.Path.FillType.EvenOdd -> "PathFillType.EvenOdd"
+            ImageVector.Path.FillType.NonZero -> "PathFillType.NonZero"
+            ImageVector.Path.FillType.EvenOdd -> "PathFillType.EvenOdd"
         }
 
-    private fun VectorSet.Path.FillColor?.solid(): String = this?.let { "SolidColor($it)" } ?: "null"
-    private fun VectorSet.Path.Stroke.Cap.property(): String = when (this) {
+    private fun ImageVector.Path.FillColor?.solid(): String = this?.let { "SolidColor($it)" } ?: "null"
+    private fun ImageVector.Path.Stroke.Cap.property(): String = when (this) {
         Butt -> "StrokeCap.Butt"
         Square -> "StrokeCap.Square"
-        VectorSet.Path.Stroke.Cap.Round -> "StrokeCap.Round"
+        ImageVector.Path.Stroke.Cap.Round -> "StrokeCap.Round"
     }
 
-    private fun VectorSet.Path.Stroke.Join.property(): String = when (this) {
+    private fun ImageVector.Path.Stroke.Join.property(): String = when (this) {
         Bevel -> "StrokeJoin.Bevel"
         Miter -> "StrokeJoin.Miter"
-        VectorSet.Path.Stroke.Join.Round -> "StrokeJoin.Round"
+        ImageVector.Path.Stroke.Join.Round -> "StrokeJoin.Round"
     }
 }

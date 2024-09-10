@@ -7,7 +7,7 @@ class HexColorParser {
 
     enum class Strategy { ARGB, RGBA }
 
-    fun parse(color: String, strategy: Strategy = ARGB): VectorSet.Path.FillColor? {
+    fun parse(color: String, strategy: Strategy = ARGB): ImageVector.Path.FillColor? {
         if (color.startsWith("#")) return parse(color.drop(1), strategy)
         return when (color.length) {
             3, 4 -> parse(color.fold(initial = "") { acc, char -> "$acc$char$char" }, strategy)
@@ -21,7 +21,7 @@ class HexColorParser {
                     ARGB -> listOf(first, second, third, fourth)
                     RGBA -> listOf(fourth, first, second, third)
                 }
-                VectorSet.Path.FillColor(
+                ImageVector.Path.FillColor(
                     red = red.toInt(16),
                     green = green.toInt(16),
                     blue = blue.toInt(16),

@@ -1,15 +1,15 @@
 package dev.lennartegb.vec2compose.vectorDrawable
 
 import dev.lennartegb.vec2compose.core.HexColorParser
+import dev.lennartegb.vec2compose.core.ImageVector
+import dev.lennartegb.vec2compose.core.ImageVectorParser
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
-import dev.lennartegb.vec2compose.core.VectorSet
-import dev.lennartegb.vec2compose.core.VectorSetParser
 import dev.lennartegb.vec2compose.core.commands.PathParser
 
 private typealias DpString = String
 
-fun vectorSetParser(): VectorSetParser = VectorDrawableParser(
+fun xmlImageVectorParser(): ImageVectorParser = VectorDrawableParser(
     pathParser = PathParser(),
     colorParser = HexColorParser(),
     deserializer = VectorDrawableDeserializer()
@@ -19,15 +19,15 @@ internal class VectorDrawableParser(
     private val pathParser: PathParser,
     private val colorParser: HexColorParser,
     private val deserializer: VectorDrawableDeserializer = VectorDrawableDeserializer()
-) : VectorSetParser {
+) : ImageVectorParser {
 
-    override fun parse(content: String): Result<VectorSet> {
+    override fun parse(content: String): Result<ImageVector> {
         val androidVector = deserializer.deserialize(content)
-        return runCatching { androidVector.toVectorSet() }
+        return runCatching { androidVector.toImageVector() }
     }
 
-    private fun VectorDrawable.toVectorSet(): VectorSet {
-        return VectorSet(
+    private fun VectorDrawable.toImageVector(): ImageVector {
+        return ImageVector(
             width = widthInDp.toIntDp(),
             height = heightInDp.toIntDp(),
             viewportWidth = viewportWidth,
@@ -41,14 +41,14 @@ internal class VectorDrawableParser(
         )
     }
 
-    private fun VectorDrawable.Group.toVectorGroup(): VectorSet.Group {
+    private fun VectorDrawable.Group.toVectorGroup(): ImageVector.Group {
         val tx = translateX ?: 0f
         val ty = translateY ?: 0f
         val sx = scaleX ?: 1f
         val sy = scaleY ?: 1f
         val px = pivotX ?: 0f
         val py = pivotY ?: 0f
-        return VectorSet.Group(
+        return ImageVector.Group(
             name = name,
             nodes = children.map {
                 when (it) {
@@ -63,9 +63,9 @@ internal class VectorDrawableParser(
         )
     }
 
-    private fun VectorDrawable.Path.toVectorPath(): VectorSet.Path {
-        return VectorSet.Path(
-            fillType = VectorSet.Path.FillType.parse(fillType),
+    private fun VectorDrawable.Path.toVectorPath(): ImageVector.Path {
+        return ImageVector.Path(
+            fillType = ImageVector.Path.FillType.parse(fillType),
             commands = pathParser.parse(pathData),
             fillColor = fillColor?.let(colorParser::parse),
             alpha = alpha,
@@ -73,8 +73,8 @@ internal class VectorDrawableParser(
         )
     }
 
-    private fun VectorDrawable.Path.toStroke(): VectorSet.Path.Stroke {
-        return VectorSet.Path.Stroke(
+    private fun VectorDrawable.Path.toStroke(): ImageVector.Path.Stroke {
+        return ImageVector.Path.Stroke(
             color = strokeColor?.let { colorParser.parse(it) },
             alpha = strokeAlpha?.toFloat(),
             width = strokeWidth?.toFloat(),
@@ -84,21 +84,21 @@ internal class VectorDrawableParser(
         )
     }
 
-    private fun getCap(value: String): VectorSet.Path.Stroke.Cap {
+    private fun getCap(value: String): ImageVector.Path.Stroke.Cap {
         return when (value) {
-            "round" -> VectorSet.Path.Stroke.Cap.Round
-            "butt" -> VectorSet.Path.Stroke.Cap.Butt
-            "square" -> VectorSet.Path.Stroke.Cap.Square
-            else -> error("StrokeCap not supported. Was: $value. Must be in: ${VectorSet.Path.Stroke.Cap.entries}")
+            "round" -> ImageVector.Path.Stroke.Cap.Round
+            "butt" -> ImageVector.Path.Stroke.Cap.Butt
+            "square" -> ImageVector.Path.Stroke.Cap.Square
+            else -> error("StrokeCap not supported. Was: $value. Must be in: ${ImageVector.Path.Stroke.Cap.entries}")
         }
     }
 
-    private fun getJoin(value: String): VectorSet.Path.Stroke.Join {
+    private fun getJoin(value: String): ImageVector.Path.Stroke.Join {
         return when (value) {
-            "round" -> VectorSet.Path.Stroke.Join.Round
-            "bevel" -> VectorSet.Path.Stroke.Join.Bevel
-            "miter" -> VectorSet.Path.Stroke.Join.Miter
-            else -> error("StrokeJoin not supported. Was: $value. Must be in: ${VectorSet.Path.Stroke.Join.entries}")
+            "round" -> ImageVector.Path.Stroke.Join.Round
+            "bevel" -> ImageVector.Path.Stroke.Join.Bevel
+            "miter" -> ImageVector.Path.Stroke.Join.Miter
+            else -> error("StrokeJoin not supported. Was: $value. Must be in: ${ImageVector.Path.Stroke.Join.entries}")
         }
     }
 
@@ -112,10 +112,10 @@ internal class VectorDrawableParser(
         error("Could not transform dp string to int: $this")
     }
 
-    private fun VectorSet.Path.FillType.Companion.parse(fillType: String): VectorSet.Path.FillType {
+    private fun ImageVector.Path.FillType.Companion.parse(fillType: String): ImageVector.Path.FillType {
         return when (fillType) {
-            "evenOdd" -> VectorSet.Path.FillType.EvenOdd
-            "nonZero" -> VectorSet.Path.FillType.NonZero
+            "evenOdd" -> ImageVector.Path.FillType.EvenOdd
+            "nonZero" -> ImageVector.Path.FillType.NonZero
             else -> Default
         }
     }
