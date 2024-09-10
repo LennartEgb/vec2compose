@@ -11,4 +11,13 @@ data class CurveTo(
     val x3: Float,
     val y3: Float,
     override val isAbsolute: Boolean
-) : Command
+) : Command {
+    override fun toString(): String {
+        var method = "curveTo"
+        if (!isAbsolute) {
+            method += "Relative"
+        }
+        method += "(${x1}f, ${y1}f, ${x2}f, ${y2}f, ${x3}f, ${y3}f)"
+        return method
+    }
+}

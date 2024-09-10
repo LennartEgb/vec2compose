@@ -95,7 +95,7 @@ class CommandsTest {
     }
 
     @Test
-    fun `CurveTo with absolute=true method returns curveTo`() {
+    fun `CurveTo method with absolute=true returns curveTo`() {
         assertEquals(
             actual = CurveTo(1f, 2f, 3f, 4f, 5f, 6f, isAbsolute = true).method,
             expected = "curveTo(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f)"
@@ -103,9 +103,25 @@ class CommandsTest {
     }
 
     @Test
-    fun `CurveTo with absolute=false method returns curveToRelative`() {
+    fun `CurveTo toString with absolute=true returns curveTo`() {
+        assertEquals(
+            actual = CurveTo(1f, 2f, 3f, 4f, 5f, 6f, isAbsolute = true).toString(),
+            expected = "curveTo(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f)"
+        )
+    }
+
+    @Test
+    fun `CurveTo method with absolute=false returns curveToRelative`() {
         assertEquals(
             actual = CurveTo(1f, 2f, 3f, 4f, 5f, 6f, isAbsolute = false).method,
+            expected = "curveToRelative(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f)"
+        )
+    }
+
+    @Test
+    fun `CurveTo toString with absolute=false returns curveToRelative`() {
+        assertEquals(
+            actual = CurveTo(1f, 2f, 3f, 4f, 5f, 6f, isAbsolute = false).toString(),
             expected = "curveToRelative(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f)"
         )
     }
