@@ -159,7 +159,7 @@ class CommandsTest {
     }
 
     @Test
-    fun `LineTo with absolute=true method returns lineTo`() {
+    fun `LineTo method with absolute=true returns lineTo`() {
         assertEquals(
             actual = LineTo(x = 10f, y = 20f, isAbsolute = true).method,
             expected = "lineTo(10.0f, 20.0f)"
@@ -167,9 +167,25 @@ class CommandsTest {
     }
 
     @Test
-    fun `LineTo with absolute=false method returns lineToRelative`() {
+    fun `LineTo toString with absolute=true returns lineTo`() {
+        assertEquals(
+            actual = LineTo(x = 10f, y = 20f, isAbsolute = true).toString(),
+            expected = "lineTo(10.0f, 20.0f)"
+        )
+    }
+
+    @Test
+    fun `LineTo method with absolute=false returns lineToRelative`() {
         assertEquals(
             actual = LineTo(x = 10f, y = 20f, isAbsolute = false).method,
+            expected = "lineToRelative(10.0f, 20.0f)"
+        )
+    }
+
+    @Test
+    fun `LineTo toString with absolute=false returns lineToRelative`() {
+        assertEquals(
+            actual = LineTo(x = 10f, y = 20f, isAbsolute = false).toString(),
             expected = "lineToRelative(10.0f, 20.0f)"
         )
     }
