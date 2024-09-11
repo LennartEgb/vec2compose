@@ -51,26 +51,26 @@ import io.github.vinceglb.filekit.core.PickerType
 
 @Composable
 fun App(modifier: Modifier = Modifier) {
-    var files by remember { mutableStateOf(emptyList<File>()) }
+    val (files, setFiles) = remember { mutableStateOf(emptyList<File>()) }
     val launcher = rememberFilePickerLauncher(
         type = PickerType.File(extensions = listOf("xml", "svg")),
         mode = PickerMode.Multiple()
     ) { platformFiles ->
         platformFiles?.also { pFiles ->
-            files = pFiles.map { File(name = it.name, path = it.file.path) }
+            setFiles(pFiles.map { File(name = it.name, path = it.file.path) })
         }
     }
     if (files.isEmpty()) {
         UploadPane(
             modifier = modifier.fillMaxSize(),
-            onUploadedFiles = { files = it },
-            onUploadFilesClick = { launcher.launch() }
+            onUploadedFiles = setFiles,
+            onUploadFilesClick = launcher::launch
         )
     } else {
         PreviewPane(
             modifier = modifier.fillMaxSize(),
             files = files,
-            onClose = { files = emptyList() })
+            onClose = { setFiles(emptyList()) })
     }
 }
 
@@ -87,7 +87,7 @@ private fun UploadPane(
         modifier = Modifier.fillMaxSize().padding(24.dp),
         contentAlignment = Center
     ) {
-        val maxWidth = 800.dp
+        val maxWidth = 1_000.dp
         UploadColumn(
             modifier = Modifier
                 .sizeIn(
