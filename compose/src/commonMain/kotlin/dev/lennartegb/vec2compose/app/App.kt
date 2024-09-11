@@ -45,21 +45,28 @@ import dev.lennartegb.vec2compose.app.data.File
 import dev.lennartegb.vec2compose.app.data.content
 import dev.lennartegb.vec2compose.app.dragdrop.onExternalDrag
 import dev.lennartegb.vec2compose.app.icons.Icons
+import io.github.vinceglb.filekit.compose.PickerResultLauncher
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerMode
 import io.github.vinceglb.filekit.core.PickerType
 
 @Composable
-fun App(modifier: Modifier = Modifier) {
-    val (files, setFiles) = remember { mutableStateOf(emptyList<File>()) }
-    val launcher = rememberFilePickerLauncher(
+private fun rememberVectorPickerLauncher(onResult: (List<File>) -> Unit): PickerResultLauncher {
+    return rememberFilePickerLauncher(
         type = PickerType.File(extensions = listOf("xml", "svg")),
         mode = PickerMode.Multiple()
     ) { platformFiles ->
         platformFiles?.also { pFiles ->
-            setFiles(pFiles.map { File(name = it.name, path = it.file.path) })
+            onResult(pFiles.map { File(name = it.name, path = it.file.path) })
         }
     }
+}
+
+@Composable
+fun App(modifier: Modifier = Modifier) {
+    val (files, setFiles) = remember { mutableStateOf(emptyList<File>()) }
+    val launcher = rememberVectorPickerLauncher(setFiles)
+
     if (files.isEmpty()) {
         UploadPane(
             modifier = modifier.fillMaxSize(),
@@ -79,7 +86,7 @@ private fun UploadPane(
     onUploadedFiles: (List<File>) -> Unit,
     onUploadFilesClick: () -> Unit,
     modifier: Modifier = Modifier
-) = Surface(modifier = modifier) {
+) = Surface(modifier = modifier, color = MaterialTheme.colors.background) {
     var isDragging by remember { mutableStateOf(value = false) }
     val borderAlpha = if (isDragging) ContentAlpha.high else ContentAlpha.disabled
     val borderColor = MaterialTheme.colors.onBackground.copy(alpha = borderAlpha)
@@ -143,7 +150,7 @@ private fun PreviewPane(
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState()
 ) {
-    Surface(modifier = modifier) {
+    Surface(modifier = modifier, color = MaterialTheme.colors.background) {
         Box {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
