@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# Define the target directories/files and the symbolic link paths
+PRE_PUSH="pre-push"
+PRE_COMMIT="pre-commit"
+TARGET="./.scripts/hooks/"
+LINK=".git/hooks/"
+
+# Function to create or update a symbolic link
+create_symlink() {
+    local target=$1
+    local link=$2
+
+    if [ -L "$link" ]; then
+        echo "Symbolic link $link already exists. Deleting it..."
+        rm "$link"
+    elif [ -e "$link" ]; then
+        echo "Error: $link exists but is not a symbolic link. Exiting..."
+        exit 1
+    fi
+
+    echo "Creating symbolic link: $link -> $target"
+    chmod +x $target
+    ln -s "$target" "$link"
+}
+
+# Create or update symbolic links
+create_symlink "$TARGET$PRE_PUSH" "$LINK$PRE_PUSH"
+create_symlink "$TARGET$PRE_COMMIT" "$LINK$PRE_COMMIT"
+
+echo "Symbolic links set up successfully!"
