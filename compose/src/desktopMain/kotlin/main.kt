@@ -1,3 +1,5 @@
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import dev.lennartegb.vec2compose.app.App
@@ -7,6 +9,6 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         title = "vec2compose"
     ) {
-        App()
+        App(modifier = Modifier.fillMaxSize())
     }
 }
