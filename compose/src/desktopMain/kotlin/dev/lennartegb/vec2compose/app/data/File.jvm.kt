@@ -17,5 +17,7 @@ actual fun ExternalDragValue.toFiles(): List<File> {
 
 private fun readFiles(path: String): File {
     val javaFile = java.io.File(URI.create(path))
-    return File(name = javaFile.name, content = javaFile.readText())
+    return File(name = javaFile.name, path = javaFile.path)
 }
+
+actual val File.content: String get() = java.io.File(path).readText()
