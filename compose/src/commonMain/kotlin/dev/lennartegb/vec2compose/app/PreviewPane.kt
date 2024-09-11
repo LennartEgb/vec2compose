@@ -17,10 +17,12 @@ import androidx.compose.material.ListItem
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.lennartegb.vec2compose.app.data.File
 import dev.lennartegb.vec2compose.app.data.content
@@ -48,21 +50,29 @@ fun PreviewPane(
                     )
                 }
             }
-            Box(
-                modifier = Modifier
-                    .padding(24.dp)
-                    .clip(CircleShape)
-                    .background(color = MaterialTheme.colors.primary)
-                    .clickable(onClick = onClose)
-                    .padding(8.dp)
-                    .align(Alignment.TopEnd),
-            ) {
-                Icon(
-                    imageVector = Icons.Close,
-                    contentDescription = "close",
-                    tint = MaterialTheme.colors.onPrimary
-                )
-            }
+            CloseIcon(modifier = Modifier.align(TopEnd).padding(24.dp), onClick = onClose)
         }
+    }
+}
+
+@Composable
+private fun CloseIcon(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colors.primary,
+    contentColor: Color = contentColorFor(color)
+) {
+    Box(
+        modifier = modifier
+            .clip(CircleShape)
+            .background(color = color)
+            .clickable(onClick = onClick)
+            .padding(8.dp),
+    ) {
+        Icon(
+            imageVector = Icons.Close,
+            contentDescription = "close",
+            tint = contentColor
+        )
     }
 }
