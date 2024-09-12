@@ -1,5 +1,6 @@
 package dev.lennartegb.vec2compose.app
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
@@ -28,6 +30,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.lennartegb.vec2compose.app.icons.Icons
+import org.jetbrains.compose.resources.painterResource
+import vec2compose.compose.generated.resources.Res
+import vec2compose.compose.generated.resources.logo
 
 @Composable
 fun UploadPane(
@@ -38,18 +43,27 @@ fun UploadPane(
         modifier = Modifier.fillMaxSize().padding(24.dp),
         contentAlignment = Center
     ) {
-        val maxWidth = 1_000.dp
-        UploadColumn(
-            modifier = Modifier
-                .sizeIn(
-                    minWidth = maxWidth / 3,
-                    maxWidth = maxWidth,
-                    minHeight = maxWidth * .25f,
-                    maxHeight = maxWidth * .75f
-                )
-                .dottedBorder(color = LocalContentColor.current, radius = 8.dp),
-            onUploadFilesClick = onUploadFilesClick
-        )
+        Column(horizontalAlignment = CenterHorizontally, verticalArrangement = spacedBy(32.dp)) {
+            val maxWidth = 1_000.dp
+            val logo = painterResource(Res.drawable.logo)
+            Image(
+                modifier = Modifier.width(250.dp),
+                painter = logo,
+                contentDescription = null
+            )
+
+            UploadColumn(
+                modifier = Modifier
+                    .sizeIn(
+                        minWidth = maxWidth / 2,
+                        maxWidth = maxWidth,
+                        minHeight = maxWidth * .25f,
+                        maxHeight = maxWidth * .75f
+                    )
+                    .dottedBorder(color = LocalContentColor.current, radius = 8.dp),
+                onUploadFilesClick = onUploadFilesClick
+            )
+        }
     }
 }
 

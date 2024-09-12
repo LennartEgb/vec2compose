@@ -4,12 +4,14 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Colors
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,33 +29,69 @@ import io.github.vinceglb.filekit.core.PickerType
 import kotlinx.coroutines.launch
 
 @Composable
+fun rememberAppState(
+    isSystemDarkTheme: Boolean = isSystemInDarkTheme(),
+): AppState {
+    val files = remember { mutableStateOf(emptyList<File>()) }
+    val picker = rememberVectorPickerLauncher { files.value = it }
+    return remember {
+        AppState(
+            isSystemDarkTheme = isSystemDarkTheme,
+            files = files,
+            picker = picker
+        )
+    }
+}
+
+class AppState(
+    isSystemDarkTheme: Boolean,
+    files: State<List<File>>,
+    private val picker: PickerResultLauncher
+) {
+    val files by files
+    var isDark by mutableStateOf(isSystemDarkTheme)
+        private set
+    var colors: Colors = getColor()
+        private set
+
+    fun toggleTheme() {
+        isDark = !isDark
+        colors = getColor()
+    }
+
+    fun pickFiles() {
+        picker.launch()
+    }
+
+    private fun getColor(): Colors {
+        return if (isDark) darkColors() else lightColors()
+    }
+}
+
+
+@Composable
 fun App(
     modifier: Modifier = Modifier,
-    isSystemDarkTheme: Boolean = isSystemInDarkTheme()
+    appState: AppState = rememberAppState()
 ) {
-    var darkTheme: Boolean by remember { mutableStateOf(isSystemDarkTheme) }
-    val colors = if (darkTheme) darkColors() else lightColors()
-    MaterialTheme(colors = colors) {
+    MaterialTheme(colors = appState.colors) {
         Box(modifier = modifier) {
-            val (files, setFiles) = remember { mutableStateOf(emptyList<File>()) }
-            val launcher = rememberVectorPickerLauncher(setFiles)
-
-            if (files.isEmpty()) {
+            if (appState.files.isEmpty()) {
                 UploadPane(
-                    onUploadFilesClick = launcher::launch,
+                    onUploadFilesClick = appState::pickFiles,
                     modifier = Modifier.fillMaxSize()
                 )
             } else {
                 PreviewPane(
-                    modifier = Modifier.fillMaxSize(),
-                    files = files,
-                    onClose = { setFiles(emptyList()) })
+                    files = appState.files,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
             FloatingActionButton(
                 modifier = Modifier.padding(16.dp).align(Alignment.BottomEnd),
-                onClick = { darkTheme = !darkTheme }
+                onClick = appState::toggleTheme
             ) {
-                val icon = if (darkTheme) Icons.Moon else Icons.Sun
+                val icon = if (appState.isDark) Icons.Moon else Icons.Sun
                 Icon(imageVector = icon, contentDescription = null)
             }
         }

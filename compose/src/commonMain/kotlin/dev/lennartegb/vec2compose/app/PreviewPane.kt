@@ -32,7 +32,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.Center
-import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -49,59 +48,55 @@ import dev.lennartegb.vec2compose.vectorDrawable.xmlImageVectorParser
 @Composable
 fun PreviewPane(
     files: List<File>,
-    onClose: () -> Unit,
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState()
 ) {
     Surface(modifier = modifier, color = MaterialTheme.colors.background) {
         val (detail, setDetail) = remember { mutableStateOf<File?>(null) }
-        Box {
-            val padding = 16.dp
-            Row(modifier = modifier) {
-                LazyColumn(
-                    modifier = Modifier
-                        .shadow(elevation = 4.dp)
-                        .background(MaterialTheme.colors.background)
-                        .fillMaxHeight()
-                        .weight(1f),
-                    state = state,
-                    contentPadding = PaddingValues(vertical = padding)
-                ) {
-                    fileListItems(
-                        selected = detail,
-                        files = files,
-                        onClick = setDetail,
-                        modifier = Modifier.padding(horizontal = padding)
-                    )
-                }
-                Box(Modifier.fillMaxHeight().weight(2f).padding(16.dp)) {
-                    if (detail != null) {
-                        DetailColumn(
-                            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
-                            file = detail,
-                            fileConverter = converter@{
-                                val imageVector = when (detail.extension) {
-                                    "xml" -> xmlImageVectorParser()
-                                    "svg" -> svgImageVectorParser()
-                                    else -> return@converter "ERROR"
-                                }.parse(detail.content)
-                                val creator = ImageVectorCreator(indentation = " ".repeat(4))
-                                imageVector
-                                    .mapCatching {
-                                        creator.create(name = detail.name, imageVector = it)
-                                    }
-                                    .getOrElse { "ERROR" }
-                            }
-                        )
-                    } else {
-                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
-                            Text(text = "Select a file")
+        val padding = 16.dp
+        Row(modifier = modifier) {
+            LazyColumn(
+                modifier = Modifier
+                    .shadow(elevation = 4.dp)
+                    .background(MaterialTheme.colors.background)
+                    .fillMaxHeight()
+                    .weight(1f),
+                state = state,
+                contentPadding = PaddingValues(vertical = padding)
+            ) {
+                fileListItems(
+                    selected = detail,
+                    files = files,
+                    onClick = setDetail,
+                    modifier = Modifier.padding(horizontal = padding)
+                )
+            }
+            Box(Modifier.fillMaxHeight().weight(2f).padding(16.dp)) {
+                if (detail != null) {
+                    DetailColumn(
+                        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
+                        file = detail,
+                        fileConverter = converter@{
+                            val imageVector = when (detail.extension) {
+                                "xml" -> xmlImageVectorParser()
+                                "svg" -> svgImageVectorParser()
+                                else -> return@converter "ERROR"
+                            }.parse(detail.content)
+                            val creator = ImageVectorCreator(indentation = " ".repeat(4))
+                            imageVector
+                                .mapCatching {
+                                    creator.create(name = detail.name, imageVector = it)
+                                }
+                                .getOrElse { "ERROR" }
                         }
+                    )
+                } else {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
+                        Text(text = "Select a file")
                     }
                 }
             }
 
-            CloseIcon(modifier = Modifier.align(TopEnd).padding(24.dp), onClick = onClose)
         }
     }
 }
