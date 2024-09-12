@@ -8,16 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -31,19 +27,13 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dev.lennartegb.vec2compose.app.data.File
-import dev.lennartegb.vec2compose.app.dragdrop.onExternalDrag
 import dev.lennartegb.vec2compose.app.icons.Icons
 
 @Composable
 fun UploadPane(
-    onUploadedFiles: (List<File>) -> Unit,
     onUploadFilesClick: () -> Unit,
     modifier: Modifier = Modifier
 ) = Surface(modifier = modifier, color = MaterialTheme.colors.background) {
-    var isDragging by remember { mutableStateOf(value = false) }
-    val borderAlpha = if (isDragging) ContentAlpha.high else ContentAlpha.disabled
-    val borderColor = MaterialTheme.colors.onBackground.copy(alpha = borderAlpha)
     Box(
         modifier = Modifier.fillMaxSize().padding(24.dp),
         contentAlignment = Center
@@ -57,16 +47,7 @@ fun UploadPane(
                     minHeight = maxWidth * .25f,
                     maxHeight = maxWidth * .75f
                 )
-                .dottedBorder(color = borderColor, radius = 8.dp)
-                .onExternalDrag(
-                    onDragStart = { isDragging = true },
-                    onDragExit = { isDragging = false },
-                    onDrop = { files ->
-                        val regex = """.*\.(svg|xml)$""".toRegex()
-                        onUploadedFiles(files.filter { regex.matches(it.name) })
-                        isDragging = false
-                    }
-                ),
+                .dottedBorder(color = LocalContentColor.current, radius = 8.dp),
             onUploadFilesClick = onUploadFilesClick
         )
     }
@@ -89,7 +70,7 @@ private fun UploadColumn(onUploadFilesClick: () -> Unit, modifier: Modifier = Mo
             tint = MaterialTheme.colors.onBackground
         )
         Text(
-            text = "Drag and drop files",
+            text = "Upload XML and SVG files",
             style = MaterialTheme.typography.subtitle1,
             textAlign = TextAlign.Center
         )

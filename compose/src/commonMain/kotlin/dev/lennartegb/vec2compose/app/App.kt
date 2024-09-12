@@ -22,7 +22,6 @@ import dev.lennartegb.vec2compose.app.data.File
 import dev.lennartegb.vec2compose.app.icons.Icons
 import io.github.vinceglb.filekit.compose.PickerResultLauncher
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
-import io.github.vinceglb.filekit.core.FileKit
 import io.github.vinceglb.filekit.core.PickerMode
 import io.github.vinceglb.filekit.core.PickerType
 import kotlinx.coroutines.launch
@@ -41,9 +40,8 @@ fun App(
 
             if (files.isEmpty()) {
                 UploadPane(
-                    modifier = Modifier.fillMaxSize(),
-                    onUploadedFiles = setFiles,
-                    onUploadFilesClick = launcher::launch
+                    onUploadFilesClick = launcher::launch,
+                    modifier = Modifier.fillMaxSize()
                 )
             } else {
                 PreviewPane(

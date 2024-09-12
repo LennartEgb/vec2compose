@@ -4,7 +4,7 @@ import dev.lennartegb.vec2compose.app.App
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-    CanvasBasedWindow("vec2compose") {
+    CanvasBasedWindow(title = "vec2compose", canvasElementId = "mainCanvas") {
         App()
     }
 }

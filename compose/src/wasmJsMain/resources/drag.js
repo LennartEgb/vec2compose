@@ -1,4 +1,4 @@
-var dragAndDropListener = null;
+let dragAndDropListener = null;
 
 function registerDragAndDropListener(onDragOver, onDragLeave, onDrop) {
     dragAndDropListener = {
@@ -32,16 +32,17 @@ function dragLeaveHandler(ev) {
 
 function extractMultiFile(ev) {
     const data = ev.dataTransfer;
-    if (data.items && data.items.length > 0) {
-        const file = data.items[0].getAsFile();
-        console.log(file);
-        return file;
-    } else if (data.files && data.files.length > 0) {
-        const file = data.files[0];
-        console.log(file);
-        return data.files[0];
-    } else {
-        console.log("No files found in %", data)
-        return undefined;
+    let files = [];
+    if (data.files && data.files.length > 0) {
+        for (let i = 0; i < data.files.length; i++) {
+            files.push(data.files[i])
+        }
+        return files[0];
+    } else if (data.items && data.items.length > 0) {
+        for (let i = 0; i < data.items.length; i++) {
+            files.push(data.items[i].getAsFile())
+        }
+        return files[0];
     }
+    return undefined;
 }
