@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalComposeUiApi::class)
-
 package dev.lennartegb.vec2compose.app.dragdrop
 
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -9,6 +7,7 @@ import androidx.compose.ui.onExternalDrag
 import dev.lennartegb.vec2compose.app.data.File
 import dev.lennartegb.vec2compose.app.data.toFiles
 
+@OptIn(ExperimentalComposeUiApi::class)
 actual fun Modifier.onExternalDrag(
     onDragStart: () -> Unit,
     onDragExit: () -> Unit,

@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,8 +22,10 @@ import dev.lennartegb.vec2compose.app.data.File
 import dev.lennartegb.vec2compose.app.icons.Icons
 import io.github.vinceglb.filekit.compose.PickerResultLauncher
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
+import io.github.vinceglb.filekit.core.FileKit
 import io.github.vinceglb.filekit.core.PickerMode
 import io.github.vinceglb.filekit.core.PickerType
+import kotlinx.coroutines.launch
 
 @Composable
 fun App(
@@ -61,12 +64,20 @@ fun App(
 
 @Composable
 private fun rememberVectorPickerLauncher(onResult: (List<File>) -> Unit): PickerResultLauncher {
+    val scope = rememberCoroutineScope()
     return rememberFilePickerLauncher(
         type = PickerType.File(extensions = listOf("xml", "svg")),
         mode = PickerMode.Multiple()
     ) { platformFiles ->
-        platformFiles?.also { pFiles ->
-            onResult(pFiles.map { File(name = it.name, path = it.file.path) })
+        scope.launch {
+            platformFiles
+                ?.map { file ->
+                    File(
+                        name = file.name,
+                        content = file.readBytes().decodeToString(),
+                    )
+                }
+                ?.also(onResult)
         }
     }
 }

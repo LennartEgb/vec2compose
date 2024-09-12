@@ -2,6 +2,7 @@ package dev.lennartegb.vec2compose.app
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,10 +39,8 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import androidx.compose.ui.unit.dp
 import dev.lennartegb.vec2compose.app.data.File
-import dev.lennartegb.vec2compose.app.data.content
 import dev.lennartegb.vec2compose.app.icons.Icons
 import dev.lennartegb.vec2compose.core.imagevector.ImageVectorCreator
 import dev.lennartegb.vec2compose.svg.svgImageVectorParser
@@ -89,10 +88,7 @@ fun PreviewPane(
                                 val creator = ImageVectorCreator(indentation = " ".repeat(4))
                                 imageVector
                                     .mapCatching {
-                                        creator.create(
-                                            name = detail.name,
-                                            imageVector = it
-                                        )
+                                        creator.create(name = detail.name, imageVector = it)
                                     }
                                     .getOrElse { "ERROR" }
                             }
@@ -118,17 +114,18 @@ fun DetailColumn(
 ) {
     val clipBoardManager = LocalClipboardManager.current
     Column(modifier = modifier) {
-        val fileContent = file.content
-        var content by remember { mutableStateOf(fileContent) }
+        var content by remember(file) { mutableStateOf(file.content) }
         Text(text = content)
 
-        Row {
+        Row(horizontalArrangement = spacedBy(8.dp)) {
             Button(onClick = { clipBoardManager.setText(AnnotatedString(file.content)) }) {
                 Text(text = "Copy")
             }
+            var enabled: Boolean by remember { mutableStateOf(true) }
             Button(
-                enabled = content == fileContent,
-                onClick = { content = fileConverter() }) {
+                enabled = enabled,
+                onClick = { content = fileConverter(); enabled = false }
+            ) {
                 Text(text = "Convert")
             }
         }
@@ -150,13 +147,6 @@ private fun LazyListScope.fileListItems(
             .background(if (file == selected) selectedColor else color)
             .then(modifier),
         text = { Text(file.name) },
-        secondaryText = {
-            Text(
-                text = file.path,
-                overflow = Ellipsis,
-                maxLines = 1
-            )
-        }
     )
 }
 

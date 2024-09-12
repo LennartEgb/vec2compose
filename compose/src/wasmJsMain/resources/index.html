@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Multiplatform App</title>
+        <script src="skiko.js"></script>
+        <script src="drag.js"></script>
+    </head>
+    <body>
+        <div>
+            <canvas
+                id="ComposeTarget"
+                width="800"
+                height="600"
+                ondrop="dropHandler(event);"
+                ondragover="dragOverHandler(event);"
+                ondragleave="dragLeaveHandler(event);">
+            </canvas>
+        </div>
+        <script src="compose.js"></script>
+    </body>
+</html>
