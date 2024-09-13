@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -23,103 +23,94 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.ListItem
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import dev.lennartegb.vec2compose.app.data.File
 import dev.lennartegb.vec2compose.app.icons.Icons
-import dev.lennartegb.vec2compose.core.imagevector.ImageVectorCreator
-import dev.lennartegb.vec2compose.svg.svgImageVectorParser
-import dev.lennartegb.vec2compose.vectorDrawable.xmlImageVectorParser
+import kotlinx.coroutines.launch
+
+fun interface ContentConverter : (File) -> Result<String>
+fun interface Copier : suspend (String) -> Unit
 
 @Composable
 fun PreviewPane(
     files: List<File>,
+    contentConverter: ContentConverter,
+    copier: Copier,
     modifier: Modifier = Modifier,
     state: LazyListState = rememberLazyListState()
 ) {
-    Surface(modifier = modifier, color = MaterialTheme.colors.background) {
-        val (detail, setDetail) = remember { mutableStateOf<File?>(null) }
-        val padding = 16.dp
-        Row(modifier = modifier) {
+    val padding = 16.dp
+    var detail by remember { mutableStateOf<File?>(null) }
+    val scope = rememberCoroutineScope()
+    ListDetailPane(
+        modifier = modifier,
+        list = {
             LazyColumn(
-                modifier = Modifier
-                    .shadow(elevation = 4.dp)
-                    .background(MaterialTheme.colors.background)
-                    .fillMaxHeight()
-                    .weight(1f),
+                modifier = Modifier.fillMaxWidth(),
                 state = state,
                 contentPadding = PaddingValues(vertical = padding)
             ) {
                 fileListItems(
                     selected = detail,
                     files = files,
-                    onClick = setDetail,
+                    onClick = { detail = it },
                     modifier = Modifier.padding(horizontal = padding)
                 )
             }
-            Box(Modifier.fillMaxHeight().weight(2f).padding(16.dp)) {
-                if (detail != null) {
-                    DetailColumn(
-                        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
-                        file = detail,
-                        fileConverter = converter@{
-                            val imageVector = when (detail.extension) {
-                                "xml" -> xmlImageVectorParser()
-                                "svg" -> svgImageVectorParser()
-                                else -> return@converter "ERROR"
-                            }.parse(detail.content)
-                            val creator = ImageVectorCreator(indentation = " ".repeat(4))
-                            imageVector
-                                .mapCatching {
-                                    creator.create(name = detail.name, imageVector = it)
-                                }
-                                .getOrElse { "ERROR" }
-                        }
-                    )
-                } else {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
-                        Text(text = "Select a file")
+        }
+    ) {
+        val detailModifier = Modifier.fillMaxSize()
+        detail?.also { detail ->
+            DetailColumn(
+                modifier = detailModifier.verticalScroll(rememberScrollState()),
+                file = detail,
+                contentConverter = contentConverter,
+                copy = {
+                    scope.launch {
+                        copier(it)
                     }
                 }
-            }
-
+            )
+        } ?: Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
+            Text(text = "Select a file")
         }
     }
 }
 
+
 @Composable
-fun DetailColumn(
+private fun DetailColumn(
     file: File,
+    copy: (String) -> Unit,
+    contentConverter: ContentConverter,
     modifier: Modifier = Modifier,
-    fileConverter: () -> String
 ) {
-    val clipBoardManager = LocalClipboardManager.current
-    Column(modifier = modifier) {
+    var enabled: Boolean by remember(file) { mutableStateOf(true) }
+    Column(modifier = modifier, verticalArrangement = spacedBy(16.dp)) {
         var content by remember(file) { mutableStateOf(file.content) }
         Text(text = content)
 
         Row(horizontalArrangement = spacedBy(8.dp)) {
-            Button(onClick = { clipBoardManager.setText(AnnotatedString(file.content)) }) {
+            Button(onClick = { copy(content) }) {
                 Text(text = "Copy")
             }
-            var enabled: Boolean by remember { mutableStateOf(true) }
             Button(
                 enabled = enabled,
-                onClick = { content = fileConverter(); enabled = false }
+                onClick = {
+                    enabled = contentConverter(file).onSuccess { content = it }.isFailure
+                }
             ) {
                 Text(text = "Convert")
             }

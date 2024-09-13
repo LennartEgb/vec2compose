@@ -19,9 +19,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import dev.lennartegb.vec2compose.app.data.File
 import dev.lennartegb.vec2compose.app.icons.Icons
+import dev.lennartegb.vec2compose.core.imagevector.ImageVectorCreator
+import dev.lennartegb.vec2compose.svg.svgImageVectorParser
+import dev.lennartegb.vec2compose.vectorDrawable.xmlImageVectorParser
 import io.github.vinceglb.filekit.compose.PickerResultLauncher
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerMode
@@ -51,7 +56,7 @@ class AppState(
     val files by files
     var isDark by mutableStateOf(isSystemDarkTheme)
         private set
-    var colors: Colors = getColor()
+    var colors: Colors by mutableStateOf(getColor())
         private set
 
     fun toggleTheme() {
@@ -63,16 +68,16 @@ class AppState(
         picker.launch()
     }
 
-    private fun getColor(): Colors {
-        return if (isDark) darkColors() else lightColors()
-    }
+    private fun getColor(): Colors = if (isDark) darkColors() else lightColors()
 }
 
 
 @Composable
 fun App(
     modifier: Modifier = Modifier,
-    appState: AppState = rememberAppState()
+    appState: AppState = rememberAppState(),
+    contentConverter: ContentConverter = rememberContentConverter(),
+    copier: Copier = rememberCopier()
 ) {
     MaterialTheme(colors = appState.colors) {
         Box(modifier = modifier) {
@@ -84,7 +89,9 @@ fun App(
             } else {
                 PreviewPane(
                     files = appState.files,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    contentConverter = contentConverter,
+                    copier = copier
                 )
             }
             FloatingActionButton(
@@ -96,6 +103,27 @@ fun App(
             }
         }
     }
+}
+
+@Composable
+private fun rememberContentConverter(indentation: String = " ".repeat(4)): ContentConverter {
+    return remember {
+        val creator = ImageVectorCreator(indentation = indentation)
+        ContentConverter { file ->
+            when (file.extension) {
+                "xml" -> xmlImageVectorParser()
+                "svg" -> svgImageVectorParser()
+                else -> error("Only XML and SVG files are allowed")
+            }.parse(file.content)
+                .mapCatching { creator.create(name = file.name, imageVector = it) }
+        }
+    }
+}
+
+@Composable
+private fun rememberCopier(): Copier {
+    val manager = LocalClipboardManager.current
+    return remember { Copier { manager.setText(AnnotatedString(it)) } }
 }
 
 @Composable
