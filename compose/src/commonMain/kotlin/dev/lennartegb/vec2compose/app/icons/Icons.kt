@@ -7,4 +7,5 @@ object Icons {
     val Moon: ImageVector get() = internalMoon
     val Sun: ImageVector get() = internalSun
     val Warning: ImageVector get() = internalWarning
+    val Copy: ImageVector get() = internalCopy
 }

@@ -85,12 +85,7 @@ fun App(
         modifier = modifier,
         scaffoldState = scaffoldState,
         floatingActionButton = {
-            FloatingActionButton(
-                modifier = Modifier.padding(16.dp).size(48.dp),
-                onClick = appState::toggleTheme,
-                shape = MaterialTheme.shapes.medium,
-                backgroundColor = MaterialTheme.colors.surface
-            ) {
+            Fab(modifier = Modifier.padding(16.dp), onClick = appState::toggleTheme) {
                 val icon = if (appState.isDark) Icons.Moon else Icons.Sun
                 Icon(imageVector = icon, contentDescription = null)
             }
@@ -154,4 +149,15 @@ private fun rememberVectorPickerLauncher(onResult: (File) -> Unit): PickerResult
                 ?.also(onResult)
         }
     }
+}
+
+@Composable
+fun Fab(onClick: () -> Unit, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+    FloatingActionButton(
+        modifier = modifier.size(48.dp),
+        onClick = onClick,
+        shape = MaterialTheme.shapes.medium,
+        backgroundColor = MaterialTheme.colors.surface,
+        content = content
+    )
 }
