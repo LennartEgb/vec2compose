@@ -36,7 +36,7 @@ import io.github.vinceglb.filekit.core.PickerType
 import kotlinx.coroutines.launch
 
 private val Copier.Data.description: String
-    get() = when (this){
+    get() = when (this) {
         is Copier.Data.FileContent -> extension
         is Copier.Data.ImageVector -> "ImageVector"
     }

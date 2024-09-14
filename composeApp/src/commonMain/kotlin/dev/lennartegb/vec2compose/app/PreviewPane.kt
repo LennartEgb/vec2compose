@@ -39,7 +39,6 @@ fun interface Copier : (Copier.Data) -> Unit {
     }
 }
 
-
 @Composable
 fun PreviewPane(
     file: File,
