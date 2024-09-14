@@ -1,13 +1,13 @@
 package dev.lennartegb.vec2compose.app
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,10 +17,8 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -85,11 +83,10 @@ fun PreviewPane(
         }
     ) {
         val detailModifier = Modifier.fillMaxSize()
-        detail?.also { detail ->
+        detail?.let { contentConverter(it).getOrNull() }?.also { detail ->
             DetailColumn(
-                modifier = detailModifier.verticalScroll(rememberScrollState()),
-                file = detail,
-                contentConverter = contentConverter,
+                modifier = detailModifier,
+                content = detail,
                 copy = {
                     scope.launch {
                         copier(it)
@@ -104,28 +101,24 @@ fun PreviewPane(
 }
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun DetailColumn(
-    file: File,
+    content: String,
     copy: (String) -> Unit,
-    contentConverter: ContentConverter,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier, verticalArrangement = spacedBy(16.dp)) {
-        var content by remember(file) { mutableStateOf(file.content) }
-        Text(text = content)
-
-        Row(horizontalArrangement = spacedBy(8.dp)) {
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = spacedBy(16.dp),
+        contentPadding = PaddingValues(16.dp)
+    ) {
+        stickyHeader {
             Button(onClick = { copy(content) }) {
                 Text(text = "Copy")
             }
-            Button(
-                enabled = content == file.content,
-                onClick = { contentConverter(file).onSuccess { content = it } }
-            ) {
-                Text(text = "Convert")
-            }
         }
+        item { Text(modifier = Modifier.animateContentSize(), text = content) }
     }
 }
 
