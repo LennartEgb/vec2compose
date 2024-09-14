@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.lennartegb.vec2compose.app.icons.Icons
 import org.jetbrains.compose.resources.painterResource
-import vec2compose.compose.generated.resources.Res
-import vec2compose.compose.generated.resources.logo
+import vec2compose.composeapp.generated.resources.Res
+import vec2compose.composeapp.generated.resources.logo
 
 @Composable
 fun UploadPane(

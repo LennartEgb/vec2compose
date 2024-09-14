@@ -19,7 +19,7 @@ include(
     ":cli",
     ":svg",
     ":vector-drawable",
-    ":compose"
+    ":composeApp"
 )
 
 rootProject.name = "vec2compose"
