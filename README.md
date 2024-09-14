@@ -9,9 +9,11 @@
 A CLI tool to create `ImageVector` from Android vector XML and SVG.
 
 ## Setup
+
+### CLI
 Clone this repository and run `./gradlew assembleCli` to generate the native binary to the `dist` folder.
 
-## Usage
+#### Usage
 
 There are two options to create the `ImageVector`. The first option is to create a Kotlin file.
 
@@ -53,6 +55,9 @@ ImageVector.Builder(
     close()
 }.build()
 ```
+
+### Desktop
+Clone this repository and run `./gradlew desktopRun -DmainClass=MainKt --quiet`.
 
 ## Motivation
 
