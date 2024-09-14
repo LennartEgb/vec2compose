@@ -35,6 +35,12 @@ import io.github.vinceglb.filekit.core.PickerMode
 import io.github.vinceglb.filekit.core.PickerType
 import kotlinx.coroutines.launch
 
+private val Copier.Data.description: String
+    get() = when (this){
+        is Copier.Data.FileContent -> extension
+        is Copier.Data.ImageVector -> "ImageVector"
+    }
+
 @Composable
 fun rememberAppState(
     isSystemDarkTheme: Boolean = isSystemInDarkTheme()
@@ -100,7 +106,10 @@ fun App(
                 copy = {
                     scope.launch {
                         copier(it)
-                        scaffoldState.snackbarHostState.showSnackbar("Copied")
+                        with(scaffoldState.snackbarHostState) {
+                            currentSnackbarData?.dismiss()
+                            showSnackbar("Copied ${it.description}")
+                        }
                     }
                 }
             )
@@ -128,7 +137,7 @@ private fun rememberContentConverter(
 
 @Composable
 private fun rememberCopier(manager: ClipboardManager = LocalClipboardManager.current): Copier {
-    return remember { Copier { manager.setText(AnnotatedString(it)) } }
+    return remember { Copier { data -> manager.setText(AnnotatedString(data.content)) } }
 }
 
 @Composable
