@@ -1,5 +1,6 @@
 package dev.lennartegb.vec2compose.app
 
+import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.spacedBy
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
@@ -23,6 +26,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.ListItem
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
@@ -32,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -49,24 +54,32 @@ fun PreviewPane(
     contentConverter: ContentConverter,
     copier: Copier,
     modifier: Modifier = Modifier,
-    state: LazyListState = rememberLazyListState()
+    state: LazyListState = rememberLazyListState(),
 ) {
     val padding = 16.dp
     var detail by remember { mutableStateOf<File?>(null) }
     val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
     ListDetailPane(
         modifier = modifier,
+        snackbarHostState = snackbarHostState,
         list = {
-            LazyColumn(
-                modifier = Modifier.fillMaxWidth(),
-                state = state,
-                contentPadding = PaddingValues(vertical = padding)
-            ) {
-                fileListItems(
-                    selected = detail,
-                    files = files,
-                    onClick = { detail = it },
-                    modifier = Modifier.padding(horizontal = padding)
+            Box {
+                LazyColumn(
+                    modifier = Modifier.fillMaxWidth(),
+                    state = state,
+                    contentPadding = PaddingValues(vertical = padding)
+                ) {
+                    fileListItems(
+                        selected = detail,
+                        files = files,
+                        onClick = { detail = it },
+                        modifier = Modifier.padding(horizontal = padding)
+                    )
+                }
+                VerticalScrollbar(
+                    modifier = Modifier.align(CenterEnd).fillMaxHeight(),
+                    adapter = rememberScrollbarAdapter(state)
                 )
             }
         }
@@ -80,6 +93,7 @@ fun PreviewPane(
                 copy = {
                     scope.launch {
                         copier(it)
+                        snackbarHostState.showSnackbar("Copied")
                     }
                 }
             )
@@ -97,7 +111,6 @@ private fun DetailColumn(
     contentConverter: ContentConverter,
     modifier: Modifier = Modifier,
 ) {
-    var enabled: Boolean by remember(file) { mutableStateOf(true) }
     Column(modifier = modifier, verticalArrangement = spacedBy(16.dp)) {
         var content by remember(file) { mutableStateOf(file.content) }
         Text(text = content)
@@ -107,10 +120,8 @@ private fun DetailColumn(
                 Text(text = "Copy")
             }
             Button(
-                enabled = enabled,
-                onClick = {
-                    enabled = contentConverter(file).onSuccess { content = it }.isFailure
-                }
+                enabled = content == file.content,
+                onClick = { contentConverter(file).onSuccess { content = it } }
             ) {
                 Text(text = "Convert")
             }
@@ -125,12 +136,16 @@ private fun LazyListScope.fileListItems(
     onClick: (File) -> Unit,
     modifier: Modifier = Modifier,
 ) = items(files) { file ->
-    val color: Color = MaterialTheme.colors.surface
+    val color: Color = MaterialTheme.colors.background
     val selectedColor: Color = contentColorFor(color).copy(alpha = .1f)
     ListItem(
         modifier = Modifier
+            .padding(horizontal = 8.dp)
             .clickable(onClick = { onClick(file) })
-            .background(if (file == selected) selectedColor else color)
+            .background(
+                if (file == selected) selectedColor else color,
+                shape = MaterialTheme.shapes.medium
+            )
             .then(modifier),
         text = { Text(file.name) },
     )

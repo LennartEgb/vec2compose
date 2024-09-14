@@ -8,8 +8,6 @@ import androidx.compose.material.Colors
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -24,6 +22,8 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import dev.lennartegb.vec2compose.app.data.File
 import dev.lennartegb.vec2compose.app.icons.Icons
+import dev.lennartegb.vec2compose.app.theme.darkColors
+import dev.lennartegb.vec2compose.app.theme.lightColors
 import dev.lennartegb.vec2compose.core.imagevector.ImageVectorCreator
 import dev.lennartegb.vec2compose.svg.svgImageVectorParser
 import dev.lennartegb.vec2compose.vectorDrawable.xmlImageVectorParser
