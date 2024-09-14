@@ -1,6 +1,7 @@
 # noinspection EditorConfigKeyCorrectness
 [*.{kt,kts}]
 ktlint_code_style = intellij_idea
+ktlint_function_naming_ignore_when_annotated_with=Composable
 indent_size = 4
 indent_style = space
 ij_kotlin_allow_trailing_comma_on_call_site = false

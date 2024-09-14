@@ -9,6 +9,9 @@ import dev.lennartegb.vec2compose.core.commands.MoveTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+/**
+ * TODO: Use other float values to test rounding issues
+ */
 internal class ComposeMethodCreatorTest {
 
     private val testImageVector = ImageVector(
@@ -163,9 +166,9 @@ internal class ComposeMethodCreatorTest {
                     )
                 ),
                 rotate = 0.25f,
-                pivot = Translation(x = .15f, y = .20f),
-                translation = Translation(x = .25f, y = .30f),
-                scale = Scale(x = .5f, y = .6f)
+                pivot = Translation(x = 0f, y = .25f),
+                translation = Translation(x = .5f, y = .75f),
+                scale = Scale(x = 1f, y = .25f)
             )
         )
         assertEquals(
@@ -174,12 +177,12 @@ internal class ComposeMethodCreatorTest {
                 group(
                     name = "group",
                     rotate = 0.25f,
-                    pivotX = 0.15f,
-                    pivotY = 0.2f,
-                    scaleX = 0.5f,
-                    scaleY = 0.6f,
-                    translationX = 0.25f,
-                    translationY = 0.3f,
+                    pivotX = 0.0f,
+                    pivotY = 0.25f,
+                    scaleX = 1.0f,
+                    scaleY = 0.25f,
+                    translationX = 0.5f,
+                    translationY = 0.75f,
                     clipPathData = emptyList()
                 ) {
                     path(
@@ -208,9 +211,9 @@ internal class ComposeMethodCreatorTest {
                 name = "group",
                 nodes = emptyList(),
                 rotate = 0.25f,
-                pivot = Translation(x = .15f, y = .20f),
-                translation = Translation(x = .25f, y = .30f),
-                scale = Scale(x = .5f, y = .6f)
+                pivot = Translation(x = .0f, y = .25f),
+                translation = Translation(x = .5f, y = .75f),
+                scale = Scale(x = 1f, y = .75f)
             )
         )
         assertEquals(
@@ -219,12 +222,12 @@ internal class ComposeMethodCreatorTest {
                 .group(
                   name = "group",
                   rotate = 0.25f,
-                  pivotX = 0.15f,
-                  pivotY = 0.2f,
-                  scaleX = 0.5f,
-                  scaleY = 0.6f,
-                  translationX = 0.25f,
-                  translationY = 0.3f,
+                  pivotX = 0.0f,
+                  pivotY = 0.25f,
+                  scaleX = 1.0f,
+                  scaleY = 0.75f,
+                  translationX = 0.5f,
+                  translationY = 0.75f,
                   clipPathData = emptyList()
                 ) {
                 }
