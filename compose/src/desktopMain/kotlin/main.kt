@@ -1,3 +1,5 @@
+@file:Suppress("ktlint")
+
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier

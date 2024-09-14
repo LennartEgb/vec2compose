@@ -4,12 +4,12 @@ import androidx.compose.ui.graphics.Color
 
 internal fun darkColors() = androidx.compose.material.darkColors(
     background = Colors.Black,
-    surface = Colors.Gray,
+    surface = Colors.Gray
 )
 
 internal fun lightColors() = androidx.compose.material.lightColors(
     background = Color(0xFFEEEEEE),
-    surface = Color.White,
+    surface = Color.White
 )
 
 private object Colors {
