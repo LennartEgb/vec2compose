@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  workflow_dispatch:
+    
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: temurin
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build
+        run: ./gradlew :composeApp:wasmJsBrowserDistribution
+      - name: Commit and push
+        run: |
+          git config user.email "26793300+LennartEgb@users.noreply.github.com"
+          git config user.name "LennartEgb"
+          git checkout --orphan gh-pages
+          git reset --hard
+          git --work-tree=composeApp/build/dist/wasmJs/productionExecutable add .
+          git commit -m "Upload gh-pages"
+          git push origin gh-pages --force
