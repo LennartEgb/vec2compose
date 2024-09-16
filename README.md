@@ -3,7 +3,7 @@
 [![codecov](https://codecov.io/github/LennartEgb/vec2compose/branch/main/graph/badge.svg?token=3GZE97P1A2)](https://codecov.io/github/LennartEgb/vec2compose)
 
 <p align=center>
-    <img width=400 src="compose/src/commonMain/composeResources/drawable/logo.png" alt="random logo showing svg and xml logo pointing to jetpack compose logo"/> 
+    <img width=400 src="composeApp/src/commonMain/composeResources/drawable/logo.png" alt="random logo showing svg and xml logo pointing to jetpack compose logo"/> 
 </p>
 
 A CLI tool to create `ImageVector` from Android vector XML and SVG.
