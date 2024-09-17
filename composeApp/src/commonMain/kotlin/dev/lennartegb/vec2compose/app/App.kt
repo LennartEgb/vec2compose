@@ -3,9 +3,7 @@ package dev.lennartegb.vec2compose.app
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.Colors
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -40,44 +38,6 @@ private val Copier.Data.description: String
         is Copier.Data.FileContent -> extension
         is Copier.Data.ImageVector -> "ImageVector"
     }
-
-@Composable
-fun rememberAppState(
-    isSystemDarkTheme: Boolean = isSystemInDarkTheme()
-): AppState {
-    val file = remember { mutableStateOf<File?>(null) }
-    val picker = rememberVectorPickerLauncher { file.value = it }
-    return remember {
-        AppState(
-            isSystemDarkTheme = isSystemDarkTheme,
-            file = file,
-            picker = picker
-        )
-    }
-}
-
-class AppState(
-    isSystemDarkTheme: Boolean,
-    file: State<File?>,
-    private val picker: PickerResultLauncher
-) {
-    val file by file
-    var isDark by mutableStateOf(isSystemDarkTheme)
-        private set
-    var colors: Colors by mutableStateOf(getColor())
-        private set
-
-    fun toggleTheme() {
-        isDark = !isDark
-        colors = getColor()
-    }
-
-    fun pickFiles() {
-        picker.launch()
-    }
-
-    private fun getColor(): Colors = if (isDark) darkColors() else lightColors()
-}
 
 @Composable
 fun App(
@@ -138,35 +98,4 @@ private fun rememberContentConverter(
 @Composable
 private fun rememberCopier(manager: ClipboardManager = LocalClipboardManager.current): Copier {
     return remember { Copier { data -> manager.setText(AnnotatedString(data.content)) } }
-}
-
-@Composable
-private fun rememberVectorPickerLauncher(onResult: (File) -> Unit): PickerResultLauncher {
-    val scope = rememberCoroutineScope()
-    return rememberFilePickerLauncher(
-        type = PickerType.File(extensions = listOf("xml", "svg")),
-        mode = PickerMode.Single
-    ) { platformFile ->
-        scope.launch {
-            platformFile
-                ?.let { file ->
-                    File(
-                        name = file.name,
-                        content = file.readBytes().decodeToString()
-                    )
-                }
-                ?.also(onResult)
-        }
-    }
-}
-
-@Composable
-fun Fab(onClick: () -> Unit, modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    FloatingActionButton(
-        modifier = modifier.size(48.dp),
-        onClick = onClick,
-        shape = MaterialTheme.shapes.medium,
-        backgroundColor = MaterialTheme.colors.surface,
-        content = content
-    )
 }
