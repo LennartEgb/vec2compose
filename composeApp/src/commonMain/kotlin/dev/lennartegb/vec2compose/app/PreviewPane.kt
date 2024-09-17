@@ -1,29 +1,23 @@
 package dev.lennartegb.vec2compose.app
 
-import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.VerticalScrollbar
-import androidx.compose.foundation.layout.Arrangement.SpaceBetween
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.rememberScrollbarAdapter
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment.Companion.CenterEnd
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
+import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.lennartegb.vec2compose.app.data.File
@@ -32,71 +26,51 @@ import dev.lennartegb.vec2compose.app.icons.Icons
 @Composable
 fun PreviewPane(
     file: File,
-    contentConverter: ContentConverter,
+    imageVectorCreator: ImageVectorCreator = rememberImageVectorCreator(),
+    contentConverter: ContentConverter = rememberContentConverter(imageVectorCreator),
     copy: Copier,
-    modifier: Modifier = Modifier,
-    scaffoldState: ScaffoldState = rememberScaffoldState()
-) = Scaffold(scaffoldState = scaffoldState, modifier = modifier) {
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = modifier.fillMaxSize().padding(16.dp),
         verticalArrangement = spacedBy(16.dp)
     ) {
+        val imageVectorContent = contentConverter(file).getOrElse { "" }
         Text(file.name, style = MaterialTheme.typography.h1)
-        Card(modifier = Modifier.fillMaxWidth()) {
-            Row(horizontalArrangement = spacedBy(16.dp)) {
-                ContentColumn(
-                    title = file.extension,
-                    content = file.content,
-                    modifier = Modifier.weight(1f),
-                    copy = {
-                        file.let { Copier.Data.FileContent(it.extension, it.content) }.also(copy)
-                    }
-                )
-                val imageVectorContent = contentConverter(file).getOrElse { "" }
-                ContentColumn(
-                    title = "ImageVector",
-                    content = imageVectorContent,
-                    modifier = Modifier.weight(1f),
-                    copy = { copy(Copier.Data.ImageVector(imageVectorContent)) }
-                )
-            }
-        }
-    }
-}
 
-@Composable
-private fun ContentColumn(
-    title: String,
-    content: String,
-    copy: () -> Unit,
-    modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(16.dp)
-) {
-    val state: ScrollState = rememberScrollState()
-    Column(
-        modifier = modifier.padding(contentPadding),
-        verticalArrangement = spacedBy(8.dp)
-    ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = SpaceBetween,
-            verticalAlignment = CenterVertically
+            modifier = Modifier.align(CenterHorizontally),
+            verticalAlignment = CenterVertically,
+            horizontalArrangement = spacedBy(16.dp)
         ) {
-            Text(title, style = MaterialTheme.typography.h2)
-            Fab(onClick = copy) {
-                Icon(imageVector = Icons.Copy, contentDescription = null)
+            Box(modifier = Modifier.weight(1f), contentAlignment = Center) {
+                remember(file) { imageVectorCreator(file).map { it.toCompose(file.name) } }
+                    .onSuccess {
+                        Icon(
+                            modifier = Modifier.padding(16.dp).size(48.dp),
+                            imageVector = it,
+                            contentDescription = null
+                        )
+                    }.onFailure {
+                        Text(
+                            modifier = Modifier.padding(16.dp),
+                            text = "Error interpreting ImageVector: $it"
+                        )
+                    }
             }
-        }
-        Box {
-            Text(
-                modifier = Modifier.verticalScroll(state).fillMaxWidth(),
-                text = content,
-                style = MaterialTheme.typography.body2
-            )
-            VerticalScrollbar(
-                modifier = Modifier.align(CenterEnd),
-                adapter = rememberScrollbarAdapter(state)
-            )
+            Box(modifier = Modifier.weight(1f)) {
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = imageVectorContent,
+                    onValueChange = {}
+                )
+                Fab(
+                    modifier = Modifier.align(TopEnd).padding(16.dp),
+                    onClick = { copy(imageVectorContent) }
+                ) {
+                    Icon(imageVector = Icons.Copy, contentDescription = null)
+                }
+            }
         }
     }
 }

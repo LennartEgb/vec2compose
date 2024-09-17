@@ -9,7 +9,7 @@ import dev.lennartegb.vec2compose.vectorDrawable.xmlImageVectorParser
 fun interface ImageVectorCreator : (File) -> Result<dev.lennartegb.vec2compose.core.ImageVector>
 
 @Composable
-internal fun rememberImageVectorParser(): ImageVectorCreator = remember {
+internal fun rememberImageVectorCreator(): ImageVectorCreator = remember {
     ImageVectorCreator {
         when (it.extension) {
             "xml" -> xmlImageVectorParser()

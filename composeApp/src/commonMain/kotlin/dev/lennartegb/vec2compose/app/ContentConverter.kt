@@ -8,7 +8,7 @@ fun interface ContentConverter : (File) -> Result<String>
 
 @Composable
 fun rememberContentConverter(
-    imageVectorCreator: ImageVectorCreator = rememberImageVectorParser(),
+    imageVectorCreator: ImageVectorCreator = rememberImageVectorCreator(),
     indentation: String = " ".repeat(4)
 ): ContentConverter = remember {
     ContentConverter { file ->

@@ -13,12 +13,6 @@ import dev.lennartegb.vec2compose.app.icons.Icons
 import dev.lennartegb.vec2compose.app.theme.ComposeTheme
 import kotlinx.coroutines.launch
 
-private val Copier.Data.description: String
-    get() = when (this) {
-        is Copier.Data.FileContent -> extension
-        is Copier.Data.ImageVector -> "ImageVector"
-    }
-
 @Composable
 fun App(
     modifier: Modifier = Modifier,
@@ -48,7 +42,7 @@ fun App(
                         copier(it)
                         with(scaffoldState.snackbarHostState) {
                             currentSnackbarData?.dismiss()
-                            showSnackbar("Copied ${it.description}")
+                            showSnackbar("Copied ImageVector")
                         }
                     }
                 }
