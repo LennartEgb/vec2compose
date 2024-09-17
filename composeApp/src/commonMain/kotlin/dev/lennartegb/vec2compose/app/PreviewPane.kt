@@ -35,7 +35,6 @@ fun PreviewPane(
         modifier = modifier.fillMaxSize().padding(16.dp),
         verticalArrangement = spacedBy(16.dp)
     ) {
-        val imageVectorContent = contentConverter(file).getOrElse { "" }
         Text(file.name, style = MaterialTheme.typography.h1)
 
         Row(
@@ -43,6 +42,20 @@ fun PreviewPane(
             verticalAlignment = CenterVertically,
             horizontalArrangement = spacedBy(16.dp)
         ) {
+            Box(modifier = Modifier.weight(1f)) {
+                val imageVectorContent = contentConverter(file).getOrElse { "" }
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = imageVectorContent,
+                    onValueChange = {}
+                )
+                Fab(
+                    modifier = Modifier.align(TopEnd).padding(16.dp),
+                    onClick = { copy(imageVectorContent) }
+                ) {
+                    Icon(imageVector = Icons.Copy, contentDescription = null)
+                }
+            }
             Box(modifier = Modifier.weight(1f), contentAlignment = Center) {
                 remember(file) { imageVectorCreator(file).map { it.toCompose(file.name) } }
                     .onSuccess {
@@ -57,19 +70,6 @@ fun PreviewPane(
                             text = "Error interpreting ImageVector: $it"
                         )
                     }
-            }
-            Box(modifier = Modifier.weight(1f)) {
-                TextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = imageVectorContent,
-                    onValueChange = {}
-                )
-                Fab(
-                    modifier = Modifier.align(TopEnd).padding(16.dp),
-                    onClick = { copy(imageVectorContent) }
-                ) {
-                    Icon(imageVector = Icons.Copy, contentDescription = null)
-                }
             }
         }
     }
