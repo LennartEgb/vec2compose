@@ -1,36 +1,23 @@
 package dev.lennartegb.vec2compose.app
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Colors
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
-import dev.lennartegb.vec2compose.app.data.File
 import dev.lennartegb.vec2compose.app.icons.Icons
-import dev.lennartegb.vec2compose.app.theme.darkColors
-import dev.lennartegb.vec2compose.app.theme.lightColors
+import dev.lennartegb.vec2compose.app.theme.ComposeTheme
 import dev.lennartegb.vec2compose.core.imagevector.ImageVectorCreator
 import dev.lennartegb.vec2compose.svg.svgImageVectorParser
 import dev.lennartegb.vec2compose.vectorDrawable.xmlImageVectorParser
-import io.github.vinceglb.filekit.compose.PickerResultLauncher
-import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
-import io.github.vinceglb.filekit.core.PickerMode
-import io.github.vinceglb.filekit.core.PickerType
 import kotlinx.coroutines.launch
 
 private val Copier.Data.description: String
@@ -45,7 +32,7 @@ fun App(
     appState: AppState = rememberAppState(),
     contentConverter: ContentConverter = rememberContentConverter(),
     copier: Copier = rememberCopier()
-) = MaterialTheme(colors = appState.colors) {
+) = ComposeTheme(isDark = appState.isDark) {
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         modifier = modifier,
@@ -74,7 +61,7 @@ fun App(
                 }
             )
         } ?: UploadPane(
-            onUploadFilesClick = appState::pickFiles,
+            onUploadFilesClick = appState::pickFile,
             modifier = Modifier.fillMaxSize()
         )
     }
