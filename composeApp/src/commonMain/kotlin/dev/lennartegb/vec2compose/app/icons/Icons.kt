@@ -8,4 +8,5 @@ object Icons {
     val Sun: ImageVector get() = internalSun
     val Warning: ImageVector get() = internalWarning
     val Copy: ImageVector get() = internalCopy
+    val Refresh: ImageVector get() = internalRefresh
 }
