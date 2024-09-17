@@ -1,5 +1,6 @@
 package dev.lennartegb.vec2compose.app
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
@@ -26,8 +27,9 @@ fun App(
         scaffoldState = scaffoldState,
         floatingActionButton = {
             Fab(modifier = Modifier.padding(16.dp), onClick = appState::toggleTheme) {
-                val icon = if (appState.isDark) Icons.Moon else Icons.Sun
-                Icon(imageVector = icon, contentDescription = null)
+                AnimatedContent(if (appState.isDark) Icons.Moon else Icons.Sun) { icon ->
+                    Icon(imageVector = icon, contentDescription = null)
+                }
             }
         }
     ) {
