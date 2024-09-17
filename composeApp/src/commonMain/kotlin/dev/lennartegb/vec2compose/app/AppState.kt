@@ -1,7 +1,6 @@
 package dev.lennartegb.vec2compose.app
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.Colors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -10,8 +9,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import dev.lennartegb.vec2compose.app.data.File
-import dev.lennartegb.vec2compose.app.theme.darkColors
-import dev.lennartegb.vec2compose.app.theme.lightColors
 import io.github.vinceglb.filekit.compose.PickerResultLauncher
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerMode
@@ -41,19 +38,14 @@ class AppState(
     val file by file
     var isDark by mutableStateOf(isSystemDarkTheme)
         private set
-    var colors: Colors by mutableStateOf(getColor())
-        private set
 
     fun toggleTheme() {
         isDark = !isDark
-        colors = getColor()
     }
 
-    fun pickFiles() {
+    fun pickFile() {
         picker.launch()
     }
-
-    private fun getColor(): Colors = if (isDark) darkColors() else lightColors()
 }
 
 @Composable
