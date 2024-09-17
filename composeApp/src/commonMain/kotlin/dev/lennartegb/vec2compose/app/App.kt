@@ -39,6 +39,7 @@ fun App(
                 file = file,
                 modifier = Modifier.fillMaxSize(),
                 contentConverter = contentConverter,
+                onUpdate = appState::pickFile,
                 copy = {
                     scope.launch {
                         copier(it)

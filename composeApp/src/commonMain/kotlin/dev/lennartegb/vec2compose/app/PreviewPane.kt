@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -29,13 +30,26 @@ fun PreviewPane(
     imageVectorCreator: ImageVectorCreator = rememberImageVectorCreator(),
     contentConverter: ContentConverter = rememberContentConverter(imageVectorCreator),
     copy: Copier,
+    onUpdate: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier.fillMaxSize().padding(16.dp),
         verticalArrangement = spacedBy(16.dp)
     ) {
-        Text(file.name, style = MaterialTheme.typography.h1)
+        Row(
+            horizontalArrangement = spacedBy(16.dp),
+            verticalAlignment = CenterVertically
+        ) {
+            IconButton(modifier = Modifier.size(96.dp), onClick = onUpdate) {
+                Icon(
+                    modifier = Modifier.size(96.dp),
+                    imageVector = Icons.Refresh,
+                    contentDescription = null
+                )
+            }
+            Text(file.name, style = MaterialTheme.typography.h1)
+        }
 
         Row(
             modifier = Modifier.align(CenterHorizontally),
