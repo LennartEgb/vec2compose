@@ -29,16 +29,6 @@ import androidx.compose.ui.unit.dp
 import dev.lennartegb.vec2compose.app.data.File
 import dev.lennartegb.vec2compose.app.icons.Icons
 
-fun interface ContentConverter : (File) -> Result<String>
-fun interface Copier : (Copier.Data) -> Unit {
-    sealed interface Data {
-        val content: String
-
-        data class FileContent(val extension: String, override val content: String) : Data
-        data class ImageVector(override val content: String) : Data
-    }
-}
-
 @Composable
 fun PreviewPane(
     file: File,

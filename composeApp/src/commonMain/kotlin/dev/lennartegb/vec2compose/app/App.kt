@@ -6,18 +6,11 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ClipboardManager
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import dev.lennartegb.vec2compose.app.icons.Icons
 import dev.lennartegb.vec2compose.app.theme.ComposeTheme
-import dev.lennartegb.vec2compose.core.imagevector.ImageVectorCreator
-import dev.lennartegb.vec2compose.svg.svgImageVectorParser
-import dev.lennartegb.vec2compose.vectorDrawable.xmlImageVectorParser
 import kotlinx.coroutines.launch
 
 private val Copier.Data.description: String
@@ -65,24 +58,4 @@ fun App(
             modifier = Modifier.fillMaxSize()
         )
     }
-}
-
-@Composable
-private fun rememberContentConverter(
-    indentation: String = " ".repeat(4)
-): ContentConverter = remember {
-    val creator = ImageVectorCreator(indentation = indentation)
-    ContentConverter { file ->
-        when (file.extension) {
-            "xml" -> xmlImageVectorParser()
-            "svg" -> svgImageVectorParser()
-            else -> error("Only XML and SVG files are allowed")
-        }.parse(file.content)
-            .mapCatching { creator.create(name = file.name, imageVector = it) }
-    }
-}
-
-@Composable
-private fun rememberCopier(manager: ClipboardManager = LocalClipboardManager.current): Copier {
-    return remember { Copier { data -> manager.setText(AnnotatedString(data.content)) } }
 }
