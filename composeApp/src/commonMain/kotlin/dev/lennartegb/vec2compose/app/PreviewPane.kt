@@ -1,5 +1,7 @@
 package dev.lennartegb.vec2compose.app
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,12 +16,17 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import dev.lennartegb.vec2compose.app.data.File
 import dev.lennartegb.vec2compose.app.icons.Icons
@@ -71,10 +78,15 @@ fun PreviewPane(
                 }
             }
             Box(modifier = Modifier.weight(1f), contentAlignment = Center) {
+                var iconSize by remember { mutableStateOf(IconSize.Small) }
                 remember(file) { imageVectorCreator(file).map { it.toCompose(file.name) } }
                     .onSuccess {
                         Icon(
-                            modifier = Modifier.padding(16.dp).size(48.dp),
+                            modifier = Modifier
+                                .clip(MaterialTheme.shapes.medium)
+                                .clickable { iconSize = !iconSize }
+                                .padding(16.dp)
+                                .size(iconSize),
                             imageVector = it,
                             contentDescription = null
                         )
@@ -87,4 +99,21 @@ fun PreviewPane(
             }
         }
     }
+}
+
+private enum class IconSize { Small, Large }
+
+private operator fun IconSize.not(): IconSize = when (this) {
+    IconSize.Small -> IconSize.Large
+    IconSize.Large -> IconSize.Small
+}
+
+private fun Modifier.size(size: IconSize): Modifier = composed {
+    val animatedSize by animateDpAsState(
+        when (size) {
+            IconSize.Small -> 48.dp
+            IconSize.Large -> 96.dp
+        }
+    )
+    size(animatedSize)
 }
