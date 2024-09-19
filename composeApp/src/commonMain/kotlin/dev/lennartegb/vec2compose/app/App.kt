@@ -20,8 +20,10 @@ import androidx.compose.ui.unit.dp
 import dev.lennartegb.vec2compose.app.icons.Icons
 import dev.lennartegb.vec2compose.app.theme.ComposeTheme
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import vec2compose.composeapp.generated.resources.Res
 import vec2compose.composeapp.generated.resources.logo
+import vec2compose.composeapp.generated.resources.upload
 
 @Composable
 fun App(
@@ -47,7 +49,7 @@ fun App(
                     Button(onClick = appState::pickFile) {
                         Icon(imageVector = Icons.Add, contentDescription = null)
                         Spacer(Modifier.width(8.dp))
-                        Text(text = "Upload")
+                        Text(text = stringResource(Res.string.upload))
                     }
                 }
             ) {
