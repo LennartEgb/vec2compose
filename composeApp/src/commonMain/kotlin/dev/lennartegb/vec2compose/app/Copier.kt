@@ -6,7 +6,7 @@ import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 
-fun interface Copier : (String) -> Unit
+fun interface Copier : suspend (String) -> Unit
 
 @Composable
 fun rememberCopier(
