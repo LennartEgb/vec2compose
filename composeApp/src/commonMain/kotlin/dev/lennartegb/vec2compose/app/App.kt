@@ -55,15 +55,17 @@ fun App(
             }
         }
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                painter = painterResource(Res.drawable.logo),
-                alpha = .5f,
-                contentDescription = null
-            )
-        }
+        Empty(modifier = Modifier.fillMaxSize())
+    }
+}
+
+@Composable
+private fun Empty(modifier: Modifier = Modifier) {
+    Box(modifier = modifier, contentAlignment = Alignment.Center) {
+        Image(
+            painter = painterResource(Res.drawable.logo),
+            alpha = .5f,
+            contentDescription = null
+        )
     }
 }
