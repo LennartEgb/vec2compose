@@ -1,0 +1,5 @@
+<resources>
+    <string name="upload">Upload</string>
+    <string name="converter_error">Error while converting vector graphic to an ImageVector</string>
+    <string name="copied_image_vector">Copied ImageVector</string>
+</resources>

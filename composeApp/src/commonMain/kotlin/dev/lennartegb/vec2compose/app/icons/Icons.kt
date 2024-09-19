@@ -3,6 +3,7 @@ package dev.lennartegb.vec2compose.app.icons
 import androidx.compose.ui.graphics.vector.ImageVector
 
 object Icons {
+    val Add: ImageVector get() = internalAdd
     val Upload: ImageVector get() = internalUpload
     val Moon: ImageVector get() = internalMoon
     val Sun: ImageVector get() = internalSun
