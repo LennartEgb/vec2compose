@@ -10,11 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,7 +36,7 @@ fun PreviewPane(
     file: File,
     imageVectorCreator: ImageVectorCreator = rememberImageVectorCreator(),
     contentConverter: ContentConverter = rememberContentConverter(imageVectorCreator),
-    copy: Copier,
+    copy: (String) -> Unit,
     onUpdate: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -55,7 +55,7 @@ fun PreviewPane(
                     contentDescription = null
                 )
             }
-            Text(file.name, style = MaterialTheme.typography.h1)
+            Text(file.name, style = MaterialTheme.typography.headlineLarge)
         }
 
         Row(

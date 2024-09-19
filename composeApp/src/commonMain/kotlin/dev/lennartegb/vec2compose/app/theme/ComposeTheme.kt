@@ -2,8 +2,8 @@ package dev.lennartegb.vec2compose.app.theme
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.Colors
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
@@ -13,24 +13,48 @@ fun ComposeTheme(
     content: @Composable () -> Unit
 ) {
     val colors = if (isDark) darkColors() else lightColors()
-    MaterialTheme(colors = colors.switch(), content = content)
+    MaterialTheme(colorScheme = colors.switch(), content = content)
 }
 
 @Composable
 private fun animateColor(targetValue: Color) = animateColorAsState(targetValue).value
 
 @Composable
-private fun Colors.switch() = copy(
+private fun ColorScheme.switch() = copy(
     primary = animateColor(primary),
-    primaryVariant = animateColor(primaryVariant),
-    secondary = animateColor(secondary),
-    secondaryVariant = animateColor(secondaryVariant),
-    background = animateColor(background),
-    surface = animateColor(surface),
-    error = animateColor(error),
     onPrimary = animateColor(onPrimary),
+    primaryContainer = animateColor(primaryContainer),
+    onPrimaryContainer = animateColor(onPrimaryContainer),
+    inversePrimary = animateColor(inversePrimary),
+    secondary = animateColor(secondary),
     onSecondary = animateColor(onSecondary),
+    secondaryContainer = animateColor(secondaryContainer),
+    onSecondaryContainer = animateColor(onSecondaryContainer),
+    tertiary = animateColor(tertiary),
+    onTertiary = animateColor(onTertiary),
+    tertiaryContainer = animateColor(tertiaryContainer),
+    onTertiaryContainer = animateColor(onTertiaryContainer),
+    background = animateColor(background),
     onBackground = animateColor(onBackground),
+    surface = animateColor(surface),
     onSurface = animateColor(onSurface),
-    onError = animateColor(onError)
+    surfaceVariant = animateColor(surfaceVariant),
+    onSurfaceVariant = animateColor(onSurfaceVariant),
+    surfaceTint = animateColor(surfaceTint),
+    inverseSurface = animateColor(inverseSurface),
+    inverseOnSurface = animateColor(inverseOnSurface),
+    error = animateColor(error),
+    onError = animateColor(onError),
+    errorContainer = animateColor(errorContainer),
+    onErrorContainer = animateColor(onErrorContainer),
+    outline = animateColor(outline),
+    outlineVariant = animateColor(outlineVariant),
+    scrim = animateColor(scrim),
+    surfaceBright = animateColor(surfaceBright),
+    surfaceDim = animateColor(surfaceDim),
+    surfaceContainer = animateColor(surfaceContainer),
+    surfaceContainerHigh = animateColor(surfaceContainerHigh),
+    surfaceContainerHighest = animateColor(surfaceContainerHighest),
+    surfaceContainerLow = animateColor(surfaceContainerLow),
+    surfaceContainerLowest = animateColor(surfaceContainerLowest)
 )
