@@ -102,7 +102,7 @@ private fun DesktopScaffoldLayout(
         val fabOffsetFromBottom = fabHeight + contentWindowInsets.getBottom(this@SubcomposeLayout)
 
         val snackbarOffsetFromBottom = if (snackbarHeight != 0) {
-            snackbarHeight + fabOffsetFromBottom
+            snackbarHeight
         } else {
             0
         }

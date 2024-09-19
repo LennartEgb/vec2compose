@@ -2,12 +2,13 @@ package dev.lennartegb.vec2compose.app
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import dev.lennartegb.vec2compose.app.data.File
 import io.github.vinceglb.filekit.compose.PickerResultLauncher
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
@@ -19,12 +20,12 @@ import kotlinx.coroutines.launch
 fun rememberAppState(
     isSystemDarkTheme: Boolean = isSystemInDarkTheme()
 ): AppState {
-    val file = remember { mutableStateOf<File?>(null) }
-    val picker = rememberVectorPickerLauncher { file.value = it }
+    val files = remember { mutableStateListOf<File>() }
+    val picker = rememberVectorPickerLauncher { files.addAll(it) }
     return remember {
         AppState(
             isSystemDarkTheme = isSystemDarkTheme,
-            file = file,
+            files = files,
             picker = picker
         )
     }
@@ -32,10 +33,12 @@ fun rememberAppState(
 
 class AppState(
     isSystemDarkTheme: Boolean,
-    file: State<File?>,
+    val files: SnapshotStateList<File>,
     private val picker: PickerResultLauncher
 ) {
-    val file by file
+    var selectedFile by mutableStateOf<File?>(null)
+        private set
+
     var isDark by mutableStateOf(isSystemDarkTheme)
         private set
 
@@ -46,18 +49,22 @@ class AppState(
     fun pickFile() {
         picker.launch()
     }
+
+    fun select(file: File) {
+        selectedFile = file
+    }
 }
 
 @Composable
-private fun rememberVectorPickerLauncher(onResult: (File) -> Unit): PickerResultLauncher {
+private fun rememberVectorPickerLauncher(onResult: (List<File>) -> Unit): PickerResultLauncher {
     val scope = rememberCoroutineScope()
     return rememberFilePickerLauncher(
         type = PickerType.File(extensions = listOf("xml", "svg")),
-        mode = PickerMode.Single
+        mode = PickerMode.Multiple()
     ) { platformFile ->
         scope.launch {
             platformFile
-                ?.let { File(name = it.name, content = it.readBytes().decodeToString()) }
+                ?.map { File(name = it.name, content = it.readBytes().decodeToString()) }
                 ?.also(onResult)
         }
     }
