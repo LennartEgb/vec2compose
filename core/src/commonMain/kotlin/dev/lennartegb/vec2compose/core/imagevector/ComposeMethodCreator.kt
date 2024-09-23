@@ -6,7 +6,7 @@ import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Cap.Square
 import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join.Bevel
 import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join.Miter
 
-internal class ComposeMethodCreator(private val indentation: CharSequence) {
+internal class ComposeMethodCreator(private val indentation: String) {
 
     fun createConstructor(name: String, set: ImageVector): String = buildString {
         append("ImageVector.Builder(").appendLine()
@@ -30,9 +30,12 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
         indent().append("strokeLineJoin = ${path.stroke.join.property()},").appendLine()
         indent().append("strokeLineMiter = ${path.stroke.miter}f,").appendLine()
         indent().append("pathFillType = ${path.fillType.composeName}").appendLine()
-        append(") {").appendLine()
+        appendLine(") {")
 
-        path.commands.forEach { indent().append(it).appendLine() }
+        path.commands
+            .joinToString("\n")
+            .prependIndent(indent = indentation)
+            .also { appendLine(it) }
 
         append("}")
     }.removePrefix(indentation)
@@ -57,13 +60,11 @@ internal class ComposeMethodCreator(private val indentation: CharSequence) {
                     is ImageVector.Path -> createPath(it, forBuilder = false)
                 }
             }
-            ?.setupIndent()
-            ?.let(::append)
-            ?.appendLine()
+            ?.prependIndent(indentation)
+            ?.let(::appendLine)
         append("}")
     }
 
-    private fun String.setupIndent(): String = prependIndent(indent = indentation.toString())
     private fun StringBuilder.indent(): StringBuilder = append(indentation)
     private val ImageVector.Path.FillType.composeName: String
         get() = when (this) {

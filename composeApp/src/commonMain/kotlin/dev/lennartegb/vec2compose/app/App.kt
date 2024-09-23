@@ -24,6 +24,7 @@ import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.SnackbarHost
@@ -34,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -170,13 +172,14 @@ private fun FileContent(
                     Column(
                         modifier = maxMod.padding(contentPadding),
                         horizontalAlignment = CenterHorizontally,
-                        verticalArrangement = spacedBy(16.dp)
+                        verticalArrangement = spacedBy(16.dp, alignment = CenterVertically)
                     ) {
                         Icon(imageVector = Icons.Warning, contentDescription = null)
                         Text(
                             text = stringResource(Res.string.converter_error),
                             textAlign = TextAlign.Center
                         )
+                        Text("Reason: $it", color = LocalContentColor.current.copy(alpha = .8f))
                     }
                 }
             VerticalScrollbar(

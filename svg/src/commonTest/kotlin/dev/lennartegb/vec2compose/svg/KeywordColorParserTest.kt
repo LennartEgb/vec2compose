@@ -7,16 +7,14 @@ import kotlin.test.assertNull
 
 class KeywordColorParserTest {
     @Test
-    fun `parse none to null`() {
-        val parser = KeywordColorParser()
-        assertNull(parser.parse("none"))
+    fun parse_none_to_null() {
+        assertNull(KeywordColorParser().parse("none"))
     }
 
     @Test
-    fun `parse black to FillColor 0xFF000000`() {
-        val parser = KeywordColorParser()
+    fun parse_black_to_FillColor_0xFF000000() {
         assertEquals(
-            actual = parser.parse("black"),
+            actual = KeywordColorParser().parse("black"),
             expected = FillColor(red = 0x00, green = 0x00, blue = 0x00, alpha = 0xFF)
         )
     }

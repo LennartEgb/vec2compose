@@ -2,7 +2,7 @@ package dev.lennartegb.vec2compose.core.imagevector
 
 import dev.lennartegb.vec2compose.core.ImageVector
 
-class ImageVectorCreator(indentation: CharSequence) {
+class ImageVectorCreator(indentation: String) {
 
     private val emptyLineRegex = "(?m)^[ \t]*\r?\n".toRegex()
     private val composeMethodCreator = ComposeMethodCreator(indentation)

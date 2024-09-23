@@ -18,7 +18,7 @@ internal class SVGParserTest {
         get() = nodes.filterIsInstance<ImageVector.Group>()
 
     @Test
-    fun `parse SVG file with correct fill color`() {
+    fun parse_SVG_file_with_correct_fill_color() {
         val svg = svg {
             """
             <path d="" fill="none"/>
@@ -53,7 +53,7 @@ internal class SVGParserTest {
     }
 
     @Test
-    fun `parse file with group rotation`() {
+    fun parse_file_with_group_rotation() {
         val svg = svg { """<g transform="rotate(45 0 0)"/>""" }
         assertEquals(
             actual = svgImageVectorParser().parse(svg).map { it.nodes },
@@ -73,7 +73,7 @@ internal class SVGParserTest {
     }
 
     @Test
-    fun `parse file with group pivot`() {
+    fun parse_file_with_group_pivot() {
         val svg = svg { """<g transform="rotate(45 20 30)"/>""" }
         assertEquals(
             actual = svgImageVectorParser().parse(svg).map { it.groups.map { it.pivot } },
@@ -82,7 +82,7 @@ internal class SVGParserTest {
     }
 
     @Test
-    fun `parse file with group translate`() {
+    fun parse_file_with_group_translate() {
         val svg = svg { """<g transform="translate(20 30)"/>""" }
         assertEquals(
             actual = svgImageVectorParser().parse(svg)
@@ -92,7 +92,7 @@ internal class SVGParserTest {
     }
 
     @Test
-    fun `parse path data with fill none`() {
+    fun parse_path_data_with_fill_none() {
         val svg = svg { """<path d="" fill="none"/>""" }
 
         assertEquals(
@@ -111,13 +111,13 @@ internal class SVGParserTest {
     }
 
     @Test
-    fun `parse invalid ellipse from SVG`() {
+    fun parse_invalid_ellipse_from_SVG() {
         val svg = svg { """<ellipse cx="10" /> """ }
         assertFailsWith<IllegalArgumentException> { svgImageVectorParser().parse(svg).getOrThrow() }
     }
 
     @Test
-    fun `parse ellipse from SVG`() {
+    fun parse_ellipse_from_SVG() {
         val svg = svg {
             """<ellipse cx="10" cy="20" rx="10" ry="20" fill="red" stroke="blue" stroke-width="3"/>"""
         }
@@ -134,7 +134,7 @@ internal class SVGParserTest {
                             alpha = 0xFF
                         ),
                         alpha = 1f,
-                        stroke = ImageVector.Path.Stroke(
+                        stroke = Stroke(
                             color = ImageVector.Path.FillColor(
                                 red = 0x00,
                                 green = 0x00,
@@ -145,13 +145,12 @@ internal class SVGParserTest {
                             width = 3f
                         ),
                         commands = listOf(
-                            MoveTo(0f, 20f, isAbsolute = true),
+                            MoveTo(0f, 20f),
                             ArcTo(
                                 horizontalEllipseRadius = 10f,
                                 verticalEllipseRadius = 20f,
                                 theta = 0f,
                                 isMoreThanHalf = false,
-                                isAbsolute = true,
                                 isPositiveArc = true,
                                 x1 = 20f,
                                 y1 = 20f
@@ -161,12 +160,11 @@ internal class SVGParserTest {
                                 verticalEllipseRadius = 20f,
                                 theta = 0f,
                                 isMoreThanHalf = false,
-                                isAbsolute = true,
                                 isPositiveArc = true,
                                 x1 = 0f,
                                 y1 = 20f
                             ),
-                            Close
+                            Close()
                         )
                     )
                 )
@@ -175,12 +173,8 @@ internal class SVGParserTest {
     }
 
     @Test
-    fun `parse circle from SVG`() {
-        val svg = svg {
-            """
-            <circle cx="5" cy="5" r="5" />
-            """
-        }
+    fun parse_circle_from_SVG() {
+        val svg = svg { """<circle cx="5" cy="5" r="5" />""" }
         assertEquals(
             actual = svgImageVectorParser().parse(svg).getOrThrow(),
             expected = ImageVector(
@@ -193,13 +187,12 @@ internal class SVGParserTest {
                         fillType = FillType.Default,
                         fillColor = ImageVector.Path.FillColor(0x00, 0x00, 0x00, 0xFF),
                         commands = listOf(
-                            MoveTo(x = 0f, y = 5f, isAbsolute = true),
+                            MoveTo(x = 0f, y = 5f),
                             ArcTo(
                                 horizontalEllipseRadius = 5f,
                                 verticalEllipseRadius = 5f,
                                 theta = 0f,
                                 isMoreThanHalf = false,
-                                isAbsolute = true,
                                 isPositiveArc = true,
                                 x1 = 10f,
                                 y1 = 5f
@@ -209,12 +202,11 @@ internal class SVGParserTest {
                                 verticalEllipseRadius = 5f,
                                 theta = 0f,
                                 isMoreThanHalf = false,
-                                isAbsolute = true,
                                 isPositiveArc = true,
                                 x1 = 0f,
                                 y1 = 5f
                             ),
-                            Close
+                            Close()
                         ),
                         alpha = 1f,
                         stroke = Stroke()

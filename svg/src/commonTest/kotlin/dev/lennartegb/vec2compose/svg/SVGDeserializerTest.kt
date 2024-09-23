@@ -136,7 +136,7 @@ internal class SVGDeserializerTest {
     }
 
     @Test
-    fun `parse SVG with rectangle`() {
+    fun parse_SVG_with_rectangle() {
         val svg = svg {
             """<rect width="150" height="50" fill="red" y="50" />"""
         }
@@ -156,7 +156,7 @@ internal class SVGDeserializerTest {
     }
 
     @Test
-    fun `parse SVG with mixed children order`() {
+    fun parse_SVG_with_mixed_children_order() {
         val svg = svg {
             """
                 <g id="head">

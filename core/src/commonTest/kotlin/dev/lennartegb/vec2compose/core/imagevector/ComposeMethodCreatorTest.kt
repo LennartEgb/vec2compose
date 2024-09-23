@@ -23,7 +23,7 @@ internal class ComposeMethodCreatorTest {
     )
 
     @Test
-    fun `parse constructor returns builder`() {
+    fun parse_constructor_returns_builder() {
         val creator = ComposeMethodCreator(indentation = "  ")
         val actual = creator.createConstructor(name = "hello", set = testImageVector)
         assertEquals(
@@ -41,7 +41,7 @@ internal class ComposeMethodCreatorTest {
     }
 
     @Test
-    fun `parse path`() {
+    fun parse_path() {
         val creator = ComposeMethodCreator(indentation = "  ")
         val actual = creator.createPath(
             forBuilder = false,
@@ -54,9 +54,9 @@ internal class ComposeMethodCreatorTest {
                     alpha = 0xff
                 ),
                 commands = listOf(
-                    MoveTo(2f, 2f, isAbsolute = false),
-                    LineTo(4f, 4f, isAbsolute = false),
-                    Close
+                    MoveTo(2f, 2f),
+                    LineTo(4f, 4f),
+                    Close()
                 ),
                 alpha = .5f,
                 stroke = ImageVector.Path.Stroke(
@@ -83,8 +83,8 @@ internal class ComposeMethodCreatorTest {
                   strokeLineMiter = 0.25f,
                   pathFillType = PathFillType.EvenOdd
                 ) {
-                  moveToRelative(2.0f, 2.0f)
-                  lineToRelative(4.0f, 4.0f)
+                  moveTo(2.0f, 2.0f)
+                  lineTo(4.0f, 4.0f)
                   close()
                 }
             """.trimIndent()
@@ -92,7 +92,7 @@ internal class ComposeMethodCreatorTest {
     }
 
     @Test
-    fun `parse path for builder`() {
+    fun parse_path_for_builder() {
         val creator = ComposeMethodCreator(indentation = "  ")
         val actual = creator.createPath(
             forBuilder = true,
@@ -100,9 +100,9 @@ internal class ComposeMethodCreatorTest {
                 fillType = ImageVector.Path.FillType.EvenOdd,
                 fillColor = null,
                 commands = listOf(
-                    MoveTo(2f, 2f, isAbsolute = true),
-                    LineTo(4f, 4f, isAbsolute = true),
-                    Close
+                    MoveTo(2f, 2f),
+                    LineTo(4f, 4f),
+                    Close()
                 ),
                 alpha = .5f,
                 stroke = ImageVector.Path.Stroke(
@@ -138,7 +138,7 @@ internal class ComposeMethodCreatorTest {
     }
 
     @Test
-    fun `parse group with path`() {
+    fun parse_group_with_path() {
         val creator = ComposeMethodCreator(indentation = " ".repeat(4))
         val actual = creator.createGroup(
             forBuilder = false,
@@ -196,6 +196,7 @@ internal class ComposeMethodCreatorTest {
                         strokeLineMiter = 0.25f,
                         pathFillType = PathFillType.EvenOdd
                     ) {
+                    
                     }
                 }
             """.trimIndent()
@@ -203,7 +204,7 @@ internal class ComposeMethodCreatorTest {
     }
 
     @Test
-    fun `parse group for builder`() {
+    fun parse_group_for_builder() {
         val creator = ComposeMethodCreator(indentation = "  ")
         val actual = creator.createGroup(
             forBuilder = true,

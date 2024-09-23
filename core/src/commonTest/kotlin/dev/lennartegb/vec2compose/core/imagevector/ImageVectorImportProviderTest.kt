@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 class ImageVectorImportProviderTest {
 
     @Test
-    fun `create imports without groups`() {
+    fun create_imports_without_groups() {
         val provider = ImageVectorImportProvider()
         assertEquals(
             actual = provider.getImports(hasGroup = false),
@@ -22,7 +22,7 @@ class ImageVectorImportProviderTest {
     }
 
     @Test
-    fun `create imports with groups`() {
+    fun create_imports_with_groups() {
         val provider = ImageVectorImportProvider()
         assertEquals(
             actual = provider.getImports(hasGroup = true),
