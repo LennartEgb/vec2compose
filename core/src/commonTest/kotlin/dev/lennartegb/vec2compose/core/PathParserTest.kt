@@ -34,4 +34,14 @@ internal class PathParserTest {
             )
         )
     }
+
+    @Test
+    fun raw_path_returns_joined_command_values() {
+        val commands = listOf(
+            Command("M27.05,24.55"),
+            Command("L12.15,19.65"),
+            Command("Z")
+        )
+        assertEquals(expected = "M27.05,24.55L12.15,19.65Z", actual = commands.raw)
+    }
 }
