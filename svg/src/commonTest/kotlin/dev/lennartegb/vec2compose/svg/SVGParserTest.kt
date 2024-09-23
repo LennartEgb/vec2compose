@@ -7,6 +7,7 @@ import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
 import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
+import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -210,6 +211,35 @@ internal class SVGParserTest {
                         ),
                         alpha = 1f,
                         stroke = Stroke()
+                    )
+                )
+            )
+        )
+    }
+
+    @Test
+    fun parse_rect_from_SVG() {
+        val svg = svg { """<rect x="1" y="2" width="10" height="5" />""" }
+        assertEquals(
+            actual = svgImageVectorParser().parse(svg).getOrThrow(),
+            expected = ImageVector(
+                width = 24,
+                height = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
+                nodes = listOf(
+                    ImageVector.Path(
+                        fillType = FillType.Default,
+                        fillColor = null,
+                        commands = listOf(
+                            MoveTo(x = 1f, y = 2f),
+                            LineTo(x = 11f, y = 2f),
+                            LineTo(x = 11f, y = 7f),
+                            LineTo(x = 1f, y = 7f),
+                            Close()
+                        ),
+                        alpha = 1f,
+                        stroke = Stroke(width = 0f)
                     )
                 )
             )
