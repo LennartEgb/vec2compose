@@ -2,11 +2,12 @@ package dev.lennartegb.vec2compose.core
 
 import dev.lennartegb.vec2compose.core.commands.Command
 
-typealias Path = List<Command>
-
 private val regex = "[A-z][^A-z]*".toRegex()
 
-fun parsePath(pathCode: String): Path = regex
-    .findAll(pathCode)
-    .flatMap { parseCommand(it.value) }
-    .toList()
+typealias Path = List<Command>
+
+val Path.raw: String get() = joinToString("") { it.value }
+
+@Suppress("FunctionName")
+fun Path(pathCode: String): Path =
+    regex.findAll(pathCode).map { Command(it.value) }.toList()

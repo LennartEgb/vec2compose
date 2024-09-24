@@ -14,7 +14,7 @@ internal class ImageVectorCreatorTest {
     private val imageVectorCreator = ImageVectorCreator(indentation = "    ")
 
     @Test
-    fun `parse ImageVector with FillType NonZero to ImageVector string`() {
+    fun parse_ImageVector_with_FillType_NonZero_to_ImageVector_string() {
         val set = ImageVector(
             width = 24,
             height = 24,
@@ -24,10 +24,10 @@ internal class ImageVectorCreatorTest {
                 ImageVector.Path(
                     fillType = ImageVector.Path.FillType.NonZero,
                     commands = listOf(
-                        MoveTo(x = 1f, y = 2f, isAbsolute = true),
-                        LineTo(x = 2f, y = 2f, isAbsolute = true),
-                        LineTo(x = 1f, y = 2f, isAbsolute = false),
-                        Close
+                        MoveTo(x = 1f, y = 2f),
+                        LineTo(x = 2f, y = 2f),
+                        LineTo(x = 1f, y = 2f),
+                        Close()
                     ),
                     alpha = 1f
                 )
@@ -54,7 +54,7 @@ internal class ImageVectorCreatorTest {
             ) {
                 moveTo(1.0f, 2.0f)
                 lineTo(2.0f, 2.0f)
-                lineToRelative(1.0f, 2.0f)
+                lineTo(1.0f, 2.0f)
                 close()
             }.build()
         """.trimIndent()
@@ -65,7 +65,7 @@ internal class ImageVectorCreatorTest {
     }
 
     @Test
-    fun `parse ImageVector with FillType EvenOdd to ImageVector string`() {
+    fun parse_ImageVector_with_FillType_EvenOdd_to_ImageVector_string() {
         val set = ImageVector(
             width = 24,
             height = 24,
@@ -75,10 +75,10 @@ internal class ImageVectorCreatorTest {
                 ImageVector.Path(
                     fillType = ImageVector.Path.FillType.EvenOdd,
                     commands = listOf(
-                        MoveTo(x = 1f, y = 2f, isAbsolute = true),
-                        LineTo(x = 2f, y = 2f, isAbsolute = true),
-                        LineTo(x = 1f, y = 2f, isAbsolute = false),
-                        Close
+                        MoveTo(x = 1f, y = 2f),
+                        LineTo(x = 2f, y = 2f),
+                        LineTo(x = 1f, y = 2f),
+                        Close()
                     ),
                     alpha = .5f
                 )
@@ -105,7 +105,7 @@ internal class ImageVectorCreatorTest {
             ) {
                 moveTo(1.0f, 2.0f)
                 lineTo(2.0f, 2.0f)
-                lineToRelative(1.0f, 2.0f)
+                lineTo(1.0f, 2.0f)
                 close()
             }.build()
         """.trimIndent()
@@ -116,7 +116,7 @@ internal class ImageVectorCreatorTest {
     }
 
     @Test
-    fun `parse ImageVector with Group to ImageVector string`() {
+    fun parse_ImageVector_with_Group_to_ImageVector_string() {
         val imageVector = ImageVector(
             width = 24,
             height = 25,

@@ -3,13 +3,8 @@ package dev.lennartegb.vec2compose.core.commands
 /**
  * Horizontal line to command indicated by h/H
  */
-data class HorizontalLineTo(val x: Float, override val isAbsolute: Boolean) : Command {
-    override fun toString(): String {
-        var method = "horizontalLineTo"
-        if (!isAbsolute) {
-            method += "Relative"
-        }
-        method += "(${x}f)"
-        return method
-    }
+data object HorizontalLineTo : CommandSpec {
+    override val name: String = "horizontalLineTo"
+    override val argsCount: Int = 1
+    override fun getArguments(args: List<String>): String = "${args[0]}f"
 }

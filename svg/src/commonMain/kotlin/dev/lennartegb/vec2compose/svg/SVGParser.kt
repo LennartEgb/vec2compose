@@ -6,13 +6,13 @@ import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke
 import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Cap
 import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join
 import dev.lennartegb.vec2compose.core.ImageVectorParser
+import dev.lennartegb.vec2compose.core.Path
 import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
 import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
-import dev.lennartegb.vec2compose.core.parsePath
 
 fun svgImageVectorParser(): ImageVectorParser = SVGParser()
 
@@ -66,7 +66,7 @@ internal class SVGParser(
         fillColor = if (fill == null && strokeColor == null) Black else fillColor
         return ImageVector.Path(
             fillType = parseFillType(fillRule),
-            commands = parsePath(pathData),
+            commands = Path(pathData),
             fillColor = fillColor,
             alpha = fillOpacity,
             stroke = stroke
@@ -93,13 +93,12 @@ internal class SVGParser(
             ),
             alpha = 1f,
             commands = listOf(
-                MoveTo(cx - radiusX, cy, isAbsolute = true),
+                MoveTo(x = cx - radiusX, y = cy),
                 ArcTo(
                     horizontalEllipseRadius = radiusX,
                     verticalEllipseRadius = radiusY,
                     theta = 0f,
                     isMoreThanHalf = false,
-                    isAbsolute = true,
                     isPositiveArc = true,
                     x1 = cx + radiusX,
                     y1 = cy
@@ -109,12 +108,11 @@ internal class SVGParser(
                     verticalEllipseRadius = radiusY,
                     theta = 0f,
                     isMoreThanHalf = false,
-                    isAbsolute = true,
                     isPositiveArc = true,
                     x1 = cx - radiusX,
                     y1 = cy
                 ),
-                Close
+                Close()
             )
         )
     }
@@ -130,11 +128,11 @@ internal class SVGParser(
             alpha = 1f,
             stroke = Stroke(width = 0f),
             commands = listOf(
-                MoveTo(x = x, y = y, isAbsolute = true),
-                LineTo(x = x + width, y = y, isAbsolute = true),
-                LineTo(x = x + width, y = y + height, isAbsolute = true),
-                LineTo(x = x, y = y + height, isAbsolute = true),
-                Close
+                MoveTo(x = x, y = y),
+                LineTo(x = x + width, y = y),
+                LineTo(x = x + width, y = y + height),
+                LineTo(x = x, y = y + height),
+                Close()
             )
         )
     }
@@ -161,13 +159,12 @@ internal class SVGParser(
             fillType = FillType.Default,
             fillColor = color,
             commands = listOf(
-                MoveTo(x = cx - r, y = cy, isAbsolute = true),
+                MoveTo(x = cx - r, y = cy),
                 ArcTo(
                     horizontalEllipseRadius = r,
                     verticalEllipseRadius = r,
                     theta = 0f,
                     isMoreThanHalf = false,
-                    isAbsolute = true,
                     isPositiveArc = true,
                     x1 = cx + r,
                     y1 = cy
@@ -177,12 +174,11 @@ internal class SVGParser(
                     verticalEllipseRadius = r,
                     theta = 0f,
                     isMoreThanHalf = false,
-                    isAbsolute = true,
                     isPositiveArc = true,
                     x1 = cx - r,
                     y1 = cy
                 ),
-                Close
+                Close()
             ),
             alpha = opacity.toFloat(),
             stroke = Stroke()

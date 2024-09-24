@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 
 class KotlinFileContentCreatorTest {
     @Test
-    fun `create file content for ImageVector`() {
+    fun create_file_content_for_ImageVector() {
         val indentation = "    "
         val creator = KotlinFileContentCreator(
             importProvider = { "IMPORTS" },
@@ -46,7 +46,7 @@ class KotlinFileContentCreatorTest {
     }
 
     @Test
-    fun `create file content for ImageVector without package`() {
+    fun create_file_content_for_ImageVector_without_package() {
         val indentation = "    "
         val creator = KotlinFileContentCreator(
             importProvider = { "IMPORTS" },

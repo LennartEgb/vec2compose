@@ -3,19 +3,9 @@ package dev.lennartegb.vec2compose.core.commands
 /**
  * Reflective curve to command indicated by s/S
  */
-data class ReflectiveCurveTo(
-    val x1: Float,
-    val y1: Float,
-    val x2: Float,
-    val y2: Float,
-    override val isAbsolute: Boolean
-) : Command {
-    override fun toString(): String {
-        var method = "reflectiveCurveTo"
-        if (!isAbsolute) {
-            method += "Relative"
-        }
-        method += "(${x1}f, ${y1}f, ${x2}f, ${y2}f)"
-        return method
-    }
+data object ReflectiveCurveTo : CommandSpec {
+    override val name: String = "reflectiveCurveTo"
+    override val argsCount: Int = 4
+    override fun getArguments(args: List<String>): String =
+        "${args[0]}f, ${args[1]}f, ${args[2]}f, ${args[3]}f"
 }
