@@ -1,8 +1,6 @@
 package dev.lennartegb.vec2compose.core.imagevector
 
 import dev.lennartegb.vec2compose.core.ImageVector
-import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Cap
-import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join
 
 internal class ComposeMethodCreator(private val indentation: String) {
 
@@ -69,19 +67,4 @@ internal class ComposeMethodCreator(private val indentation: String) {
             ImageVector.Path.FillType.NonZero -> "PathFillType.NonZero"
             ImageVector.Path.FillType.EvenOdd -> "PathFillType.EvenOdd"
         }
-
-    private fun ImageVector.Path.FillColor?.solid(): String =
-        this?.let { "SolidColor($it)" } ?: "null"
-
-    private fun Cap.property(): String = when (this) {
-        Cap.Butt -> "StrokeCap.Butt"
-        Cap.Square -> "StrokeCap.Square"
-        Cap.Round -> "StrokeCap.Round"
-    }
-
-    private fun Join.property(): String = when (this) {
-        Join.Bevel -> "StrokeJoin.Bevel"
-        Join.Miter -> "StrokeJoin.Miter"
-        Join.Round -> "StrokeJoin.Round"
-    }
 }
