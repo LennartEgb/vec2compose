@@ -21,7 +21,10 @@ fun rememberAppState(
     isSystemDarkTheme: Boolean = isSystemInDarkTheme()
 ): AppState {
     val files = remember { mutableStateListOf<File>() }
-    val picker = rememberVectorPickerLauncher { files.addAll(it) }
+    val picker = rememberVectorPickerLauncher {
+        files.removeAll(it)
+        files.addAll(it)
+    }
     return remember {
         AppState(
             isSystemDarkTheme = isSystemDarkTheme,
