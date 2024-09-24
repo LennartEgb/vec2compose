@@ -1,10 +1,8 @@
 package dev.lennartegb.vec2compose.core.imagevector
 
 import dev.lennartegb.vec2compose.core.ImageVector
-import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Cap.Butt
-import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Cap.Square
-import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join.Bevel
-import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join.Miter
+import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Cap
+import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke.Join
 
 internal class ComposeMethodCreator(private val indentation: String) {
 
@@ -61,7 +59,7 @@ internal class ComposeMethodCreator(private val indentation: String) {
                 }
             }
             ?.prependIndent(indentation)
-            ?.let(::appendLine)
+            ?.also(::appendLine)
         append("}")
     }
 
@@ -75,15 +73,15 @@ internal class ComposeMethodCreator(private val indentation: String) {
     private fun ImageVector.Path.FillColor?.solid(): String =
         this?.let { "SolidColor($it)" } ?: "null"
 
-    private fun ImageVector.Path.Stroke.Cap.property(): String = when (this) {
-        Butt -> "StrokeCap.Butt"
-        Square -> "StrokeCap.Square"
-        ImageVector.Path.Stroke.Cap.Round -> "StrokeCap.Round"
+    private fun Cap.property(): String = when (this) {
+        Cap.Butt -> "StrokeCap.Butt"
+        Cap.Square -> "StrokeCap.Square"
+        Cap.Round -> "StrokeCap.Round"
     }
 
-    private fun ImageVector.Path.Stroke.Join.property(): String = when (this) {
-        Bevel -> "StrokeJoin.Bevel"
-        Miter -> "StrokeJoin.Miter"
-        ImageVector.Path.Stroke.Join.Round -> "StrokeJoin.Round"
+    private fun Join.property(): String = when (this) {
+        Join.Bevel -> "StrokeJoin.Bevel"
+        Join.Miter -> "StrokeJoin.Miter"
+        Join.Round -> "StrokeJoin.Round"
     }
 }

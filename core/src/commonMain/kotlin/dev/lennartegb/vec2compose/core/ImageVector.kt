@@ -47,7 +47,14 @@ data class ImageVector(
         ) {
 
             // NOTE: constructor with null values to fall back to default values.
-            constructor(color: FillColor?, alpha: Float?, width: Float?, cap: Cap?, join: Join?, miter: Float?) : this(
+            constructor(
+                color: FillColor?,
+                alpha: Float?,
+                width: Float?,
+                cap: Cap?,
+                join: Join?,
+                miter: Float?
+            ) : this(
                 color = color,
                 alpha = alpha ?: 1f,
                 width = width ?: 1f,
@@ -63,14 +70,8 @@ data class ImageVector(
         data class FillColor(val red: Int, val green: Int, val blue: Int, val alpha: Int) {
             override fun toString(): String {
                 fun String.format() = if (length < 2) padStart(length = 2, padChar = '0') else this
-                return buildString {
-                    append("Color(0x")
-                    append(alpha.toString(16).format())
-                    append(red.toString(16).format())
-                    append(green.toString(16).format())
-                    append(blue.toString(16).format())
-                    append(")")
-                }
+                fun Int.hex() = toString(radix = 16).format()
+                return "Color(0x${alpha.hex()}${red.hex()}${green.hex()}${blue.hex()})"
             }
         }
     }
