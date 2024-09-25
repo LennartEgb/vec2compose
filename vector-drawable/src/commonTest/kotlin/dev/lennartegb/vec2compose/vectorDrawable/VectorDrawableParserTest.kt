@@ -23,6 +23,7 @@ internal class VectorDrawableParserTest {
                 nodes = listOf(
                     ImageVector.Path(
                         fillType = ImageVector.Path.FillType.NonZero,
+                        fillColor = ImageVector.Path.FillColor(0xff, 0xff, 0xff, 0xff),
                         commands = emptyList(),
                         alpha = .5f
                     )
@@ -47,6 +48,7 @@ internal class VectorDrawableParserTest {
                 nodes = listOf(
                     ImageVector.Path(
                         fillType = ImageVector.Path.FillType.EvenOdd,
+                        fillColor = ImageVector.Path.FillColor(0xff, 0xff, 0xff, 0xff),
                         commands = emptyList(),
                         alpha = 1f
                     )

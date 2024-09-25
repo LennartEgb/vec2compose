@@ -10,12 +10,12 @@ import dev.lennartegb.vec2compose.core.Translation
 private typealias DpString = String
 
 fun xmlImageVectorParser(): ImageVectorParser = VectorDrawableParser(
-    colorParser = HexColorParser(),
+    colorParser = VectorDrawableColorParser(HexColorParser()),
     deserializer = VectorDrawableDeserializer()
 )
 
 internal class VectorDrawableParser(
-    private val colorParser: HexColorParser,
+    private val colorParser: VectorDrawableColorParser,
     private val deserializer: VectorDrawableDeserializer = VectorDrawableDeserializer()
 ) : ImageVectorParser {
 
