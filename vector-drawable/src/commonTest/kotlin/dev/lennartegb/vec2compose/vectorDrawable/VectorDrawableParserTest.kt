@@ -9,7 +9,7 @@ import kotlin.test.assertEquals
 internal class VectorDrawableParserTest {
 
     @Test
-    fun `parse valid VectorDrawable xml to ImageVector`() {
+    fun parse_valid_VectorDrawable_xml_to_ImageVector() {
         val vector = vector(
             """
                 <path
@@ -34,7 +34,7 @@ internal class VectorDrawableParserTest {
     }
 
     @Test
-    fun `parse valid VectorDrawable with fillType evenOdd to ImageVector`() {
+    fun parse_valid_VectorDrawable_with_fillType_evenOdd_to_ImageVector() {
         val v = vector(
             """
             <path
@@ -59,7 +59,7 @@ internal class VectorDrawableParserTest {
     }
 
     @Test
-    fun `parse drawable with group`() {
+    fun parse_drawable_with_group() {
         val vector = vector(
             """
                 <group 
@@ -91,7 +91,7 @@ internal class VectorDrawableParserTest {
     }
 
     @Test
-    fun `parse path with stroke`() {
+    fun parse_path_with_stroke() {
         val vector = vector(
             """
              <path
