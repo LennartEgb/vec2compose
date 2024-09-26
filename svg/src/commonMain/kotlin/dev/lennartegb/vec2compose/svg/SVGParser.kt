@@ -79,7 +79,7 @@ internal class SVGParser(
         //       fill can be none resulting to null.
         fillColor = if (fill == null && strokeColor == null) Black else fillColor
         return ImageVector.Path(
-            fillType = parseFillType(fillRule),
+            fillType = FillType(fillRule),
             commands = Path(pathData),
             fillColor = fillColor,
             alpha = fillOpacity,
