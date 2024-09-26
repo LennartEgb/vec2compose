@@ -20,6 +20,21 @@ internal class SVGParserTest {
         get() = nodes.filterIsInstance<ImageVector.Group>()
 
     @Test
+    fun svg_without_viewBox_uses_width_and_height() {
+        val svg = svg(viewBox = null) { "" }
+        assertEquals(
+            actual = svgImageVectorParser().parse(svg).getOrThrow(),
+            expected = ImageVector(
+                width = 24,
+                height = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
+                nodes = emptyList()
+            )
+        )
+    }
+
+    @Test
     fun parse_SVG_file_with_correct_fill_color() {
         val svg = svg {
             """
@@ -273,7 +288,7 @@ internal class SVGParserTest {
     @Test
     fun parse_polygon_from_SVG() {
         val svg = svg {
-            """<polygon points="0,0 10,10, 0,10" fill="none" fill-rule="evenodd" opacity="0.5" stroke="black" />"""
+            """<polygon points="0,0 10,10, 0,10" fill="none" fill-rule="evenodd" opacity="0.5" stroke="black" stroke-width="3" />"""
         }
         assertEquals(
             actual = svgImageVectorParser().parse(svg).getOrThrow(),
@@ -290,7 +305,7 @@ internal class SVGParserTest {
                         alpha = .5f,
                         stroke = Stroke(
                             color = ImageVector.Path.FillColor(0, 0, 0, 255),
-                            width = 1f
+                            width = 3f
                         )
                     )
                 )

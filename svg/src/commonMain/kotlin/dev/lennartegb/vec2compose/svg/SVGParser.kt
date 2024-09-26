@@ -199,14 +199,6 @@ internal class SVGParser(
         )
     }
 
-    private fun parseFillType(fillRule: String): FillType {
-        return when (fillRule) {
-            "evenodd" -> FillType.EvenOdd
-            "nonzero" -> FillType.NonZero
-            else -> FillType.Default
-        }
-    }
-
     private fun String.getRotation(): Float {
         return getFunction("rotate")
             ?.let { (a, _, _) -> a }
