@@ -134,6 +134,20 @@ internal class VectorDrawableParserTest {
     }
 
     @Test
+    fun parse_int_width_vector() {
+        assertEquals(
+            actual = xmlImageVectorParser().parse(vector("", width = "24")).getOrThrow(),
+            expected = ImageVector(
+                width = 24,
+                height = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
+                nodes = emptyList()
+            )
+        )
+    }
+
+    @Test
     fun parse_invalid_width_vector_throws_IllegalArgumentException() {
         assertFailsWith<IllegalArgumentException> {
             xmlImageVectorParser().parse(vector("", width = "r4nd0m")).getOrThrow()
