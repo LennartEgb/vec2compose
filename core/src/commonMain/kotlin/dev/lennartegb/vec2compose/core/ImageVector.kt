@@ -34,6 +34,12 @@ data class ImageVector(
 
             companion object {
                 val Default = NonZero
+
+                operator fun invoke(value: String): FillType = when (value.lowercase()) {
+                    "evenodd" -> EvenOdd
+                    "nonzero" -> NonZero
+                    else -> Default
+                }
             }
         }
 

@@ -1,5 +1,6 @@
 package dev.lennartegb.vec2compose.core
 
+import dev.lennartegb.vec2compose.core.ImageVector.Path.FillType
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -20,8 +21,23 @@ class ImageVectorTest {
     @Test
     fun default_FillType_is_NonZero() {
         assertEquals(
-            actual = ImageVector.Path.FillType.Default,
-            expected = ImageVector.Path.FillType.NonZero
+            actual = FillType.Default,
+            expected = FillType.NonZero
         )
+    }
+
+    @Test
+    fun invoke_FillType_evenodd_returns_FillType_EvenOdd() {
+        assertEquals(actual = FillType("evenodd"), expected = FillType.EvenOdd)
+    }
+
+    @Test
+    fun invoke_FillType_NonZero_returns_FillType_NonZero() {
+        assertEquals(actual = FillType("NONZERO"), expected = FillType.NonZero)
+    }
+
+    @Test
+    fun invoke_FillType_RANDOM_returns_FillType_Default() {
+        assertEquals(actual = FillType("r4ndøm"), expected = FillType.Default)
     }
 }
