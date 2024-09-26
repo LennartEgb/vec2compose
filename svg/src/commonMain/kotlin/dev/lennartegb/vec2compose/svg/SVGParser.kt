@@ -45,6 +45,20 @@ internal class SVGParser(
         is SVG.Path -> toVectorPath()
         is SVG.Rectangle -> toVectorPath()
         is SVG.Ellipse -> toVectorPath()
+        is SVG.Polygon -> toVectorPath()
+    }
+
+    private fun SVG.Polygon.toVectorPath(): ImageVector.Path {
+        return ImageVector.Path(
+            fillType = fillType?.let { FillType(it) } ?: FillType.Default,
+            fillColor = fill?.let { colorParser.parse(it) } ?: if (fill == null) Black else null,
+            alpha = alpha?.toFloatOrNull() ?: 1f,
+            stroke = Stroke(
+                color = stroke?.let { colorParser.parse(it) },
+                width = strokeWidth?.toFloat() ?: 1f
+            ),
+            commands = points.takeIf { it.isNotEmpty() }?.let { Path("M${it}Z") }.orEmpty()
+        )
     }
 
     private fun SVG.Group.toVectorGroup(): ImageVector.Group {
@@ -65,7 +79,7 @@ internal class SVGParser(
         //       fill can be none resulting to null.
         fillColor = if (fill == null && strokeColor == null) Black else fillColor
         return ImageVector.Path(
-            fillType = parseFillType(fillRule),
+            fillType = FillType(fillRule),
             commands = Path(pathData),
             fillColor = fillColor,
             alpha = fillOpacity,
@@ -183,14 +197,6 @@ internal class SVGParser(
             alpha = opacity.toFloat(),
             stroke = Stroke()
         )
-    }
-
-    private fun parseFillType(fillRule: String): FillType {
-        return when (fillRule) {
-            "evenodd" -> FillType.EvenOdd
-            "nonzero" -> FillType.NonZero
-            else -> FillType.Default
-        }
     }
 
     private fun String.getRotation(): Float {
