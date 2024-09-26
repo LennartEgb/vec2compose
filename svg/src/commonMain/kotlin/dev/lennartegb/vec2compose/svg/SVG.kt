@@ -106,8 +106,11 @@ internal data class SVG(
     @SerialName(POLYGON)
     @XmlSerialName(POLYGON)
     data class Polygon(
-        @SerialName("points") val points: String,
+        @SerialName("points") val points: String = "",
         @SerialName("fill") val fill: String? = null,
-        @SerialName("stroke") val stroke: String? = null
+        @SerialName("fill-rule") val fillType: String? = null,
+        @SerialName("stroke") val stroke: String? = null,
+        @SerialName("stroke-width") val strokeWidth: String? = null,
+        @SerialName("opacity") val alpha: String? = null
     ) : Child
 }

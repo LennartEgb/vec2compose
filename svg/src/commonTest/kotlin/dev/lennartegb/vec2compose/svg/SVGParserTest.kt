@@ -7,6 +7,7 @@ import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
 import dev.lennartegb.vec2compose.core.commands.ArcTo
 import dev.lennartegb.vec2compose.core.commands.Close
+import dev.lennartegb.vec2compose.core.commands.Command
 import dev.lennartegb.vec2compose.core.commands.LineTo
 import dev.lennartegb.vec2compose.core.commands.MoveTo
 import kotlin.test.Test
@@ -240,6 +241,29 @@ internal class SVGParserTest {
                         ),
                         alpha = 1f,
                         stroke = Stroke(width = 0f)
+                    )
+                )
+            )
+        )
+    }
+
+    @Test
+    fun parse_polygon_from_SVG() {
+        val svg = svg { """<polygon points="0,0 10,10, 0,10" />""" }
+        assertEquals(
+            actual = svgImageVectorParser().parse(svg).getOrThrow(),
+            expected = ImageVector(
+                width = 24,
+                height = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
+                nodes = listOf(
+                    ImageVector.Path(
+                        fillType = FillType.Default,
+                        fillColor = ImageVector.Path.FillColor(0, 0, 0, 0xff),
+                        commands = listOf(Command("M0,0 10,10, 0,10"), Close()),
+                        alpha = 1f,
+                        stroke = Stroke(width = 1f)
                     )
                 )
             )

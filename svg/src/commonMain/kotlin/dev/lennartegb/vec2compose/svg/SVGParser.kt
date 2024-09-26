@@ -49,7 +49,16 @@ internal class SVGParser(
     }
 
     private fun SVG.Polygon.toVectorPath(): ImageVector.Path {
-        TODO("Implement")
+        return ImageVector.Path(
+            fillType = fillType?.let { FillType(it) } ?: FillType.Default,
+            fillColor = fill?.let { colorParser.parse(it) } ?: Black,
+            alpha = alpha?.toFloatOrNull() ?: 1f,
+            stroke = Stroke(
+                color = stroke?.let { colorParser.parse(it) },
+                width = strokeWidth?.toFloat() ?: 1f
+            ),
+            commands = points.takeIf { it.isNotEmpty() }?.let { Path("M${it}Z") }.orEmpty()
+        )
     }
 
     private fun SVG.Group.toVectorGroup(): ImageVector.Group {
