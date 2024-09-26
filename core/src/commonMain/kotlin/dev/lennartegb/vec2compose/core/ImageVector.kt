@@ -34,6 +34,12 @@ data class ImageVector(
 
             companion object {
                 val Default = NonZero
+
+                operator fun invoke(value: String): FillType = when (value.lowercase()) {
+                    "evenodd" -> EvenOdd
+                    "nonzero" -> NonZero
+                    else -> Default
+                }
             }
         }
 
@@ -63,8 +69,45 @@ data class ImageVector(
                 miter = miter ?: 1f
             )
 
-            enum class Cap { Butt, Round, Square }
-            enum class Join { Bevel, Miter, Round }
+            enum class Cap {
+                Butt,
+                Round,
+                Square;
+
+                companion object {
+                    operator fun invoke(value: String): Cap {
+                        val cap = when (value.lowercase()) {
+                            "butt" -> Butt
+                            "round" -> Round
+                            "square" -> Square
+                            else -> null
+                        }
+                        return requireNotNull(cap) {
+                            "StrokeCap not supported. Was: $value. Must be in: $entries"
+                        }
+                    }
+                }
+            }
+
+            enum class Join {
+                Bevel,
+                Miter,
+                Round;
+
+                companion object {
+                    operator fun invoke(value: String): Join {
+                        val join = when (value.lowercase()) {
+                            "bevel" -> Bevel
+                            "miter" -> Miter
+                            "round" -> Round
+                            else -> null
+                        }
+                        return requireNotNull(join) {
+                            "StrokeJoin not supported. Was: $value. Must be in: $entries"
+                        }
+                    }
+                }
+            }
         }
 
         data class FillColor(val red: Int, val green: Int, val blue: Int, val alpha: Int) {

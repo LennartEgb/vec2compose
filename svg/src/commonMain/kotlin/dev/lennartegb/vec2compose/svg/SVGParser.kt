@@ -87,8 +87,8 @@ internal class SVGParser(
                 color = stroke?.let { colorParser.parse(it) },
                 alpha = if (stroke != null) 1f else 0f,
                 width = strokeWidth?.toFloat() ?: if (stroke != null) 1f else 0f,
-                cap = strokeLineCap?.let(::getStrokeLineCap) ?: Cap.Butt,
-                join = strokeLineJoin?.let(::getStrokeLineJoin) ?: Join.Bevel,
+                cap = strokeLineCap?.let { Cap(it) } ?: Cap.Butt,
+                join = strokeLineJoin?.let { Join(it) } ?: Join.Bevel,
                 miter = strokeMiterLimit?.toFloat() ?: 1f
             ),
             alpha = 1f,
@@ -142,8 +142,8 @@ internal class SVGParser(
             color = strokeColor?.let(colorParser::parse),
             alpha = strokeAlpha?.toFloat(),
             width = strokeWidth?.toFloat(),
-            cap = strokeLinecap?.let(::getStrokeLineCap),
-            join = strokeLinejoin?.let(::getStrokeLineJoin),
+            cap = strokeLinecap?.let { Cap(it) },
+            join = strokeLinejoin?.let { Join(it) },
             miter = strokeMiter?.toFloat()
         )
     }
@@ -183,28 +183,6 @@ internal class SVGParser(
             alpha = opacity.toFloat(),
             stroke = Stroke()
         )
-    }
-
-    private fun getStrokeLineJoin(value: String): Join {
-        // NOTE: Documentation lists more supported values. Compose only supports three, so we
-        //       need to ignore unsupported values for now.
-        //       arcs | bevel | miter | miter-clip | round
-        //       @see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linejoin
-        return when (value) {
-            "round" -> Join.Round
-            "bevel" -> Join.Bevel
-            "miter" -> Join.Miter
-            else -> error("StrokeJoin not supported. Was: $value. Must be in: ${Join.entries}")
-        }
-    }
-
-    private fun getStrokeLineCap(value: String): Cap {
-        return when (value) {
-            "butt" -> Cap.Butt
-            "round" -> Cap.Round
-            "square" -> Cap.Square
-            else -> error("StrokeCap not supported. Was: $value. Must be in: ${Cap.entries}")
-        }
     }
 
     private fun parseFillType(fillRule: String): FillType {

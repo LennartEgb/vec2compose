@@ -5,6 +5,7 @@ import dev.lennartegb.vec2compose.core.Scale
 import dev.lennartegb.vec2compose.core.Translation
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 internal class VectorDrawableParserTest {
 
@@ -132,12 +133,37 @@ internal class VectorDrawableParserTest {
         )
     }
 
-    private fun vector(content: String): String = buildString {
+    @Test
+    fun parse_int_width_vector() {
+        assertEquals(
+            actual = xmlImageVectorParser().parse(vector("", width = "24")).getOrThrow(),
+            expected = ImageVector(
+                width = 24,
+                height = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
+                nodes = emptyList()
+            )
+        )
+    }
+
+    @Test
+    fun parse_invalid_width_vector_throws_IllegalArgumentException() {
+        assertFailsWith<IllegalArgumentException> {
+            xmlImageVectorParser().parse(vector("", width = "r4nd0m")).getOrThrow()
+        }
+    }
+
+    private fun vector(
+        content: String,
+        width: String = "24dp",
+        height: String = "24dp"
+    ): String = buildString {
         appendLine(
             """
             <vector xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:width="24dp"
-                    android:height="24dp"
+                    android:width="$width"
+                    android:height="$height"
                     android:viewportWidth="24"
                     android:viewportHeight="24">
             """.trimIndent()
