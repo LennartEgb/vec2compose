@@ -17,7 +17,7 @@ internal data class SVG(
     @SerialName("height") val height: String,
     @SerialName("viewBox") val viewBox: String? = null,
     @SerialName("fill") val fill: String? = null,
-    @XmlPolyChildren([GROUP, PATH, CIRCLE, RECTANGLE, ELLIPSE])
+    @XmlPolyChildren([GROUP, PATH, CIRCLE, RECTANGLE, ELLIPSE, POLYGON])
     val children: List<@Polymorphic Child> = emptyList()
 ) {
 
@@ -27,6 +27,7 @@ internal data class SVG(
         const val CIRCLE = "circle"
         const val RECTANGLE = "rect"
         const val ELLIPSE = "ellipse"
+        const val POLYGON = "polygon"
     }
 
     sealed interface Child
@@ -37,7 +38,7 @@ internal data class SVG(
     data class Group(
         @SerialName("id") val name: String? = null,
         @SerialName("transform") val transform: String? = null,
-        @XmlPolyChildren([GROUP, PATH, CIRCLE, RECTANGLE, ELLIPSE])
+        @XmlPolyChildren([GROUP, PATH, CIRCLE, RECTANGLE, ELLIPSE, POLYGON])
         val children: List<@Polymorphic Child> = emptyList()
     ) : Child
 
@@ -99,5 +100,14 @@ internal data class SVG(
         @SerialName("stroke-linecap") val strokeLineCap: String? = null,
         @SerialName("stroke-linejoin") val strokeLineJoin: String? = null,
         @SerialName("stroke-miterlimit") val strokeMiterLimit: String? = null
+    ) : Child
+
+    @Serializable
+    @SerialName(POLYGON)
+    @XmlSerialName(POLYGON)
+    data class Polygon(
+        @SerialName("points") val points: String,
+        @SerialName("fill") val fill: String? = null,
+        @SerialName("stroke") val stroke: String? = null
     ) : Child
 }

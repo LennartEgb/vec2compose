@@ -45,6 +45,11 @@ internal class SVGParser(
         is SVG.Path -> toVectorPath()
         is SVG.Rectangle -> toVectorPath()
         is SVG.Ellipse -> toVectorPath()
+        is SVG.Polygon -> toVectorPath()
+    }
+
+    private fun SVG.Polygon.toVectorPath(): ImageVector.Path {
+        TODO("Implement")
     }
 
     private fun SVG.Group.toVectorGroup(): ImageVector.Group {
