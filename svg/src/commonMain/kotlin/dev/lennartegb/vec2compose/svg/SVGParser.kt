@@ -88,7 +88,7 @@ internal class SVGParser(
                 alpha = if (stroke != null) 1f else 0f,
                 width = strokeWidth?.toFloat() ?: if (stroke != null) 1f else 0f,
                 cap = strokeLineCap?.let(::getStrokeLineCap) ?: Cap.Butt,
-                join = strokeLineJoin?.let(::getStrokeLineJoin) ?: Join.Bevel,
+                join = strokeLineJoin?.let { Join(it) } ?: Join.Bevel,
                 miter = strokeMiterLimit?.toFloat() ?: 1f
             ),
             alpha = 1f,
@@ -143,7 +143,7 @@ internal class SVGParser(
             alpha = strokeAlpha?.toFloat(),
             width = strokeWidth?.toFloat(),
             cap = strokeLinecap?.let(::getStrokeLineCap),
-            join = strokeLinejoin?.let(::getStrokeLineJoin),
+            join = strokeLinejoin?.let { Join(it) },
             miter = strokeMiter?.toFloat()
         )
     }
@@ -183,19 +183,6 @@ internal class SVGParser(
             alpha = opacity.toFloat(),
             stroke = Stroke()
         )
-    }
-
-    private fun getStrokeLineJoin(value: String): Join {
-        // NOTE: Documentation lists more supported values. Compose only supports three, so we
-        //       need to ignore unsupported values for now.
-        //       arcs | bevel | miter | miter-clip | round
-        //       @see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linejoin
-        return when (value) {
-            "round" -> Join.Round
-            "bevel" -> Join.Bevel
-            "miter" -> Join.Miter
-            else -> error("StrokeJoin not supported. Was: $value. Must be in: ${Join.entries}")
-        }
     }
 
     private fun getStrokeLineCap(value: String): Cap {

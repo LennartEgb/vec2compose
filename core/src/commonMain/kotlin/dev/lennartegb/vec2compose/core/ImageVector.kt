@@ -70,7 +70,25 @@ data class ImageVector(
             )
 
             enum class Cap { Butt, Round, Square }
-            enum class Join { Bevel, Miter, Round }
+            enum class Join {
+                Bevel,
+                Miter,
+                Round;
+
+                companion object {
+                    operator fun invoke(value: String): Join {
+                        val join = when (value.lowercase()) {
+                            "bevel" -> Bevel
+                            "miter" -> Miter
+                            "round" -> Round
+                            else -> null
+                        }
+                        return requireNotNull(join) {
+                            "StrokeJoin not supported. Was: $value. Must be in: $entries"
+                        }
+                    }
+                }
+            }
         }
 
         data class FillColor(val red: Int, val green: Int, val blue: Int, val alpha: Int) {

@@ -73,7 +73,7 @@ internal class VectorDrawableParser(
             alpha = strokeAlpha?.toFloat(),
             width = strokeWidth?.toFloat(),
             cap = strokeLineCap?.let(::getCap),
-            join = strokeLineJoin?.let(::getJoin),
+            join = strokeLineJoin?.let { Join(it) },
             miter = strokeMiterLimit?.toFloat()
         )
     }
@@ -84,15 +84,6 @@ internal class VectorDrawableParser(
             "butt" -> Cap.Butt
             "square" -> Cap.Square
             else -> error("StrokeCap not supported. Was: $value. Must be in: ${Cap.entries}")
-        }
-    }
-
-    private fun getJoin(value: String): Join {
-        return when (value) {
-            "round" -> Join.Round
-            "bevel" -> Join.Bevel
-            "miter" -> Join.Miter
-            else -> error("StrokeJoin not supported. Was: $value. Must be in: ${Join.entries}")
         }
     }
 
