@@ -78,9 +78,6 @@ internal class VectorDrawableParser(
         )
     }
 
-    private fun DpString.toIntDp(): Int = toIntOrNull() ?: if (endsWith("dp")) {
-        requireNotNull(dropLast(2).toIntOrNull()) { "Malformed dp string: $this" }
-    } else {
-        error("Could not transform dp string to int: $this")
-    }
+    private fun DpString.toIntDp(): Int =
+        toIntOrNull() ?: requireNotNull(dropLast(2).toIntOrNull()) { "Malformed dp string: $this" }
 }
