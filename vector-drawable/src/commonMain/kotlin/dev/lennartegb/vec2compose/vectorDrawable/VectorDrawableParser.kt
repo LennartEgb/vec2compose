@@ -72,19 +72,10 @@ internal class VectorDrawableParser(
             color = strokeColor?.let { colorParser.parse(it) },
             alpha = strokeAlpha?.toFloat(),
             width = strokeWidth?.toFloat(),
-            cap = strokeLineCap?.let(::getCap),
+            cap = strokeLineCap?.let { Cap(it) },
             join = strokeLineJoin?.let { Join(it) },
             miter = strokeMiterLimit?.toFloat()
         )
-    }
-
-    private fun getCap(value: String): Cap {
-        return when (value) {
-            "round" -> Cap.Round
-            "butt" -> Cap.Butt
-            "square" -> Cap.Square
-            else -> error("StrokeCap not supported. Was: $value. Must be in: ${Cap.entries}")
-        }
     }
 
     private fun DpString.toIntDp(): Int = toIntOrNull() ?: if (endsWith("dp")) {

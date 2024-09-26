@@ -69,7 +69,26 @@ data class ImageVector(
                 miter = miter ?: 1f
             )
 
-            enum class Cap { Butt, Round, Square }
+            enum class Cap {
+                Butt,
+                Round,
+                Square;
+
+                companion object {
+                    operator fun invoke(value: String): Cap {
+                        val cap = when (value.lowercase()) {
+                            "butt" -> Butt
+                            "round" -> Round
+                            "square" -> Square
+                            else -> null
+                        }
+                        return requireNotNull(cap) {
+                            "StrokeCap not supported. Was: $value. Must be in: $entries"
+                        }
+                    }
+                }
+            }
+
             enum class Join {
                 Bevel,
                 Miter,

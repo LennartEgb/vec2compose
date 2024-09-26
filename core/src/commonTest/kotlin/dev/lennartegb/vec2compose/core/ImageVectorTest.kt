@@ -62,4 +62,24 @@ class ImageVectorTest {
     fun invoke_Join_random_throws_IllegalArgumentException() {
         assertFailsWith<IllegalArgumentException> { Stroke.Join("r4ndøm") }
     }
+
+    @Test
+    fun invoke_Cap_butt_returns_Cap_Butt() {
+        assertEquals(actual = Stroke.Cap("butt"), expected = Stroke.Cap.Butt)
+    }
+
+    @Test
+    fun invoke_Cap_round_returns_Cap_Round() {
+        assertEquals(actual = Stroke.Cap("round"), expected = Stroke.Cap.Round)
+    }
+
+    @Test
+    fun invoke_Cap_square_returns_Cap_Square() {
+        assertEquals(actual = Stroke.Cap("square"), expected = Stroke.Cap.Square)
+    }
+
+    @Test
+    fun invoke_Cap_random_throws_IllegalArgumentException() {
+        assertFailsWith<IllegalArgumentException> { Stroke.Cap("r4ndøm") }
+    }
 }

@@ -87,7 +87,7 @@ internal class SVGParser(
                 color = stroke?.let { colorParser.parse(it) },
                 alpha = if (stroke != null) 1f else 0f,
                 width = strokeWidth?.toFloat() ?: if (stroke != null) 1f else 0f,
-                cap = strokeLineCap?.let(::getStrokeLineCap) ?: Cap.Butt,
+                cap = strokeLineCap?.let { Cap(it) } ?: Cap.Butt,
                 join = strokeLineJoin?.let { Join(it) } ?: Join.Bevel,
                 miter = strokeMiterLimit?.toFloat() ?: 1f
             ),
@@ -142,7 +142,7 @@ internal class SVGParser(
             color = strokeColor?.let(colorParser::parse),
             alpha = strokeAlpha?.toFloat(),
             width = strokeWidth?.toFloat(),
-            cap = strokeLinecap?.let(::getStrokeLineCap),
+            cap = strokeLinecap?.let { Cap(it) },
             join = strokeLinejoin?.let { Join(it) },
             miter = strokeMiter?.toFloat()
         )
@@ -183,15 +183,6 @@ internal class SVGParser(
             alpha = opacity.toFloat(),
             stroke = Stroke()
         )
-    }
-
-    private fun getStrokeLineCap(value: String): Cap {
-        return when (value) {
-            "butt" -> Cap.Butt
-            "round" -> Cap.Round
-            "square" -> Cap.Square
-            else -> error("StrokeCap not supported. Was: $value. Must be in: ${Cap.entries}")
-        }
     }
 
     private fun parseFillType(fillRule: String): FillType {
