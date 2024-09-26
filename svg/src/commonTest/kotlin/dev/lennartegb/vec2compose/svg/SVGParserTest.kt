@@ -248,7 +248,7 @@ internal class SVGParserTest {
     }
 
     @Test
-    fun parse_polygon_from_SVG() {
+    fun parse_minimal_polygon_from_SVG() {
         val svg = svg { """<polygon points="0,0 10,10, 0,10" />""" }
         assertEquals(
             actual = svgImageVectorParser().parse(svg).getOrThrow(),
@@ -264,6 +264,34 @@ internal class SVGParserTest {
                         commands = listOf(Command("M0,0 10,10, 0,10"), Close()),
                         alpha = 1f,
                         stroke = Stroke(width = 1f)
+                    )
+                )
+            )
+        )
+    }
+
+    @Test
+    fun parse_polygon_from_SVG() {
+        val svg = svg {
+            """<polygon points="0,0 10,10, 0,10" fill="none" fill-rule="evenodd" opacity="0.5" stroke="black" />"""
+        }
+        assertEquals(
+            actual = svgImageVectorParser().parse(svg).getOrThrow(),
+            expected = ImageVector(
+                width = 24,
+                height = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
+                nodes = listOf(
+                    ImageVector.Path(
+                        fillType = FillType.EvenOdd,
+                        fillColor = null,
+                        commands = listOf(Command("M0,0 10,10, 0,10"), Close()),
+                        alpha = .5f,
+                        stroke = Stroke(
+                            color = ImageVector.Path.FillColor(0, 0, 0, 255),
+                            width = 1f
+                        )
                     )
                 )
             )

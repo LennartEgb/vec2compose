@@ -51,7 +51,7 @@ internal class SVGParser(
     private fun SVG.Polygon.toVectorPath(): ImageVector.Path {
         return ImageVector.Path(
             fillType = fillType?.let { FillType(it) } ?: FillType.Default,
-            fillColor = fill?.let { colorParser.parse(it) } ?: Black,
+            fillColor = fill?.let { colorParser.parse(it) } ?: if (fill == null) Black else null,
             alpha = alpha?.toFloatOrNull() ?: 1f,
             stroke = Stroke(
                 color = stroke?.let { colorParser.parse(it) },
