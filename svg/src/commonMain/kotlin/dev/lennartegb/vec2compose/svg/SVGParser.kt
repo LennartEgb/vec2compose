@@ -166,8 +166,7 @@ internal class SVGParser(
         val cx = centerX.toFloat()
         val cy = centerY.toFloat()
         val r = radius.toFloat()
-        val color = fill?.let(colorParser::parse)
-            ?: ImageVector.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff)
+        val color = fill?.let(colorParser::parse) ?: Black
 
         return ImageVector.Path(
             fillType = FillType.Default,
