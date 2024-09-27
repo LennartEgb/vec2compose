@@ -1,6 +1,7 @@
 package dev.lennartegb.vec2compose.svg
 
 import dev.lennartegb.vec2compose.core.ImageVector
+import dev.lennartegb.vec2compose.core.ImageVector.Path.FillColor
 import dev.lennartegb.vec2compose.core.ImageVector.Path.FillType
 import dev.lennartegb.vec2compose.core.ImageVector.Path.Stroke
 import dev.lennartegb.vec2compose.core.Scale
@@ -35,6 +36,40 @@ internal class SVGParserTest {
     }
 
     @Test
+    fun svg_with_invalid_viewBox_throws_IllegalArgumentException() {
+        val svg = svg(viewBox = "r4nd0m") { "" }
+        assertFailsWith<IllegalArgumentException> {
+            svgImageVectorParser().parse(svg).getOrThrow()
+        }
+    }
+
+    @Test
+    fun parse_path_with_stroke_from_SVG() {
+        val svg = svg {
+            """<path d="" stroke="black" stroke-width="2" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="0.25" stroke-opacity="0.5"/>"""
+        }
+        assertEquals(
+            actual = svgImageVectorParser().parse(svg).getOrThrow().nodes,
+            expected = listOf(
+                ImageVector.Path(
+                    fillType = FillType.Default,
+                    fillColor = null,
+                    commands = emptyList(),
+                    alpha = 1f,
+                    stroke = Stroke(
+                        color = FillColor(0, 0, 0, 255),
+                        alpha = .5f,
+                        width = 2f,
+                        cap = Stroke.Cap.Square,
+                        join = Stroke.Join.Round,
+                        miter = .25f
+                    )
+                )
+            )
+        )
+    }
+
+    @Test
     fun parse_SVG_file_with_correct_fill_color() {
         val svg = svg {
             """
@@ -52,13 +87,13 @@ internal class SVGParserTest {
             ),
             ImageVector.Path(
                 fillType = FillType.Default,
-                fillColor = ImageVector.Path.FillColor(0xff, 0xff, 0xff, 0xff),
+                fillColor = FillColor(0xff, 0xff, 0xff, 0xff),
                 commands = emptyList(),
                 alpha = 1f
             ),
             ImageVector.Path(
                 fillType = FillType.Default,
-                fillColor = ImageVector.Path.FillColor(0x00, 0x00, 0x00, alpha = 0xff),
+                fillColor = FillColor(0x00, 0x00, 0x00, alpha = 0xff),
                 commands = emptyList(),
                 alpha = 1f
             )
@@ -144,7 +179,7 @@ internal class SVGParserTest {
                 listOf(
                     ImageVector.Path(
                         fillType = FillType.Default,
-                        fillColor = ImageVector.Path.FillColor(
+                        fillColor = FillColor(
                             red = 0xFF,
                             green = 0x00,
                             blue = 0x00,
@@ -152,7 +187,7 @@ internal class SVGParserTest {
                         ),
                         alpha = 1f,
                         stroke = Stroke(
-                            color = ImageVector.Path.FillColor(
+                            color = FillColor(
                                 red = 0x00,
                                 green = 0x00,
                                 blue = 0xFF,
@@ -191,7 +226,7 @@ internal class SVGParserTest {
 
     @Test
     fun parse_circle_from_SVG() {
-        val svg = svg { """<circle cx="5" cy="5" r="5" />""" }
+        val svg = svg { """<circle cx="5" cy="5" r="5" fill="#00ff00" />""" }
         assertEquals(
             actual = svgImageVectorParser().parse(svg).getOrThrow(),
             expected = ImageVector(
@@ -202,7 +237,7 @@ internal class SVGParserTest {
                 nodes = listOf(
                     ImageVector.Path(
                         fillType = FillType.Default,
-                        fillColor = ImageVector.Path.FillColor(0x00, 0x00, 0x00, 0xFF),
+                        fillColor = FillColor(0x00, 0xff, 0x00, 0xFF),
                         commands = listOf(
                             MoveTo(x = 0f, y = 5f),
                             ArcTo(
@@ -263,6 +298,35 @@ internal class SVGParserTest {
     }
 
     @Test
+    fun parse_rect_without_width_and_height_from_SVG() {
+        val svg = svg { """<rect x="1" y="2" />""" }
+        assertEquals(
+            actual = svgImageVectorParser().parse(svg).getOrThrow(),
+            expected = ImageVector(
+                width = 24,
+                height = 24,
+                viewportWidth = 24f,
+                viewportHeight = 24f,
+                nodes = listOf(
+                    ImageVector.Path(
+                        fillType = FillType.Default,
+                        fillColor = null,
+                        commands = listOf(
+                            MoveTo(x = 1f, y = 2f),
+                            LineTo(x = 1f, y = 2f),
+                            LineTo(x = 1f, y = 2f),
+                            LineTo(x = 1f, y = 2f),
+                            Close()
+                        ),
+                        alpha = 1f,
+                        stroke = Stroke(width = 0f)
+                    )
+                )
+            )
+        )
+    }
+
+    @Test
     fun parse_minimal_polygon_from_SVG() {
         val svg = svg { """<polygon points="0,0 10,10, 0,10" />""" }
         assertEquals(
@@ -275,7 +339,7 @@ internal class SVGParserTest {
                 nodes = listOf(
                     ImageVector.Path(
                         fillType = FillType.Default,
-                        fillColor = ImageVector.Path.FillColor(0, 0, 0, 0xff),
+                        fillColor = FillColor(0, 0, 0, 0xff),
                         commands = listOf(Command("M0,0 10,10, 0,10"), Close()),
                         alpha = 1f,
                         stroke = Stroke(width = 1f)
@@ -304,7 +368,7 @@ internal class SVGParserTest {
                         commands = listOf(Command("M0,0 10,10, 0,10"), Close()),
                         alpha = .5f,
                         stroke = Stroke(
-                            color = ImageVector.Path.FillColor(0, 0, 0, 255),
+                            color = FillColor(0, 0, 0, 255),
                             width = 3f
                         )
                     )
