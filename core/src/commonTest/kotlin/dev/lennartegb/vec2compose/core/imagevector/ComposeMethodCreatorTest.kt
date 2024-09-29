@@ -44,7 +44,6 @@ internal class ComposeMethodCreatorTest {
     fun parse_path() {
         val creator = ComposeMethodCreator(indentation = "  ")
         val actual = creator.createPath(
-            forBuilder = false,
             path = ImageVector.Path(
                 fillType = ImageVector.Path.FillType.EvenOdd,
                 fillColor = ImageVector.Path.FillColor(
@@ -95,7 +94,6 @@ internal class ComposeMethodCreatorTest {
     fun parse_path_for_builder() {
         val creator = ComposeMethodCreator(indentation = "  ")
         val actual = creator.createPath(
-            forBuilder = true,
             path = ImageVector.Path(
                 fillType = ImageVector.Path.FillType.EvenOdd,
                 fillColor = null,
@@ -118,7 +116,7 @@ internal class ComposeMethodCreatorTest {
         assertEquals(
             actual = actual,
             expected = """
-                .path(
+                path(
                   fill = null,
                   fillAlpha = 0.5f,
                   stroke = null,
@@ -141,7 +139,6 @@ internal class ComposeMethodCreatorTest {
     fun parse_group_with_path() {
         val creator = ComposeMethodCreator(indentation = " ".repeat(4))
         val actual = creator.createGroup(
-            forBuilder = false,
             group = ImageVector.Group(
                 name = "group",
                 nodes = listOf(
@@ -207,7 +204,6 @@ internal class ComposeMethodCreatorTest {
     fun parse_group_for_builder() {
         val creator = ComposeMethodCreator(indentation = "  ")
         val actual = creator.createGroup(
-            forBuilder = true,
             group = ImageVector.Group(
                 name = "group",
                 nodes = emptyList(),
@@ -220,7 +216,7 @@ internal class ComposeMethodCreatorTest {
         assertEquals(
             actual = actual,
             expected = """
-                .group(
+                group(
                   name = "group",
                   rotate = 0.25f,
                   pivotX = 0.0f,

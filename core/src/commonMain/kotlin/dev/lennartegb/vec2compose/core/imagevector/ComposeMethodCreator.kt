@@ -14,8 +14,7 @@ internal class ComposeMethodCreator(private val indentation: String) {
         append(")")
     }
 
-    fun createPath(path: ImageVector.Path, forBuilder: Boolean = true): String = buildString {
-        if (forBuilder) append(".")
+    fun createPath(path: ImageVector.Path): String = buildString {
         append("path(").appendLine()
         indent().append("fill = ${path.fillColor?.solid()},").appendLine()
         indent().append("fillAlpha = ${path.alpha}f,").appendLine()
@@ -36,8 +35,7 @@ internal class ComposeMethodCreator(private val indentation: String) {
         append("}")
     }.removePrefix(indentation)
 
-    fun createGroup(group: ImageVector.Group, forBuilder: Boolean = true): String = buildString {
-        if (forBuilder) append(".")
+    fun createGroup(group: ImageVector.Group): String = buildString {
         append("group(").appendLine()
         group.name?.also { indent().append("name = \"$it\",").appendLine() }
         indent().append("rotate = ${group.rotate}f,").appendLine()
@@ -52,8 +50,8 @@ internal class ComposeMethodCreator(private val indentation: String) {
         group.nodes.takeIf { it.isNotEmpty() }
             ?.joinToString(separator = "\n") {
                 when (it) {
-                    is ImageVector.Group -> createGroup(it, forBuilder = false)
-                    is ImageVector.Path -> createPath(it, forBuilder = false)
+                    is ImageVector.Group -> createGroup(it)
+                    is ImageVector.Path -> createPath(it)
                 }
             }
             ?.prependIndent(indentation)

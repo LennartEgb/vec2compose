@@ -9,7 +9,8 @@ class ImageVectorCreator(indentation: String) {
 
     fun create(name: String, imageVector: ImageVector): String {
         var content = composeMethodCreator.createConstructor(name, imageVector)
-        content += imageVector.nodes.joinToString(separator = "") { node ->
+        val prefix = if (imageVector.nodes.isNotEmpty()) "." else ""
+        content += imageVector.nodes.joinToString(separator = ".", prefix = prefix) { node ->
             when (node) {
                 is ImageVector.Group -> composeMethodCreator.createGroup(node)
                 is ImageVector.Path -> composeMethodCreator.createPath(node)
