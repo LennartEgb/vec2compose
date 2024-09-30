@@ -43,8 +43,8 @@ internal class ComposeMethodCreatorTest {
     @Test
     fun parse_path() {
         val creator = ComposeMethodCreator(indentation = "  ")
-        val actual = creator.createPath(
-            path = ImageVector.Path(
+        val actual = creator.createNode(
+            node = ImageVector.Path(
                 fillType = ImageVector.Path.FillType.EvenOdd,
                 fillColor = ImageVector.Path.FillColor(
                     red = 0xff,
@@ -93,8 +93,8 @@ internal class ComposeMethodCreatorTest {
     @Test
     fun parse_path_for_builder() {
         val creator = ComposeMethodCreator(indentation = "  ")
-        val actual = creator.createPath(
-            path = ImageVector.Path(
+        val actual = creator.createNode(
+            node = ImageVector.Path(
                 fillType = ImageVector.Path.FillType.EvenOdd,
                 fillColor = null,
                 commands = listOf(
@@ -138,8 +138,8 @@ internal class ComposeMethodCreatorTest {
     @Test
     fun parse_group_with_path() {
         val creator = ComposeMethodCreator(indentation = " ".repeat(4))
-        val actual = creator.createGroup(
-            group = ImageVector.Group(
+        val actual = creator.createNode(
+            node = ImageVector.Group(
                 name = "group",
                 nodes = listOf(
                     ImageVector.Path(
@@ -193,7 +193,6 @@ internal class ComposeMethodCreatorTest {
                         strokeLineMiter = 0.25f,
                         pathFillType = PathFillType.EvenOdd
                     ) {
-                    
                     }
                 }
             """.trimIndent()
@@ -203,8 +202,8 @@ internal class ComposeMethodCreatorTest {
     @Test
     fun parse_group_for_builder() {
         val creator = ComposeMethodCreator(indentation = "  ")
-        val actual = creator.createGroup(
-            group = ImageVector.Group(
+        val actual = creator.createNode(
+            node = ImageVector.Group(
                 name = "group",
                 nodes = emptyList(),
                 rotate = 0.25f,
