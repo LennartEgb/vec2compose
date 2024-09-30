@@ -5,9 +5,9 @@ import kotlin.jvm.JvmInline
 @JvmInline
 value class Command(internal val value: String) {
 
-    internal companion object {
+    private companion object {
 
-        private val regex = "[+-]?\\d*[.]?\\d+".toRegex()
+        val regex = "[+-]?\\d*[.]?\\d+".toRegex()
 
         val commandSpecMap = mapOf(
             'a' to ArcTo,
