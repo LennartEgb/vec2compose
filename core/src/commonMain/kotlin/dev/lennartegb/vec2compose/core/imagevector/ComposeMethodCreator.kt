@@ -4,6 +4,8 @@ import dev.lennartegb.vec2compose.core.ImageVector
 
 internal class ComposeMethodCreator(private val indentation: String) {
 
+    private val emptyLineRegex = "(?m)^[ \t]*\r?\n".toRegex()
+
     fun createConstructor(name: String, set: ImageVector): String = buildString {
         append("ImageVector.Builder(").appendLine()
         indent().append("name = \"$name\",").appendLine()
@@ -14,8 +16,12 @@ internal class ComposeMethodCreator(private val indentation: String) {
         append(")")
     }
 
-    fun createPath(path: ImageVector.Path, forBuilder: Boolean = true): String = buildString {
-        if (forBuilder) append(".")
+    fun createNode(node: ImageVector.Node): String = when (node) {
+        is ImageVector.Group -> createGroup(node)
+        is ImageVector.Path -> createPath(node)
+    }.replace(emptyLineRegex, "")
+
+    private fun createPath(path: ImageVector.Path): String = buildString {
         append("path(").appendLine()
         indent().append("fill = ${path.fillColor?.solid()},").appendLine()
         indent().append("fillAlpha = ${path.alpha}f,").appendLine()
@@ -28,16 +34,14 @@ internal class ComposeMethodCreator(private val indentation: String) {
         indent().append("pathFillType = ${path.fillType.composeName}").appendLine()
         appendLine(") {")
 
-        path.commands
-            .joinToString("\n")
+        path.commands.joinToString("\n")
             .prependIndent(indent = indentation)
-            .also { appendLine(it) }
+            .also(::appendLine)
 
         append("}")
     }.removePrefix(indentation)
 
-    fun createGroup(group: ImageVector.Group, forBuilder: Boolean = true): String = buildString {
-        if (forBuilder) append(".")
+    private fun createGroup(group: ImageVector.Group): String = buildString {
         append("group(").appendLine()
         group.name?.also { indent().append("name = \"$it\",").appendLine() }
         indent().append("rotate = ${group.rotate}f,").appendLine()
@@ -49,15 +53,9 @@ internal class ComposeMethodCreator(private val indentation: String) {
         indent().append("translationY = ${group.translation.y}f,").appendLine()
         indent().append("clipPathData = emptyList()").appendLine()
         append(") {").appendLine()
-        group.nodes.takeIf { it.isNotEmpty() }
-            ?.joinToString(separator = "\n") {
-                when (it) {
-                    is ImageVector.Group -> createGroup(it, forBuilder = false)
-                    is ImageVector.Path -> createPath(it, forBuilder = false)
-                }
-            }
-            ?.prependIndent(indentation)
-            ?.also(::appendLine)
+        group.nodes.joinToString(separator = "\n", transform = ::createNode)
+            .prependIndent(indentation)
+            .also(::appendLine)
         append("}")
     }
 
