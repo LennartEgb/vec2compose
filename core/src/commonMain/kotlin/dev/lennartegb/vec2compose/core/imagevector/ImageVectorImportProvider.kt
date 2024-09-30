@@ -1,9 +1,12 @@
 package dev.lennartegb.vec2compose.core.imagevector
 
+import kotlin.js.JsName
+
 fun interface ImageVectorImportProvider {
     fun getImports(hasGroup: Boolean): String
 }
 
+@JsName("createImageVectorProvider")
 @Suppress("ktlint")
 fun ImageVectorImportProvider() = ImageVectorImportProvider { hasGroup ->
     "import androidx.compose.ui.graphics.Color\n" +
