@@ -6,7 +6,7 @@ kotlin-kover = "0.8.3"
 ktlint = "12.1.1"
 xmlutil = "0.90.1"
 compose-plugin = "1.6.11"
-filekit = "0.8.3"
+filekit = "0.8.7"
 
 [libraries]
 kotlin-cli = { group = "org.jetbrains.kotlinx", name = "kotlinx-cli", version.ref = "kotlin-cli" }
