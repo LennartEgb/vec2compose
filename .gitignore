@@ -1,6 +1,7 @@
 */build
 /build
 /.idea
+!./.idea/icon.svg
 local.properties
 /.gradle
 /dist
