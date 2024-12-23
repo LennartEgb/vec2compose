@@ -5,7 +5,7 @@ kotlin-io = "0.6.0"
 kotlin-kover = "0.9.0"
 ktlint = "12.1.2"
 xmlutil = "0.90.3"
-compose-plugin = "1.7.1"
+compose-plugin = "1.7.3"
 filekit = "0.8.8"
 
 [libraries]
