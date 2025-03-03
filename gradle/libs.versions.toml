@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.1.10"
 kotlin-cli = "0.3.6"
-kotlin-io = "0.6.0"
+kotlin-io = "0.7.0"
 kotlin-kover = "0.9.1"
 ktlint = "12.1.2"
 xmlutil = "0.90.3"
