@@ -22,26 +22,21 @@ internal class VectorDrawableParser(
     private val deserializer: VectorDrawableDeserializer = VectorDrawableDeserializer()
 ) : ImageVectorParser {
 
-    override fun parse(content: String): Result<ImageVector> =
-        runCatching { deserializer.deserialize(content) }
-            .mapCatching { it.toImageVector() }
+    override fun parse(content: String): Result<ImageVector> = runCatching { deserializer.deserialize(content) }
+        .mapCatching { it.toImageVector() }
 
-    private fun VectorDrawable.Child.toNode(): ImageVector.Node {
-        return when (this) {
-            is VectorDrawable.Group -> toVectorGroup()
-            is VectorDrawable.Path -> toVectorPath()
-        }
+    private fun VectorDrawable.Child.toNode(): ImageVector.Node = when (this) {
+        is VectorDrawable.Group -> toVectorGroup()
+        is VectorDrawable.Path -> toVectorPath()
     }
 
-    private fun VectorDrawable.toImageVector(): ImageVector {
-        return ImageVector(
-            width = widthInDp.toIntDp(),
-            height = heightInDp.toIntDp(),
-            viewportWidth = viewportWidth,
-            viewportHeight = viewportHeight,
-            nodes = children.map { it.toNode() }
-        )
-    }
+    private fun VectorDrawable.toImageVector(): ImageVector = ImageVector(
+        width = widthInDp.toIntDp(),
+        height = heightInDp.toIntDp(),
+        viewportWidth = viewportWidth,
+        viewportHeight = viewportHeight,
+        nodes = children.map { it.toNode() }
+    )
 
     private fun VectorDrawable.Group.toVectorGroup(): ImageVector.Group {
         val translation = Translation(x = translateX ?: 0f, y = translateY ?: 0f)
@@ -57,27 +52,22 @@ internal class VectorDrawableParser(
         )
     }
 
-    private fun VectorDrawable.Path.toVectorPath(): ImageVector.Path {
-        return ImageVector.Path(
-            fillType = FillType(fillType),
-            commands = Path(pathData),
-            fillColor = fillColor?.let(colorParser::parse),
-            alpha = alpha,
-            stroke = toStroke()
-        )
-    }
+    private fun VectorDrawable.Path.toVectorPath(): ImageVector.Path = ImageVector.Path(
+        fillType = FillType(fillType),
+        commands = Path(pathData),
+        fillColor = fillColor?.let(colorParser::parse),
+        alpha = alpha,
+        stroke = toStroke()
+    )
 
-    private fun VectorDrawable.Path.toStroke(): ImageVector.Path.Stroke {
-        return ImageVector.Path.Stroke(
-            color = strokeColor?.let { colorParser.parse(it) },
-            alpha = strokeAlpha?.toFloat(),
-            width = strokeWidth?.toFloat(),
-            cap = strokeLineCap?.let { Cap(it) },
-            join = strokeLineJoin?.let { Join(it) },
-            miter = strokeMiterLimit?.toFloat()
-        )
-    }
+    private fun VectorDrawable.Path.toStroke(): ImageVector.Path.Stroke = ImageVector.Path.Stroke(
+        color = strokeColor?.let { colorParser.parse(it) },
+        alpha = strokeAlpha?.toFloat(),
+        width = strokeWidth?.toFloat(),
+        cap = strokeLineCap?.let { Cap(it) },
+        join = strokeLineJoin?.let { Join(it) },
+        miter = strokeMiterLimit?.toFloat()
+    )
 
-    private fun DpString.toIntDp(): Int =
-        toIntOrNull() ?: requireNotNull(dropLast(2).toIntOrNull()) { "Malformed dp string: $this" }
+    private fun DpString.toIntDp(): Int = toIntOrNull() ?: requireNotNull(dropLast(2).toIntOrNull()) { "Malformed dp string: $this" }
 }

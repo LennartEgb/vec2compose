@@ -11,21 +11,19 @@ internal class KeywordColorParser {
 
     fun parse(color: String): ImageVector.Path.FillColor? = nameToColors[color]
 
-    private fun createNamesToColors(): Map<String, ImageVector.Path.FillColor> {
-        return getColors().lines().associate { line -> line.split(":").let { it[0] to it[1] } }
-            .mapValues { (_, color) ->
-                color.removeSurrounding("[", "]")
-                    .split(",")
-                    .let { (r, g, b) ->
-                        ImageVector.Path.FillColor(
-                            alpha = 0xff,
-                            red = r.toInt(),
-                            green = g.toInt(),
-                            blue = b.toInt()
-                        )
-                    }
-            }
-    }
+    private fun createNamesToColors(): Map<String, ImageVector.Path.FillColor> = getColors().lines().associate { line -> line.split(":").let { it[0] to it[1] } }
+        .mapValues { (_, color) ->
+            color.removeSurrounding("[", "]")
+                .split(",")
+                .let { (r, g, b) ->
+                    ImageVector.Path.FillColor(
+                        alpha = 0xff,
+                        red = r.toInt(),
+                        green = g.toInt(),
+                        blue = b.toInt()
+                    )
+                }
+        }
 
     private fun getColors() = """
         aliceblue:[240,248,255]

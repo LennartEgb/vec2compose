@@ -41,9 +41,7 @@ fun ImageVector.toCompose(name: String): ComposeImageVector {
     return builder.build()
 }
 
-private fun ImageVector.Path.FillColor.toColor(): Color {
-    return Color(red = red, green = green, blue = blue, alpha = alpha)
-}
+private fun ImageVector.Path.FillColor.toColor(): Color = Color(red = red, green = green, blue = blue, alpha = alpha)
 
 private fun ComposeImageVector.Builder.addNodes(nodes: List<ImageVector.Node>) {
     nodes.forEach { node ->
