@@ -7,10 +7,8 @@ private const val ANDROID_COLOR_PREFIX = "@android:color/"
 
 internal class AndroidColorParser(private val hexColorParser: HexColorParser) {
 
-    fun parse(value: String): ImageVector.Path.FillColor? {
-        return androidColorsMap[value.substringAfter(ANDROID_COLOR_PREFIX)]
-            ?.let(hexColorParser::parse)
-    }
+    fun parse(value: String): ImageVector.Path.FillColor? = androidColorsMap[value.substringAfter(ANDROID_COLOR_PREFIX)]
+        ?.let(hexColorParser::parse)
 
     // NOTE: Taken from https://gist.github.com/sghael/2930380
     private val androidColorsMap = mapOf(

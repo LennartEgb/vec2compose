@@ -9,5 +9,4 @@ typealias Path = List<Command>
 val Path.raw: String get() = joinToString("") { it.value }
 
 @Suppress("FunctionName")
-fun Path(pathCode: String): Path =
-    regex.findAll(pathCode).map { Command(it.value) }.toList()
+fun Path(pathCode: String): Path = regex.findAll(pathCode).map { Command(it.value) }.toList()

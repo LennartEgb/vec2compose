@@ -21,8 +21,7 @@ internal class SVGParser(
     private val deserializer: SVGDeserializer = SVGDeserializer()
 ) : ImageVectorParser {
 
-    override fun parse(content: String): Result<ImageVector> =
-        runCatching { deserializer.deserialize(content).toImageVector() }
+    override fun parse(content: String): Result<ImageVector> = runCatching { deserializer.deserialize(content).toImageVector() }
 
     private fun SVG.toImageVector(): ImageVector {
         val width = width.filter { it.isDigit() }.toInt()
@@ -48,29 +47,25 @@ internal class SVGParser(
         is SVG.Polygon -> toVectorPath()
     }
 
-    private fun SVG.Polygon.toVectorPath(): ImageVector.Path {
-        return ImageVector.Path(
-            fillType = fillType?.let { FillType(it) } ?: FillType.Default,
-            fillColor = fill?.let { colorParser.parse(it) } ?: if (fill == null) Black else null,
-            alpha = alpha?.toFloatOrNull() ?: 1f,
-            stroke = Stroke(
-                color = stroke?.let { colorParser.parse(it) },
-                width = strokeWidth?.toFloat() ?: 1f
-            ),
-            commands = points.takeIf { it.isNotEmpty() }?.let { Path("M${it}Z") }.orEmpty()
-        )
-    }
+    private fun SVG.Polygon.toVectorPath(): ImageVector.Path = ImageVector.Path(
+        fillType = fillType?.let { FillType(it) } ?: FillType.Default,
+        fillColor = fill?.let { colorParser.parse(it) } ?: if (fill == null) Black else null,
+        alpha = alpha?.toFloatOrNull() ?: 1f,
+        stroke = Stroke(
+            color = stroke?.let { colorParser.parse(it) },
+            width = strokeWidth?.toFloat() ?: 1f
+        ),
+        commands = points.takeIf { it.isNotEmpty() }?.let { Path("M${it}Z") }.orEmpty()
+    )
 
-    private fun SVG.Group.toVectorGroup(): ImageVector.Group {
-        return ImageVector.Group(
-            name = name,
-            nodes = children.map { it.toNode() },
-            rotate = transform?.getRotation() ?: 0f,
-            pivot = transform?.getPivot() ?: Translation(0f, 0f),
-            translation = transform?.getTranslation() ?: Translation(0f, 0f),
-            scale = transform?.getScale() ?: Scale(1f, 1f)
-        )
-    }
+    private fun SVG.Group.toVectorGroup(): ImageVector.Group = ImageVector.Group(
+        name = name,
+        nodes = children.map { it.toNode() },
+        rotate = transform?.getRotation() ?: 0f,
+        pivot = transform?.getPivot() ?: Translation(0f, 0f),
+        translation = transform?.getTranslation() ?: Translation(0f, 0f),
+        scale = transform?.getScale() ?: Scale(1f, 1f)
+    )
 
     private fun SVG.Path.toVectorPath(): ImageVector.Path {
         val stroke = toStroke()
@@ -151,16 +146,14 @@ internal class SVGParser(
         )
     }
 
-    private fun SVG.Path.toStroke(): Stroke {
-        return Stroke(
-            color = strokeColor?.let(colorParser::parse),
-            alpha = strokeAlpha?.toFloat(),
-            width = strokeWidth?.toFloat(),
-            cap = strokeLinecap?.let { Cap(it) },
-            join = strokeLinejoin?.let { Join(it) },
-            miter = strokeMiter?.toFloat()
-        )
-    }
+    private fun SVG.Path.toStroke(): Stroke = Stroke(
+        color = strokeColor?.let(colorParser::parse),
+        alpha = strokeAlpha?.toFloat(),
+        width = strokeWidth?.toFloat(),
+        cap = strokeLinecap?.let { Cap(it) },
+        join = strokeLinejoin?.let { Join(it) },
+        miter = strokeMiter?.toFloat()
+    )
 
     private fun SVG.Circle.toVectorPath(): ImageVector.Path {
         val cx = centerX.toFloat()
@@ -198,29 +191,21 @@ internal class SVGParser(
         )
     }
 
-    private fun String.getRotation(): Float {
-        return getFunction("rotate")
-            ?.let { (a, _, _) -> a }
-            ?: 0f
-    }
+    private fun String.getRotation(): Float = getFunction("rotate")
+        ?.let { (a, _, _) -> a }
+        ?: 0f
 
-    private fun String.getPivot(): Translation {
-        return getFunction("rotate")
-            ?.let { (_, x, y) -> Translation(x = x, y = y) }
-            ?: Translation(0f, 0f)
-    }
+    private fun String.getPivot(): Translation = getFunction("rotate")
+        ?.let { (_, x, y) -> Translation(x = x, y = y) }
+        ?: Translation(0f, 0f)
 
-    private fun String.getTranslation(): Translation {
-        return getFunction("translate")
-            ?.let { (x, y) -> Translation(x = x, y = y) }
-            ?: Translation(0f, 0f)
-    }
+    private fun String.getTranslation(): Translation = getFunction("translate")
+        ?.let { (x, y) -> Translation(x = x, y = y) }
+        ?: Translation(0f, 0f)
 
-    private fun String.getScale(): Scale {
-        return getFunction("scale")
-            ?.let { (x, y) -> Scale(x = x, y = y) }
-            ?: Scale(1f, 1f)
-    }
+    private fun String.getScale(): Scale = getFunction("scale")
+        ?.let { (x, y) -> Scale(x = x, y = y) }
+        ?: Scale(1f, 1f)
 
     private fun String.getFunction(key: String): List<Float>? {
         val startIndex = indexOf(key).takeIf { it != -1 } ?: return null
