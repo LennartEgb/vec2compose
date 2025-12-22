@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.2.21"
+kotlin = "2.3.0"
 kotlin-cli = "0.3.6"
 kotlin-io = "0.8.2"
 kotlin-kover = "0.9.4"
