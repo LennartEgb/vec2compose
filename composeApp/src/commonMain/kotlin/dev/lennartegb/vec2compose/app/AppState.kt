@@ -10,10 +10,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import dev.lennartegb.vec2compose.app.data.File
-import io.github.vinceglb.filekit.compose.PickerResultLauncher
-import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
-import io.github.vinceglb.filekit.core.PickerMode
-import io.github.vinceglb.filekit.core.PickerType
+import io.github.vinceglb.filekit.dialogs.FileKitMode
+import io.github.vinceglb.filekit.dialogs.FileKitType
+import io.github.vinceglb.filekit.dialogs.compose.PickerResultLauncher
+import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
+import io.github.vinceglb.filekit.name
+import io.github.vinceglb.filekit.readBytes
 import kotlinx.coroutines.launch
 
 @Composable
@@ -62,8 +64,8 @@ class AppState(
 private fun rememberVectorPickerLauncher(onResult: (List<File>) -> Unit): PickerResultLauncher {
     val scope = rememberCoroutineScope()
     return rememberFilePickerLauncher(
-        type = PickerType.File(extensions = listOf("xml", "svg")),
-        mode = PickerMode.Multiple()
+        type = FileKitType.File(extensions = listOf("xml", "svg")),
+        mode = FileKitMode.Multiple(),
     ) { platformFile ->
         scope.launch {
             platformFile
