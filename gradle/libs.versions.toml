@@ -5,6 +5,7 @@ kotlin-io = "0.9.1"
 kotlin-kover = "0.9.11"
 xmlutil = "1.0.2"
 compose-plugin = "1.12.1"
+material3 = "1.9.0"
 ktlint = "14.2.0"
 filekit = "0.16.0"
 
@@ -16,9 +17,17 @@ xmlutil-serialization = { group = "io.github.pdvrieze.xmlutil", name = "serializ
 filekit-dialogs = { module = "io.github.vinceglb:filekit-dialogs", version.ref = "filekit" }
 filekit-dialogs-compose = { module = "io.github.vinceglb:filekit-dialogs-compose", version.ref = "filekit" }
 
+compose-runtime = { group = "org.jetbrains.compose.runtime", name = "runtime", version.ref = "compose-plugin" }
+compose-foundation = { group = "org.jetbrains.compose.foundation", name = "foundation", version.ref = "compose-plugin" }
+compose-material = { group = "org.jetbrains.compose.material3", name = "material3", version.ref = "material3" }
+compose-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "compose-plugin" }
+compose-components = { group = "org.jetbrains.compose.components", name = "components-resources", version.ref = "compose-plugin" }
+compose-ui-tooling = { group = "org.jetbrains.compose.ui", name = "ui-tooling-preview", version.ref = "compose-plugin" }
+
 [bundles]
 xmlutil = ["xmlutil-core", "xmlutil-serialization"]
 filekit = ["filekit-dialogs", "filekit-dialogs-compose"]
+compose = ["compose-runtime", "compose-components", "compose-foundation", "compose-material", "compose-ui", "compose-ui-tooling"]
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

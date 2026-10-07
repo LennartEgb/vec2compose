@@ -31,12 +31,7 @@ kotlin {
             implementation(project(":vector-drawable"))
             implementation(project(":svg"))
             implementation(project(":core"))
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
+            implementation(libs.bundles.compose)
             implementation(libs.bundles.filekit)
         }
         desktopMain.dependencies {
