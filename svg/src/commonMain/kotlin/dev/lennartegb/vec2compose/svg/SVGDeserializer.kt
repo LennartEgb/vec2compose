@@ -22,11 +22,10 @@ internal class SVGDeserializer {
     }
 
     @OptIn(ExperimentalXmlUtilApi::class)
-    private val xmlConfig = XML(serializersModule = polyModule) {
-        autoPolymorphic = true
-        defaultPolicy {
+    private val xmlConfig = XML.v1(polyModule) {
+        repairNamespaces = true
+        policy {
             pedantic = false
-            repairNamespaces = true
             unknownChildHandler = UnknownChildHandler { _, _, _, _, _ -> emptyList() }
         }
     }
