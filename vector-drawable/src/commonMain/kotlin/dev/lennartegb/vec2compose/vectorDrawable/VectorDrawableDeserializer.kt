@@ -17,11 +17,10 @@ internal class VectorDrawableDeserializer {
     }
 
     @OptIn(ExperimentalXmlUtilApi::class)
-    private val xmlConfig = XML(baseModule) {
-        autoPolymorphic = true
-        defaultPolicy {
+    private val xmlConfig = XML.v1(baseModule) {
+        repairNamespaces = true
+        policy {
             pedantic = false
-            repairNamespaces = true
             unknownChildHandler = UnknownChildHandler { _, _, _, _, _ -> emptyList() }
         }
     }
