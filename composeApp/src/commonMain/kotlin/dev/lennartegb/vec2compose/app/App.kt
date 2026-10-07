@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.End
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.VerticalScrollbar
@@ -71,7 +72,8 @@ fun App(
             ) {
                 AnimatedVisibility(
                     visible = appState.selectedFile != null,
-                    enter = scaleIn()
+                    enter = scaleIn(),
+                    exit = scaleOut(),
                 ) {
                     val fabMessage = stringResource(Res.string.copied_image_vector)
                     SmallFab(
