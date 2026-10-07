@@ -34,7 +34,6 @@ fun DesktopList(
     contentPadding: PaddingValues = DesktopListDefaults.contentPadding,
     content: @Composable (PaddingValues) -> Unit
 ) {
-    MaterialTheme
     Surface(
         modifier = modifier.width(IntrinsicSize.Min),
         color = color,
