@@ -56,7 +56,7 @@ class AppState(
     }
 
     fun select(file: File) {
-        selectedFile = file
+        selectedFile = file.takeUnless { it == selectedFile }
     }
 }
 
