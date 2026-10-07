@@ -2,7 +2,7 @@
 kotlin = "2.4.0"
 kotlin-cli = "0.3.6"
 kotlin-io = "0.9.1"
-kotlin-kover = "0.9.8"
+kotlin-kover = "0.9.11"
 xmlutil = "1.0.2"
 compose-plugin = "1.12.1"
 ktlint = "14.2.0"
