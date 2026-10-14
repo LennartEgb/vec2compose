@@ -65,7 +65,7 @@ private fun rememberVectorPickerLauncher(onResult: (List<File>) -> Unit): Picker
     val scope = rememberCoroutineScope()
     return rememberFilePickerLauncher(
         type = FileKitType.File(extensions = listOf("xml", "svg")),
-        mode = FileKitMode.Multiple(),
+        mode = FileKitMode.Multiple()
     ) { platformFile ->
         scope.launch {
             platformFile
