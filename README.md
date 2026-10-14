@@ -1,3 +1,6 @@
+> [!NOTE]
+> For a more feature rich experience head over to [ComposeGears/Valkyrie](https://github.com/ComposeGears/Valkyrie). This project will exist to have a quick `ImageVector` generator on web available
+
 # vec2compose
 ![Github Actions Status](https://github.com/lennartegb/vec2compose/actions/workflows/ci.yml/badge.svg)
 [![codecov](https://codecov.io/github/LennartEgb/vec2compose/branch/main/graph/badge.svg?token=3GZE97P1A2)](https://codecov.io/github/LennartEgb/vec2compose)
